@@ -1,0 +1,198 @@
+this is the pseudo_printfunction text file
+
+[project:va_list:demonstration_1][<%%,vadem1,%>]
+
+            *
+        introduction
+            *
+
+            yarr
+        for pyrates we be
+    nd puyrates shall reign
+        over every sea
+
+            **
+<%%,socptf,%>
+stream of consciousness
+            **
+i could try to write a basic script in this IDE
+then when confirmed running, simply write the functions I need
+right?
+            **
+            ***
+<%%,bscrpt,%>
+basic script
+<start#in c#>
+//TODO: replace with appropriate library
+#include <stdarg.h>
+#include <stdio.h>
+int ps_bscrpt(int num);
+int main(void)
+{
+    ps_bscrpt(420);
+}
+int ps_bscrpt(int num)
+{
+    printf(num);
+    return (0);
+}
+<#in c#end>
+[commentary]
+08/06/24//14:14//gonna copy and try to run it now.
+[result]
+////14:16//segfault! since printf is used to "print an int" but no string is present.
+[next test]
+what happens when printf is passed a string?
+<start#in c#>
+//TODO: replace with appropriate library
+#include <stdarg.h>
+#include <stdio.h>
+int ps_bscrpt(int num);
+int main(void)
+{
+    ps_bscrpt("420");
+}
+int ps_bscrpt(char *num)
+{
+    printf(num);
+    return (0);
+}
+<#in c#end>
+[result]
+it printed, complained but printed. Interesting.
+[next experiment]
+what happens if printf is passed a pointer to a pointer
+where the two pointers within, contain one string and one integer
+aha. Here we have a conundrum. For it is a varying data type
+and instead we woul have an array of strings, where each int or variable were named
+after the iconic "" symbols delineating the string from printf
+and according to the number of % symbols, indicating flags for the function
+[peeving thought]
+it feels like we are not really learning to use this function, but instead
+asked to follow a framework preexisting. The va_list stuff? What is that?
+[post next experiment]
+check out the va stuff cus what is that?
+<start#in c#>
+//TODO: replace with appropriate library
+#include <stdarg.h>
+#include <stdio.h>
+int ps_bscrpt(int num);
+int main(void)
+{
+    int num = 420;
+    ps_bscrpt("\"420 = %d\",num");
+}
+int ps_bscrpt(void *num)
+{
+    printf(num);
+    return (0);
+}
+<#in c#end>
+////14:30//moderate success in experiment.
+[conditions]
+i did not pass a pointer per se, but I took two void pointers
+and with those, when passing a string and an int, printf works
+interestingly, the %d flag in the string was picked up
+so it is clear that the way data is passed matters
+[next experiment]
+check out the va stuff cus what is that?
+//
+<start#in c#>
+//TODO: replace with appropriate library
+#include <stdarg.h>
+#include <stdio.h>
+int ps_bscrpt(void *num, void *str);
+int main(void)
+{
+    int num = 420;
+    char *str = "420 = %d" ;
+    ps_bscrpt(num, str);
+}
+int ps_bscrpt(void *num, void *str)
+{
+    printf(str, num);
+    return (0);
+}
+<#in c#end>
+//
+////14:35//
+<start#in c#>
+#include <stdarg.h>
+ps_argmac(void* data);
+int main(void)
+{
+    //ps_argument_machine(1);
+    ps_argmac();
+    ps_argmac(1);
+    ps_argmac(0);
+}
+ps_argmac(void* data)
+{
+    if (!data)
+        return (0);
+    else
+        return (1);
+}
+<#in c#end>
+[purpose]
+to test the basic structure of the code
+before beginning testing with lists
+to ensure that the data gets passed reliably
+<start#in c#>
+
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdio.h>
+int ps_argmac(int data);
+int main(void)
+{
+    int var;
+    int nix;
+
+    var = 1;
+    nix = 0;
+
+    //ps_argument_machine(1);
+    if (ps_argmac(var))
+    {
+        printf("nice device! %d", ps_argmac(nix));  
+        return (0);
+    }
+    printf("no dice homeslice %d", ((ps_argmac(var))));
+    printf("nice device! %d", ps_argmac(nix)); 
+    return (1);
+}
+int ps_argmac(int data)
+{
+    if (!data)
+        return (1);
+    else
+        return (0);
+}
+<#in c#end>
+////14:53//function basics repetition. I am playing scales to prepare for a symphony. For shame.
+Not really for shame I mean... ANyway...
+
+So I've reaffirmed my grasp on returns and true values.
+So I should be able to determine the contents of the list ap list and so on.
+[project:va_list:demonstration_1]
+[<%%,vadem1,,%>]
+[abstract]
+to make a function
+that tries to
+send a string to a va_list
+then use the va functions
+to extract the information
+and make sense of how
+it is organized and accessed
+<start#in c#>
+
+<#in c#end> 
+[<%%,,vadem1,%>]
+/
+//
+///DO NOT DELETE JUST COPY
+<start#in c#><#in c#end> 
+////://
+[::]
+
