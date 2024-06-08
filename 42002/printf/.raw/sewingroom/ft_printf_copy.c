@@ -13,11 +13,16 @@
 /* THE PURPOSE OF THIS SPECIFIC FILE IS AS A DONOR */
 /* IT IS INTENDED TO DONATE ALL ITS ESSENCE TO OTHER FILES */
 /* TAKE NOTE OF WHAT GETS DONATED THUS: */
-/* <don:at:ed>
+/*
+first the supertag
+then the stamptag
+<%%,donated,%>
+<don:at:ed>
 where don is the original line number
 at is the new line number
 ed is the new file name (shorthand, consult registry) */
 /* temporary inclusions for testing */
+char	*ft_strdup(const char *s);
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -25,20 +30,69 @@ ed is the new file name (shorthand, consult registry) */
 #include <stdio.h>
 
 int	ft_printf(const char *format, ...);
-char	*ft_strdup(const char *s);
 static int		ft_ptfcha(char c);
 static int		ft_ptfstr(const char *format);
 static int		ft_vex(const char format, va_list ap);
-static void		ft_ptfhex_put(unsigned long long int num, const char format);
 static int		ft_ptfhex(unsigned long long int num, const char format);
 static int		ft_ptfhex_len(unsigned long long int num);
+static void		ft_ptfhex_put(unsigned long long int num, const char format);
 static int		ft_ptfptr(unsigned long long ptr);
 static int		ft_ptfint(int num);
 static int		ft_ptfint_put(int num);
 static int		ft_ptfuin(unsigned int num);
 static int		ft_ptfnumlen(unsigned int num);
 static char		*ft_uitoa(unsigned int num);
+/* initial assay:
 
+<%%,donated,%>
+<don:at:ed>
+////////	CATEGORY:
+////ft_()		//*
+*/
+//[current structure]
+////////	TEMP:
+////main()	//for testing and calling the function pre-release	
+////////	ROOT:
+////ft_printf()		//the star of the show
+////////	UTIL:
+////ft_ptfvex()		//checks for flags and selects next ft
+////ft_ptfcha()		//prints individual characters
+////ft_ptfstr()		//prints strings of characters
+////ft_ptfhex()		//motherfunction for hex printing
+////ft_ptfhex_len()		//length-measure of hex number
+////ft_ptfhex_put()		//practical printer of hex
+////ft_ptfptr()		//motherfunction for pointer printing
+////ft_ptfint()		//motherfunction for int printing
+////ft_ptfuin()		//motherfunction for uint printing
+////ft_ptfnumlen()		//length-measure for int printing
+////ft_uitoa()		//converts unsigned int to a string
+////()		//
+//[new structure]
+////////	TEMP:
+////main()	//for testing and calling the function pre-release	
+////////	ROOT:
+////ft_printf()		//the star of the show
+////ft_ptfcha()		//prints individual characters
+////ft_ptfstr()		//prints strings of characters
+////ft_ptfhex_put()		//practical printer of hex
+////////	UTIL:
+////ft_ptfvex()		//checks for flags and selects next ft
+////ft_uitoa()		//converts unsigned int to a string
+////ft_ptfnumlen()		//length-measure for int printing
+////ft_ptfhex_len()		//length-measure of hex number
+////////	SRC:
+////ft_ptfint()		//motherfunction for int printing
+////ft_ptfuin()		//motherfunction for uint printing
+////ft_ptfptr()		//motherfunction for pointer printing
+////ft_ptfhex()		//motherfunction for hex printing
+////////	BONUS:
+////()		//
+////()		//
+////()		//
+////()		//
+////	NOTES: [this setup is symmetrical, and mirrors the intended 4 x 4 array]
+////()		//
+/* [/new structure] */
 ////TESTER: to test the original function of printf.
 
 // cspdiuxX%
@@ -309,7 +363,8 @@ int		ft_ptfhex_len(unsigned long long int num)
 	}
 	return (len);
 }
-
+////	RETRACTED:
+/* 
 static void	filler(int i, int len, char *str, int n)
 {
 	int	j;
@@ -365,8 +420,10 @@ char	*ft_itoa(int n)
 		return (NULL);
 	filler(i, len, str, n);
 	return (str);
-}
+}*/
+////	RETRACTED:	////
 
+////	TEMP:	delete before publishing
 char	*ft_strdup(const char *s)
 {
 	int		i;
@@ -388,7 +445,8 @@ char	*ft_strdup(const char *s)
 	d[i] = '\0';
 	return (d);
 }
-
+////	RETRACTED:
+/* 
 int	ft_len(const char *s)
 {
 	int	i;
@@ -397,4 +455,4 @@ int	ft_len(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
+} */
