@@ -1,0 +1,379 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/08 20:14:05 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/08 20:15:01 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/08 16:33:16 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/08 20:14:02 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+[registry]
+<%%,donated,,%>
+<don:at:ed>
+ft_printf_copy.c
+<donor file>
+
+
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/08 16:32:50 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/08 16:33:14 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+[init]
+[TODO]
+get an overview. this is a mess
+[LADO]
+[EVDO]
+2024/06/08//17:15//
+[progress so far]
+[va_list]
+tried a pseudocode approach for printing ints. It worked!
+With 1 and int min so far.
+////://
+[overview::]
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/07 18:50:08 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/07 18:57:22 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+oof im getting hung/ree
+
+if coffee is for closers, can mmaah be for me? pls?
+but thn...
+how can I know that I will go back and not home to bed.
+
+i just will go back. That is decided. My stuff is here.
+
+okay then...
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 18:14:32 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/07 18:50:03 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+well then.
+
+i think it might try to like... print everything a million times or something...
+
+the issue is inside of the vex function, regarding printing ints or strings.
+the whole "format [i]" and "iterate on i" kind of thing is weird...
+I mean, the whole point is that format i is the string...
+it should skip to AFTER the 'len + ' so and so palaver. Right??
+
+I can't imagine otherwise.
+
+
+////			HYPOTHESIS
+////			it should skip to AFTER the 'len + '
+////			so and so palaver. Right??
+
+lol. I saw another solution to the print int thing
+
+:
+
+ready?
+
+
+:
+
+
+output an index of a numbers modulus from an array of that base's digits...
+
+so the same solution for hex was pretty nif-tee.
+
+////////////////////////////////////////////////////////////////////////////////
+
+malarkey
+
+what if I had a static name for the functions as aliases
+so I could call them shorter with the right datatype, and ditn have to repeat
+myslfe
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+////////////////////////////////////////////////////////////////////////////////
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 18:12:27 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/05 18:14:23 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+Welcome back
+
+	I finished before I completed the work on the pointer printer
+
+Other tasks:
+
+	separate functions into separate files to accomodate norm
+
+	create and curate headers
+
+	find a way to `make` the libft library via the printf makefile
+
+Additionally:
+
+	actually test it. So far I've just copied and written my versions
+
+	I still don't have experience with the VA_LIST logic.
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 15:20:34 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/05 15:50:19 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+have to:
+
+look into how to print unsigned int
+
+look into how to print pointers
+
+
+
+CHANGES:
+
+all the autopsy results show calling all the functions thus:
+
+ft_name(va_arg(ap, datatype))
+
+PATH:
+
+main
+int	ft_printf(const char *format, ...)
+
+flagcheck
+int	ft_vex(const char *format, va_list ap)
+
+printers
+int
+uint
+hex
+str
+ptr
+char
+
+bonus
+bonuscheck
+>>> printers
+
+main
+>>> return count of printed chars
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 13:07:09 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/05 14:23:44 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+
+
+
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/01 16:08:41 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/05 11:22:10 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+//// STILL TO DO::
+
+make all the put-functions handle va_arg etc
+ex:
+
+ft_ptfcha(va_arg ap, int)
+[sends the pointer to the argument, and the type int to the va_arg]
+
+
+
+coming at you like a ton of antimatter
+
+better contain yourself boi
+
+//// FLAGS TO HANDLE::
+cspdiuxX%
+//// BONUS FLAGS::
+'+-0#. '
+//// FLAGS EXT::
+
+'c'
+characters, individually
+'s'
+strings, entirely, until '\0'
+'p'
+pointers, //??//as a hex address//??//
+'d'
+numbers/integers
+'i'
+numbers/integers
+'u'
+unsigned int
+'x'
+hexadecimal lowercase
+'X'
+hexadecimal uppercase
+'%'
+percent symbol
+
+//// BONUS EXT::
+
+'+'
+adds positive sign (negative is on by default)
+'-'
+left justifies?
+'0'
+pads with zeroes
+'#'
+at least # characters
+'.'
+precision/decimals
+' '
+pad number with one space
+
+
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/01 16:08:35 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/01 16:08:36 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+//
+functions
+//
+int	ft_printf(const char *format, ...);
+int
+//
+
+first time looking at the project now. seems that I've spent most of my time
+so far just playing with shell scripts. not the most productive thing.
+anyway.
+
+I need to:
+
++++
+understand printf
+
++++
+prototype it until it sorta works
+- pseudocode the shit out of it until it kinda works
+- go from first principles and try your best
+- become familiar with the task before you look for help
+- DO look for help after trying...
+
+++++
+understand the flags and things
+(otherwise I can't do the bonus)
+- the various flags do different things. Modify the outpu.
+- i cant separate the tricky from the easy.
+- i need to consider them from the start
+	--	'-' 'minus' flag //wip//
+	--	'0' 'zero' flag //wip//
+	--	'.' 'period' flag
+		example: n = 2.002 `ft_printf("testing%.2f", n)`
+		output: `testing2.00`	
+	--	'#' 'hash' flag //wip//
+	--	' ' 'space' flag
+		example: n = 2 `ft_printf("testing% d", n)`
+		output: `testing 2`
+		[prints an extra space before the digit]
+	--	'+' 'plus' flag
+		example: n = 2 `ft_printf("testing%+d", n)`
+		output: `testing+2`
+		[prints a + if digit is positive]
+
+make a script that copies from the raw folder into the real folder if im ready
+- should ask if the copy utility wants feedback
+- should compare edit times
+- should ask if I want to make another backup somewhere else
+
+####
+makefiles:
+since I use libft, the printf project makefile needs to compile that makefile
+before it compiles itself
+####
+bonuses:
+bonuses must be in their own files _bonus.{c/h}
+
+<%%,logend,,%>
+[TEMPLATE]
+[init]
+[TODO]
+[LADO]
+[EVDO]
+////://
+[::]

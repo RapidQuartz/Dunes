@@ -1,0 +1,130 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    code.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.d      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/07 17:29:31 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/07 17:35:14 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+tis today
+melancholy drifts past my vision
+and a sorrow fills my heart
+even as bloom makes way for bloom
+and all my eyes can see is art
+
+then i long for deprivation
+pain of death and tell no lies
+when the daily invocation
+holds a million goodbyes.
+
+
+... And now for something
+..completely different...
+////////////////////////////////////////////////////////////////////////////////
+
+it is printf we're dealing with, come on. It's not the rosetta stone*
+
+what does my malaise come from? is it the lack of creativity?
+
+I feel as though being here is sorrowful, while I make slow progress
+
+but why is that?
+
+and end is in sight.
+
+I will finish Printf by the end of next week, most assuredly.
+
+*because then it might be interesting
+
+////////////////////////////////////////////////////////////////////////////////
+today
+2024/06/07 17:29:31
+I will
+oh, refreshing font.
+
+A'ight, have a look.
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    code.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 10:55:39 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/05 10:56:22 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+////////////////////////////////////////////////////////////////////////////////
+
+back again today.
+i will NOT work on shells today if I can help it.
+
+I will:
+
+code printf
+
+use VA_lists
+
+prepare to work on another project
+
+////////////////////////////////////////////////////////////////////////////////
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    code.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/01 16:29:23 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/01 16:30:11 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+////////////////////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/01 16:07:58 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/06/01 16:27:42 by akjoerse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* it begins */
+// DONE
+/* log needs to be made */
+// TODO
+/* number parsing */
+/* decimal */
+/* hexadecimal */
+
+////////////////////////////////////////////////////////////////////////////////
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    code.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/01 16:28:11 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/01 16:29:09 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+this file is to save code before editing it
+copying everything from the header to the tail
+//cc// I should make a shell script to do this, take whatever is
+in the clipboard and append it to this file. or just do so whenever i backup
