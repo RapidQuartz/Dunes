@@ -115,3 +115,7 @@ u_init
 # # ////()		//
 # /$sub_dir/UTL ft_uitoa.c ft_ptfvex.c ft_ptfhex_put.c ft_ptfnumlen.c ft_ptfhex_len.c
 # # ////()		//
+
+# mkdir LIB && cd LIB ; touch ft_printf.h libft.h Makefile ; pwd ; ls
+# cd .. ; mkdir SRC && cd SRC ; touch ft_ptfint.c ft_ptfuin.c ft_ptfptr.c ft_ptfhex.c ft_ptfcha.c ft_ptfstr.c ; pwd ; ls
+# cd .. ; mkdir UTL && cd UTL ; touch ft_uitoa.c ft_ptfvex.c ft_ptfhex_put.c ft_ptfnumlen.c ft_ptfhex_len.c ; pwd ; ls
