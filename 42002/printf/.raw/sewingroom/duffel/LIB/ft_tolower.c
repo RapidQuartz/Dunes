@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/04/23 16:23:57 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_ptfcha(char c)
+int	ft_tolower(int c)
 {
-	write (1, &c, 1);
-	return (1);
+	if (c <= 90 && c >= 65)
+		c += 32;
+	return (c);
 }

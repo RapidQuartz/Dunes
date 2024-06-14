@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/16 18:03:30 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:05 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	write (1, &c, 1);
-	return (1);
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	str = (char *)s;
+	while (i < n)
+	{
+		if (*(unsigned char *)(str + i) == (unsigned char)c)
+			return ((char *)(str + i));
+		i++;
+	}
+	return (NULL);
 }

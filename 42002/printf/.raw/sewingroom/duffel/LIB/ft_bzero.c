@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/16 17:53:26 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+void	ft_bzero(void *s, size_t n)
 {
-	write (1, &c, 1);
-	return (1);
+	size_t			i;
+	unsigned char	*c;
+
+	i = 0;
+	c = s;
+	while (i < n)
+	{
+		c[i] = '\0';
+		i++;
+	}
 }

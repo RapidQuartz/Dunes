@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/04/23 17:07:41 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+size_t	ft_strlen(const char *s)
 {
-	write (1, &c, 1);
-	return (1);
+	size_t	i;
+
+	i = 0;
+	while (s[i] != 0)
+		i++;
+	return (i);
 }

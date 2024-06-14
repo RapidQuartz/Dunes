@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/10 16:17:43 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:08 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+void	ft_putendl_fd(char *s, int fd)
 {
-	write (1, &c, 1);
-	return (1);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

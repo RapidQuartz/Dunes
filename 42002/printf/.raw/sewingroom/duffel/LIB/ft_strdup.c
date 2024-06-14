@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 11:13:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 11:14:19 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/17 15:20:03 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+char	*ft_strdup(const char *s)
 {
 	int		i;
 	int		len;
-	va_list	ap;
+	char	*d;
 
 	i = 0;
 	len = 0;
-	va_start(ap, format);
-	if (!format)
-		return (0);
-	while (format[i])
+	while (s[len])
+		len++;
+	d = malloc(len + 1);
+	if (d == NULL)
+		return (NULL);
+	while (s[i])
 	{
-		if (format[i] == '%')
-		{
-			len += ft_vex(format[i + 1], ap);
-			i++;
-		}
-		else
-			len += ft_ptfcha(format[i]);
+		d[i] = s[i];
 		i++;
 	}
-	va_end(ap);
-	return (len);
+	d[i] = '\0';
+	return (d);
+}
+
+int	ft_len(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

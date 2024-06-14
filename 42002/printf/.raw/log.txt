@@ -3,12 +3,81 @@
 #                                                         :::      ::::::::    #
 #    log.txt                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/08 20:14:05 by akjoerse          #+#    #+#              #
-#    Updated: 2024/06/08 20:15:01 by akjoerse         ###   ########.fr        #
+#    Created: 2024/06/11 19:08:13 by codespace         #+#    #+#              #
+#    Updated: 2024/06/11 19:09:00 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/11 10:30:11 by codespace         #+#    #+#              #
+#    Updated: 2024/06/11 19:08:05 by codespace        ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+back home
+didnt work on code today
+but fixed the bike i guess
+yay for that
+
+--
+
+now however, i will try to do SOMETHING useful
+
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    log.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/08 20:14:05 by akjoerse          #+#    #+#              #
+#    Updated: 2024/06/11 10:29:59 by codespace        ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+hello
+It has been a week.
+I'm still not finished with print F.
+I feel kind of sick.
+it has been a week.
+I'm still not finished with print F.
+I feel kind of sick.
+However, I'm constantly trying to stay on some kind of ball, and will attempt
+different ways of working with this project that allow me to work on that,
+even if certain modes are harder than others.
+
+[For example]
+I am currently using dictation.
+This is because I am trying to work despite feeling like motor things are hard.
+So: here we go.
+
+<%%,plan,%>
+[today's plan.]
+* Divide code from print F copy file into individual code files.
+* Eat enough food and drink enough water
+* Try to organize plane tickets.
+* Look for pedal crank.
+* (have fun :)
+* Listen To Music
+
+
+
+[SOLVED]
+in UTL/ft_ptfvex.c
+	--	ptfhex is a void and will not return length
+	++	fixed by editing .h file
 
 # **************************************************************************** #
 #                                                                              #

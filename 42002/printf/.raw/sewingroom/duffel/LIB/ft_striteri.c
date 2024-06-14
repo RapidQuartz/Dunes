@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/10 13:31:12 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	write (1, &c, 1);
-	return (1);
+	unsigned int	i;
+
+	if (s && f)
+	{
+		i = 0;
+		while (s[i] != '\0')
+		{
+			f(i, s + i);
+			i++;
+		}
+	}
 }

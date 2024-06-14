@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:07:58 by akjoerse          #+#    #+#             */
-/*   Updated: 2024/06/08 20:13:55 by akjoerse         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:14:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ then the stamptag
 where don is the original line number
 at is the new line number
 ed is the new file name (shorthand, consult registry) */
+/* <%%,plan,%> for 2024/06/11 11:06:11 */
+/*  */
 /* temporary inclusions for testing */
 char	*ft_strdup(const char *s);
 #include <stdarg.h>
@@ -93,6 +95,14 @@ static char		*ft_uitoa(unsigned int num);
 ////	NOTES: [this setup is symmetrical, and mirrors the intended 4 x 4 array]
 ////()		//
 /* [/new structure] */
+////()		//
+////		SUGGESTEDNEW:
+////(<%%,put,%>)		//functions that all output - could be in one file together
+////()		//
+////()		//
+////()		//
+////()		//
+////()		//
 ////TESTER: to test the original function of printf.
 
 // cspdiuxX%
@@ -149,6 +159,7 @@ int	main(void)
 	return (0);
 }
 
+// <%%,donated,%><155:15:ft_printf.c>
 int	ft_printf(const char *format, ...)
 {
 	int		i;
@@ -174,7 +185,7 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (len);
 }
-
+// <%%,donated,%><180:15:ft_ptfvex.c>
 int		ft_vex(const char format, va_list ap)
 {
 	int	len;
@@ -195,13 +206,13 @@ int		ft_vex(const char format, va_list ap)
 	if (format == '%')
 		return (len += ft_ptfcha(va_arg(ap, int)));
 }
-
+//// FLAG: <%%,put,%>
 int	ft_ptfcha(char c)
 {
 	write (1, &c, 1);
 	return (1);
 }
-
+//// FLAG: <%%,put,%>
 int	ft_ptfstr(const char *format)
 {
 	int	i;
@@ -252,7 +263,7 @@ int			ft_ptfint(int num)
 	}
 	return (i);
 }
-
+//// FLAG: <%%,put,%>
 int		ft_ptfint_put(int num)
 {
 	int				neg;
@@ -281,6 +292,7 @@ int		ft_ptfint_put(int num)
 
 //WORK IN PROGRESS
 ////TODO: reverse numbers I guess. use the uitoa son.
+//// FLAG: <%%,put,%>
 static int		ft_ptfuin(unsigned int num)
 {
 	int		i;
@@ -350,7 +362,7 @@ void	ft_ptfhex_put(unsigned long long int num, const char format)
 		}
 	}
 }
-
+//donated
 int		ft_ptfhex_len(unsigned long long int num)
 {
 	int	len;

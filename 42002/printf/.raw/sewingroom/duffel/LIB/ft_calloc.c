@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptfcha.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 19:12:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/06/11 19:13:11 by codespace        ###   ########.fr       */
+/*   Created: 2024/05/08 12:52:37 by akjoerse          #+#    #+#             */
+/*   Updated: 2024/05/29 14:55:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_ptfcha(char c)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	write (1, &c, 1);
-	return (1);
+	void	*ptr;
+	void	*cpy;
+	size_t	i;
+
+	i = nmemb * size;
+	ptr = (void *)malloc(i);
+	if (!ptr)
+		return (NULL);
+	cpy = ptr;
+	while (i--)
+		*(unsigned char *)ptr++ = '\0';
+	return (cpy);
 }
