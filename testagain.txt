@@ -1,0 +1,7 @@
+gh repo clone RapidQuartz/Dunes ;
+git auth login ;
+git config user.name "RapidQuartz" ;
+git config user.email "qycksnd@protonmail.com" ;
+pwd ; ls ; cp -r ./3 ./Dunes/42005/ ;
+cd ./Dunes/42005/ ;
+mv ./3 ./.legacy
