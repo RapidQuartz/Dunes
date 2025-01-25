@@ -1,6 +1,7 @@
 #	readme-index
 [readme-index](README.md#readme-index)
 [strategy-log](README.md#strategy-log)
+[sub-strategic-breakdown](README.md#sub-strategic-breakdown)
 [todo-learn-1](README.md#todofind-out-about-error-returns)
 [-log-files-](README.md#log-files)
 [-options-](README.md#options)
@@ -20,6 +21,24 @@
 [-'using index'-](#)
 [-'send clean/temp variable'-](test.c#adjacent-operation)
 
+##	sub-strategic-breakdown
+////	OVERVIEW:
+
+////	OPERATION:
+////	PROCESS:
+////	METHOD:
+
+////	FUNCTIONS:
+////	TODO:URGENT:
+////	DUMP:TIMEWASTE:
+////	EVALUATION:
+////	TESTING:DEBUG:
+
+////	CHECKER:
+////	COMPARING:
+////	NORME:
+
+////	COMPLETION:
 
 
 
@@ -39,8 +58,39 @@
 :is this only message:
 :outlier cases;
 :write:strategy-log:including:'instructions from youtube tutorial':
+--from algorithm.c
+////	:sorting
+/* the gentle art of sorting 	*/
+/* we have this information: 
+:distance to next
+::how far _forward_
+:how to navigate
+::up and down
+:::where is lower number
+::::and
+:::where is higher number
+ 					*/
+/* from this we can perform:
+:if distance is greater than:
+size (-) index
+then:
+number is BEHIND
+eg:size 6
+v-i-p---d
+3-5-3----
+2-6-2---5
+v-i-p---d
+3-3-3----
+2-4-2---5
+then the number
+'index(higher) (-) own index'
+will be negative
 
+//
+hold on.
 
+ 					*/
+--
 
 
 

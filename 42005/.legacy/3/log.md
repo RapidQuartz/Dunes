@@ -1,7 +1,45 @@
+## <:log6:<
+###	log 2025-01-25 14:24:46
+fiddling with the algorithm.
+
+trying to deal with relationships between two numbers.
+
+#### ONENESS
+basically saying that if these are `1`
+*"position b" - "position a"*
+*"position c" - "position b"*
+then the position b is adjacent to both.
+if one is 1 
+
+#### BACKWARDNESS
+,,negative if adjacent backwards,,code it in now not later,,
+relationship::
+index
+position
+
+(in stack A)
+{{{}}}
+{{{if index - position = 0 then number is sorted}}}
+{{{if index - position > 0 then number is too early}}}
+{{{if index - position < 0 then number is too late}}}
+{{{}}}
+{{{if y_position + 1 == z_position}}}
+{{{if x_position + 1 == y_position}}}
+{{{}}}
+{{{if y_position - 1 == z_position}}}
+{{{if x_position - 1 == y_position}}}
+{{{}}}
+
+
+
+
+
+## >log6:>
+
 ## <:log5:<
 #	[log 2025-01-23 15:27:45](logmakefile.md#log-2025-01-23-152745)
 made log for bugs	[HERE](logbugs.md)
-## log 2025-01-23 17:57:41
+### log 2025-01-23 17:57:41
 makefile makes now!
 next up:
 the "sorting algo" so called, is being rammed into the numbers and it aint workin.
@@ -10,13 +48,13 @@ build on those.
 progress. gradually.
 ## >log5:>
 ## <:log4:<
-## log 2025-01-21 16:03:43
+### log 2025-01-21 16:03:43
 feel drained now
 tired and restless
 like i know what work to do and im avoiding it
 like the work is tedious and not rewarding
 as if that means something in the greater picture lool.
-## log 2025-01-21 13:49:18
+### log 2025-01-21 13:49:18
 fueled and ready to go
 targets:
 -:0:-
@@ -30,7 +68,7 @@ targets:
 -1-'figure out makefile'-
 ## >log4:>
 ## <:log3<
-## log 2025-01-20 11:32:07
+### log 2025-01-20 11:32:07
 todo:
 :simple functions to:
 :compare cost of processing top value:
@@ -111,7 +149,7 @@ _________
  -->
 ## >log3:>
 
-## log 2025-01-19 18:01:59
+### log 2025-01-19 18:01:59
 ## <:log2<
 
 what to do now?
@@ -194,7 +232,7 @@ NEED
 
 
 
-## log 2025-01-15 15:08:04
+### log 2025-01-15 15:08:04
 ## <:log1<
 [strategy for manipulating stack](ops.md#entropic)
 	sort direction to determine operation
@@ -249,7 +287,7 @@ NEED
 	''
 	''
 ## >log1:>
-## log 2025-01-15 13:46:39
+### log 2025-01-15 13:46:39
 //---------------------------------------------------------------------------//
 ## <:log0<
 [passing argument 1 of ‘sort’ from incompatible pointer type [-Wincompatible-pointer-types]](main.c#L51)

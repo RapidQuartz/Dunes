@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:16:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/23 17:55:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:46:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,7 @@ void		dosort_d(t_stack **stack);
 void		dosort_e(t_stack **stack);
 void		dosort_f(t_stack **stack);
 //---------------------------------------------------------------------------//
-////	:sorting
-/* the gentle art of sorting 	*/
-/* we have this information: 
-:distance to next
-::how far _forward_
-:how to navigate
-::up and down
-:::where is lower number
-::::and
-:::where is higher number
- 					*/
-/* from this we can perform:
-:if distance is greater than:
-size (-) index
-then:
-number is BEHIND
-eg:size 6
-v-i-p---d
-3-5-3----
-2-6-2---5
-v-i-p---d
-3-3-3----
-2-4-2---5
-then the number
-'index(higher) (-) own index'
-will be negative
 
-//
-hold on.
-
- 					*/
 void		negadjacent(t_stack **st, int	g) 
 {
 	int	d;//distance
