@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:44 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/23 17:03:02 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:45:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void		sort(t_stack **st_a, t_stack **st_b, int size);
 
 ////	CALL:0:3:1:main()
 ////	TODO: make a thing
+////	TODO: move to own file
 void		push_swap(t_stack **st_a, t_stack **st_b)
 {
 	int		size;
@@ -273,6 +274,7 @@ long    get_number(char *arg, int argn)
 ////	TODO: <1>
 ////	TODO: <2>
 ////	TODO: <4>	make it count spaced args better
+////	TODO: <5>	check for duplicates
 int	arg_checker(int ac, char **av)
 {
 	int	i;
@@ -295,7 +297,36 @@ int	arg_checker(int ac, char **av)
 	}
 	return (1);////	CALL:0:2:1:RETURN:n:main()
 }
+////	FUNC:duplicate_checker()
+////	DOES:checks for duplicates
+void	duplicate_checker(t_stack **sss)
+{
+	t_stack	*t;
+	t_stack	*p;
+	int	d;
+	int	i;
 
+	t = (*sss);
+	p = (*sss)->next;
+	d = 0;
+	i = 0;
+	while (p != NULL)
+	{
+		i = t->value;
+		while (d == 0 && p != NULL)
+		{
+			if (p->value == i)
+				d++;
+			else
+				p = p->next;
+			if (d > 0)
+				error_handling(sss, NULL);
+		}
+		p = t->next->next;
+		t = t->next;
+	}
+	return ;
+}
 ////	FUNC:arg_counter()
 ////	CALL:
 int	arg_counter(char *av)
@@ -377,6 +408,7 @@ int	main(int ac, char **av)
 		return (0);
 	stack_b = NULL;
 	stack_a = stack_maker(ac, av);//// CONSIDER: moving this to main()
+	duplicate_checker(&stack_a);
 	push_swap(&stack_a, &stack_b);////	CALL:0:3:1:main()
 	return (0);
 }

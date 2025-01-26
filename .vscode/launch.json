@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/akjoerse/42/999_GitHub/.auto",
-      "program": "/home/akjoerse/42/999_GitHub/.auto/build/Debug/outDebug",
+      "cwd": "/home/akjoerse/42/999_GitHub/42005/.legacy/3/",
+      "program": "/home/akjoerse/42/999_GitHub/42005/.legacy/3/push_swap",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

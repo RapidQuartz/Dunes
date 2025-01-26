@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:41:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 15:32:29 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:53:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,15 @@ void		indexize(t_stack **sss, int adj, int siz)
 /* backtracker bug <%<:log3:>%%> */
 void		backtracker(t_stack **sss, int siz)
 {
+	////	DEBUG:OUTPUT:
+	printf("debug: backtracker()\n");
+	printf("note: segfaults ahoy\n");
 	int		i;
 	t_stack	*stack;
 	
 	i = 0;
 	stack = *sss;
+	printf("note: finding size of stack?\n");
 	while (stack->position != siz)
 	{
 		if (stack->next == NULL)
@@ -118,6 +122,7 @@ void		backtracker(t_stack **sss, int siz)
 		stack = stack->next;
 	}
 	*sss = stack;
+	printf("note: iterating 'siz' negatively\n");
 	while (siz--)
 	{
 		while (stack->prev != NULL && stack->position != siz)
@@ -130,6 +135,7 @@ void		backtracker(t_stack **sss, int siz)
 		if (i < stack->adjacency && stack->lower != NULL)
 			stack->adjacency = (i * - 1);
 	}	
+	printf("note: done with backtracker function\n");
 }
 
 /* so skip backtracker?

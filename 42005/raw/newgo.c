@@ -155,9 +155,9 @@ static int	fn_singlet_check(t_stack **s)
 		while (t->prev != NULL)
 		{
 			if (y == (x + 1))
-				return (0);
+				return (1);
 			if (y == (x - 1))
-				return (0);
+				return (1);
 		}
 	}
 	return (0);

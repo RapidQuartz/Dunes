@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 15:19:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:59:09 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		analyzer(t_stack **stack);
 void		sorter(t_stack **stack_a, t_stack **stack_b, int size);
 void		dosort_abc(t_stack **stack, t_stack **kcats, int flag);
 void		dosort_def(t_stack **stack, t_stack **kcats, int flag);
-int		issorted(t_stack **stack_a);
+int		is_sorted(t_stack *stack);
 void		push_swap(t_stack **st_a, t_stack **st_b);
 t_stack	*stack_maker(int ac, char **av);
 t_stack	*new_stack_entry(int value, t_stack *prev);
@@ -60,7 +60,7 @@ t_stack	*find_stack_bottom(t_stack *stack);
 void		add_to_bottom(t_stack **stack, t_stack *new);
 void		give_stack_position(t_stack *stack, int size);
 int		get_stack_size(t_stack *stack);
-long    	get_number(char *arg, int argn);
+long		get_number(char *arg, int argn);
 int		arg_checker(int ac, char **av);
 int		arg_counter(char *av);
 int		validity_checker(char a, char b);
@@ -69,12 +69,17 @@ t_stack	*navigator(t_stack **st_a, t_stack **st_b, int size);
 t_stack	*smolfind(t_stack *sss, int size);
 void		prevfind(t_stack **sss, t_stack **smol, int size);
 void		indexize(t_stack **sss, int adj, int siz);
-void swap(t_stack *stack);
-void rotate(t_stack **stack);
-void reverse_rotate(t_stack **stack);
+void		swap(t_stack *stack);
+void		rotate(t_stack **stack);
+void		reverse_rotate(t_stack **stack);
 t_stack	*get_penultimate(t_stack *stack);
 void		push(t_stack **st_from, t_stack **st_to);
 void		sort(t_stack **st_a, t_stack **st_b, int size);
+////	:
+t_stack	*adjacency(t_stack *sss, int size);
+t_stack	*getnxtptr(t_stack *ptr, int size);
+////	:
+void		backtracker(t_stack **sss, int siz);
 ////	:
 //	from main.c
 void	duplicate_checker(t_stack **sss);
