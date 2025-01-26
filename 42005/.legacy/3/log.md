@@ -3,13 +3,16 @@
 fiddling with the algorithm.
 
 trying to deal with relationships between two numbers.
-
+## [NOTES](notes.md)
 #### ONENESS
 basically saying that if these are `1`
 *"position b" - "position a"*
 *"position c" - "position b"*
 then the position b is adjacent to both.
-if one is 1 
+if one is	1
+	doublet
+if both are	1
+	triplet
 
 #### BACKWARDNESS
 ,,negative if adjacent backwards,,code it in now not later,,
@@ -23,7 +26,7 @@ position
 {{{if index - position > 0 then number is too early}}}
 {{{if index - position < 0 then number is too late}}}
 {{{}}}
-{{{if y_position + 1 == z_position}}}
+{{{if y_position + 1 == z_position}}}   
 {{{if x_position + 1 == y_position}}}
 {{{}}}
 {{{if y_position - 1 == z_position}}}
