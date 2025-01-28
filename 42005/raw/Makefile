@@ -11,29 +11,47 @@
 # **************************************************************************** #
 
 NAME = push_swap
-INC = -I push_swap.h
 CC = cc -g
-#-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
+LIB = /Users/akjoerse/Code/4_github/42001/libft
+LIBFT = libft.a
 SRC = algorithm.c do_ops.c main.c navigator.c operations.c push.c push_swap.c \
 sort.c newgo.c error_handling.c init.c stack.c stack_utils.c util.c
 OBJ = $(SRC:.c=.o)
 
-all:	$(NAME)
+all:	$(LIBFT) $(NAME)
+
+$(LIBFT):
+	@echo "$(GREEN)making the libft library\n$(RESET)"
+	make -C $(LIB)
 
 $(NAME): $(OBJ)
-	$(CC) $^ -o $(NAME)
+	@echo "$(BLUE)compiling\n$(RESET)"
+	$(CC) $^ -L$(LIB) -lft -o $(NAME)
 
 
 $(OBJ): %.o: %.c
-	$(CC) -c $^ -o $@ $(INC)
+	@echo "$(GREEN)making the object files\n$(RESET)"
+	$(CC) -c $^ -o $@
 
 
 clean:
-	rm -f $(OBJ) 
+	@echo "$(YELLOW)removing object files\n$(RESET)"
+	rm -f $(OBJ)
+	make -C $(LIB) clean	
 
 fclean: clean
+	@echo "$(YELLOW)removing the program files\n$(RESET)"
 	rm -f $(NAME)
+	make -C $(LIB) fclean	
 
 re: fclean all
+	@echo "$(GREEN)remaking the project$(RESET)"
+
+RED    = \033[1;31m
+GREEN  = \033[1;32m
+YELLOW = \033[1;33m
+BLUE   = \033[1;34m
+RESET  = \033[0m
 
 .PHONY: all clean fclean re
