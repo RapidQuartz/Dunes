@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:41:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 16:53:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:47:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	prevfind(t_stack **sss, t_stack **smol, int size)
 		}
 		prev->higher = stack;
 		stack->lower = prev;
-		indexize(&stack, i, size);
+		// indexize(&stack, i, size);
 		prev = stack;
 		if (stack->position == size)
 			return ;
@@ -93,7 +93,8 @@ void	prevfind(t_stack **sss, t_stack **smol, int size)
 	return ;
 }
 
-/* added 2025-01-20 12:39:32
+/* added	2025-01-20 12:39:32
+		2025-01-28 16:47:41 nixed in test, might not be useful
 gives the 'adjacency number'
 */
 void		indexize(t_stack **sss, int adj, int siz)

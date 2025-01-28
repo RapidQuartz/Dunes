@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 16:59:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:32:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,24 @@ typedef struct s_stack
 	int				index;
 	int				position;
 	int				adjacency;
+	int				negadjacency;
 	struct	s_stack	*higher;
 	struct	s_stack	*lower;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
+/* 2025-01-28 16:41:48 version, next will have "negadjacent" numbers
+typedef struct s_stack
+{
+	int				value;
+	int				index;
+	int				position;
+	int				adjacency;
+	struct	s_stack	*higher;
+	struct	s_stack	*lower;
+	struct	s_stack	*prev;
+	struct	s_stack	*next;
+} t_stack; */
 
 ////	FUNCTIONS:
 // void		dd(void *(*f)(t_stack **, t_stack **), t_stack **fst, t_stack **scd);
@@ -81,8 +94,14 @@ t_stack	*getnxtptr(t_stack *ptr, int size);
 ////	:
 void		backtracker(t_stack **sss, int siz);
 ////	:
+//	from newgo.c
+void		fn_goldrush(t_stack **s);
+////	:
 //	from main.c
-void	duplicate_checker(t_stack **sss);
+void		duplicate_checker(t_stack **sss);
+void		debug(char *str);
+////	:
+t_stack	*find_stack_top(t_stack *stack);
 ////	:
 //	from error_handling.c
 void	error_handling(t_stack **one, t_stack **other);

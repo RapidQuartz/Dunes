@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:14:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 16:16:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:51:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_stack	*new_stack_entry(int value, t_stack *prev)
 {
+	// debug("");
 	t_stack	*new;
 
 	new = malloc(sizeof * new);
@@ -24,20 +25,23 @@ t_stack	*new_stack_entry(int value, t_stack *prev)
 		new->index = 1;
 	if (prev != NULL)
 	{
+		debug("'prev (stack provided) is NOT NULL'");
 		while (prev->next != NULL)
 		{
+			debug("iterating through 'prev->next");
 			prev = prev->next;
 		}
 		new->index = prev->index + 1;
+		new->prev = prev;
 	}
 	new->position = 0;
 	new->adjacency = 0;
 	new-> higher = NULL;
 	new-> lower = NULL;
-	new->prev = NULL;
 	new->next = NULL;
 	return (new);
 }
+// 3 debug lines
 
 t_stack	*stack_maker(int ac, char **av)
 {

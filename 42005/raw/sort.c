@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:08:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 16:59:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:55:04 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void		sort(t_stack **st_a, t_stack **st_b, int size)
 	stack = adjacency(stack, size);
 	printf("note: trying to run 'navigator'\n");
 	stack = navigator(st_a, st_b, size);
+	printf("done with 'navigator'\n");
+	debug("trying to run goldrush");
+	fn_goldrush(st_a);
 }
 ////	HELPER:
 //is_sorted
@@ -50,6 +53,8 @@ int		is_sorted(t_stack *stack)
 
 t_stack	*adjacency(t_stack *sss, int size)
 {
+	// debug("");
+	debug("inside adjacency()");
 	t_stack	*tmp;
 	t_stack	*nxp;
 	t_stack	*prp;
@@ -59,7 +64,9 @@ t_stack	*adjacency(t_stack *sss, int size)
 	prp = NULL;
 	while (size--)
 	{
-		while (sss && sss->next && (nxp == NULL && prp == NULL))
+		debug("decrementing size now");
+		// while (sss && sss->next && (nxp == NULL && prp == NULL))
+		while (sss && sss->next)
 		{
 			if (nxp == NULL)
 				nxp = getnxtptr(sss, size);
@@ -69,13 +76,16 @@ t_stack	*adjacency(t_stack *sss, int size)
 				sss = tmp;
 			else
 				sss = sss->next;
+			debug("done with one inner loop");
 		}
 		sss->lower = prp;
 		if (nxp != prp)
 			sss->higher = nxp;
+		debug("done with one outer loop");
 	}
 	return(0);
 }
+// 5 debug lines
 
 t_stack	*getnxtptr(t_stack *ptr, int size)
 {

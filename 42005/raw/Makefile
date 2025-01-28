@@ -6,17 +6,19 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/01/26 16:21:02 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/01/28 17:29:12 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
-LIB = /Users/akjoerse/Code/4_github/42001/libft
+# LIB = /Users/akjoerse/Code/4_github/42001/libft
+LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
 SRC = algorithm.c do_ops.c main.c navigator.c operations.c push.c push_swap.c \
-sort.c newgo.c error_handling.c init.c stack.c stack_utils.c util.c
+sort.c newgo.c error_handling.c init.c stack.c stack_utils.c util.c \
+findtopofstack.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)
@@ -27,7 +29,7 @@ $(LIBFT):
 
 $(NAME): $(OBJ)
 	@echo "$(BLUE)compiling\n$(RESET)"
-	$(CC) $^ -L$(LIB) -lft -o $(NAME)
+	$(CC) $^ -L/home/akjoerse/42/999_GitHub/42001/libft -lft -o $(NAME)
 
 
 $(OBJ): %.o: %.c

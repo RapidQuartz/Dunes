@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:12:01 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/26 16:37:12 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:40:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	arg_checker(int ac, char **av)
 {
 ////	DEBUG:OUTPUT:
-	printf("debug: arg_checker()\n");
+	debug("inside arg_checker()");
 	int	i;
 	int	n;
 	int	j;
@@ -30,17 +30,17 @@ int	arg_checker(int ac, char **av)
 			p = av[i][j];
 			j++;
 			if (!validity_checker(av[i][j], p))
-				return (0);////	CALL:0:2:1:RETURN:0:main()
+				return (0);
 		}
 		i++;
 	}
-	return (1);////	CALL:0:2:1:RETURN:n:main()
+	return (1);
 }
 
 void	duplicate_checker(t_stack **sss)
 {
 	////	DEBUG:OUTPUT:
-	printf("debug: duplicate_checker()\n");
+	printf("inside duplicate_checker()\n");
 	t_stack	*t;
 	t_stack	*p;
 	int	d;
@@ -71,7 +71,7 @@ void	duplicate_checker(t_stack **sss)
 int	arg_counter(char *av)
 {
 	////	DEBUG:OUTPUT:
-	printf("debug: arg_counter()\n");
+	printf("inside arg_counter()\n");
 	int	i;
 	int	n;
 	char	p;
@@ -95,7 +95,7 @@ int	arg_counter(char *av)
 int	validity_checker(char a, char b)
 {
 	////	DEBUG:OUTPUT:
-	printf("debug: validity_checker()\n");
+	debug("in validity_checker()");
 	if ((b == ' ') && (a == ' ' || a == '-' || a == '+' || \
 	(a >= '0' && a <= '9')))
 			return (1);

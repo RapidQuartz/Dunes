@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/23 17:05:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:27:49 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,6 @@ void		do_sb(t_stack **stack)
 	do_swap(stack);
 }
 
-void		do_rotate(t_stack **stack)
-{
-	printf("");
-	rotate(&(*stack));
-	
-}
 void		do_ra(t_stack **stack)
 {
 	printf("ra");

@@ -9,131 +9,106 @@
 // static void fn_(t_stack **s);
 // 
 // 
-static void fn_goldrush(t_stack **s);
-static int fn_singlet_check(t_stack **s);
-static int fn_doublet_check(t_stack **s);
-static int fn_triplet_check(t_stack **s);
-static int fn_goldpanning(t_stack **s);
+void		fn_goldrush(t_stack **s);
+static int	fn_singlet_check(t_stack **s);
+static int	fn_doublet_check(t_stack **s);
+static int	fn_triplet_check(t_stack **s);
+static int	fn_goldpanning(t_stack **s);
+////	:
+static int	fn_checkcenter(int x, int y, int z, t_stack **s);
+////	:
 
 
 ////	
 ////	goldrush looks for sing/doub/triplets in the stack
 ////	
 ////	and then dispatches the appropriate function
-static void fn_goldrush(t_stack **s)
+void		fn_goldrush(t_stack **s)
 {
+	// debug("");
+	debug("inside goldrush");
 	int		r;
-	t_stack	*t;
 	int		x;
 	int		y;
 	int		z;
+	t_stack	*t;
 
-	if ((s == NULL) || ((*s) == NULL))
-		return ;////DEBUG: SHOULD I FREE HERE? OR CHECK IN CALLER?
-	t = (*s);
-	r = -1;
-	if (t->prev == NULL)
-		t = t->next;
-	x = t->prev->position;
-	y = t->position;
-	z = t->next->position;
-	if (x <= 0 || y <= 0 || z <= 0)
-		return ;
-	if ((y == (x - 1) || (y == (x + 1))) && (y == (z - 1) || (y == (z + 1))))
-		r = fn_triplet_check(s);
-	else if ((y == (x - 1) || (y == (x + 1))) || (y == (z - 1) || (y == (z + 1))))
-		r = fn_doublet_check(s);
-	if (r <= 0)
-		r = fn_goldpanning(s);
-	return ;
-}
-static int fn_goldpanning(t_stack **s)
-{
-	return (0);////DEBUG:
-}
-
-/* 
-	//
-	if (!fn_triplet_check(s) && !fn_doublet_check(s) && !fn_singlet_check(s))
-		r = goldpanning(s)
-		r = fn_doublet_check(s);
-		if (fn_doublet_check(s))
-		if (r && triplet_check(s))
-			r += fn_triplet_check(s);
-	if (fn_doublet_check(s) > 0)
-	if (fn_triplet_check(s) > 0)
-		r = fn_triplet_check(s);
-	if (r)
+	r = 0;
+	if ((!s || !(*s)))
+		error_handling(s, NULL);
+	debug("not errored");
+	t = find_stack_top(*s);
+	debug("found stack top");
+	if (!t || t->prev == NULL)
+		debug("found stack top, it was really top");
+	while (t->next != NULL)
 	{
-	
-			fn_singlet_check(s);
-
-			if (y == (z - 1) || (y == (z + 1)))
-			{
-				if (y == (z - 1) ||	(y == (z + 1)))
-					fn_triplet_check(s);
-				else
-					fn_doublet_check(s);
-			}
-			else
-				return ;
-
-	
+		if (t->prev == NULL)
+		{
+			t = t->next;
+			debug("inside loop 1.0");
+		}
+		debug("inside loop 2");
+		x = t->prev->position;
+		debug("inside loop 3");
+		y = t->position;
+		debug("inside loop 4");
+		z = t->next->position;
+		debug("inside loop 5");
+		debug("calling checkcenter");
+		r += fn_checkcenter(x, y, z, &t);
+		debug("inside loop 6");
+		t = t->next;
+		debug("inside loop 7");
 	}
-} */
+	debug("done with it!");
+	printf("r: %d\n", r);
+}
 
-////	TODO:URGENT:RETURNVALUE:ZEROFORDEFAULT:INTFORNUMBEROFADJACENTS:
-////	singlet check finds numerical meme gold for singlets
-////	
-////	a singlet is 1 number considered alone
-////	this time its not about relative numbers, but positional index
-////	if no doublets or triplets (2-3 adjacent numbers) are found 
-////	this function sees if any of the numbers are favorably placed
-////	considering the index to position relationship
-////	based on this, a value 'r' is returned, indicating the quality
-////	since doublets and triplets also return an integer,
-////	the sort of number returned is significant
-////	there are many sizes of stacks possible, but in any case there
-////	is a practical limit to how delayed this would make it....
-////	:operations:
-////	::walks through whole stack and observes index and position:
-////	:::advances forwards initially:
-////	:::compares ratio between [[stack->index]&&[stack->position]]:
-////	::::if (stack->index > stack->position)
-////	:::: [if(STACK A = ---)][if(STACK B = +++)]
-////	::::if (stack->index < stack->position)
-////	:::: [if(STACK A = ---)][if(STACK B = +++)]
-////	::::if (stack->index == stack->position)
-////	:::: [if(STACK A = +++)][if(STACK B = ---)]
-////	::::
-////	::::for stack A that means the fewer 'steps away' from ideal
-////	::::{so.. the `CLOSER` to the proportional index, the better}
-////	::::for stack B that means the more 'steps away' from ideal
-////	::::{so.. the `CLOSER` to the inverse index, the better}
-////	::::the average of the sum of these relationships can be given
-////	::::as a predictable number, like a percentage
-////	::::and from this percentage, entropy unmasks, at least once.
-////	::::
-////	::::
-////	:::
-////	:::
-////	::OR::
-////	::::saves relationship between `i` and `p` in `subtotal` {w/e}:
-////	:::reverses backwards:
-////	:::
-////	:::
-////	:assumed:
-////	::[max_index == max_position]::
-////	::stack has appropriate variables to populate::
-////	::::
-////	:results:
-////	:::
-////	::
-////	:::
-////	
-////	
-////	
-////	
+static int	fn_checkcenter(int x, int y, int z, t_stack **s)
+{
+	// debug("");
+	debug("inside fn_checkcenter()");
+	int		r;
+	t_stack	*t;
+
+	r = 0;
+	if ((s == NULL) || ((*s) == NULL))
+		return (0);////DEBUG: SHOULD I FREE HERE? OR CHECK IN CALLER?
+	t = (*s);
+	if ((y == (x - 1) || (y == (x + 1))) || (y == (z - 1) || (y == (z + 1))))
+	{
+		debug("doublet or triplet found! ...now what");
+		if (y == (x - 1))
+		{
+			t->prev->adjacency = -1;
+			debug("(y == (x - 1)) ---> (*s)->prev->adjacency = -1;");
+		}
+		else if (y == (z - 1))
+		{
+			t->adjacency = 1;
+			debug("(y == (z - 1)) ---> (*s)->adjacency = 1;");
+		}
+		if (y == (x + 1))
+		{
+			t->prev->adjacency = 1;
+			debug("(y == (x + 1)) ---> (*s)->prev->adjacency = 1;");
+		}
+		else if (y == (z + 1))
+		{
+			t->adjacency = -1;
+			debug("(y == (z + 1)) ---> (*s)->adjacency = -1;");
+		}
+	}
+	if (r == 0)
+		debug("no match found");
+	if (r == 1)
+		debug("doublet found");
+	if (r == 2)
+		debug("triplet found");
+	return (r);
+}
+
 static int	fn_singlet_check(t_stack **s)
 {
 	t_stack	*t;
@@ -169,6 +144,8 @@ static int	fn_singlet_check(t_stack **s)
 ////	a doublet is 2 numbers considered as a group
 static int	fn_doublet_check(t_stack **s)
 {
+	// debug("");
+	debug("inside doublet check");
 	int		r;
 	t_stack	*t;
 	int		x;
@@ -179,31 +156,15 @@ static int	fn_doublet_check(t_stack **s)
 	r = 0;
 	while (s && ((*s) != NULL) && (t->next != NULL))
 	{
+		debug("iterating through");
 		t = t->next;
 		x = t->prev->position;
 		y = t->position;
-		z = t->next->position;
-		if (((y == z + 1) || (y == z - 1)) || ((y == x + 1) || (y == x - 1)))
-		{
-			
-		}
-////	THIS:IS:GOOD:DONT:ACTUALLY:RETURN:
-			// return ;
-		while (t->prev != NULL)
-		{
-			if (y == (x + 1))
-				return (0);
-			if (y == (x - 1))
-				return (0);
-		}
-		while (t->next != NULL)
-		{
-			if (y > z)
-				return (0);
-			if (y < z)
-				return (0);
-		}
+			debug("doublet found!! ...now what?");
+		if ((y == x + 1) || (y == x - 1))
+				r++;
 	}
+	debug("made it to the end. huh");
 	return (r);
 }
 
@@ -213,11 +174,15 @@ static int	fn_doublet_check(t_stack **s)
 ////	a triplet is 3 numbers considered as a group
 static int	fn_triplet_check(t_stack **s)
 {
+	// debug("");
+	debug("inside triplet check");
 	t_stack	*t;
 	int		x;
 	int		y;
 	int		z;
+	int		r;
 
+	r = 0;
 	t = (*s);
 	if (!t || !(*s))
 		return (0);
@@ -226,17 +191,44 @@ static int	fn_triplet_check(t_stack **s)
 	x = t->prev->position;
 	y = t->position;
 	z = t->next->position;
-	if (x == 0 || y == 0 || z == 0)
-		return (0);
-	if (y == (x - 1) ||	(y == (x + 1)) || y == (z - 1) || (y == (z + 1)))
-		if (y == (x - 1))
-			;
-		if (y == (x + 1))
-			;
-		if (y == (z - 1))
-			;
-		if (y == (z + 1))
-			;
-	return (0);
+	if ((y == (x - 1) || (y == (x + 1))) && (y == (z - 1) || (y == (z + 1))))
+	{
+		debug("triplet found! ...now what");
+		if (y == (x - 1) || (y == (z - 1)))
+			r++;
+		if (y == (x + 1) || (y == (z + 1)))
+			r++;
+	}
+	return (r);
 }
+
+// static int	fn_triplet_check(t_stack **s)
+// {
+// 	// debug("");
+// 	debug("inside triplet check");
+// 	t_stack	*t;
+// 	int		x;
+// 	int		y;
+// 	int		z;
+// 	int		r;
+
+// 	r = 0;
+// 	t = (*s);
+// 	if (!t || !(*s))
+// 		return (0);
+// 	if (t->prev == NULL)
+// 		t = t->next;
+// 	x = t->prev->position;
+// 	y = t->position;
+// 	z = t->next->position;
+// 	if ((y == (x - 1) || (y == (x + 1))) && (y == (z - 1) || (y == (z + 1))))
+// 	{
+// 		debug("triplet found! ...now what");
+// 		if (y == (x - 1) || (y == (z - 1)))
+// 			r++;
+// 		if (y == (x + 1) || (y == (z + 1)))
+// 			r++;
+// 	}
+// 	return (r);
+// }
 
