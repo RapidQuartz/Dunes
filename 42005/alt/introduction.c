@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/29 18:14:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:59:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 // order of business::	[copy atoi][copy PARTS of makestack][select mode fwd]
 int	main(int count, char **arg)
 {
+	int	members;
+	t_stack	*stack;
+	
 	if (count < 2)
 		return (1);
 	if (count > 100)
 		return (2);
-	
+	members = arg_inspector(count, arg);
+	stack = stack_maker(count, arg);
 	
 	return (0);
 }

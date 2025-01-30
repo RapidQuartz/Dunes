@@ -108,3 +108,8 @@ __ rewrite? rewrite.
 	- NEXT
       - a pointer to the next position "down" the stack
 #####
+#####	functions and files
+[introduction, a sort of main slash test](../alt/introduction.c)
+
+
+#####

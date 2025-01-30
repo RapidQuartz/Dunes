@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/29 18:28:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:55:35 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PUSH_SWAP_H
 #include <stdio.h>
 #include <unistd.h>
-#include <stddef.h>
+#include <stddef.h>	
 #include <stdlib.h>
 #include <limits.h>
 
@@ -57,13 +57,13 @@ void	push_swap(t_stack **stk_a, t_stack **stk_b);
 int		arg_inspector(int count, char **args);
 
 /* needs subfunctions	::
-						::	
-						::	
+						::	can use arg check for validation or index of args?
+						::	wants to return a char**
 						::	
 						
 						::
  */
-char 	**arg_normalizer(int count, char **args);
+char 	**arg_normalizer(int count, char **arg, int members);
 
 ////		STACK:
 //	assigns the index/position integers
@@ -80,7 +80,12 @@ t_stack	*stack_maker(int count, char **arg);
 
 //	an ft_atoi clone, mutated into a push swap creation
 ////		UTILITY:
-long	get_number(char *arg, int argn)
+long	get_number(char *arg, int argn);
+
+t_stack *find_bottom(t_stack *stack);
+
+void	make_bottom(t_stack **stack, t_stack *new);
+
 
 
 #endif
