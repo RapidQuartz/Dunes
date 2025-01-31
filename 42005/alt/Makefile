@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/01/31 16:46:19 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/01/31 17:27:24 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
 SRC = arg_inspector.c error_handling.c introduction.c  push_swap.c \
 stack/stack_indexer.c stack/stack_inspector.c stack/stack_maker.c \
-stack/stack_navigator.c utilities.c sort_checker.c
+stack/stack_navigator.c utilities.c sort_checker.c operations/push.c \
+operations/rotate.c operations/swap.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)

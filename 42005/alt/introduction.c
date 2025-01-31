@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:44:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:21:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int count, char **arg)
 	temp = stack_a;
 	debug_print(temp, "STACK_A-INITIAL");
 	if (!sort_checker(stack_a))
-		debug("not sorted");
+		push_swap(&stack_a, &stack_b, members);
 	debug_print(temp, "STACK_A-RESULT");
 	debug("ending, trying to free A");
 	free_memory(&stack_a);

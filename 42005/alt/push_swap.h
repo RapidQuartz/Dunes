@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:34:05 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:23:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_stack
 ////		
 ////		PRIMARY:
 //	gets ready made stacks and does magic
-void	push_swap(t_stack **stk_a, t_stack **stk_b);
+void	push_swap(t_stack **stack_a, t_stack **stack_b, int members);
 
 ////		ARGUMENTS:
 //	returns: [number of (individually valid args)] [0 if invalid] [-1 if small]

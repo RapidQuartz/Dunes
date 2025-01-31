@@ -1,19 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 16:21:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 17:25:27 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/01/31 17:27:31 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/01/31 17:27:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-void	push_swap(t_stack **stack_a, t_stack **stack_b, int members)
-{
-	if (members == 2 && !sort_checker(*stack_a))
-		
-}
