@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_indexer.c                                    :+:      :+:    :+:   */
+/*   sort_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:52:15 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/29 18:57:32 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/01/31 14:03:08 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/01/31 14:35:29 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
-t_stack	*stack_indexer(int value, t_stack *prev)
+int	sort_checker(t_stack *stack)
 {
-	t_stack	*new;
-
-	new = malloc(sizeof * new);
-	if (!new)
-		return (NULL);
-	new->value = value;
-	if (prev == NULL)
-		new->index = 1;
-	if (prev != NULL)
+	debug("in sort_checker()");
+	t_stack	*temp;
+	
+	if (!stack)
+		error_handling(NULL, NULL);
+	temp = stack;
+	while (temp->next != NULL)
 	{
-		while (prev->next != NULL)
-		{
-			prev = prev->next;
-		}
-		new->index = prev->index + 1;
-		new->prev = prev;
+		debug("in _sc_ loop");
+		if (temp->value < temp->next->value)
+			temp = temp->next;
+		else
+			return (0);
 	}
-	new->position = 0;
-	new->adjacency = -1;
-	new->higher = NULL;
-	new->lower = NULL;
-	new->next = NULL;
-	return (new);
+	debug("sorted");
+	return (1);
 }

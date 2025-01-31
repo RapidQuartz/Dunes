@@ -1,0 +1,140 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_maker.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/01/31 16:46:54 by akjoerse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../push_swap.h"
+
+t_stack	*stack_maker(int count, char **arg, int members)
+{
+	t_stack		*stack;
+	t_stack		*lowest;
+
+	stack = stack_filler(count, arg, members);
+	stack_inspector(&stack);
+	stack_positioner(&stack, members + 1);
+	lowest = find_lowest(stack);
+	stack_finisher(&stack, &lowest, members);
+	return (stack);
+}
+
+t_stack	*stack_filler(int count, char **arg, int members)
+{
+	t_stack		*stack;
+	int			i;
+	int			n;
+	long int		value;
+
+	i = 1;
+	stack = NULL;
+	while (i < count)
+	{
+		n = 0;
+		while (n != arg_counter(arg[i]))
+		{
+			n++;
+			value = get_number(arg[i], n);
+			check_minmax(value, &stack);
+			if (stack == NULL)
+				stack = arg_stacker((int)value, stack);
+			else
+				make_bottom(&stack, arg_stacker((int)value, stack));
+		}
+		i++;
+	}
+	return (stack);
+}
+	
+t_stack	*arg_stacker(int value, t_stack *prev)
+{
+	t_stack	*new;
+
+	new = malloc(sizeof * new);
+	if (!new)
+		return (NULL);
+	new->value = value;
+	if (prev == NULL)
+		new->index = 1;
+	if (prev != NULL)
+	{
+		while (prev->next != NULL)
+		{
+			prev = prev->next;
+		}
+		new->index = prev->index + 1;
+		new->prev = prev;
+	}
+	new->position = 0;
+	new->bucket = 0;
+	new->cost_a = 0;
+	new->cost_b = 0;
+	new->higher = NULL;
+	new->lower = NULL;
+	new->next = NULL;
+	return (new);
+}
+
+void	stack_positioner(t_stack **stack, int members)
+{
+	t_stack	*mem;
+	t_stack	*highest;
+	int		high;
+
+	while (--members > 0)
+	{
+		mem = (*stack);
+		highest = NULL;
+		high = INT_MIN;
+		while (mem)
+		{
+			if (mem->value == INT_MIN && mem->position == 0)
+				mem->position = 1;
+			if (mem->value > high && mem->position == 0)
+			{
+				high = mem->value;
+				highest = mem;
+				mem = *stack;
+			}
+			else
+				mem = mem->next;
+		}
+		if (highest != NULL)
+			highest->position = members;
+	}
+}
+
+void	stack_finisher(t_stack **stack, t_stack **lowest, int members)
+{
+	int		i;
+	t_stack	*mem;
+	t_stack	*prev;
+	
+	mem = *lowest;
+	prev = *lowest;
+	while (mem->position < members)
+	{
+		i = 0;
+		while (i < members && mem->position != (prev->position + 1))
+		{
+			if (mem->next == NULL)
+				mem = *stack;
+			else
+				mem = mem->next;
+			i++;
+		}
+		if (prev->position == (mem->position) - 1)
+		{
+			prev->higher = mem;
+			mem->lower = prev;
+		}
+		prev = mem;
+	}
+	return ;
+}

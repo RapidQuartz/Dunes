@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/30 16:59:59 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:44:16 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,29 @@
 int	main(int count, char **arg)
 {
 	int	members;
-	t_stack	*stack;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+	t_stack	*temp;
 	
 	if (count < 2)
 		return (1);
 	if (count > 100)
 		return (2);
+	stack_b = NULL;
 	members = arg_inspector(count, arg);
-	stack = stack_maker(count, arg);
-	
+	if (!members)
+		error_handling(NULL, NULL);
+	stack_a = stack_maker(count, arg, members);
+	temp = stack_a;
+	debug_print(temp, "STACK_A-INITIAL");
+	if (!sort_checker(stack_a))
+		debug("not sorted");
+	debug_print(temp, "STACK_A-RESULT");
+	debug("ending, trying to free A");
+	free_memory(&stack_a);
+	debug("ending, trying to free B");
+	free_memory(&stack_b);
+	debug("end of program");
 	return (0);
 }
 
-long	get_number(char *arg, int argn)
-{
-	int		i;
-	int		neg;
-	long int	num;
-
-	i = 0;
-	while (argn && arg[i] != '\0')
-	{
-		neg = 1;
-		num = 0;
-		if (argn == 1 && arg[i] == '-')
-			neg *= -1;
-		if (arg[i] == '+' || arg[i] == '-' || arg[i] == ' ')
-			i++;
-		while (arg[i] <= '9' && arg[i] >= '0')
-		{
-			if (argn == 1)
-				num += (arg[i] - '0');
-			i++;
-			if ((arg[i] != '\0') && (arg[i] != ' ') && argn == 1)
-				num *= 10;
-		}
-		if (arg[i] == ' ' || arg[i] == '\0')
-			argn--;
-	}
-	return (num * neg);
-}

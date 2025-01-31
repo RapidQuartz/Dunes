@@ -6,14 +6,15 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:42:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/29 18:45:05 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:46:50 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void	stack_inspector(t_stack **stk)
 {
+	debug("in stack_inspector()");
 	t_stack	*t;
 	t_stack	*p;
 	int	d;
@@ -32,11 +33,13 @@ void	stack_inspector(t_stack **stk)
 				d++;
 			else
 				p = p->next;
+			printf("_si_: %p --- d = %d --- t->value = %d\n", t, d, t->value);
 			if (d > 0)
 				error_handling(stk, NULL);
 		}
 		p = t->next->next;
 		t = t->next;
 	}
+	debug("_si_: leaving");
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/30 16:55:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:34:05 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_stack
 	int				value;
 	int				index;
 	int				position;
+	int				bucket;
 	int				cost_a;
 	int				cost_b;
 	struct	s_stack	*higher;
@@ -63,7 +64,9 @@ int		arg_inspector(int count, char **args);
 						
 						::
  */
+int	arg_counter(char *args);
 char 	**arg_normalizer(int count, char **arg, int members);
+t_stack	*arg_stacker(int value, t_stack *prev);
 
 ////		STACK:
 //	assigns the index/position integers
@@ -75,16 +78,28 @@ void	stack_navigator(t_stack **stk);
 //	investigates the stack for malignancy or opportunity
 void	stack_inspector(t_stack **stk);
 
+//	calls various functions to process stack
+t_stack	*stack_maker(int count, char **arg, int members);
 //	converts arguments into stack values
-t_stack	*stack_maker(int count, char **arg);
+t_stack	*stack_filler(int count, char **arg, int members);
 
+//	adds info like position, next/prev pointers etc
+void	stack_finisher(t_stack **stack, t_stack **lowest, int members);
+void	stack_positioner(t_stack **stack, int members);
+t_stack	*find_top(t_stack *stack);
+t_stack	*find_lowest(t_stack *stack);
 //	an ft_atoi clone, mutated into a push swap creation
 ////		UTILITY:
+int	sort_checker(t_stack *stack);
 long	get_number(char *arg, int argn);
+void	check_minmax(long int value, t_stack **stack);
 
 t_stack *find_bottom(t_stack *stack);
-
-void	make_bottom(t_stack **stack, t_stack *new);
+void		make_bottom(t_stack **stack, t_stack *new);
+void		error_handling(t_stack **one, t_stack **other);
+void		free_memory(t_stack **stack);
+void		debug(char *str);
+void		debug_print(t_stack *stack, char *msg);
 
 
 

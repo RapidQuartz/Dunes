@@ -1,48 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_maker.c                                      :+:      :+:    :+:   */
+/*   stack_indexer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/30 17:01:18 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/01/29 18:52:15 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/01/31 16:46:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-//	takes: arguments and their count
-//	returns: a stack
-t_stack	*stack_maker(int count, char **arg, int members)
+void	stack_indexer(t_stack **stk)
 {
-	t_stack		*stack;
-	int			i;
-	int			n;
-	int			m;
-	long int	value;
-
-	i = 1;
-	stack = NULL;
-	while (members && i < count)
-	{
-		n = arg_counter(arg[i]);
-		m = 1;
-		while (m != n)
-		{
-			value = get_number(arg[i], m);
-			if (stack == NULL)
-				stack = arg_stacker(value, stack);
-			else
-				make_bottom(&stack, arg_stacker(value, stack));
-			m++;
-		}
-		i++;
-	}
-	return (stack);
-}
+	t_stack	*high;
+	int		low;
 	
-t_stack	*arg_stacker(int value, t_stack *prev)
+	low = INT_MIN;
+	high = (*stk);
+	while ((*stk))
+	{
+		if ((*stk)->value > low)
+			high = (*stk);
+	}
+}
+//(*stk)
+
+/* 
+t_stack	*stack_indexer(int value, t_stack *prev)
 {
 	t_stack	*new;
 
@@ -62,18 +48,9 @@ t_stack	*arg_stacker(int value, t_stack *prev)
 		new->prev = prev;
 	}
 	new->position = 0;
-	new->cost_a = 0;
-	new->cost_b = 0;
+	new->adjacency = -1;
 	new->higher = NULL;
 	new->lower = NULL;
 	new->next = NULL;
 	return (new);
-}
-
-int		arg_navigator(int count, char **args);
-int		arg_navigator(int count, char **args)
-{
-	
-}
-
-
+} */
