@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 17:23:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:02:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ typedef struct s_stack
 {
 	int				value;
 	int				index;
-	int				position;
+	int				pos;
 	int				bucket;
 	int				cost_a;
 	int				cost_b;
-	struct	s_stack	*higher;
-	struct	s_stack	*lower;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
 
+/* 	struct	s_stack	*higher;
+	struct	s_stack	*lower; */
 //
 ////		FUNCTIONS:
 ////		
@@ -101,6 +101,15 @@ void		free_memory(t_stack **stack);
 void		debug(char *str);
 void		debug_print(t_stack *stack, char *msg);
 
+void		do_swap(t_stack *stack);
+void		do_sa(t_stack **stack);
+void		do_sb(t_stack **stack);
+
+void	do_ra(t_stack **stack);
+void rotate(t_stack **stack);
+void reverse_rotate(t_stack **stack);
+
+t_stack	*get_penultimate(t_stack *stack);
 
 
 #endif

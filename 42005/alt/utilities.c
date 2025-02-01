@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 15:22:43 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:02:38 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,11 @@ void	check_minmax(long int value, t_stack **stack)
 		else
 			error_handling(NULL, NULL);
 	}
+}
+
+t_stack	*get_penultimate(t_stack *stack)
+{
+	while (stack && stack->next && stack->next->next != NULL)
+		stack = stack->next;
+	return (stack);
 }

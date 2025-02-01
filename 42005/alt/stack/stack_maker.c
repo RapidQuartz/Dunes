@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:19:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_stack	*stack_maker(int count, char **arg, int members)
 	stack_inspector(&stack);
 	stack_positioner(&stack, members + 1);
 	lowest = find_lowest(stack);
-	stack_finisher(&stack, &lowest, members);
+	// stack_finisher(&stack, &lowest, members);
 	return (stack);
 }
 
@@ -71,15 +71,15 @@ t_stack	*arg_stacker(int value, t_stack *prev)
 		new->index = prev->index + 1;
 		new->prev = prev;
 	}
-	new->position = 0;
+	new->pos = 0;
 	new->bucket = 0;
 	new->cost_a = 0;
 	new->cost_b = 0;
-	new->higher = NULL;
-	new->lower = NULL;
 	new->next = NULL;
 	return (new);
 }
+	/* new->higher = NULL;
+	new->lower = NULL; */
 
 void	stack_positioner(t_stack **stack, int members)
 {
@@ -94,9 +94,9 @@ void	stack_positioner(t_stack **stack, int members)
 		high = INT_MIN;
 		while (mem)
 		{
-			if (mem->value == INT_MIN && mem->position == 0)
-				mem->position = 1;
-			if (mem->value > high && mem->position == 0)
+			if (mem->value == INT_MIN && mem->pos == 0)
+				mem->pos = 1;
+			if (mem->value > high && mem->pos == 0)
 			{
 				high = mem->value;
 				highest = mem;
@@ -106,10 +106,10 @@ void	stack_positioner(t_stack **stack, int members)
 				mem = mem->next;
 		}
 		if (highest != NULL)
-			highest->position = members;
+			highest->pos = members;
 	}
 }
-
+/* 
 void	stack_finisher(t_stack **stack, t_stack **lowest, int members)
 {
 	int		i;
@@ -137,4 +137,4 @@ void	stack_finisher(t_stack **stack, t_stack **lowest, int members)
 		prev = mem;
 	}
 	return ;
-}
+} */

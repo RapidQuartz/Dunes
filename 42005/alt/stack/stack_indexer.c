@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:52:15 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:19:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_stack	*stack_indexer(int value, t_stack *prev)
 		new->index = prev->index + 1;
 		new->prev = prev;
 	}
-	new->position = 0;
+	new->pos = 0;
 	new->adjacency = -1;
 	new->higher = NULL;
 	new->lower = NULL;

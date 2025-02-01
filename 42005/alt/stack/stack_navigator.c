@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:49:41 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:58 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:19:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_stack	*find_lowest(t_stack *stack)
 	lowest = stack;
 	while (lowest->next != NULL)
 	{
-		if (lowest->position == 1)
+		if (lowest->pos == 1)
 			break;
-		else if (lowest->position != 1)
+		else if (lowest->pos != 1)
 			lowest = lowest->next;
 	}
 	return (lowest);

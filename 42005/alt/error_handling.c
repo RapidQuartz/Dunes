@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 14:38:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:23:16 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,18 @@ void		debug(char *str)
 void	debug_print(t_stack *stack, char *msg)
 {
 	printf("\t\t[%s]\n", msg);
+	if (stack->prev != NULL)
+		stack = find_top(stack);	
 	while (stack != NULL)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
-"bucket:%d\n\thigher:%p\tlower:%p\tprev:%p\tnext:%p\t\n\n", stack->value, \
-		stack->index, stack->position, stack->bucket, \
-		stack->higher, stack->lower, stack->prev, stack->next);
+"bucket:%d\n\tcost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
+		stack->index, stack->pos, stack->bucket, \
+		stack->cost_a, stack->cost_b, stack->prev, stack->next);
 		if (stack->next == NULL)
 			break ;
 		stack = stack->next;
 	}
 }
+/* higher:%p\tlower:%p\t */
+/* stack->higher, stack->lower ,*/
