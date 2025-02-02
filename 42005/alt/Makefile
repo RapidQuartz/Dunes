@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/01/31 17:27:24 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/02/02 10:45:04 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 # LIB = /Users/akjoerse/Code/4_github/42001/libft
 LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
-SRC = arg_inspector.c error_handling.c introduction.c  push_swap.c \
+SRC = arg_inspector.c error_handling.c introduction.c  push_swap.c cost.c\
 stack/stack_indexer.c stack/stack_inspector.c stack/stack_maker.c \
 stack/stack_navigator.c utilities.c sort_checker.c operations/push.c \
 operations/rotate.c operations/swap.c

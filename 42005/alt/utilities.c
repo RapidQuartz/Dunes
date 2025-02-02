@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:38 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long	get_number(char *arg, int argn)
 {
-	debug("in get_number()");
+	//debug("in get_number()");
 	int		i;
 	int		neg;
 	long int	num;
@@ -44,7 +44,7 @@ long	get_number(char *arg, int argn)
 
 void	check_minmax(long int value, t_stack **stack)
 {
-	debug("in check_minmax()");
+	//debug("in check_minmax()");
 	if (value > INT_MAX || value < INT_MIN)
 	{
 		if (stack || (*stack) != NULL)
@@ -56,7 +56,16 @@ void	check_minmax(long int value, t_stack **stack)
 
 t_stack	*get_penultimate(t_stack *stack)
 {
+	//debug("in get_penultimate()");
 	while (stack && stack->next && stack->next->next != NULL)
 		stack = stack->next;
 	return (stack);
+}
+
+int		get_absolute(int rel)
+{
+	//debug("in get_absolute()");
+	if (rel < 0)
+		rel *= -1;
+	return (rel);
 }

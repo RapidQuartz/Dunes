@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:09 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 18:17:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ int	main(int count, char **arg)
 	stack_a = stack_maker(count, arg, members);
 	temp = stack_a;
 	debug_print(temp, "STACK_A-INITIAL");
-	debug("01");
+	//debug("01");
 	if (!sort_checker(stack_a))
 		push_swap(&stack_a, &stack_b, members);
-		// debug("lol");
+		// //debug("lol");
 	// do_sa(&stack_a);
 	debug_print(stack_a, "STACK_A-RESULT");
-	debug("ending, trying to free A");
+	//debug("ending, trying to free A");
 	free_memory(&stack_a);
-	debug("ending, trying to free B");
+	//debug("ending, trying to free B");
 	free_memory(&stack_b);
-	debug("end of program");
+	//debug("end of program");
 	return (0);
 }
 

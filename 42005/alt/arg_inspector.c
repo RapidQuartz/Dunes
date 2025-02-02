@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:25 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 18:23:02 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int		arg_inspector(int count, char **args)
 {
-	debug("in arg_inspector()");
+	//debug("in arg_inspector()");
 	int	i;
 	int	n;
 	int	m;
@@ -30,7 +30,7 @@ int		arg_inspector(int count, char **args)
 	{
 		printf("_ac_: i = %d\n", i);
 		printf("_ac_: args[i] = %s\n", args[i]);
-		debug("_ac_: iterating...");
+		//debug("_ac_: iterating...");
 		n = arg_counter(args[i]);
 		if (n == 0)
 			return (0);
@@ -43,7 +43,7 @@ int		arg_inspector(int count, char **args)
 int	arg_checker(char a, char b)
 {
 	////	DEBUG:OUTPUT:
-	debug("in arg_checker()");
+	//debug("in arg_checker()");
 	if ((b == ' ') && (a == ' ' || a == '-' || a == '+' || \
 	(a >= '0' && a <= '9')))
 			return (1);
@@ -51,7 +51,7 @@ int	arg_checker(char a, char b)
 			return (1);
 	if (b <= '9' && b >= '0')
 	{
-		debug("in _ac_ loop");
+		//debug("in _ac_ loop");
 		if ((a == ' ') || (a == '\0'))
 			return (2);
 		if (a >= '0' && a <= '9')

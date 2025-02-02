@@ -1,3 +1,61 @@
+## <:log7:<
+###	log 2025-02-02 09:02:26
+
+# what I have:
+- makefile
+- header
+- stack initializing
+- stack sort check
+- assignment of "cost"
+- simple operators
+- probably lots of leaks.
+[valgrind output: 40 bytes, 1 missing free/alloc pair](logbugs.md#2025-02-02)
+- 
+# what I need:
+- translation from cost_a/_b to operations
+- fix memory leak soooooner than later
+- decide (soon) on whether to keep stamping the mud or to go for a turnkey solution
+# cost counting + assignment of count
+- =	purpose	:	if many members have same cost, one move can fix many.
+- =	challenge	:	[iterating](TODO.md#targets)
+- =	
+[]()
+# what to do:
+- call some of the cost analysis with `members` to make it easier to allocate memory for registered costs?
+- [X]	looks like the 'cost' association is failing again:
+	-	i want: position - index
+	-	i have: index - position
+	-	target file:
+- ?	recursive			?
+- ?	split even further	?
+- ?	minifunctions		?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## >:log7:>
+
 ## <:log6:<
 ###	log 2025-01-25 14:24:46
 fiddling with the algorithm.

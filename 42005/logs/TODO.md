@@ -71,7 +71,8 @@ Code	Color	Example
 ###		targets
 [-index-](#index)
 //---------------------------------------------------------------------------//
-[]()
+[]()	
+[-on counting costs-](log.md#cost-counting--assignment-of-count)	
 [-sorting degree-](algorithm.c#L26)
 [-number of operations from entropic to sorted state-](ops.md)
 [-made a file to test components-](README.md#test-file)

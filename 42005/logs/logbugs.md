@@ -6,6 +6,19 @@
 
 [#bughunt](#bughunt)
 #	bughunt
+##	2025-02-02
+<dump from valgrind at 2025-02-02 09:06:18>
+==12960== HEAP SUMMARY:
+==12960==     in use at exit: 40 bytes in 1 blocks
+==12960==   total heap usage: 4 allocs, 3 frees, 1,144 bytes allocated
+==12960== 
+==12960== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==12960==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12960==    by 0x402238: arg_stacker (stack_maker.c:59)
+==12960==    by 0x4020EF: stack_filler (stack_maker.c:46)
+==12960==    by 0x402010: stack_maker (stack_maker.c:20)
+==12960==    by 0x40183D: main (introduction.c:32)
+</dump from valgrind at 2025-02-02 09:06:18>
 <raw dump from make attempt at 2025-01-23 15:36:48>
 <!-- <raw dump from make attempt at 2025-01-23 15:36:48>
 c3a6c4% make

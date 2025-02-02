@@ -1,0 +1,4 @@
+void		cost_check(t_stack **stack_a)
+{
+		
+}

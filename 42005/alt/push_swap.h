@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:46 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:50:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-/* the stack
-?? what variables are useful
--- value
--- initial index
--- positional index
--- pointer to prev
--- pointer to next
--- pointer to ??? - (prev. iteration had higher/lower, but unknown if useful)
--- pointer to ??? - (prev. iteration had higher/lower, but unknown if useful)
--- "cost" variable B - (A/B are arbitrary)
--- "cost" variable A - (A/B are arbitrary)
--- "memory" variable M - stores information about transaction
-*/
+
 typedef struct s_stack
 {
 	int				value;
@@ -43,73 +31,80 @@ typedef struct s_stack
 	struct	s_stack	*next;
 } t_stack;
 
-/* 	struct	s_stack	*higher;
-	struct	s_stack	*lower; */
-//
 ////		FUNCTIONS:
-////		
-////		
-////		PRIMARY:
-//	gets ready made stacks and does magic
-void	push_swap(t_stack **stack_a, t_stack **stack_b, int members);
+////		TODO:	make some structure here bwoi
 
-////		ARGUMENTS:
-//	returns: [number of (individually valid args)] [0 if invalid] [-1 if small]
-int		arg_inspector(int count, char **args);
 
-/* needs subfunctions	::
-						::	can use arg check for validation or index of args?
-						::	wants to return a char**
-						::	
-						
-						::
- */
-int	arg_counter(char *args);
-char 	**arg_normalizer(int count, char **arg, int members);
-t_stack	*arg_stacker(int value, t_stack *prev);
-
-////		STACK:
-//	assigns the index/position integers
-void	stack_indexer(t_stack **stk);
-
-//	assigns the higher/lower, prev/next pointers
-void	stack_navigator(t_stack **stk);
-
-//	investigates the stack for malignancy or opportunity
-void	stack_inspector(t_stack **stk);
-
-//	calls various functions to process stack
-t_stack	*stack_maker(int count, char **arg, int members);
-//	converts arguments into stack values
-t_stack	*stack_filler(int count, char **arg, int members);
-
-//	adds info like position, next/prev pointers etc
-void	stack_finisher(t_stack **stack, t_stack **lowest, int members);
-void	stack_positioner(t_stack **stack, int members);
-t_stack	*find_top(t_stack *stack);
+//		adds info like position, next/prev pointers etc
 t_stack	*find_lowest(t_stack *stack);
-//	an ft_atoi clone, mutated into a push swap creation
-////		UTILITY:
-int	sort_checker(t_stack *stack);
-long	get_number(char *arg, int argn);
-void	check_minmax(long int value, t_stack **stack);
 
-t_stack *find_bottom(t_stack *stack);
-void		make_bottom(t_stack **stack, t_stack *new);
+////		ERROR:
 void		error_handling(t_stack **one, t_stack **other);
 void		free_memory(t_stack **stack);
+
+////		UTILITY:
+//		an ft_atoi clone, mutated into a push swap creation
+long		get_number(char *arg, int argn);
+void		check_minmax(long int value, t_stack **stack);
+t_stack	*get_penultimate(t_stack *stack);
+int		get_absolute(int rel);
+t_stack	*find_top(t_stack *stack);//?? where ??
+t_stack	*find_bottom(t_stack *stack);//?? where ??
+
+////		PRIMARY:
+//		gets ready made stacks and does magic
+void		push_swap(t_stack **stack_a, t_stack **stack_b, int members);
+
+////		ARGUMENTS:
+t_stack	*arg_stacker(int value, t_stack *prev);
+int		arg_counter(char *args);
+int		arg_inspector(int count, char **args);
+
+////		STACK:
+void		make_bottom(t_stack **stack, t_stack *new);
+//		investigates the stack for malignancy or opportunity
+void		stack_inspector(t_stack **stk);
+//		assigns the index/position integers
+void		stack_indexer(t_stack **stk);
+void		stack_positioner(t_stack **stack, int members);
+void		stack_finisher(t_stack **stack, t_stack **lowest, int members);
+//		calls various functions to process stack
+t_stack	*stack_maker(int count, char **arg, int members);
+//		converts arguments into stack values
+t_stack	*stack_filler(int count, char **arg, int members);
+
+////		DEBUG:
 void		debug(char *str);
 void		debug_print(t_stack *stack, char *msg);
 
+////		OPERATIONS:
 void		do_swap(t_stack *stack);
 void		do_sa(t_stack **stack);
 void		do_sb(t_stack **stack);
+void		do_ra(t_stack **stack);
+void		rotate(t_stack **stack);
+void		reverse_rotate(t_stack **stack);
+////			TODO:
+// void		do_rb(t_stack **stack);
+// void		do_rr(t_stack **stack_a, t_stack **stack_b);
+// void		do_rra(t_stack **stack);
+// void		do_rrb(t_stack **stack);
+// void		do_rrr(t_stack **stack_a, t_stack **stack_b);
 
-void	do_ra(t_stack **stack);
-void rotate(t_stack **stack);
-void reverse_rotate(t_stack **stack);
-
-t_stack	*get_penultimate(t_stack *stack);
+////		SORTING:
+int		sort_checker(t_stack *stack);
+void		sort_cost(t_stack **stack_a, int size);
 
 
+////		COST:
+void		cost_check(t_stack **stack);
+int		count_samecost(t_stack *stack_a);
+int		samecost_decider(t_stack *stack_a, int count, int same);
+
+
+
+
+////		LEGACY:	DISUSED:
+// char		**arg_normalizer(int count, char **arg, int members);//NOT PRESENT
+// void		stack_navigator(t_stack **stk);
 #endif

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:42:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	stack_inspector(t_stack **stk)
 {
-	debug("in stack_inspector()");
+	//debug("in stack_inspector()");
 	t_stack	*t;
 	t_stack	*p;
 	int	d;
@@ -40,6 +40,6 @@ void	stack_inspector(t_stack **stk)
 		p = t->next->next;
 		t = t->next;
 	}
-	debug("_si_: leaving");
+	//debug("_si_: leaving");
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:49:41 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 16:19:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_stack *find_bottom(t_stack *stack)
 
 t_stack	*find_top(t_stack *stack)
 {
-	debug("inside find stack top");
+	//debug("inside find stack top");
 	
 	while (stack && stack->prev != NULL)
 	{
-		debug("broke backwards");
+		//debug("broke backwards");
 		stack = stack->prev;
 	}
-	debug("made it out");
+	//debug("made it out");
 	return (stack);
 }
 

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 16:23:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 
 void	error_handling(t_stack **one, t_stack **other)
 {
-	debug("in error handling");
+	//debug("in error handling");
 	if (one == NULL  || (*one) != NULL)
 	{
-		debug("freeing one");
+		//debug("freeing one");
 		free_memory(one);
 	}
 	if (other == NULL  || (*other) != NULL)
 	{
-		debug("freeing other");
+		//debug("freeing other");
 		free_memory(other);
 		other = NULL;
 	}
@@ -41,7 +41,7 @@ void	error_handling(t_stack **one, t_stack **other)
 
 void	free_memory(t_stack **stack)
 {
-	debug("in free memory");
+	//debug("in free memory");
 	t_stack	*mem;
 	
 	if (!stack || !*stack)
@@ -51,13 +51,13 @@ void	free_memory(t_stack **stack)
 	// printf("stack->next: %p\n", (*stack)->next);
 	while (*stack)
 	{
-		debug("in _fm_ loop");
+		//debug("in _fm_ loop");
 		mem = (*stack)->next;
 		printf("freeing node: %p\n", *stack);
 		free(*stack);
 		*stack = mem;
 	}
-	debug("setting to NULL");
+	//debug("setting to NULL");
 	*stack = NULL;
 }
 
