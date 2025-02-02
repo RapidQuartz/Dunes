@@ -6,12 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:25 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:13:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
+#include "../push_swap.h"
 
 //	takes: arguments and their count
 //	returns: [int > 0 - no of valid arguments][0 - invalid arguments]

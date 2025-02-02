@@ -1,6 +1,6 @@
 ## <:log7:<
 ###	log 2025-02-02 09:02:26
-
+#	[suitcase lost](https://transportb.novafind.eu/home/transportb/BVG/app/lossrecords/BVG-K2025_003834?accessToken=PN3B3UG47WUHXMEC6S4D353YGMFAATHGSTBWN4LS6KKU7QTZZMAAIGWSXMI4AYHT&culture=en)
 # what I have:
 - makefile
 - header

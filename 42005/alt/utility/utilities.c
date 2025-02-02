@@ -6,11 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 09:51:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:13:57 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 long	get_number(char *arg, int argn)
 {

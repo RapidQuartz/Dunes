@@ -6,13 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:26:19 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 16:19:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:13:44 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-
 
 void		do_sa(t_stack **stack)
 {

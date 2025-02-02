@@ -6,11 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:20:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 11:01:12 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:13:29 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 int	count_samecost(t_stack *stack_a)
 {
