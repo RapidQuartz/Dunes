@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:27:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:13 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:19:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,33 @@ void	do_ra(t_stack **stack)
 	rotate(stack);
 }
 
+//	FIRST TO LAST
 void rotate(t_stack **stack)
 {
+	debug(GRNTXT"rotating..");
 	t_stack	*temporary_stack;
+	t_stack	*previous;
 	t_stack	*bottom;
 
-	temporary_stack = *stack;
-	*stack = (*stack)->next;
 	bottom = find_bottom(*stack);
-	temporary_stack->next = NULL;
+	YLWTXT;
+	debug("ok");
+	temporary_stack = (*stack);
+	debug("ok");
+	temporary_stack->prev = bottom->prev;
+	debug("ok");
 	bottom->next = temporary_stack;
+	debug("ok");
+	temporary_stack->next = NULL;
+	debug("ok");
+	(*stack) = (*stack)->next;
+	(*stack)->prev = NULL;
+	debug("ok");
+	debug("ok");
+	DEFTXT;
 }
 
+//	LAST TO FIRST
 void reverse_rotate(t_stack **stack)
 {
 	t_stack	*temporary_stack;

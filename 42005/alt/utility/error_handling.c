@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 12:13:52 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:55:09 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ void		debug(char *str)
 void	debug_print(t_stack *stack, char *msg)
 {
 	printf("\t\t[%s]\n", msg);
-	if (stack->prev != NULL)
-		stack = find_top(stack);	
+	stack = find_top(stack);	
 	while (stack != NULL)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"

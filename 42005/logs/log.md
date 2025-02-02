@@ -21,6 +21,11 @@
 - =	
 []()
 # what to do:
+- fix the rotate function:
+- - 0 -> 1
+- - 
+- - 
+- - 
 - call some of the cost analysis with `members` to make it easier to allocate memory for registered costs?
 - [X]	looks like the 'cost' association is failing again:
 	-	i want: position - index

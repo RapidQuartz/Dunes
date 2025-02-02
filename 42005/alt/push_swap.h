@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 10:50:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:34:50 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include <stddef.h>	
 #include <stdlib.h>
 #include <limits.h>
+
+# define REDTXT "\033[1;31m"
+# define BLUTXT "\033[1;34m"
+# define GRNTXT "\033[1;32m"
+# define YLWTXT "\033[1;33m"
+# define DEFTXT "\033[0m"
 
 
 typedef struct s_stack
@@ -99,7 +105,7 @@ void		sort_cost(t_stack **stack_a, int size);
 ////		COST:
 void		cost_check(t_stack **stack);
 int		count_samecost(t_stack *stack_a);
-int		samecost_decider(t_stack *stack_a, int count, int same);
+void		samecost_decider(t_stack **stack_a, int count, int same);
 
 
 

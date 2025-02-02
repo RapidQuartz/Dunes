@@ -30,9 +30,7 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b, int members)
 //MISLEADING NAME
 void	set_cost(t_stack **stack_a, t_stack **stack_b, int size)
 {
-	debug("in sort_small()");
-	int		index;
-	int		pos;
+	debug("in set_cost()");
 	int		m;
 	t_stack	*tumbler;
 
@@ -50,13 +48,19 @@ void	set_cost(t_stack **stack_a, t_stack **stack_b, int size)
 	}
 	printf("m: %d\n", m);
 	sort_costcompare(stack_a, stack_b, size);
-	m = count_samecost(find_top(*stack_a));
+	m = 0;
+	(*stack_a) = find_top(*stack_a);
+	m = count_samecost((*stack_a));
+	printf("m: %d\n", m);
+	if (m != 0)
+		samecost_decider(stack_a, size, m);
 	printf("samecost m: %d\n", m);
 }
 
 void	sort_costcompare(t_stack **stack_a, t_stack **stack_b, int size)
 {
-	debug("in sort_compare()");
+	printf(YLWTXT);
+	debug("in sort_costcompare()");
 	int		m;
 	int		cost_a;
 	int		cost_b;
@@ -78,7 +82,9 @@ void	sort_costcompare(t_stack **stack_a, t_stack **stack_b, int size)
 			tumbler = tumbler->next;
 		m++;
 	}
-	debug("leaving sort_compare()");
+	printf(GRNTXT);
+	debug("leaving sort_costcompare()");
+	printf(DEFTXT);
 }
 
 /* cost_check() prototype:
@@ -161,14 +167,14 @@ void		sort_bigbee(t_stack **stack_a)
 
 void		sort_cost(t_stack **stack_a, int size)
 {
-	debug("in sort_negativecost()");
+	debug("in sort_cost()");
 	int		i;
 	int		count;
 	t_stack	*temp;
 	t_stack	*store;
 
 	temp = find_top(*stack_a);
-	count = count_samecost(temp);
+	// count = count_samecost(temp);
 	while (temp && temp->next)
 	{
 		debug("entered loop");
@@ -187,7 +193,7 @@ void		sort_cost(t_stack **stack_a, int size)
 			(*stack_a) = temp;
 		debug("end of loop");
 	}
-	debug("leaving sort_negativecost()");
+	debug("leaving sort_cost()");
 	return ;
 }
 
