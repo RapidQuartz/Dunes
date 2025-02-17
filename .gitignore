@@ -1,2 +1,4 @@
 .local/
 *.o
+push_swap
+*.a

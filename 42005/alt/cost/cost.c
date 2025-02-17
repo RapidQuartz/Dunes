@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:20:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 15:31:20 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:33:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,22 @@ int		adjacent_triplet(t_stack *stack)
 	}
 	return (i);
 }
+
+//intended to locate triplets, then use the sort-3 on them.
 int		find_triplet(t_stack *stack)
 {
 	int	trip;
+	int	move;
 	
 	trip = 0;
+	move = 0;
 	while (stack->next->next != NULL)
 	{
 		debug("inside loop in tripletfinder");
 		if (adjacent_triplet(stack))
 			trip++;
 		stack = stack->next;
+		move++;
 	}
-	printf(BLUTXT"\nTRIP = %d\n"DEFTXT, trip);
+	printf(BLUTXT"\nTRIP = %d\t MOVE = %d\n"DEFTXT, trip, move);
 }
