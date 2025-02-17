@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:20:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 15:33:48 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:08:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ int		find_triplet(t_stack *stack)
 		move++;
 	}
 	printf(BLUTXT"\nTRIP = %d\t MOVE = %d\n"DEFTXT, trip, move);
+	return (move);
 }

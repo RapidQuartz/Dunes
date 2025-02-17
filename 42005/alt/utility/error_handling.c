@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 15:00:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:13:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	debug_print(t_stack *stack, char *msg)
 	while (stack != NULL && i < 10)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
-"bucket:%d\n\tcost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
+"bucket:%d\n\tcost_a:%d\tcost_b:%d\n\tlo:%p\thi:%p\tprev:%p\tnext:%p\t\n\n", stack->value, \
 		stack->index, stack->pos, stack->bucket, \
-		stack->cost_a, stack->cost_b, stack->prev, stack->next);
+		stack->cost_a, stack->cost_b, stack->lo, stack->hi, stack->prev, stack->next);
 		if (stack->next == NULL)
 			break ;
 		stack = stack->next;

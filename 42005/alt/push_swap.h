@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 15:09:24 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:29:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_stack
 	int				bucket;
 	int				cost_a;
 	int				cost_b;
+	struct	s_stack	*hi;
+	struct	s_stack	*lo;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
@@ -78,10 +80,16 @@ void		stack_finisher(t_stack **stack, t_stack **lowest, int members);
 t_stack	*stack_maker(int count, char **arg, int members);
 //		converts arguments into stack values
 t_stack	*stack_filler(int count, char **arg, int members);
+//		sets higher/lower pointers for stack
+void		stack_hilofinder(t_stack **stack, int size);
+int		stack_hilosetter(t_stack *stack, t_stack *next, int size);
 
 ////		DEBUG:
 void		debug(char *str);
 void		debug_print(t_stack *stack, char *msg);
+
+////		BUCKET:
+void		set_bucket(t_stack *stack);
 
 ////		OPERATIONS:
 void		do_swap(t_stack *stack);
