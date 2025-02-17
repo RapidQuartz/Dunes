@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:20:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 13:18:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:08:38 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	samecost_decider(t_stack **stack_a, int count, int same)
 	printf(BLUTXT"in samecost_decider()\n");
 	DEFTXT;
 	ledger = (*stack_a);
-	printf(GRNTXT"pointer for stack: %p\n"DEFTXT, ledger);
+	printf(GRNTXT"[2] pointer for stack: %p\n"DEFTXT, ledger);
 	printf(GRNTXT"\"next\" for stack: %p\n"DEFTXT, ledger->next);
 	num = ledger->cost_b;
-	printf(GRNTXT"pointer for stack: %p\t next: %p\n"DEFTXT, ledger, ledger->next);
+	printf(GRNTXT"[3] pointer for stack: %p\t next: %p\n"DEFTXT, ledger, ledger->next);
 	while (ledger->next != NULL)
 	{
 		printf(BLUTXT"LOOPINGGGGGGG\n"DEFTXT);

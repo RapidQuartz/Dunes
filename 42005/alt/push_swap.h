@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 12:34:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:58:29 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ void		reverse_rotate(t_stack **stack);
 ////		SORTING:
 int		sort_checker(t_stack *stack);
 void		sort_cost(t_stack **stack_a, int size);
-
+void		sort_three(t_stack **stack_a, t_stack **stack_b, int members);
+void		swap_xy(t_stack **stack_a);
+void		swap_yz(t_stack **stack_a);
 
 ////		COST:
 void		cost_check(t_stack **stack);

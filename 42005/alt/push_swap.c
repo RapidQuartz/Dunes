@@ -20,10 +20,13 @@ void		sort_bigbee(t_stack **stack_a);
 
 void	push_swap(t_stack **stack_a, t_stack **stack_b, int members)
 {
+	debug("inside push_swap");
 	if (members == 2)
 		do_sa(stack_a);
+	if (members == 3)
+		sort_three(stack_a, stack_b, members);
 	// if (members > 2 && members < 6)
-	if (members > 2)
+	if (members > 3)
 		set_cost(stack_a, stack_b, members);
 }
 

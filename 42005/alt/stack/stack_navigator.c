@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:49:41 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 13:14:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:08:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_stack *find_bottom(t_stack *stack)
 		while (stack && stack->next != NULL)
 			stack = stack->next;
 	}
-	debug("ok OK then");
+	debug("ok OK then");//SEGFAULT
 	return (stack);	
 }
 
@@ -35,7 +35,7 @@ t_stack	*find_top(t_stack *stack)
 		stack = stack->prev;
 	}
 	debug("made it out");
-	printf(GRNTXT"pointer for stack: %p\t next: %p\n"DEFTXT, stack, stack->next);
+	printf(GRNTXT"[1] pointer for stack: %p\t next: %p\n"DEFTXT, stack, stack->next);
 	return (stack);
 }
 
