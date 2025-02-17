@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:27:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 11:25:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:25:44 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,49 +28,50 @@ void	do_rra(t_stack **stack)
 void rotate(t_stack **stack)
 {
 	debug(GRNTXT"rotating.."DEFTXT);
-	t_stack	*temporary_stack;
-	t_stack	*previous;
+	debug_print(*stack, "BEFORE ROTATE");
+	t_stack	*second;
 	t_stack	*bottom;
+	t_stack	*top;
 
-	bottom = find_bottom(*stack);
-	YLWTXT;
-	debug("temporary_stack = (*stack);");
-	temporary_stack = (*stack);
-	debug("temporary_stack->prev = bottom->prev;");
-	temporary_stack->prev = bottom->prev;
-	debug("bottom->next = temporary_stack;");
-	bottom->next = temporary_stack;
-	debug("temporary_stack->next = NULL;");
-	temporary_stack->next = NULL;
-	debug("(*stack) = (*stack)->next;");
-	(*stack) = (*stack)->next;
-	debug(REDTXT"ok here is closer to the error"DEFTXT);
-	// printf(GRNTXT"[3] pointer for stack: %p\t next: %p\n"DEFTXT, (*stack)->prev, (*stack)->next);
-	// (*stack)->prev = NULL;
+	top = find_top(*stack);
+	bottom = find_bottom(top);
+	second = top->next;
+	second->prev = NULL;
+	bottom->next = top;
+	top->prev = bottom;
+	top->next = NULL;
 	debug("ok");
 	DEFTXT;
+	debug_print(*stack, "AFTER ROTATE");
 }
 
 //	LAST TO FIRST
 void reverse_rotate(t_stack **stack)
 {
+	debug_print(*stack, "BEFORE RR");
 	debug("inside reverse_rotate");
-	t_stack	*temporary_stack;
-	t_stack	*penultimate;
+	t_stack	*top;
+	t_stack	*penult;
 	t_stack	*bottom;
-	
-	debug(BLUTXT"1 ok"DEFTXT);
-	temporary_stack = *stack;//save the top
-	penultimate = get_penultimate(*stack);
-	debug(BLUTXT"2 ok"DEFTXT);
-	bottom = find_bottom(*stack);//find the bottom to retrieve
-	debug(BLUTXT"3 ok"DEFTXT);
-	*stack = bottom;//stack top is bottom
-	debug(BLUTXT"4 ok"DEFTXT);
-	debug(GRNTXT"HERE IT DIES"DEFTXT);
-	(*stack)->next = temporary_stack;//next after top is previous top
-	/* `bottom->next = top` */
-	debug(BLUTXT"5 ok"DEFTXT);
-	debug(BLUTXT"6 ok"DEFTXT);
-	penultimate->next = NULL;
+	top = find_top(*stack);
+	penult = find_penultimate(*stack);
+	bottom = find_bottom(*stack);
+//	debug <
+	printf("top = %p\n", top);
+	printf("penult = %p\n", penult);
+	printf("bottom = %p\n", bottom);
+//	debug >
+	top->prev = bottom;
+	bottom->next = top;
+	penult->next = NULL;
+	bottom->prev = NULL;
 }
+/* 
+	temporary_stack = find_top(*stack);//save the top
+	penultimate = find_penultimate(*stack);//find second to last (next bottom)
+	bottom = find_bottom(*stack);//find the bottom to retrieve (next top)
+	bottom->next = temporary_stack;//set new top
+	bottom->prev = NULL;
+	penultimate->next = NULL;
+	debug("done with reverse_rotate");
+	debug_print(*stack, "AFTER RR"); */

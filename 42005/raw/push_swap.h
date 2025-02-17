@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/01/28 17:32:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:24:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		indexize(t_stack **sss, int adj, int siz);
 void		swap(t_stack *stack);
 void		rotate(t_stack **stack);
 void		reverse_rotate(t_stack **stack);
-t_stack	*get_penultimate(t_stack *stack);
+t_stack	*find_penultimate(t_stack *stack);
 void		push(t_stack **st_from, t_stack **st_to);
 void		sort(t_stack **st_a, t_stack **st_b, int size);
 ////	:

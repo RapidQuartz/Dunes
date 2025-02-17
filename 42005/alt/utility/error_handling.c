@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 12:55:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:00:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,29 @@ void		debug(char *str)
 	}
 	write (1, "}\n", 2);
 }
+void	check_minmax(long int value, t_stack **stack)
+{
+	//debug("in check_minmax()");
+	if (value > INT_MAX || value < INT_MIN)
+	{
+		if (stack || (*stack) != NULL)
+			error_handling(stack, NULL);
+		else
+			error_handling(NULL, NULL);
+	}
+}
 
 void	debug_print(t_stack *stack, char *msg)
 {
+	int	i = 0;
+	printf("\t\t[INSIDE DEBUG PRINT]\n");
+	if (stack->prev != NULL)
+	{
+		debug("stack->prev wasnt null");
+		stack = find_top(stack);
+	}
 	printf("\t\t[%s]\n", msg);
-	stack = find_top(stack);	
-	while (stack != NULL)
+	while (stack != NULL && i < 10)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
 "bucket:%d\n\tcost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
@@ -92,7 +109,9 @@ void	debug_print(t_stack *stack, char *msg)
 		if (stack->next == NULL)
 			break ;
 		stack = stack->next;
+		i++;
 	}
+	printf("\t\t[LEAVING DEBUG PRINT]\n");
 }
 /* higher:%p\tlower:%p\t */
 /* stack->higher, stack->lower ,*/

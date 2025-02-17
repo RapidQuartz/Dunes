@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:24:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void swap(t_stack *stack);
 void rotate(t_stack **stack);
 void reverse_rotate(t_stack **stack);
-t_stack	*get_penultimate(t_stack *stack);
+t_stack	*find_penultimate(t_stack *stack);
 
 /* execute_ functions call the function and print string with operation [putstr("op\n")]
 void	execute_sa(t_stack **stack_a);
@@ -70,11 +70,11 @@ void reverse_rotate(t_stack **stack)
 	bottom = find_stack_bottom(*stack);
 	*stack = bottom;
 	(*stack)->next = temporary_stack;
-	penultimate = get_penultimate(*stack);
+	penultimate = find_penultimate(*stack);
 	penultimate->next = NULL;
 }
 
-t_stack	*get_penultimate(t_stack *stack)
+t_stack	*find_penultimate(t_stack *stack)
 {
 	while (stack && stack->next && stack->next->next != NULL)
 		stack = stack->next;

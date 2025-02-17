@@ -44,7 +44,7 @@ void		indexize(t_stack **sss, int adj, int siz);
 static void swap(t_stack *stack);
 static void rotate(t_stack **stack);
 static void reverse_rotate(t_stack **stack);
-t_stack	*get_penultimate(t_stack *stack);
+t_stack	*find_penultimate(t_stack *stack);
 void	push(t_stack **st_from, t_stack **st_to);
 
 ##	[do_ops.c](do_ops.c)
@@ -90,7 +90,7 @@ void		indexize(t_stack **sss, int adj, int siz)
 static void swap(t_stack *stack)
 static void rotate(t_stack **stack)
 static void reverse_rotate(t_stack **stack)
-t_stack	*get_penultimate(t_stack *stack)
+t_stack	*find_penultimate(t_stack *stack)
 
 ##	[push.c](push.c)
 void	push(t_stack **st_from, t_stack **st_to)

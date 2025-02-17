@@ -6,54 +6,57 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:20:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 11:08:38 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:31:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-//NOT USED
-int	count_samecost(t_stack *stack_a)
-{
-	debug("in count_samecost()");
-	t_stack	*ledger;
-	int		same;
+//sets 'cost' variables for number sets greater than 3
+int		adjacent_triplet(t_stack *stack);
+int		find_triplet(t_stack *stack);
 
-	if (stack_a)
-		printf("same_cost output 0: %d\tpointer: %p\n", stack_a->value, stack_a);
-	ledger = stack_a;
-	same = 0;
-	while (ledger->next != NULL)
-	{
-		if (ledger->cost_b != 0)
-			same++;
-		ledger = ledger->next;
-	}
-	if (stack_a)
-		printf("same_cost output 1: %d\tpointer: %p\n", stack_a->value, stack_a);
-	return (same);
+void		set_cost(t_stack **stack_a, t_stack **stack_b, int size)
+{
+	int	trip;
+
+	trip = find_triplet(*stack_a);
 }
 
-void	samecost_decider(t_stack **stack_a, int count, int same)
+int		adjacent_triplet(t_stack *stack)
 {
-	t_stack	*ledger;
-	int		num;
-	
-	printf(BLUTXT"in samecost_decider()\n");
-	DEFTXT;
-	ledger = (*stack_a);
-	printf(GRNTXT"[2] pointer for stack: %p\n"DEFTXT, ledger);
-	printf(GRNTXT"\"next\" for stack: %p\n"DEFTXT, ledger->next);
-	num = ledger->cost_b;
-	printf(GRNTXT"[3] pointer for stack: %p\t next: %p\n"DEFTXT, ledger, ledger->next);
-	while (ledger->next != NULL)
+	int	i;
+	int	x;
+	int	y;
+	int	z;	
+
+	i = 0;
+	x = stack->pos;
+	y = stack->next->pos;
+	z = stack->next->next->pos;
+	if (x == (y + 1) || (x == (y - 1)) || (x == (z + 1) || (x == (z - 1))))
 	{
-		printf(BLUTXT"LOOPINGGGGGGG\n"DEFTXT);
-		if (num > 0)
-		{
-			do_ra(find_top(ledger));
-			num--;
-		}
-		ledger = find_top(ledger);
+		debug("first condition");
+		i++;
 	}
+	if (y == (z + 1) || (y == (z - 1)))
+	{
+		debug("second condition");
+		i++;
+	}
+	return (i);
+}
+int		find_triplet(t_stack *stack)
+{
+	int	trip;
+	
+	trip = 0;
+	while (stack->next->next != NULL)
+	{
+		debug("inside loop in tripletfinder");
+		if (adjacent_triplet(stack))
+			trip++;
+		stack = stack->next;
+	}
+	printf(BLUTXT"\nTRIP = %d\n"DEFTXT, trip);
 }

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 10:58:29 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:09:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		free_memory(t_stack **stack);
 //		an ft_atoi clone, mutated into a push swap creation
 long		get_number(char *arg, int argn);
 void		check_minmax(long int value, t_stack **stack);
-t_stack	*get_penultimate(t_stack *stack);
+t_stack	*find_penultimate(t_stack *stack);
 int		get_absolute(int rel);
 t_stack	*find_top(t_stack *stack);//?? where ??
 t_stack	*find_bottom(t_stack *stack);//?? where ??
@@ -85,15 +85,16 @@ void		debug_print(t_stack *stack, char *msg);
 
 ////		OPERATIONS:
 void		do_swap(t_stack *stack);
+void		do_twoswap(t_stack *stack);
 void		do_sa(t_stack **stack);
 void		do_sb(t_stack **stack);
 void		do_ra(t_stack **stack);
+void		do_rra(t_stack **stack);
 void		rotate(t_stack **stack);
 void		reverse_rotate(t_stack **stack);
 ////			TODO:
 // void		do_rb(t_stack **stack);
 // void		do_rr(t_stack **stack_a, t_stack **stack_b);
-// void		do_rra(t_stack **stack);
 // void		do_rrb(t_stack **stack);
 // void		do_rrr(t_stack **stack_a, t_stack **stack_b);
 
@@ -108,7 +109,10 @@ void		swap_yz(t_stack **stack_a);
 void		cost_check(t_stack **stack);
 int		count_samecost(t_stack *stack_a);
 void		samecost_decider(t_stack **stack_a, int count, int same);
-
+void		set_cost(t_stack **stack_a, t_stack **stack_b, int size);
+void		sort_costcompare(t_stack **stack_a, t_stack **stack_b, int size);
+void		sort_positivecost(t_stack **stack_a);
+void		sort_bigbee(t_stack **stack_a);
 
 
 

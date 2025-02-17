@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 12:13:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:54:05 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,39 @@ long	get_number(char *arg, int argn)
 	return (num * neg);
 }
 
-void	check_minmax(long int value, t_stack **stack)
+t_stack	*find_penultimate(t_stack *stack)
 {
-	//debug("in check_minmax()");
-	if (value > INT_MAX || value < INT_MIN)
-	{
-		if (stack || (*stack) != NULL)
-			error_handling(stack, NULL);
-		else
-			error_handling(NULL, NULL);
-	}
+	t_stack	*penult;
+	debug("in find_penultimate()");
+	//find top first?
+	penult = find_top(stack);
+	debug_print(penult, "BEFORE PEN");
+	while (penult && penult->next && penult->next->next != NULL)
+		penult = penult->next;
+	debug_print(penult, "AFTER PEN");
+	return (penult);
 }
 
-t_stack	*get_penultimate(t_stack *stack)
+t_stack	*find_top(t_stack *stack)
 {
-	//debug("in get_penultimate()");
-	while (stack && stack->next && stack->next->next != NULL)
-		stack = stack->next;
-	return (stack);
+	t_stack	*top;
+	int	i = 0;
+	debug(YLWTXT"inside find stack top"DEFTXT);
+	
+	top = stack;
+	if (top->prev != NULL)
+	{
+		while (top->prev != NULL && i < 10)
+		{
+			i++;
+		//debug("broke backwards");
+			top = top->prev;
+			printf("<%d>\n", i);
+			DEFTXT;
+		}
+	}
+	debug(GRNTXT"done with find top"DEFTXT);//SEGFAULT
+	return (top);
 }
 
 int		get_absolute(int rel)
