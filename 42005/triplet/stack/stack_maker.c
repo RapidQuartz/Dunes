@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 18:37:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:20:22 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 
 	head = NULL;
 	array = arg_array(argc, argv, argn, array);
-	i = 0;
 	if (!array)
 		error_handling(NULL, NULL);
 	stack = stacker(array, argn, &head);
 	// stack_inspector(&stack);//temporarily disabled
-	stack_positioner(&stack, argn + 1, 0);
+	positioner(&stack, argn + 1, 0);
 	return (stack);
 }
 //provision for last
@@ -41,6 +40,8 @@ t_stack	*stacker(int *array, int argn, t_stack **head)
 	while (index < argn)
 	{
 		stack = create_node(array[index], stack, index, argn);
+		if (stack == NULL)
+			error_handling(*head, NULL);
 		if (index == 0)
 			*head = stack;
 		if (prev)
@@ -72,18 +73,24 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	return (new);
 }
 
-void		stack_positioner(t_stack **stack, int argn, int i)
+void		positioner(t_stack **stack, int argn, int i)
 {
 	t_stack	*highest;
 	int		high;
-
+	
+	highest = NULL;
+	high = INT_MIN;
 	while (i < argn)
 	{
-		highest = NULL;
-		high = INT_MIN;
-		if ()
+		if ((*stack)->value >= high)
+			high = (*stack)->value;
+		(*stack)->pos = -1;
+		highest = (*stack);
+		(*stack) = (*stack)->next;
+		i++;
 	}
 }
+
 /* void		stack_positioner(t_stack **stack, int argn, int i)
 {
 	t_stack	*mem;
