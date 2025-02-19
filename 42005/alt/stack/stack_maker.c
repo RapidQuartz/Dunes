@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 17:49:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:59:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_stack	*stack_maker(int count, char **arg, int members)
 {
-	t_stack		*stack;
-	t_stack		*lowest;
+	t_stack	*stack;
+	t_stack	*lowest;
 
 	stack = stack_filler(count, arg, members);
 	stack_inspector(&stack);
@@ -31,7 +31,7 @@ t_stack	*stack_filler(int count, char **arg, int members)
 	t_stack		*stack;
 	int			i;
 	int			n;
-	long int		value;
+	long int	value;
 
 	i = 1;
 	stack = NULL;
@@ -52,12 +52,12 @@ t_stack	*stack_filler(int count, char **arg, int members)
 	}
 	return (stack);
 }
-	
+
 t_stack	*arg_stacker(int value, t_stack *prev)
 {
 	t_stack	*new;
 
-	new = malloc(sizeof * new);
+	new = malloc(sizeof *new);
 	if (!new)
 		return (NULL);
 	new->value = value;
@@ -81,16 +81,16 @@ t_stack	*arg_stacker(int value, t_stack *prev)
 	new->next = NULL;
 	return (new);
 }
-	/* new->higher = NULL;
+/* new->higher = NULL;
 	new->lower = NULL; */
 
 void	stack_positioner(t_stack **stack, int members)
 {
-	debug("in stack positioner");
 	t_stack	*mem;
 	t_stack	*highest;
 	int		high;
 
+	debug("in stack positioner");
 	while (--members > 0)
 	{
 		mem = (*stack);
@@ -117,22 +117,24 @@ void	stack_positioner(t_stack **stack, int members)
 
 void	stack_hilofinder(t_stack **stack, int size)
 {
-	debug("in hlf");
 	t_stack	*mem;
 	t_stack	*nxt;
 	int		count;
-	int		i = 0;
+	int		i;
 
+	debug("in hlf");
+	i = 0;
 	mem = (*stack);
-	count	= 0;
-	while (count < size /*&& i < 20 */)//works randomly but no provision for starting/stopping
+	count = 0;
+	while (count < size /*&& i < 20 */)
+	//works randomly but no provision for starting/stopping
 	{
 		if (mem->next != NULL)
 			nxt = mem->next;
 		else
 			nxt = (*stack);
 		debug("in hlf loop");
-		while (nxt->next =! NULL)
+		while (nxt->next = !NULL)
 		{
 			count += stack_hilosetter(mem, nxt, size);
 			if (nxt->next != NULL)

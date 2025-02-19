@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/18 19:56:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:31:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ typedef struct s_stack
 	int				value;
 	int				index;
 	int				pos;
-	int				bucket;
+	int				size;
 	int				cost_a;
 	int				cost_b;
-	struct	s_stack	*hed;
-	struct	s_stack	*hii;
-	struct	s_stack	*low;
+	struct	s_stack	**head;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
@@ -65,22 +63,29 @@ t_stack	*find_bottom(t_stack *stack);//?? where ??
 void		push_swap(t_stack **stack_a, t_stack **stack_b, int members);
 
 ////		ARGUMENTS:
-t_stack	*arg_stacker(int value, t_stack *prev);
+t_stack	*stack_stacker(int value, t_stack *prev);
 int		arg_counter(char *args);
-int		arg_inspector(int count, char **args);
+int		arg_inspector(int argc, char **argv);
+int		arg_checker(char a, char b);
 
 ////		STACK:
+t_stack	*stacker(int *array, int argn, t_stack **head);
+t_stack	*create_node(int value, t_stack *prev, int index, int argn);
 void		make_bottom(t_stack **stack, t_stack *new);
 //		investigates the stack for malignancy or opportunity
 void		stack_inspector(t_stack **stk);
 //		assigns the index/position integers
 void		stack_indexer(t_stack **stk);
-void		stack_positioner(t_stack **stack, int members);
+void		stack_positioner(t_stack **stack, int argn, int i);
 void		stack_finisher(t_stack **stack, t_stack **lowest, int members);
 //		calls various functions to process stack
-t_stack	*stack_maker(int count, char **arg, int members);
+t_stack	*stack_maker(int argc, char **argv, int stk_size);
 //		converts arguments into stack values
-t_stack	*stack_filler(int count, char **arg, int members);
+t_stack	*stack_filler(int argc, char **argv, int stk_size);
+//
+t_stack	*stack_array(int *array, int argn);
+//		uses an array to make stack in the right direction
+//
 //		sets higher/lower pointers for stack
 void		stack_hilofinder(t_stack **stack, int size);
 int		stack_hilosetter(t_stack *stack, t_stack *next, int size);
@@ -89,7 +94,8 @@ int		stack_hilosetter(t_stack *stack, t_stack *next, int size);
 int		set_argn(int argc, char **argv);
 t_stack	*set_head(int value, t_stack *last, t_stack *head);
 
-//
+////		ARGUMENTS:
+int		*arg_array(int argc, char **argv, int argn, int *array);
 
 ////		DEBUG:
 void		debug(char *str);

@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/02/19 13:58:26 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/02/19 18:02:13 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,12 @@ CFLAGS = -Wall -Werror -Wextra
 LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
 SRC = main.c \
-introduction.c \
 push_swap.c \
-check/arg_inspector.c check/sort_checker.c \
-cost/cost.c \
+arguments/arg_inspector.c arguments/arg_array.c \
+check/sort_checker.c \
 operations/push.c operations/rotate.c operations/swap.c \
-sort/sort3.c \
 stack/stack_indexer.c stack/stack_inspector.c \
-circle/stack_maker.c \
-# stack/stack_maker.c \
+stack/stack_maker.c \
 stack/stack_navigator.c \
 utility/utilities.c utility/error_handling.c
 OBJ = $(SRC:.c=.o)
