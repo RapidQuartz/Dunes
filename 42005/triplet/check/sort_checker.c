@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:03:08 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/02 12:13:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:47:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 
 int	sort_checker(t_stack *stack)
 {
-	//debug("in sort_checker()");
-	t_stack	*temp;
+	int		flag;
 	
 	if (!stack)
-		error_handling(NULL, NULL);
-	temp = stack;
-	while (temp->next != NULL)
+		error_handling(&stack, NULL);
+	while (stack->next != *stack->head)
 	{
-		//debug("in _sc_ loop");
-		if (temp->value < temp->next->value)
-			temp = temp->next;
+		if (stack->value < stack->next->value)
+			stack = stack->next;
 		else
 			return (0);
 	}
-	//debug("sorted");
 	return (1);
 }
