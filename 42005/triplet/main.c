@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 18:11:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:26:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,16 @@ int	main(int argc, char **argv)
 	while (i < argn)
 	{
 		i++;
-		printf("[%d]\t\tvalue = %d\tindex = %d\tpos = %d\n", \
-			i, stack_a->value, stack_a->index, stack_a->pos);
+		printf("[%d]\t\tvalue = %d\t"
+			"index = %d\t"
+			"pos = %d\t"
+			"next->value = %d\t\t"
+			"prev->value = %d\n", \
+			i, stack_a->value, \
+			stack_a->index, \
+			stack_a->pos, \
+			stack_a->next->value, \
+			stack_a->prev->value);
 		stack_a = stack_a->next;
 	}
 	return (0);

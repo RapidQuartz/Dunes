@@ -6,12 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 20:20:22 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:20:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
+void		ouroboros(t_stack **snek, int argn);
 t_stack	*stack_maker(int argc, char **argv, int argn)
 {
 	t_stack	*stack;
@@ -23,11 +23,22 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	if (!array)
 		error_handling(NULL, NULL);
 	stack = stacker(array, argn, &head);
+	ouroboros(&stack, argn);
 	// stack_inspector(&stack);//temporarily disabled
-	positioner(&stack, argn + 1, 0);
+	positioner(&stack, argn, 0);
 	return (stack);
 }
 //provision for last
+void		ouroboros(t_stack **snek, int argn)
+{
+	t_stack	*bottom;
+	if (snek != (*snek)->head && (*snek)->next == NULL)
+		bottom = (*snek);
+	snek = (*snek)->head;
+	(*snek)->prev = bottom;
+	bottom->next = (*snek);
+	return ;
+}
 t_stack	*stacker(int *array, int argn, t_stack **head)
 {
 	int			index;
@@ -41,7 +52,7 @@ t_stack	*stacker(int *array, int argn, t_stack **head)
 	{
 		stack = create_node(array[index], stack, index, argn);
 		if (stack == NULL)
-			error_handling(*head, NULL);
+			error_handling(head, NULL);
 		if (index == 0)
 			*head = stack;
 		if (prev)
@@ -50,9 +61,7 @@ t_stack	*stacker(int *array, int argn, t_stack **head)
 		prev = stack;
 		index++;
 	}
-	prev = prev->head;
-	prev->prev = stack;
-	stack->next = prev;
+	// stack = *stack->head;
 	return (stack);
 }
 
@@ -70,6 +79,7 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	new->cost_a = 0;
 	new->cost_b = 0;
 	new->prev = prev;
+	new->next = NULL;
 	return (new);
 }
 
@@ -80,6 +90,7 @@ void		positioner(t_stack **stack, int argn, int i)
 	
 	highest = NULL;
 	high = INT_MIN;
+	stack = (*stack)->head;
 	while (i < argn)
 	{
 		if ((*stack)->value >= high)

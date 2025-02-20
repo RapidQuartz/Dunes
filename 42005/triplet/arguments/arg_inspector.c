@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:25 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 15:13:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:10:40 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		arg_inspector(int argc, char **argv)
 
 	index = 1;
 	argn = 0;
+	num = 0;
 	while (index < argc)
 	{
 		num = arg_counter(argv[index]);

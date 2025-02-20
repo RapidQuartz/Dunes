@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:10:47 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 15:11:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:20:02 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		*arg_array(int argc, char **argv, int argn, int *array)
 
 	index = 0;
 	step = 1;
-	array = malloc(sizeof(int*) * argn);
+	array = malloc(sizeof(int) * argn);
 	if (!array)
 		return (0);
 	while (step < argc)
