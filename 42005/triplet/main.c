@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/20 17:48:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:08:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	main(int argc, char **argv)
 	char		c;
 
 	i = 0;
-	if (argc < 2)
+	if (argc < 2 || !(argn = arg_inspector(argc, argv)))
 		return (1);
-	argn = arg_inspector(argc, argv);
-	if (!argn)
-		return 1;
+	// argn = arg_inspector(argc, argv);
+	// if (!argn)
+	// 	return 1;
 	stack_b = NULL;
 	stack_a = NULL;
 	stack_a = stack_maker(argc, argv, argn);

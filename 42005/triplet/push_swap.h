@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/21 19:10:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:14:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		make_bottom(t_stack **stack, t_stack *new);
 void		stack_inspector(t_stack **stk);
 //		assigns the index/position integers
 void		stack_indexer(t_stack **stk);
-void		positioner(t_stack **stack, t_stack *bonus, int argn);
+void		positioner(t_stack **stack, int argn);
 void		stack_finisher(t_stack **stack, t_stack **lowest, int members);
 //		calls various functions to process stack
 t_stack	*stack_maker(int argc, char **argv, int stk_size);

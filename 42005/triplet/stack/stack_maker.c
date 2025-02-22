@@ -6,14 +6,14 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/22 11:11:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:59:49 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 void		ouroboros(t_stack **snek, int argn);
-t_stack	*highlow_value(t_stack *stack, int argn, int mode);
-void		pos_set(t_stack *bonus, int argn, t_stack *highest);
+t_stack	*highlow_value(t_stack *stack, int argn);
+void		pos_set(t_stack *stack, int argn, t_stack *high, t_stack *low);
 
 t_stack	*stack_maker(int argc, char **argv, int argn)
 {
@@ -28,7 +28,7 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	stack = stacker(array, argn, &head);
 	ouroboros(&stack, argn);
 	// stack_inspector(&stack);//temporarily disabled
-	positioner(stack->head, *stack->head, argn);
+	positioner(stack->head, argn);
 	return (stack);
 }
 //provision for last
@@ -86,7 +86,7 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	return (new);
 }
 
-void		positioner(t_stack **stack, t_stack *bonus, int argn)
+void		positioner(t_stack **stack, int argn)
 {
 	t_stack		*highest;
 	t_stack		*lowest;
@@ -94,55 +94,49 @@ void		positioner(t_stack **stack, t_stack *bonus, int argn)
 	int		sec;
 
 	highest = highlow_value(*stack, argn + 1, INT_MIN);
-	lowest = highlow_value(*stack, argn + 1, INT_MAX);
-	pos_set(highest->next, argn, highest);
+	while (argn-- > 1)
+	{
+		pos_set(highest->next, argn + 1, highest, lowest);
+	}
 	printf("positions set? wtf?");
 }
 
-void		pos_set(t_stack *bonus, int argn, t_stack *highest)
+void		pos_set(t_stack *stack, int argn, t_stack *high, t_stack *low)
 {
 	int		mem;
 	int		bound;
+	t_stack	*keep;
 
 	mem = INT_MIN;
-	bound = INT_MAX;
-	while (argn--)
+	bound = stack->size;
+	keep = low;
+	while (stack->pos != argn && stack->pos != 1 && low->pos != argn)
 	{
-		if (bonus->pos != 0)
-		{
-			if (bonus->value > mem)
-				mem = bonus->value;
-			else if (bonus->value < mem)
-				bound = bonus->value;
-		}
-		if (bonus->pos != 0)
-			bonus = bonus->next;
+		bound--;
+		if (stack->pos == 0 && stack->value > keep->value)
+			keep = stack;
+		else if (stack)
+			stack = stack->next;
+		if (!bound)
+			keep->pos = argn;
 	}
 }
 
-t_stack		*highlow_value(t_stack *stack, int argn, int mode)
+t_stack	*highlow_value(t_stack *stack, int argn)
 {
-	if (!mode)
+	t_stack	*modus;
+	int		mode;
+
+	modus = stack->head;
+	while (argn--)
 	{
-		while (argn--)
-		{
-			if (stack->value > mode)
-				mode = stack->value;
-			stack = stack->next;
-		}
-		stack->pos = stack->size;
+		mode = modus->value;
+		if (stack->value >= mode)
+			modus = stack->value;
+		modus = modus->next;
 	}
-	else
-	{
-		while (argn--)
-		{
-			if (stack->value < mode)
-				mode = stack->value;
-			stack = stack->next;
-		}
-		stack->pos = 1;
-	}
-	return (stack);
+	modus->pos = modus->size;
+	return (modus);
 }
 
 /* void		stack_positioner(t_stack **stack, int argn, int i)
