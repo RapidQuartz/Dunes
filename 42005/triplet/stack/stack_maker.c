@@ -6,13 +6,15 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/20 18:38:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/22 11:11:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 void		ouroboros(t_stack **snek, int argn);
-t_stack	*highest_value(t_stack *stack, t_stack *highest, int argn, int i);
+t_stack	*highlow_value(t_stack *stack, int argn, int mode);
+void		pos_set(t_stack *bonus, int argn, t_stack *highest);
+
 t_stack	*stack_maker(int argc, char **argv, int argn)
 {
 	t_stack	*stack;
@@ -26,7 +28,7 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	stack = stacker(array, argn, &head);
 	ouroboros(&stack, argn);
 	// stack_inspector(&stack);//temporarily disabled
-	positioner(stack->head, *stack->head, argn, 0);
+	positioner(stack->head, *stack->head, argn);
 	return (stack);
 }
 //provision for last
@@ -84,66 +86,63 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	return (new);
 }
 
-void		positioner(t_stack **stack, t_stack *bonus, int argn, int i)
+void		positioner(t_stack **stack, t_stack *bonus, int argn)
 {
-	t_stack	*highest;
-	int		high;
-	
-	high = INT_MIN;
-	
-	highest = highest_value(*stack, highest, argn, i);
-	while (argn)//this wont work bc is looking at value -1 which is wrong
+	t_stack		*highest;
+	t_stack		*lowest;
+	int		mem;
+	int		sec;
+
+	highest = highlow_value(*stack, argn + 1, INT_MIN);
+	lowest = highlow_value(*stack, argn + 1, INT_MAX);
+	pos_set(highest->next, argn, highest);
+	printf("positions set? wtf?");
+}
+
+void		pos_set(t_stack *bonus, int argn, t_stack *highest)
+{
+	int		mem;
+	int		bound;
+
+	mem = INT_MIN;
+	bound = INT_MAX;
+	while (argn--)
 	{
-		/* here there needs to be better logic... finding the 'next smaller'
-		i could save the value 'high'
-		then say it was bigger than everything else, but smaller than high
-		so basically running 'highest value' but with a param...
-		t_stack		*highest_value(int high, t_stack *highest, int argn)
+		if (bonus->pos != 0)
 		{
-			if (high == INT_MIN)//initial state
-				doodlydoo flagaboo
-				while (bladibla)
-					iterate bitrate
-				if (i == argn)
-					return (ptr to highest number eventually)
-			else//`high` is assumed to be the highest int
-				now find the biggest number that is still smaller than high
-				while (number < high && number > last number || number == high - 1)
-					
-				
-			
+			if (bonus->value > mem)
+				mem = bonus->value;
+			else if (bonus->value < mem)
+				bound = bonus->value;
 		}
-		*/
-		if (bonus->value == highest->value - 1 && bonus->pos == 0)
-		{
-			highest == bonus;
-			argn--;
-			bonus->pos = argn;
-		}
-		bonus = bonus->next;
+		if (bonus->pos != 0)
+			bonus = bonus->next;
 	}
 }
 
-t_stack		*highest_value(t_stack *stack, t_stack *highest, int argn, int i)
+t_stack		*highlow_value(t_stack *stack, int argn, int mode)
 {
-	int		high;
-	
-	high = INT_MIN;
-	while (i < argn)
+	if (!mode)
 	{
-		if (stack->value == high && i == argn)
-			
-		if (stack->value >= high)
+		while (argn--)
 		{
-			high = stack->value;
-			i++;
-			highest = stack;
-		}
-		else
+			if (stack->value > mode)
+				mode = stack->value;
 			stack = stack->next;
+		}
+		stack->pos = stack->size;
 	}
-	highest->pos = i;
-	return (highest);
+	else
+	{
+		while (argn--)
+		{
+			if (stack->value < mode)
+				mode = stack->value;
+			stack = stack->next;
+		}
+		stack->pos = 1;
+	}
+	return (stack);
 }
 
 /* void		stack_positioner(t_stack **stack, int argn, int i)
