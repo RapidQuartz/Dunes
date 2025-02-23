@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/akjoerse/42/999_GitHub/42005/triplet",
-      "program": "/home/akjoerse/42/999_GitHub/42005/triplet/build/Debug/outDebug",
+      "program": "/home/akjoerse/42/999_GitHub/42005/triplet/push_swap",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -6,6 +6,27 @@
 
 [#bughunt](#bughunt)
 #	bughunt
+##	2025-02-22
+<dump from `make` at 2025-02-22 20:35:24>
+[](../triplet/stack/stack_maker.c#L45)
+[](../triplet/stack/stack_maker.c#L96)
+[](../triplet/stack/stack_maker.c#L130)
+<!-- [](stack/stack_maker.c): In function ‘positioner’:
+stack/stack_maker.c:96:19: error: too many arguments to function ‘highlow_value’
+   96 |         highest = highlow_value(*stack, argn + 1, INT_MIN);
+      |                   ^~~~~~~~~~~~~
+stack/stack_maker.c:15:10: note: declared here
+   15 | t_stack *highlow_value(t_stack *stack, int argn);
+      |          ^~~~~~~~~~~~~
+stack/stack_maker.c: In function ‘highlow_value’:
+stack/stack_maker.c:130:15: warning: assignment to ‘t_stack *’ {aka ‘struct s_stack *’} from incompatible pointer type ‘struct s_stack **’ [-Wincompatible-pointer-types]
+  130 |         modus = stack->head;
+      |               ^
+stack/stack_maker.c:135:31: warning: assignment to ‘t_stack *’ {aka ‘struct s_stack *’} from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
+  135 |                         modus = stack->value;
+      |                               ^
+make: *** [Makefile:45: stack/stack_maker.o] Error 1 -->
+
 ##	2025-02-02
 <dump from valgrind at 2025-02-02 09:06:18>
 ==12960== HEAP SUMMARY:

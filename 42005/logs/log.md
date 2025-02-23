@@ -1,9 +1,18 @@
+## <:log:<
+###	log 
+#	[]() 
+## >:log:>
+## <:log9:<
+###	log 2025-02-23 18:57:57
+#	[push_swap now makes and positions a stack](notes.md#2025-02-23-185854)
+#	[]()
+## >:log9:>
 ## <:log8:<
 ###	log 2025-02-17 09:51:59
 #	[i'm back, baby](rotk.md)
 #	[issue with make](notes.md#2025-02-17-101741)
 #	[segfault on small numbers](notes.md#2025-02-17-110258)
-## >:log7:>
+## >:log8:>
 
 ## <:log7:<
 ###	log 2025-02-02 09:02:26

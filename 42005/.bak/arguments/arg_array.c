@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_inspector.c                                  :+:      :+:    :+:   */
+/*   arg_array.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:42:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 17:19:19 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/02/19 15:10:47 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/02/20 12:20:02 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-//	verifies if the stack contains duplicates
-void	stack_inspector(t_stack **stk)
+int		*arg_array(int argc, char **argv, int argn, int *array)
 {
-	t_stack	*t;
-	t_stack	*p;
-	int	d;
-	int	i;
+	int	index;
+	int	argi;
+	int	step;
+	int	count;
+	long	num;
 
-	t = (*stk);
-	p = t->next;
-	while (p != *t->head || (d == 0 && i == 0))
+	index = 0;
+	step = 1;
+	array = malloc(sizeof(int) * argn);
+	if (!array)
+		return (0);
+	while (step < argc)
 	{
-		while (t->value != p->value)
-			p = p->next;
-		if (t->value == p->value && t->pos != p->pos)
-			error_handling(stk, NULL);
-		else
-			t = t->next;
+		argi = 0;
+		count = arg_counter(argv[step]);
+		while (argi != count)
+		{
+			argi++;
+			num = get_number(argv[step], argi);
+			check_minmax(num, NULL);
+			array[index++] = num;
+		}
+		step++;
 	}
-	return ;
+	return (array);
 }

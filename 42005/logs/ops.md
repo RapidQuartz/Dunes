@@ -27,6 +27,22 @@
 
 #	pad
 [-index-](#index)
+void		pos_set(t_stack *stack, int argn, t_stack *high, t_stack *low);
+void	stack_inspector(t_stack **stk)
+{
+	t_stack	*t;
+	t_stack	*p;
+	int	d;
+	int	i;
+
+	t = (*stk);
+	p = (*stk)->next;
+	d = 0;
+	i = 0;
+	
+	return ;
+}
+
 [--](#)
 <::>
 			::

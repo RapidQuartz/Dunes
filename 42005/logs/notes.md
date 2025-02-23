@@ -1,5 +1,8 @@
 [HERE](notes.md)
 
+# 2025-02-23 18:58:54
+-	issue: args ending with ' ' and containing multiple/repeating spaces parse wrong
+
 # 2025-02-17 10:17:41
 -	issue: when libft.a exists, calling `make` results in `nothing to be done for all`
 

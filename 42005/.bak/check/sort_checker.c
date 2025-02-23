@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_inspector.c                                  :+:      :+:    :+:   */
+/*   sort_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:42:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 17:19:19 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/01/31 14:03:08 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/02/20 17:47:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-//	verifies if the stack contains duplicates
-void	stack_inspector(t_stack **stk)
+int	sort_checker(t_stack *stack)
 {
-	t_stack	*t;
-	t_stack	*p;
-	int	d;
-	int	i;
-
-	t = (*stk);
-	p = t->next;
-	while (p != *t->head || (d == 0 && i == 0))
+	int		flag;
+	
+	if (!stack)
+		error_handling(&stack, NULL);
+	while (stack->next != *stack->head)
 	{
-		while (t->value != p->value)
-			p = p->next;
-		if (t->value == p->value && t->pos != p->pos)
-			error_handling(stk, NULL);
+		if (stack->value < stack->next->value)
+			stack = stack->next;
 		else
-			t = t->next;
+			return (0);
 	}
-	return ;
+	return (1);
 }
