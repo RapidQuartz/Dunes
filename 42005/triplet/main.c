@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 18:02:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:46:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,19 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc < 2 || !(argn = arg_inspector(argc, argv)))
 		return (1);
-	// argn = arg_inspector(argc, argv);
-	// if (!argn)
-	// 	return 1;
 	stack_b = NULL;
 	stack_a = NULL;
 	stack_a = stack_maker(argc, argv, argn);
 	if (sort_checker(stack_a))
 		debug(GRNTXT"\n\n\n\n\t\t\t STACK IS SORTED!!!!!!!\n\n\n\n"DEFTXT);
-	write(2, "\n", 1);
-	write(2, &c, 1);
-	write(2, "\n", 1);
-	print_stack(stack_a, 0, argn);
-	debug("\n\n\n\nBEFORE SORT\n\n\n\n");
-	if (c == '0')
-		// sort_stack(stack_a, stack_b);
-	print_stack(stack_a, 0, argn);
+	else
+	{
+		debug("\n\n\n\nBEFORE SORT\n\n\n\n");
+		print_stack(stack_a, 0, argn);
+		stack_assay(&stack_a, &stack_b);
+	}
 	debug("\n\n\n\nAFTER SORT\n\n\n\n");
+	print_stack(stack_a, 0, argn);
 	return (0);
 }
 

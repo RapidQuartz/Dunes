@@ -5,6 +5,7 @@
 ## <:log9:<
 ###	log 2025-02-23 18:57:57
 #	[push_swap now makes and positions a stack](notes.md#2025-02-23-185854)
+#	[sort_trip takes 6 types of sorts and DEALS](../triplet/cost/stack_assay.c#sort_trip)
 #	[]()
 ## >:log9:>
 ## <:log8:<

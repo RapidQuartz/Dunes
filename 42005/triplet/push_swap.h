@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 18:02:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:47:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void		pb(t_stack **t, t_stack **s);
 //		[this should return nothing, but int is used for debugging]
 // void		sort_stack(stack_a, stack_b);
 int		sort_stack(t_stack **stack_a, t_stack **stack_b);
+int		is_triplet(t_stack **st);
+void		sort_trip(t_stack **st, t_stack **ts, int cl);
 
 int		sort_checker(t_stack *stack);
 void		sort_cost(t_stack **stack_a, int size);
@@ -135,13 +137,7 @@ void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 
 ////		COST:
-void		cost_check(t_stack **stack);
-int		count_samecost(t_stack *stack_a);
-void		samecost_decider(t_stack **stack_a, int count, int same);
-void		set_cost(t_stack **stack_a, t_stack **stack_b, int size);
-void		sort_costcompare(t_stack **stack_a, t_stack **stack_b, int size);
-void		sort_positivecost(t_stack **stack_a);
-void		sort_bigbee(t_stack **stack_a);
+void		stack_assay(t_stack **st, t_stack **ts);
 
 
 
