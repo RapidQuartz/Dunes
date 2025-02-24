@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 19:46:55 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:39:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv)
 	{
 		debug("\n\n\n\nBEFORE SORT\n\n\n\n");
 		print_stack(stack_a, 0, argn);
-		stack_assay(&stack_a, &stack_b);
+		stack_assay(&stack_a, &stack_b, stack_a->size + 1);
+		//push_swap(stack_a, stack_b);
 	}
 	debug("\n\n\n\nAFTER SORT\n\n\n\n");
 	print_stack(stack_a, 0, argn);

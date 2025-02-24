@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 19:47:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:20:04 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_stack
 	int				index;
 	int				pos;
 	int				size;
+	char				clue;
 	int				cost_a;
 	int				cost_b;
 	struct	s_stack	**head;
@@ -127,8 +128,13 @@ void		pb(t_stack **t, t_stack **s);
 //		[this should return nothing, but int is used for debugging]
 // void		sort_stack(stack_a, stack_b);
 int		sort_stack(t_stack **stack_a, t_stack **stack_b);
-int		is_triplet(t_stack **st);
-void		sort_trip(t_stack **st, t_stack **ts, int cl);
+void		is_triplet(t_stack **st, int size);
+void		sort_trip(t_stack **st, t_stack **ts, char cl);
+void		is_doublet(t_stack **st, int size);
+void		sort_doub(t_stack **st, t_stack **ts, char cl);
+void		sort_sing(t_stack **st, t_stack **ts, char cl);
+
+
 
 int		sort_checker(t_stack *stack);
 void		sort_cost(t_stack **stack_a, int size);
@@ -137,11 +143,10 @@ void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 
 ////		COST:
-void		stack_assay(t_stack **st, t_stack **ts);
-
+void		stack_assay(t_stack **st, t_stack **ts, int size);
+void		cost_set(t_stack **st, char clue);
+int		is_adjacent(t_stack **st);
 
 
 ////		LEGACY:	DISUSED:
-// char		**arg_normalizer(int count, char **arg, int members);//NOT PRESENT
-// void		stack_navigator(t_stack **stk);
 #endif
