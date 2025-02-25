@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:06:02 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 14:09:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:16:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void		stack_assay(t_stack **st, t_stack **ts, int size)
 		subject = subject->next;
 	}
 	subject = nav_ptr_set(&subject, subject->size);
-	motive = ft_nzero(motive, 2, 2);
+	motive = ft_nzero(motive, subject->size, 2);
 	if (!motive)
 		error_handling(st, ts);
-	cost_set(&subject, &subject->prev, subject->size + 1, motive);
+	cost_get(&subject, &subject->next, subject->size + 1, motive);
+	debug_cost_print(motive, subject->size);
+	free (*motive);
 }
 
 void		is_adjacent(t_stack **st)
@@ -93,31 +95,29 @@ t_stack	*nav_ptr_set(t_stack **st, int size)
 	return (keep);
 }
 
-void		cost_set(t_stack **st, t_stack **ts, int size, int **num)
+void		cost_get(t_stack **st, t_stack **ts, int size, int **num)
 {
-	int	ct;
-	int	vl;
-	
-	ct = (*st)->index;
-	vl = 0;
 	while (size--)
 	{
-		while ((*ts)->pos - 1 != (*st)->pos)
-		{
+		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][0]++)
 			(*ts) = (*ts)->next;
-			num[ct][0]++;
-		}
-		(*ts) = (*st)->prev;
-		while ((*ts)->pos - 1 != (*st)->pos)
-		{
+		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][1]++)
 			(*ts) = (*ts)->prev;
-			num[ct][1]++;
+		if ((*st)->pos != 1)
+		{
+			if (num[(*st)->index - 1][0] < num[(*st)->index - 1][1])
+				(*ts)->cost_a = &num[(*st)->index - 1][0];
+			else
+				(*ts)->cost_a = &num[(*st)->index - 1][1];
 		}
-		if (num[ct][0] < num[ct][1])
-			vl = num[ct][0];
-		else
-			vl = num[ct][1];
-		(*st)->cost_b = vl;
-		(*ts)->cost_a = vl;
+		if ((*st)->pos != (*st)->size)
+		{
+			if (num[(*st)->index - 1][0] < num[(*st)->index - 1][1])
+				(*st)->cost_b = &num[(*st)->index - 1][0];
+			else
+				(*st)->cost_b = &num[(*st)->index - 1][1];
+		}
+		(*st) = (*st)->high;
+		(*ts) = (*st)->next;
 	}
 }

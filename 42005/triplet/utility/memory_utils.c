@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:40:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 13:58:04 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:15:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ int	**ft_nzero(int **s, size_t n, size_t m)
 		}
 		j++;
 	}
+	s = c;
 }

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/19 18:11:08 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:45:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void	debug_print(t_stack *stack, char *msg)
 	if (stack->prev != NULL)
 	{
 		debug("stack->prev wasnt null");
-		stack = find_top(stack);
+		stack = *stack->head;
 	}
 	printf("\t\t[%s]\n", msg);
 	while (stack != NULL && i < 10)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
-"cost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
+"cost_a:%ls\tcost_b:%ls\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
 		stack->index, stack->pos, \
 		stack->cost_a, stack->cost_b, stack->prev, stack->next);
 		if (stack->next == NULL)
@@ -115,3 +115,28 @@ void	debug_print(t_stack *stack, char *msg)
 }
 /* higher:%p\tlower:%p\t */
 /* stack->higher, stack->lower ,*/
+//printf("");
+//
+void	debug_cost_print(int **num, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	printf(REDTXT"\n\n\nCOST NUMS\n"DEFTXT);
+	while (i < size)
+	{
+		printf("\n ====");
+		j = 0;
+		printf(GRNTXT"VALUE OF COST AT\t"DEFTXT);
+		while (j < 2)
+		{	
+			printf(GRNTXT"\t\tnum[%d][%d]\t ="
+				"\t %d"DEFTXT, i, j, num[i][j]);
+			j++;
+		}
+		printf(BLUTXT"\n ==== \n"DEFTXT);
+		i++;
+	}
+	DEFTXT;
+}

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 17:06:10 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:27:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv)
 	if (argc < 2 || !(argn = arg_inspector(argc, argv)))
 		return (1);
 	stack_b = NULL;
-	stack_a = NULL;
 	stack_a = stack_maker(argc, argv, argn);
 	if (sort_checker(stack_a))
 		debug(GRNTXT"\n\n\n\n\t\t\t STACK IS SORTED!!!!!!!\n\n\n\n"DEFTXT);
@@ -51,8 +50,8 @@ void		print_stack(t_stack *stack, int i, int argn)
 			"index = %d\t"
 			"pos = %d\t"
 			"clue = %c\t"
-			"cost_a = %d\t"
-			"cost_b = %d\t"
+			"cost_a = %ls\t"
+			"cost_b = %ls\t"
 			"next->value = %d\t\t"
 			"prev->value = %d\n", \
 			i, stack->value, \
