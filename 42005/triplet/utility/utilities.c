@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 16:56:32 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:55:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,7 @@ long	get_number(char *arg, int argn)
 	return (num * neg);
 }
 
-t_stack	*find_penultimate(t_stack *stack)
-{
-	t_stack	*penult;
-	debug("in find_penultimate()");
-	//find top first?
-	penult = find_top(stack);
-	debug_print(penult, "BEFORE PEN");
-	while (penult && penult->next && penult->next->next != NULL)
-		penult = penult->next;
-	debug_print(penult, "AFTER PEN");
-	return (penult);
-}
+
 
 t_stack	*find_top(t_stack *stack)
 {

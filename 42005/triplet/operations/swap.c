@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:26:19 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 15:04:11 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:58:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void		do_sa(t_stack **stack)
 {
 	write(1, "sa\n", 3);
-	do_swap(*stack);
+	//do_swap(*stack);
 }
 
 void		do_sb(t_stack **stack)
 {
 	write(1, "sb\n", 3);
-	do_swap(*stack);
+	//do_swap(*stack);
 }
-/* broken as fff */
+/* broken as fff *//* 
 void		do_twoswap(t_stack *stack)
 {
 	debug(GRNTXT"inside 2swap"DEFTXT);
@@ -43,7 +43,7 @@ void		do_twoswap(t_stack *stack)
 	second->prev = NULL;
 	debug(BLUTXT"leaving 2swap"DEFTXT);
 	debug_print(stack, "AFTER 2SWAP");
-}
+} *//* 
 void		do_swap(t_stack *stack)
 {
 	debug(GRNTXT"inside swap"DEFTXT);
@@ -66,7 +66,7 @@ void		do_swap(t_stack *stack)
 	third->prev = first;
 	debug(BLUTXT"leaving swap"DEFTXT);
 	debug_print(stack, "AFTER SWAP");
-}
+} */
 /* old version: doesnt work on pointers
 void		do_swap(t_stack *stack)
 {

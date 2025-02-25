@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 15:20:04 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:57:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_stack
 	int				cost_a;
 	int				cost_b;
 	struct	s_stack	**head;
+	struct	s_stack	*low;
+	struct	s_stack	*high;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
@@ -54,10 +56,10 @@ void		free_memory(t_stack **stack);
 //		an ft_atoi clone, mutated into a push swap creation
 long		get_number(char *arg, int argn);
 void		check_minmax(long int value, t_stack **stack);
-t_stack	*find_penultimate(t_stack *stack);
 int		get_absolute(int rel);
-t_stack	*find_top(t_stack *stack);//?? where ??
-t_stack	*find_bottom(t_stack *stack);//?? where ??
+
+void		*ft_calloc(size_t nmemb, size_t size);
+int		**ft_nzero(int **s, size_t n, size_t m);
 
 ////		PRIMARY:
 //		gets ready made stacks and does magic
@@ -125,15 +127,17 @@ void		pa(t_stack **t, t_stack **s);
 void		pb(t_stack **t, t_stack **s);
 
 ////		SORTING:
-//		[this should return nothing, but int is used for debugging]
-// void		sort_stack(stack_a, stack_b);
 int		sort_stack(t_stack **stack_a, t_stack **stack_b);
-void		is_triplet(t_stack **st, int size);
 void		sort_trip(t_stack **st, t_stack **ts, char cl);
-void		is_doublet(t_stack **st, int size);
 void		sort_doub(t_stack **st, t_stack **ts, char cl);
 void		sort_sing(t_stack **st, t_stack **ts, char cl);
 
+////		ASSAY:
+void		stack_assay(t_stack **st, t_stack **ts, int size);
+void		is_adjacent(t_stack **st);
+void		check_adjacency(t_stack **st);
+t_stack	*nav_ptr_set(t_stack **st, int size);
+void		cost_set(t_stack **st, t_stack **ts, int size, int **num);
 
 
 int		sort_checker(t_stack *stack);
@@ -143,9 +147,9 @@ void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 
 ////		COST:
-void		stack_assay(t_stack **st, t_stack **ts, int size);
-void		cost_set(t_stack **st, char clue);
-int		is_adjacent(t_stack **st);
+void		trip_cost_set(t_stack **st);
+void		doub_cost_set(t_stack **st);
+void		sing_cost_set(t_stack **st);
 
 
 ////		LEGACY:	DISUSED:

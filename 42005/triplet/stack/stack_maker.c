@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 13:35:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:37:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	new->clue = '0';
 	new->cost_a = 0;
 	new->cost_b = 0;
+	new->low = NULL;
+	new->high = NULL;
 	new->prev = prev;
 	new->next = NULL;
 	return (new);

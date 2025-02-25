@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 13:39:42 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:06:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,17 @@ void		print_stack(t_stack *stack, int i, int argn)
 		printf("[%d]\t\tvalue = %d\t"
 			"index = %d\t"
 			"pos = %d\t"
+			"clue = %c\t"
+			"cost_a = %d\t"
+			"cost_b = %d\t"
 			"next->value = %d\t\t"
 			"prev->value = %d\n", \
 			i, stack->value, \
 			stack->index, \
 			stack->pos, \
+			stack->clue, \
+			stack->cost_a, \
+			stack->cost_b, \
 			stack->next->value, \
 			stack->prev->value);
 		stack = stack->next;
