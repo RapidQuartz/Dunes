@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:06:02 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 16:16:32 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:24:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		stack_assay(t_stack **st, t_stack **ts, int size)
 	motive = ft_nzero(motive, subject->size, 2);
 	if (!motive)
 		error_handling(st, ts);
-	cost_get(&subject, &subject->next, subject->size + 1, motive);
+	cost_get(&subject, &subject, subject->size + 1, motive);
 	debug_cost_print(motive, subject->size);
 	free (*motive);
 }
@@ -99,6 +99,7 @@ void		cost_get(t_stack **st, t_stack **ts, int size, int **num)
 {
 	while (size--)
 	{
+		(*ts) = (*ts)->next;
 		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][0]++)
 			(*ts) = (*ts)->next;
 		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][1]++)
@@ -118,6 +119,6 @@ void		cost_get(t_stack **st, t_stack **ts, int size, int **num)
 				(*st)->cost_b = &num[(*st)->index - 1][1];
 		}
 		(*st) = (*st)->high;
-		(*ts) = (*st)->next;
+		ts = st;
 	}
 }
