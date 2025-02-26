@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:06:02 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 18:24:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:42:03 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		stack_assay(t_stack **st, t_stack **ts, int size)
 {
 	t_stack	*subject;
-	int		**motive;
+	int		*motive;
 	int		i;
 
 	subject = (*st);
@@ -26,12 +26,12 @@ void		stack_assay(t_stack **st, t_stack **ts, int size)
 		subject = subject->next;
 	}
 	subject = nav_ptr_set(&subject, subject->size);
-	motive = ft_nzero(motive, subject->size, 2);
+	motive = ft_nzero(motive, subject->size);
 	if (!motive)
 		error_handling(st, ts);
-	cost_get(&subject, &subject, subject->size + 1, motive);
+	cost_get(&subject, subject->size + 1, motive);
 	debug_cost_print(motive, subject->size);
-	free (*motive);
+	free (motive);
 }
 
 void		is_adjacent(t_stack **st)
@@ -94,15 +94,64 @@ t_stack	*nav_ptr_set(t_stack **st, int size)
 	}
 	return (keep);
 }
+//	helpers for this: cost set?
+//	check value of num array first
+void		cost_set(t_stack **ss, t_stack *st, t_stack *ts, int *num);
 
+void		cost_get(t_stack **st, int size, int *num)
+{
+	t_stack *ss;
+	t_stack *tt;
+	int	itr;
+	int	pos;
+	int	ind;
+
+	ss = (*st);
+	while (ss->high != NULL)
+		ss = ss->high;
+	while (1)
+	{
+		(*st) = ss;
+		tt = ss;
+		if ((*st)->pos == 1 || (*st)->low == NULL)
+			break ;
+		else
+			cost_set(st, ss, tt, num);
+		ss = (*st)->low;
+	}
+	return ;
+}
+
+void		cost_set(t_stack **ss, t_stack *st, t_stack *ts, int *num)
+{
+	int	itr;
+	int	ind;
+	
+	itr = 1;
+	ind = (*ss)->index;
+	while (st->next != (*ss)->low && ts->prev != (*ss)->low)
+	{
+		st = st->next;
+		ts = ts->prev;
+		itr++;
+	}
+	if (st->next == (*ss)->low && itr > 0)
+		itr *= -1;
+	num[ind] = itr;
+	(*ss)->cost_a = -num[ind];
+	(*ss)->low->cost_b = num[ind];
+	return ;
+}
+
+/* 
 void		cost_get(t_stack **st, t_stack **ts, int size, int **num)
 {
-	while (size--)
+	while (size-- && (*st)->high != NULL)
 	{
-		(*ts) = (*ts)->next;
-		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][0]++)
+		(*ts) = (*st)->next;
+		while (1 + (*st)->pos != (*ts)->pos && num[(*st)->index - 1][0]++)
 			(*ts) = (*ts)->next;
-		while ((*st)->pos + 1 != (*ts)->pos && num[(*st)->index - 1][1]++)
+		while (1 + (*st)->pos != (*ts)->pos && num[(*st)->index - 1][1]++)
 			(*ts) = (*ts)->prev;
 		if ((*st)->pos != 1)
 		{
@@ -114,11 +163,19 @@ void		cost_get(t_stack **st, t_stack **ts, int size, int **num)
 		if ((*st)->pos != (*st)->size)
 		{
 			if (num[(*st)->index - 1][0] < num[(*st)->index - 1][1])
+			{
 				(*st)->cost_b = &num[(*st)->index - 1][0];
+				debug(REDTXT"OPTION 1"DEFTXT);
+			}
 			else
+			{
 				(*st)->cost_b = &num[(*st)->index - 1][1];
+				debug(GRNTXT"OPTION 2"DEFTXT);
+			}
 		}
+		if ((*st)->high == NULL)
+			break ;
 		(*st) = (*st)->high;
-		ts = st;
 	}
 }
+ */

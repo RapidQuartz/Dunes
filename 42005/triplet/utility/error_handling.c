@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:51 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:31:37 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,16 @@ void	check_minmax(long int value, t_stack **stack)
 void	debug_print(t_stack *stack, char *msg)
 {
 	int	i = 0;
+	
 	printf("\t\t[INSIDE DEBUG PRINT]\n");
-	if (stack->prev != NULL)
-	{
-		debug("stack->prev wasnt null");
-		stack = *stack->head;
-	}
 	printf("\t\t[%s]\n", msg);
-	while (stack != NULL && i < 10)
+	while (1)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
-"cost_a:%ls\tcost_b:%ls\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
+"cost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
 		stack->index, stack->pos, \
 		stack->cost_a, stack->cost_b, stack->prev, stack->next);
-		if (stack->next == NULL)
+		if (stack->next == *stack->head)
 			break ;
 		stack = stack->next;
 		i++;
@@ -117,7 +113,7 @@ void	debug_print(t_stack *stack, char *msg)
 /* stack->higher, stack->lower ,*/
 //printf("");
 //
-void	debug_cost_print(int **num, int size)
+void	debug_cost_print(int *num, int size)
 {
 	int	i;
 	int	j;
@@ -129,12 +125,8 @@ void	debug_cost_print(int **num, int size)
 		printf("\n ====");
 		j = 0;
 		printf(GRNTXT"VALUE OF COST AT\t"DEFTXT);
-		while (j < 2)
-		{	
-			printf(GRNTXT"\t\tnum[%d][%d]\t ="
-				"\t %d"DEFTXT, i, j, num[i][j]);
-			j++;
-		}
+		printf(GRNTXT"\t\tnum[%d]\t ="
+			"\t %d"DEFTXT, i, num[i]);
 		printf(BLUTXT"\n ==== \n"DEFTXT);
 		i++;
 	}

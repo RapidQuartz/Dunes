@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 16:22:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:07:25 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ void		ouroboros(t_stack **snek, int argn)
 {
 	t_stack	*bottom;
 	
-	while ((*snek)->next != NULL)
+	while (argn-- && (*snek)->next != NULL)
 		(*snek) = (*snek)->next;
 	if (snek != (*snek)->head && (*snek)->next == NULL)
+	{
 		bottom = (*snek);
-	snek = (*snek)->head;
-	(*snek)->prev = bottom;
-	bottom->next = (*snek);
+		snek = (*snek)->head;
+		(*snek)->prev = bottom;
+		bottom->next = (*snek);
+	}
 	return ;
 }

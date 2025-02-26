@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 16:37:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:30:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	if (!array)
 		error_handling(NULL, NULL);
 	stack = stacker(array, argn, &head, 0);
-	//ouroboros(stack->head, argn);
+	ouroboros(stack->head, argn);
 	positioner(stack->head, argn);
 	stack_inspector(stack->head);
 	return (*stack->head);
@@ -71,12 +71,8 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	new->pos = 0;
 	new->size = argn;
 	new->clue = '0';
-	new->cost_a = malloc(sizeof(int));
-	if (!new->cost_a)
-		error_handling(&new, &prev);
-	new->cost_b = malloc(sizeof(int));
-	if (!new->cost_b)
-		error_handling(&new, &prev);
+	new->cost_a = 0;
+	new->cost_b = 0;
 	new->low = NULL;
 	new->high = NULL;
 	new->prev = prev;

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 16:27:21 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:28:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	main(int argc, char **argv)
 		debug("\n\n\n\nBEFORE SORT\n\n\n\n");
 		print_stack(stack_a, 0, argn);
 		stack_assay(&stack_a, &stack_b, stack_a->size + 1);
-		//push_swap(stack_a, stack_b);
+		print_stack(stack_a, 0, argn);
+		push_swap(&stack_a, &stack_b);
 	}
 	debug("\n\n\n\nAFTER SORT\n\n\n\n");
+	stack_a = *stack_a->head;
 	print_stack(stack_a, 0, argn);
 	return (0);
 }
@@ -46,14 +48,15 @@ void		print_stack(t_stack *stack, int i, int argn)
 	while (i < argn)
 	{
 		i++;
-		printf("[%d]\t\tvalue = %d\t"
-			"index = %d\t"
-			"pos = %d\t"
-			"clue = %c\t"
-			"cost_a = %ls\t"
-			"cost_b = %ls\t"
-			"next->value = %d\t\t"
-			"prev->value = %d\n", \
+		printf("\n[%d]\tvalue = %d"
+			" index = %d"
+			" pos = %d\t"
+			" clue = %c"
+			" cost_a = %d"
+			" cost_b = %d\t"
+			" next->value = %d"
+			" prev->value = %d"
+			" head = %p\n", \
 			i, stack->value, \
 			stack->index, \
 			stack->pos, \
@@ -61,7 +64,8 @@ void		print_stack(t_stack *stack, int i, int argn)
 			stack->cost_a, \
 			stack->cost_b, \
 			stack->next->value, \
-			stack->prev->value);
+			stack->prev->value, \
+			stack->head);
 		stack = stack->next;
 	}
 }

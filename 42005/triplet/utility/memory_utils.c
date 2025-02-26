@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:40:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/25 14:15:48 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:23:08 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,20 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (cpy);
 }
 
-int	**ft_nzero(int **s, size_t n, size_t m)
+int	*ft_nzero(int *s, size_t n)
 {
 	size_t			i;
-	size_t			j;
-	int				**c;
+	int				*c;
 	
-	j = 0;
+	i = 0;
 	c = s;
-	c = malloc(sizeof(int*) * n);
-	while (j < n)
+	c = malloc(sizeof(int) * n);
+	if (!c)
+		return (NULL);
+	while (i < n)
 	{
-		i = 0;
-		c[j] = malloc(sizeof(int) * m);
-		if (!c[j])
-			return (NULL);
-		while (i < m)
-		{
-			c[j][i] = 0;
-			i++;
-		}
-		j++;
+		c[i] = 0;
+		i++;
 	}
 	s = c;
 }
