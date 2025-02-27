@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/26 19:30:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:47:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ void		set_bucket(t_stack *stack);
 
 ////		OPERATIONS:
 void		do_swap(t_stack **stack);
-void		rotate_head(t_stack **stack);
+void		announce_rotate(char stk, int dir);
+void		do_rotate(t_stack **stack_a, t_stack **stack_b, char stk, int dir);
+void		rotate_head(t_stack **old, t_stack **new, char stk, int dir);
 void		reverse_rotate_head(t_stack **stack);
 ////		CO:OPS:
 void		do_sa(t_stack **stack);
@@ -126,8 +128,12 @@ void		do_rr(t_stack **stack_a, t_stack **stack_b);
 void		do_rra(t_stack **stack);
 void		do_rrb(t_stack **stack);
 void		do_rrr(t_stack **stack_a, t_stack **stack_b);
-void		do_pa(t_stack **stack_a, t_stack **stack_b);
-void		do_pb(t_stack **stack_a, t_stack **stack_b);
+
+void		push_multi(t_stack **sa, t_stack **sb, char dest, int multi);
+void		do_pa(t_stack **sa, t_stack **sb);
+
+
+void		do_pb(t_stack **sa, t_stack **sb);
 
 ////		SORTING:
 void		three_sort(t_stack **stack_a, t_stack **stack_b);
@@ -147,7 +153,7 @@ void		cost_get(t_stack **st, int size, int *num);
 
 int		sort_checker(t_stack *stack);
 void		sort_cost(t_stack **stack_a, int size);
-void		sort_three(t_stack **stack_a, t_stack **stack_b, int members);
+void		sort_three(t_stack **stack_a, t_stack **stack_b);
 void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 

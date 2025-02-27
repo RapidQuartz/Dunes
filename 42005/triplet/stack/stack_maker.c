@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/26 18:30:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:35:37 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	if (!array)
 		error_handling(NULL, NULL);
 	stack = stacker(array, argn, &head, 0);
-	ouroboros(stack->head, argn);
+	// ouroboros(stack->head, argn);
 	positioner(stack->head, argn);
 	stack_inspector(stack->head);
-	return (*stack->head);
+	return (stack);
 }
 
 //provision for last

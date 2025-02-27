@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/26 19:28:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:36:41 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	main(int argc, char **argv)
 		debug(GRNTXT"\n\n\n\n\t\t\t STACK IS SORTED!!!!!!!\n\n\n\n"DEFTXT);
 	else
 	{
-		debug("\n\n\n\nBEFORE SORT\n\n\n\n");
+		debug(BLUTXT"\n\n\n\nBEFORE SORT\n\n\n\n"DEFTXT);
 		print_stack(stack_a, 0, argn);
 		stack_assay(&stack_a, &stack_b, stack_a->size + 1);
+		debug(GRNTXT"\n\n\n\nAFTER ASSAY\n\n\n\n"DEFTXT);
 		print_stack(stack_a, 0, argn);
 		push_swap(&stack_a, &stack_b);
 	}
 	debug("\n\n\n\nAFTER SORT\n\n\n\n");
-	stack_a = *stack_a->head;
 	print_stack(stack_a, 0, argn);
 	return (0);
 }

@@ -27,10 +27,12 @@ void		push_swap(t_stack **stack_a, t_stack **stack_b)
 		do_sa(stack_a);
 	}
 	else if (size == 3)
+	{
+		three_sort(stack_a, stack_b);
 		debug("default");
-	// sort_three(stack_a, stack_b, members);
+	}
 	// if (members > 2 && members < 6)
 	else if (size > 3)
-		debug("default");
+		debug("default 2");
 	// set_cost(stack_a, stack_b, members);
 }

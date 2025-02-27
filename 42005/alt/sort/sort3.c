@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:29:35 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/17 14:47:02 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:38:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@
 //	proto:
 //	sort_three(stack_a, stack_b, members);
 //	sort_three(t_stack **stack_a, **t_stack stack_b, int members);
-void		sort_three(t_stack **stack_a, t_stack **stack_b, int members);
+void		sort_three(t_stack **stack_a, t_stack **stack_b);
 void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 
-void		sort_three(t_stack **stack_a, t_stack **stack_b, int members)
+void		sort_three(t_stack **stack_a, t_stack **stack_b)
+{
+	
+}
+
+/* void		sort_three(t_stack **stack_a, t_stack **stack_b, int members)
 {
 	int	x;
 	int	y;
@@ -37,7 +42,7 @@ void		sort_three(t_stack **stack_a, t_stack **stack_b, int members)
 	printf("%d\t", y);
 	printf("%d\t", z);
 	if (x < y && x < z && y < z)//	abc
-	return ;////	TODO: make sure this is graceful
+		return ;////	TODO: make sure this is graceful
 	else if (x > y && x > z && y < z)//	cab
 	{
 		debug(BLUTXT"1"DEFTXT);
@@ -61,7 +66,7 @@ void		sort_three(t_stack **stack_a, t_stack **stack_b, int members)
 		swap_yz(stack_a);
 	}
 	debug_print(*stack_a, "AFTER SORT3");
-}
+} */
 
 void		swap_xy(t_stack **stack_a)
 {
