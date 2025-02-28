@@ -13,16 +13,22 @@
 					x = n + 0
 					y = n + 1
 					z = n + 2
+		
 					(should have done xyz)
-		abc		if x < y && x < z && y < z
+		abc
+		if x < y && x < z && y < z
 	end	0
-		acb		if x < y && x < z && y > z
+	
+		acb
+		if x < y && x < z && y > z
 		swap y and z
 			rotate
 			swap
 			reverse rotate
 	end	3
-		cab		if x > y && x > z && y < z
+	
+		cab
+		if x > y && x > z && y < z
 		swap x and y
 			swap
 		swap y and z
@@ -30,7 +36,9 @@
 			swap
 			reverse rotate
 	end	4
-		cba		if x > y && x > z && y > z
+	
+		cba
+		if x > y && x > z && y > z
 		swap y and z
 			rotate
 			swap
@@ -42,7 +50,9 @@
 			swap
 			reverse rotate
 	end	7
-		bca		if x < y && x > z && y > z
+	
+		bca
+		if x < y && x > z && y > z
 		swap y and z
 			rotate
 			swap
@@ -50,7 +60,9 @@
 		swap x and y
 			swap
 	end	4
-		bac		if x > y && x < z && y < z
+	
+		bac
+		if x > y && x < z && y < z
 		swap x and y
 			swap
 	end	1
