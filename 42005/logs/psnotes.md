@@ -73,6 +73,7 @@ then, sorting must proceed according to other rules..
 
 	trying to incorporate into triplet:
 	-	456 is a potential triplet	STA = 6 4 9 5 10
+		- but is +1 "hidden" and +1 "not ordered" (4 + 2 = 6)
 	+2	rotate A				STA = 9 5 10 6 4
 	+1	swap A				STA = 5 9 10 6 4
 	+2	reverse A				STA = 6 4 5 9 10 //cab takes 4 moves
@@ -91,7 +92,7 @@ then, sorting must proceed according to other rules..
 		wrong stack - +1 for each number
 		distance to next - +1 for each step (bonus for wrong stack? +1 extra for moves?)
 	low entropy - numbers are close to adjacent
-		same stack - -1 for each number adjacent
+		same stack - -1 for each number adjacent	//A:cxd B:ba (pushB makes entropy -2 (right stack, ordered))
 		distance to next - minimum 0 for "right number right orientation"	//abx
 		distance to next - +1 for "next number right orientation"		//axb
 		distance to next - +1 for "right number wrong orientation"		//bax
@@ -107,8 +108,56 @@ then, sorting must proceed according to other rules..
 -	if a triplet has a better cost
 	- if index 1-3 is part of triplet with clue c and index 4-6 is part of triplet with clue a
 	- clue c costs 2 more, so must be disadvantaged in favor of clue a etc
+	- cost of triplet move includes cost benefit/disadvantage of accessing triplet move
 
+###	search for doubles
+-	A:ba (+1{wo/rs}) B:ba (+1{ro/ws}) A:ab (0{ro/rs}) B:ab (+1{ro/ws}) A:bxa (+2 {wo/rs/na}) B:bxa (+2{ro/ws/na})
 
+###	search for completing singlets
+-	A:bcxxa/ 
+
+#	legend of symbols
+ro	- right order
+wo	- wrong order
+ta	- truly adjacent
+na	- not adjacent
+rs	- right stack
+ws	- wrong stack
 
 2025-02-26 15:01:00
 cost assessment (0)
+
+2025-03-01 13:50:39
+	--abandoning triplet approach--
+	--attempting to use a function within the struct to calculate cost--
+	--switching from `cost_a` and `cost_b`--
+	--new: `cost_r` `cost_a` `cost_s`
+- `cost_r` - `relative` cost, pos/neg tells direction, 0 = `in place`
+- `cost_a` - `absolute` cost, always positive
+- `cost_s` - `sum` of absolute cost, calculated when stack is observed
+
+typedef struct s_stack
+{
+	int		val;
+	int		pos;
+	int		ind;
+	char		clu;
+	int		cost_r;
+	int		cost_a;
+	t_stack	**head;
+	t_stack	*low;
+	t_stack	*hig;
+	t_stack	*prev;
+	t_stack	*next;
+	int		(*cost_s)(struct t_stack);
+} t_stack;
+
+new->cost_s = ft_cost(stack);
+
+int		ft_cost(t_stack *stack);
+int		ft_cost(t_stack *stack)
+{
+	int
+			break ;
+		cost++;
+}

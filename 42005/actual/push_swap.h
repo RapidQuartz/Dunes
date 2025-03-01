@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/27 19:47:20 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:20:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,37 @@ typedef struct s_stack
 	int				size;
 	char				clue;
 	int				cost_a;
-	int				cost_b;
+	int				cost_r;
+	int				cost_s;
 	struct	s_stack	**head;
 	struct	s_stack	*low;
 	struct	s_stack	*high;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
+/* 
+typedef struct s_stack
+{
+	int		value;
+	int		index;
+	int		pos;
+	char		clue;
+	int		size;
+	int		cost_r;
+	int		cost_a;
+	t_stack	**head;
+	t_stack	*low;
+	t_stack	*high;
+	t_stack	*prev;
+	t_stack	*next;
+	int		(*cost_s)(struct t_stack);
+} t_stack; */
 
 ////		FUNCTIONS:
+///////		ACTUAL:
+//actual/cost/sum_cost.c
+int		ft_cost(t_stack *stack, char cost_n);
+int		ft_comcost(t_stack *stack, char cost_n);
 ////		TODO:	make `cost_*` pointers for positioning.
 
 
