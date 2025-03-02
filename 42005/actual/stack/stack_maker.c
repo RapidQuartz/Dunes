@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/01 15:12:22 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:50:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,29 @@
 t_stack	*stack_maker(int argc, char **argv, int argn)
 {
 	t_stack	*stack;
-	t_stack	*head;
 	int		*array;
+	int		index;
+	t_stack	**head;
 
-	head = NULL;
+	index = 0;
 	array = arg_array(argc, argv, argn, array);
 	if (!array)
 		error_handling(NULL, NULL);
-	stack = stacker(array, argn, &head, 0);
-	// ouroboros(stack->head, argn);
+	head = malloc(sizeof(t_stack *));
+	if (!head)
+		error_handling(NULL, NULL);
+	stack = stacker(array, argn, index, head);
+	if (!stack)
+		error_handling(&stack, head);
 	positioner(stack->head, argn);
 	stack_inspector(stack->head);
+	free(array);
 	return (stack);
 }
 
 //provision for last
 
-t_stack	*stacker(int *array, int argn, t_stack **head, int index)
+t_stack	*stacker(int *array, int argn, int index, t_stack **head)
 {
 	t_stack		*stack;
 	t_stack		*prev;
@@ -39,7 +45,7 @@ t_stack	*stacker(int *array, int argn, t_stack **head, int index)
 	prev = NULL;
 	while (index < argn)
 	{
-		stack = create_node(array[index], stack, index, argn);
+		stack = create_node(array[index], prev, index, argn);
 		if (stack == NULL)
 			error_handling(head, NULL);
 		if (index == 0)
@@ -74,6 +80,7 @@ t_stack	*create_node(int value, t_stack *prev, int index, int argn)
 	new->cost_r = 0;
 	new->cost_a = 0;
 	new->cost_s = 0;
+	new->cost_m = 0;
 	new->low = NULL;
 	new->high = NULL;
 	new->prev = prev;

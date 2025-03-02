@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/01 14:01:14 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/02 18:34:35 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ cost/stack_assay.c cost/sum_cost.c \
 ops/push.c ops/rotate.c ops/swap.c \
 stack/stack_indexer.c stack/stack_inspector.c \
 stack/stack_maker.c stack/stack_navigator.c \
-sort/push_swap.c sort/stack_sorter.c \
+sort/push_swap.c sort/stack_sorter.c sort/clue.c \
 util/utilities.c util/error_handling.c util/memory_utils.c
 OBJ = $(SRC:.c=.o)
 

@@ -1,3 +1,96 @@
+TODO:		make a `clue` file to avoid mess in sorter
+[TODO:	send 'rotation count' to `three_sort`](../actual/sort/stack_sorter.c#L33)
+	/* rotation count
+	considers `count` number of moves to sort a clue.
+	adds 'number of reverse/rotations to access clue' to `count`
+	performs move with:
+		a. fewest added moves
+		b. fewest total moves
+		c. fewest rotations before default `count`
+	*/
+#	issues 2025-03-02 17:51:58
+
+- ++	sort 2 and sort 3 works now!!! (not really)
+- --	sort larger still undone
+	proposed progression:
+	-	part goals:
+		-	add moves in global var?
+		-	reverse/rotate based on which is closer
+		-	get ready sorted numbers out of the way (clue = S)?
+		-	push sorted numbers IF remaining sort takes more moves
+				(2x numbers) so if remaining is > 2x moves to push
+				otherwise rotate/swap
+		-	implement RR, RRR, SS operations into algologic
+-	-	start simple:
+		sort individual numbers
+			rotate/reverse to unsorted and either:
+				swap
+					if stack becomes MORE sorted
+					if number becomes FULLY sorted
+			||
+				push
+					if stack becomes LESS sorted
+					if number becomes LESS sorted (higher cost)
+
+-	-	move into wilder territory:
+		sort the entire n > 10 stack with basic logic
+		revisit cost/assay as you go
+
+-	-	continue high concept:
+		run stack_assay and sort_check after each sorting move
+		cost assessment with more parameters (eg. dummy or test params)
+			{if(`this` were position, implying another value/s change)
+				what would then be cost?
+			}
+
+#	issues 2025-03-02 16:48:43
+- OK	cost_s should NOT go low->high but head->tail
+
+
+#	issues 2025-03-02 10:43:07
+- OK	stack->head seems to disappear or something, and it's weird.
+	happens after stack_maker, before ft_cost.
+	-	after `print_stack`
+- OK	`array` misrepresented values following: `*head = stack`
+	issue was in not allocating memory for `head` before assigning
+- OK	`cost_a` `cost_r` `cost_s` are not correct
+	seems like abs cost "lags" (should be on next node, not first)
+	seems like sum cost also lags (should be on next node, not first)
+	last node got past node's values basically
+	++	necessary for sorting
+
+2025-03-02 15:49:15
+#	DONE:
+	made one_sort, still depends on cost_r/cost_a
+
+#	TODO:
+make a check-distance function:
+		takes two nodes
+		finds distance in steps
+		returns as int
+	MOVE said function elsewhere
+
+make a mode in ft_cost/ft_comcost that allows 'sum' calls to return difference between head and subject
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // check for triplet
 // (if st->prev->pos, st->pos, st->next->pos are all within 1)
 // // if triplet >> `cost_a/cost_b` and `clue' for all is set
@@ -9,14 +102,17 @@
 // check for singlet
 // (how far to next adjacent -/+)
 // // always >> `cost_a/cost_b` and `clue` set
-/* triplet arrangements and costs
-	0/abc = a
-	1/bac = c
-	3/acb = b
-	4/bca = d
-	4/cab = e
-	7/cba = f
-*/
+[](README.md)
+#	triplet arrangements and costs
+	
+0/abc = [a](sort3.md#abc)
+1/bac = [b](sort3.md#bac)
+3/acb = [c](sort3.md#acb)
+4/bca = [d](sort3.md#bca)
+4/cab = [e](sort3.md#cab)
+7/cba = [f](sort3.md#cba)
+
+
 some times, statistically speaking probably most times, there are no triplets
 then, sorting must proceed according to other rules..
 

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/26 18:31:37 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:46:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	error_handling(t_stack **one, t_stack **other)
 	if (one == NULL  || (*one) != NULL)
 	{
 		//debug("freeing one");
-		free_memory(one);
+		free_stack(one);
 	}
 	if (other == NULL  || (*other) != NULL)
 	{
 		//debug("freeing other");
-		free_memory(other);
+		free_stack(other);
 		other = NULL;
 	}
 	////DEBUG:REPLACE:WITH:PUTSTR:OR:WRITE:
@@ -37,28 +37,6 @@ void	error_handling(t_stack **one, t_stack **other)
 	////DEBUG:REPLACE:WITH:WRITE:
 	write (2, "Error\n", 6);
 	exit (1);
-}
-
-void	free_memory(t_stack **stack)
-{
-	//debug("in free memory");
-	t_stack	*mem;
-	
-	if (!stack || !*stack)
-		return ;
-	printf("stack: %p\n", *stack);
-	// printf("stack value: %d\n", (*stack)->value);
-	// printf("stack->next: %p\n", (*stack)->next);
-	while (*stack)
-	{
-		//debug("in _fm_ loop");
-		mem = (*stack)->next;
-		printf("freeing node: %p\n", *stack);
-		free(*stack);
-		*stack = mem;
-	}
-	//debug("setting to NULL");
-	*stack = NULL;
 }
 
 void		debug(char *str)
@@ -78,6 +56,7 @@ void		debug(char *str)
 	}
 	write (1, "}\n", 2);
 }
+
 void	check_minmax(long int value, t_stack **stack)
 {
 	//debug("in check_minmax()");
@@ -90,6 +69,23 @@ void	check_minmax(long int value, t_stack **stack)
 	}
 }
 
+void	head_print(t_stack *stack, char *msg)
+{
+	int	err;
+
+	err = 0;
+	printf("\t\t[%s]\n", msg);
+	if (!stack)
+		debug(REDTXT"NO STACK IN HEAD PRINT"DEFTXT);
+	if (!stack->head)
+		debug(REDTXT"NO HEAD IN HEAD PRINT"DEFTXT);
+	if (!stack || !stack->head)
+		err = 1;
+	if (err == 0)
+	printf("HEAD: %p\t HEAD VALUE: %d\n", (void *)stack->head, (*stack->head)->value);
+
+}
+
 void	debug_print(t_stack *stack, char *msg)
 {
 	int	i = 0;
@@ -99,9 +95,9 @@ void	debug_print(t_stack *stack, char *msg)
 	while (1)
 	{
 		printf("value: %d\tindex: %d\tposition:%d\t"
-"cost_a:%d\tcost_b:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
+"cost_a:%d\tcost_r:%d\tcost_s:%d\n\tprev:%p\tnext:%p\t\n\n", stack->value, \
 		stack->index, stack->pos, \
-		stack->cost_a, stack->cost_b, stack->prev, stack->next);
+		stack->cost_a, stack->cost_r, stack->cost_s, stack->prev, stack->next);
 		if (stack->next == *stack->head)
 			break ;
 		stack = stack->next;
@@ -131,4 +127,26 @@ void	debug_cost_print(int *num, int size)
 		i++;
 	}
 	DEFTXT;
+}
+
+void		free_stack(t_stack **stack)
+{
+	t_stack	*node;
+	t_stack	*mem;
+	t_stack	**head_node;
+	int		size;
+	
+	node = (*stack);
+	size = node->size;
+	if (node->head != NULL)
+		head_node = node->head;
+	if (head_node != NULL)
+		free(head_node);
+	while (size--)
+	{
+		mem = node;
+		node = node->next;
+		free (mem);
+	}
+	*stack = NULL;
 }

@@ -6,59 +6,87 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:01:43 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/01 15:30:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:44:52 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 /* 2025-03-01 14:01:52 */
 
-//// ft_cost
 int		ft_cost(t_stack *stack, char cost_n)
 {
-	int		sum_cost;
-	int		rel_cost;
-	int		abs_cost;
 	t_stack	*sub;
-	t_stack	*bus;
-	
+	int		i;
+	int		sum;
+
+	if (!stack)
+		return (0);
+	i = 0;
+	sum = 0;
 	sub = stack;
-	if (sub->low != NULL)
-		sum_cost = sub->low->cost_s;
-	if (sub->high != NULL)
+	if (cost_n == 'a')
+		return (ft_comcost(sub, 'a'));
+	else if (cost_n == 'r')
+		return (ft_comcost(sub, 'r'));
+	while (cost_n == 's' && i++ < sub->size)
 	{
-		abs_cost = ft_comcost(sub, 'a');
-		rel_cost = ft_comcost(sub, 'r');
-		sum_cost += abs_cost;
-		if (cost_n == 'a')
-			return (abs_cost);
-		else if (cost_n == 'a')
-			return (rel_cost);
-		else if (cost_n == 's')
-			return (sum_cost);
+		sum += ft_sumcost(sub, i);
+		sub->cost_s = sum;
+		sub = sub->next;
 	}
 	return (0);
 }
 
-//// ft_comcost
 int		ft_comcost(t_stack *stack, char cost_n)
 {
 	int		cost_a;
 	int		cost_b;
-	t_stack	*sub;
-	t_stack	*bus;
-	
-	sub = stack;
-	bus = sub->high;
+	int		target;
+	t_stack	*mem;
+
+	mem = stack;
+	target = stack->pos;
 	cost_a = 0;
 	cost_b = 0;
-	while (sub->next != bus && cost_a++)
-		sub = sub->next;
-	while (bus->prev != sub && cost_b++)
-		bus = bus->prev;
+	while (stack->index != target)
+	{
+		stack = stack->next;
+		cost_a++;
+	}
+	while (mem->index != target)
+	{
+		mem = mem->prev;
+		cost_b++;
+	}
 	if (cost_a > cost_b && cost_n == 'r')
 		cost_a = -cost_b;
 	else if (cost_a > cost_b && cost_n == 'a')
 		cost_a = cost_b;
 	return (cost_a);
+}
+
+int		ft_sumcost(t_stack *stack, int index)
+{
+	int		cost_a;
+	int		cost_b;
+	t_stack	*mem;
+	t_stack	*eme;
+	
+	cost_a = 0;
+	cost_b = 0;
+	mem = stack;
+	eme = mem;
+	while (eme->pos != index)
+	{
+		eme = eme->next;
+		cost_a++;
+	}
+	while (mem->pos != index)
+	{
+		mem = mem->prev;
+		cost_b++;
+	}
+	if (cost_a <= cost_b)
+		return (cost_a);
+	return (cost_b);
 }

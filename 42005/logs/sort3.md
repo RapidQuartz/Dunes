@@ -15,11 +15,11 @@
 					z = n + 2
 		
 					(should have done xyz)
-		abc
+##		abc
 		if x < y && x < z && y < z
 	end	0
 	
-		acb
+##		acb
 		if x < y && x < z && y > z
 		swap y and z
 			rotate
@@ -27,7 +27,7 @@
 			reverse rotate
 	end	3
 	
-		cab
+##		cab
 		if x > y && x > z && y < z
 		swap x and y
 			swap
@@ -37,7 +37,7 @@
 			reverse rotate
 	end	4
 	
-		cba
+##		cba
 		if x > y && x > z && y > z
 		swap y and z
 			rotate
@@ -51,7 +51,7 @@
 			reverse rotate
 	end	7
 	
-		bca
+##		bca
 		if x < y && x > z && y > z
 		swap y and z
 			rotate
@@ -61,7 +61,7 @@
 			swap
 	end	4
 	
-		bac
+##		bac
 		if x > y && x < z && y < z
 		swap x and y
 			swap

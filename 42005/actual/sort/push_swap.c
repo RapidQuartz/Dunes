@@ -20,19 +20,10 @@ void		push_swap(t_stack **stack_a, t_stack **stack_b)
 	int	size;
 
 	size = (*stack_a)->size;
-	debug("inside push_swap");
 	if (size == 2)
-	{
-		debug("doing sa inside ps");
 		do_sa(stack_a);
-	}
 	else if (size == 3)
-	{
-		three_sort(stack_a, stack_b);
-		debug("default");
-	}
-	// if (members > 2 && members < 6)
+		clue_find(stack_a, (*stack_a)->size);
 	else if (size > 3)
 		debug("default 2");
-	// set_cost(stack_a, stack_b, members);
 }

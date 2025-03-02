@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+// /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   stack_sorter.c                                     :+:      :+:    :+:   */
@@ -6,76 +6,43 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:30:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/27 15:08:37 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:05:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void		three_sort(t_stack **stack_a, t_stack **stack_b)
-{
-	char	clu;
 
-	clu = (*stack_a)->next->clue;
-	if (clu >= 'a' && clu <= 'f')
-		debug("state");
+void		three_sort(t_stack **stack, t_stack *opt, int count, char clu)
+{
+	if ((clu >= 'a' && clu <= 'd') || clu == 'g')
+		clue_reader_abcdg(stack, opt, count, clu);
+	else if (clu == 'e' || clu == 'f' || clu == 'h' || clu == 'i')
+		clue_reader_efhi(stack, opt, count, clu);
 }
 
-void		clue_reader(t_stack **stack_a, t_stack **stack_b, char clu)
+void		one_sort(t_stack **stack)
 {
-	int	set;
-	char	mod;
-	char	stk;
-	
-	if (clu == 'a')//abc/push if many more numbers to sort AND makes more sorted
-		push_multi(stack_a, stack_b, 'b', 3);
-	if (clu == 'b')//acb/swap y and z, rotate, swap, reverse rotate
+	t_stack	*target;
+	t_stack	*subject;
+
+	subject = (*stack);
+	target = NULL;
+	if ((*stack)->pos + 1 != (*stack)->size)
 	{
-		do_sa(stack_a);
-		do_rotate(stack_a, stack_b, 'a', 1);
-		do_sa(stack_a);
-		do_rotate(stack_a, stack_b, 'a', -1);
+		debug(REDTXT"`pos + 1` is size"GRNTXT);
 		return ;
 	}
-	if (clu == 'c')
-		do_sa(stack_a);
-	;
+	while (target == NULL)
+	{
+		if (subject->next->pos == (*stack)->pos + 1)
+			target = subject->next;
+		else
+			subject = subject->next;
+	}
+	/* sorts a single node
+	process:
+		find next larger (check for `pos == size`)
+		calculate moves there (cost_s for that node)
+	*/
 }
-/* c//bac		if x > y && x < z && y < z
-		swap x and y
-			swap
-	end	1 */
-/* b//acb		if x < y && x < z && y > z
-		swap y and z
-			rotate
-			swap
-			reverse rotate
-	end	3 */
-
-
-/*
-bca		if x < y && x > z && y > z
-		swap y and z
-			rotate
-			swap
-			reverse rotate
-		swap x and y
-			swap
-*/
-/* misc copypasta
-
-t_stack
-(*stack_a)
-(*stack_b)
-->
-next
-prev
-head
-high
-low
-clue
-
-if ()
-
-while ()
-*/

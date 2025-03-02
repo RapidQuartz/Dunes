@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:06:02 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/01 15:26:49 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:33:03 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,28 @@
 
 void		stack_assay(t_stack **st, t_stack **ts, int size)
 {
-	t_stack	*subject;
-	t_stack	*summer;
 	int		sum;
 	int		i;
 
-	subject = (*st);
 	i = size;
 	sum = 0;
 	while (i--)
 	{
-		is_adjacent(&subject);
-		subject = subject->next;
+		check_adjacency(st);
+		(*st) = (*st)->next;
 	}
-	subject = nav_ptr_set(&subject, subject->size);
-	while (size--)
+	(*st) = nav_ptr_set(st, (*st)->size);
+	while (size-- && (*st))
 	{
-		subject->cost_r = ft_cost(subject, 'r');
-		subject->cost_a = ft_cost(subject, 'a');
-		sum += subject->cost_a;
-		subject->cost_s += sum;
-		subject = subject->high;
+		(*st)->cost_r = ft_cost((*st), 'r');
+		(*st)->cost_a = ft_cost((*st), 'a');
+		if ((*st)->high)
+			(*st) = (*st)->high;
+		else
+			break ;
 	}
-}
-
-void		is_adjacent(t_stack **st)
-{
-	int		n;
-	t_stack	*subject;
-	
-	n = 0;
-	subject = (*st);
-	check_adjacency(&subject);
+	st = (*st)->head;
+	i = ft_cost((*st), 's');
 }
 
 void		check_adjacency(t_stack **st)

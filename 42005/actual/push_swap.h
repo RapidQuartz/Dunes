@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/01 15:20:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:12:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_stack
 	int				cost_a;
 	int				cost_r;
 	int				cost_s;
+	int				cost_m;
 	struct	s_stack	**head;
 	struct	s_stack	*low;
 	struct	s_stack	*high;
@@ -61,129 +62,90 @@ typedef struct s_stack
 
 ////		FUNCTIONS:
 ///////		ACTUAL:
+
+////	MAIN:
+//actual/main.c
+void		print_stack(t_stack *stack, int i, int argn);
+
+////	COST:
 //actual/cost/sum_cost.c
 int		ft_cost(t_stack *stack, char cost_n);
 int		ft_comcost(t_stack *stack, char cost_n);
-////		TODO:	make `cost_*` pointers for positioning.
 
-
-//		adds info like position, next/prev pointers etc
-t_stack	*find_lowest(t_stack *stack);
-
-void		update_head(t_stack **old_head, t_stack *new_head);
-
-////		ERROR:
-void		error_handling(t_stack **one, t_stack **other);
-void		free_memory(t_stack **stack);
-
-////		UTILITY:
-//		an ft_atoi clone, mutated into a push swap creation
-long		get_number(char *arg, int argn);
-void		check_minmax(long int value, t_stack **stack);
-int		get_absolute(int rel);
-
-void		*ft_calloc(size_t nmemb, size_t size);
-int		*ft_nzero(int *s, size_t n);
-
-////		PRIMARY:
-//		gets ready made stacks and does magic
-void		push_swap(t_stack **stack_a, t_stack **stack_b);
-
-////		ARGUMENTS:
-t_stack	*stack_stacker(int value, t_stack *prev);
-int		arg_counter(char *args);
+////	ARGS:
+//actual/args/arg_inspector.c
 int		arg_inspector(int argc, char **argv);
+int		arg_counter(char *args);
 int		arg_checker(char a, char b);
-
-////		STACK:
-t_stack	*stacker(int *array, int argn, t_stack **head, int index);
-t_stack	*create_node(int value, t_stack *prev, int index, int argn);
-void		ouroboros(t_stack **snek, int argn);
-t_stack	*highlow_value(t_stack *stack, int argn);
-
-//		investigates the stack for malignancy or opportunity
-void		stack_inspector(t_stack **stk);
-//		assigns the index/position integers
-void		stack_indexer(t_stack **stk);
-void		positioner(t_stack **stack, int argn);
-void		stack_finisher(t_stack **stack, t_stack **lowest, int members);
-//		calls various functions to process stack
-t_stack	*stack_maker(int argc, char **argv, int stk_size);
-//		converts arguments into stack values
-t_stack	*stack_filler(int argc, char **argv, int stk_size);
-//
-t_stack	*stack_array(int *array, int argn);
-//		uses an array to make stack in the right direction
-//
-//		sets higher/lower pointers for stack
-void		stack_hilofinder(t_stack **stack, int size);
-int		stack_hilosetter(t_stack *stack, t_stack *next, int size);
-
-//	[	DENIM	EDITION	]
-int		set_argn(int argc, char **argv);
-t_stack	*set_head(int value, t_stack *last, t_stack *head);
-
-////		ARGUMENTS:
+//actual/args/arg_array.c
 int		*arg_array(int argc, char **argv, int argn, int *array);
 
-////		DEBUG:
+////	STACK:
+//actual/stack/stack_maker.c
+t_stack	*stack_maker(int argc, char **argv, int argn);
+t_stack	*stacker(int *array, int argn, int index, t_stack **head);
+t_stack	*create_node(int value, t_stack *prev, int index, int argn);
+void		positioner(t_stack **stack, int argn);
+t_stack	*highlow_value(t_stack *stack, int argn);
+//actual/stack/stack_inspector.c
+void		stack_inspector(t_stack **stk);
+
+////	UTIL:
+//actual/util/utilities.c
+long		get_number(char *arg, int argn);
 void		debug(char *str);
-void		debug_print(t_stack *stack, char *msg);
-void		debug_cost_print(int *num, int size);
+//actual/util/memory_utils.c
+void		*ft_calloc(size_t nmemb, size_t size);
+int		*ft_nzero(int *s, size_t n);
+//actual/util/error_handling.c
+void		check_minmax(long int value, t_stack **stack);
+void		error_handling(t_stack **one, t_stack **other);
+void		free_stack(t_stack **stack);
 
-////		BUCKET:
-void		set_bucket(t_stack *stack);
+////	CHECK:
+//actual/check/sort_checker.c
+int		sort_checker(t_stack *stack);
 
-////		OPERATIONS:
-void		do_swap(t_stack **stack);
-void		announce_rotate(char stk, int dir);
-void		do_rotate(t_stack **stack_a, t_stack **stack_b, char stk, int dir);
-void		rotate_head(t_stack **old, t_stack **new, char stk, int dir);
-void		reverse_rotate_head(t_stack **stack);
-////		CO:OPS:
-void		do_sa(t_stack **stack);
-void		do_sb(t_stack **stack);
-void		do_ss(t_stack **stack_a, t_stack **stack_b);
-void		do_ra(t_stack **stack);
-void		do_rb(t_stack **stack);
-void		do_rr(t_stack **stack_a, t_stack **stack_b);
-void		do_rra(t_stack **stack);
-void		do_rrb(t_stack **stack);
-void		do_rrr(t_stack **stack_a, t_stack **stack_b);
-
-void		push_multi(t_stack **sa, t_stack **sb, char dest, int multi);
-void		do_pa(t_stack **sa, t_stack **sb);
-
-
-void		do_pb(t_stack **sa, t_stack **sb);
-
-////		SORTING:
-void		three_sort(t_stack **stack_a, t_stack **stack_b);
-
-int		sort_stack(t_stack **stack_a, t_stack **stack_b);
-void		sort_trip(t_stack **st, t_stack **ts, char cl);
-void		sort_doub(t_stack **st, t_stack **ts, char cl);
-void		sort_sing(t_stack **st, t_stack **ts, char cl);
-
-////		ASSAY:
+////	COST:
+//actual/cost/stack_assay.c
 void		stack_assay(t_stack **st, t_stack **ts, int size);
-void		is_adjacent(t_stack **st);
 void		check_adjacency(t_stack **st);
 t_stack	*nav_ptr_set(t_stack **st, int size);
-void		cost_get(t_stack **st, int size, int *num);
+//cost/sum_cost.c
+int		ft_cost(t_stack *stack, char cost_n);
+int		ft_comcost(t_stack *stack, char cost_n);
+int		ft_sumcost(t_stack *stack, int index);
 
+////	PUSH:SWAP:
+//actual/sort/push_swap.c
+void		push_swap(t_stack **stack_a, t_stack **stack_b);
 
-int		sort_checker(t_stack *stack);
-void		sort_cost(t_stack **stack_a, int size);
-void		sort_three(t_stack **stack_a, t_stack **stack_b);
-void		swap_xy(t_stack **stack_a);
-void		swap_yz(t_stack **stack_a);
+////	OPS:
+//actual/ops/push.c
+void		push_multi(t_stack **sa, t_stack **sb, char dest, int multi);
+void		do_pa(t_stack **sa, t_stack **sb);
+void		do_pb(t_stack **sa, t_stack **sb);
+//actual/ops/rotate.c
+void		do_rotate(t_stack **stack_a, t_stack **stack_b, char stk, int dir);
+void		rotate_head(t_stack **old, t_stack **new, char stk, int dir);
+//actual/ops/swap.c
+void		do_sa(t_stack **stack);
+void		do_sb(t_stack **stack);
+void		do_swap(t_stack **stack);
+void		update_head(t_stack **old_head, t_stack *new_head);
 
-////		COST:
-void		trip_cost_get(t_stack **st);
-void		doub_cost_get(t_stack **st);
-void		sing_cost_get(t_stack **st);
+////	SORTING:
+//actual/sort/stack_sorter.c
+void		three_sort(t_stack **stack, t_stack *opt, int count, char clu);
+void		one_sort(t_stack **stack);
 
+//actual/sort/clue.c
+int		move_counter(t_stack *stack, char clu);
+void		clue_find(t_stack **stack, int size);
+int		clue_counter(t_stack *stack, char clu);
+void		clue_reader_abcdg(t_stack **stack, t_stack *opt, int c, char clu);
+void		clue_reader_efhi(t_stack **stack, t_stack *opt, int c, char clu);
 
-////		LEGACY:	DISUSED:
+////	:
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:42:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 17:19:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:39:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	stack_inspector(t_stack **stk)
 
 	t = (*stk);
 	p = t->next;
-	while (p != *t->head || (d == 0 && i == 0))
+	i = p->size + 1;
+	while (i--)
 	{
 		while (t->value != p->value)
 			p = p->next;
