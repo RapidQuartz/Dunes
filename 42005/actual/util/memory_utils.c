@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:40:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/28 12:33:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:18:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,29 @@ int	*ft_nzero(int *s, size_t n)
 	}
 	s = c;
 	return (s);
+}
+
+void	free_tree(t_tree **tree)
+{
+	t_tree	*stump;
+	t_tree	*scion;
+	int		size;
+
+	stump = (*tree);
+	scion = stump;
+	size = 0;
+	while (scion->next != NULL && size++)
+		scion = scion->next;
+	scion = stump;
+	while (size-- && stump)
+	{
+		if (stump->next != NULL)
+			scion = stump->next;
+		else
+			scion = NULL;
+		free (stump);
+		stump = scion;
+	}
+	if (stump)
+		stump = NULL;
 }

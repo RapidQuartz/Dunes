@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:17:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/02 13:46:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:57:47 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@
 ////	end program
 ////	
 
+void	tree_error(t_tree **tr, t_tree **rs, t_stack **ss, t_stack **tt)
+{
+	if (tr == NULL || (*tr) != NULL)
+	{
+		if (rs && rs != NULL && tr && (*tr)->roots != NULL)
+			free (rs);
+		rs = tr;
+		while ((*tr))
+		{
+			tr = rs;
+			if ((*rs)->next)
+				(*rs) = (*rs)->next;
+			free_tree(tr);
+		}
+	}
+	tr = NULL;
+	rs = NULL;
+	error_handling(ss, tt);
+}
+
 void	error_handling(t_stack **one, t_stack **other)
 {
 	//debug("in error handling");
@@ -25,6 +45,7 @@ void	error_handling(t_stack **one, t_stack **other)
 	{
 		//debug("freeing one");
 		free_stack(one);
+		one = NULL;
 	}
 	if (other == NULL  || (*other) != NULL)
 	{
@@ -36,7 +57,7 @@ void	error_handling(t_stack **one, t_stack **other)
 	// printf("Error\n");
 	////DEBUG:REPLACE:WITH:WRITE:
 	write (2, "Error\n", 6);
-	exit (1);
+	exit (2);
 }
 
 void		debug(char *str)
@@ -141,7 +162,7 @@ void		free_stack(t_stack **stack)
 	if (node->head != NULL)
 		head_node = node->head;
 	if (head_node != NULL)
-		free(head_node);
+		free (head_node);
 	while (size--)
 	{
 		mem = node;

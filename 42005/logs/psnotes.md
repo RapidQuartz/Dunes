@@ -1,4 +1,147 @@
-TODO:		make a `clue` file to avoid mess in sorter
+#	2025-03-04 12:44:11
+##	DONE
+explanation
+for n numbers, m moves is max:
+100	-	700
+500	-	5500
+
+so minimum 7x maximum 11x
+could just go 11x right away?
+so each moveset may have max 5500 + 5(leading zeroes and numbers) + 2 (x and y) = 5507 bytes
+
+
+
+on memory:
+each `array` representing stacks needs only 2 bytes/16 bits to store 500 values
+a `short` variable is 16 bits and can store a range
+from -32,768 to 32,767 (signed) or from 0 to 65,535 (unsigned)
+
+so each 'stack image' would be a product of
+-	how many movesets do we need?
+	215 for the 'five steps'
+		(5 'primaries', 30 'secondaries', 180 'tertiaries')
+	??maybe some extras for 'deep moves' that require extensive rotation?
+-	how much memory is involved?
+	stack images:
+		2 bytes per stack image
+	movesets: (626 bytes)//662 with cover stages
+		3 primer stages (push/swapping a number) 
+			5 * 1 move/byte		+ 7 bytes = 5 + 7 bytes/40 + 56 = 96 bits
+			30 * 2 moves/bytes	+ 7 bytes = 60 + 7 bytes/480 + 56 = 536 bits
+			180 * 3 moves/bytes	+ 7 bytes = 540 + 7 bytes/4320 + 56 = 4376 bits
+			
+		2 cover stages (rotating up a number)
+			6 * 1 move/byte		=	6
+			6 * 2 moves/bytes		=	12
+			6 * 3 moves/bytes		=	18 // + 36
+		
+		5 adopted movesets
+			up to 500 * 5 * 
+			
+- started 'forest approach'
+	- initialize a struct called tree
+	- used to calculate options and compare
+	- currently very basic, has `int` as well as `t_tree **roots` and `t_tree *next`
+	- future will include `int*` arrays for encoding ops moves and costs
+		-	encoding ops
+			-available moves:
+			-	`int *ops` (or maybe char array for easier copying?)
+			-	`char **ops`
+				0		-	default
+				1		-	sa
+				2		-	sb
+				3		-	ss
+				4		-	ra
+				5		-	rb
+				6		-	rr
+				7		-	rra
+				8		-	rrb
+				9		-	rrr
+				10		-	pa
+				11		-	pb
+		-	encoding moves
+			-	`int *steps`
+			-	`on step n`
+				steps[n]
+				//basic array, but could contain address to ops? or just a ref.
+				//probably a superior array `tree[x][y][z]`
+				//`array[variants][steps][ops]`
+				//`tree[trunk][branch][leaf]`
+			-	`int *ops`
+			-	`do op m`
+				ops[m]
+		-	encoding costs
+			-	hm. if tree structure contains this `***int`
+				then... hm... could store the move count as an int at 0 in the list of instructions
+				then at 1+ is the code for the move itself. (1-11 or abcdefghijk)
+				[char **movestring]
+				eg: [00024xafdefeyyyy]
+				[leading zeroes]count-as-numstring[x to start]
+				=
+				24 [moves]
+				[x as delimiter for start]
+				sa rr ra rb rr rb
+				[y as delimiter for end]
+				0		-	default start of instruction (minimum 1, maximum 4 followed by a number)
+				a		-	sa
+				b		-	sb
+				c		-	ss
+				d		-	ra
+				e		-	rb
+				f		-	rr
+				g		-	rra
+				h		-	rrb
+				i		-	rrr
+				j		-	pa
+				k		-	pb
+				x		-	end of count/start of moves
+				y		-	end of moves
+				[how many moves?]
+				would it make more sense to have a fixed length array and use more of them?
+				encode the hook or whatever by not writing y before its done?
+				maybe if the last char before null is z, its all done, and if its y then the next array also counts?
+				if the array starts with y instead of x
+				eg: [yfdefey]
+				[encode moves as string]
+				number count with leading zeroes (to potentially store thousands of moves)
+				the number of arrays might vary. they should be deleted as newer/better move sets come around
+				so in practice, even with a very long list of numbers, it might be few actual potential arrays.
+				but the 'wrong moves' might be the same all along?
+				should 'tried and found ineffective' be stored separately?
+				how to avoid repetition?
+				-	try moves in sequence
+				how to try moves?
+				-	never ra/rra or sa sa (redundant repetition)
+				-	redundant combos: (unacceptable strings)
+						aa
+						bb
+						cc
+						dg
+						gd
+						eh
+						he
+						fi
+						if
+						jk
+						kj
+				
+<!--	NAH			
+				could also encode moves for B stack as CAPITALS ()
+				0		-	default/count-as-numstring
+				a		-	sa
+				A		-	sb
+				b		-	ss
+				c		-	ra
+				C		-	rb
+				d		-	rr
+				e		-	rra
+				E		-	rrb
+				f		-	rrr
+				g		-	pa
+				G		-	pb -->
+
+
+[TODO:		make a `clue` file to avoid mess in sorter](../actual/sort/clue.c)
 [TODO:	send 'rotation count' to `three_sort`](../actual/sort/stack_sorter.c#L33)
 	/* rotation count
 	considers `count` number of moves to sort a clue.

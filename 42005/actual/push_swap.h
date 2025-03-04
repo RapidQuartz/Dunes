@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/02 20:12:46 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:45:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_stack
 	struct	s_stack	*prev;
 	struct	s_stack	*next;
 } t_stack;
-/* 
+/* alt stack
 typedef struct s_stack
 {
 	int		value;
@@ -59,6 +59,67 @@ typedef struct s_stack
 	t_stack	*next;
 	int		(*cost_s)(struct t_stack);
 } t_stack; */
+//
+/* tree for new approach */
+
+typedef struct s_tree
+{
+	short				rings;//'steps' so the first are 
+	short				**trunk;//stack projection
+	char				**branch;//ALL movesets
+	short				**leaf;//entropy measurement
+	char				**seed;//5 candidate movesets
+	struct	s_tree	**roots;//head basically
+	struct	s_tree	*next;
+} t_tree;
+
+////		TREEDEFS:
+
+#ifndef MAX_MOVES
+# define MAX_MOVES 5507
+#endif
+#ifndef MAX_NUM
+# define MAX_NUM 500
+#endif
+
+
+////		TREEFUNCTIONS:
+
+//	combines error handling for brevity
+void		tree_error(t_tree **tr, t_tree **rs, t_stack **ss, t_stack **tt);
+//	frees the tree and sets it to NULL
+void		free_tree(t_tree **tree);
+//	is called to begin making the tree structure
+t_tree	**tree_planter(t_stack **stack_a, t_stack **stack_b, t_tree **tree);
+//	
+
+////	FOREST:
+void		forest(t_stack **stack_a, t_stack **stack_b, t_tree **tree);
+
+////	TRUNK:
+void		trunk_alloc(t_stack **stack_a, t_tree **tree);
+void		trunk_init(t_stack **stack_a, t_tree **tree);
+
+////	BRANCH:
+//	
+void		branch_alloc(t_tree **tree);
+// void		branch_init(t_tree **tree);
+
+////	LEAF:
+//	
+void		leaf_alloc(t_tree **tree);
+
+////	SEED:
+//	
+void		seed_alloc(t_tree **tree);
+
+//	calls the plant_tree and advances stack
+t_tree	*make_tree(t_tree **tree, t_stack **stack);
+//	sets default and current values, init tree
+t_tree	*plant_tree(t_tree **trunk, t_tree **roots);
+//	sets `roots`, equivalent to `head`
+t_tree	**plant_roots(t_tree **tree, t_tree **roots);
+
 
 ////		FUNCTIONS:
 ///////		ACTUAL:

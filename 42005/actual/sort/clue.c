@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 18:34:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/02 20:49:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:36:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,6 @@ void		clue_reader_efhi(t_stack **stack, t_stack *opt, int c, char clu)
 		do_sa(stack);
 	if (clu == 'i')
 		one_sort(stack);
-}
-
-t_stack	optimove(t_stack **stack)
-{
-	int	size;
-	int	*moves;
-	
-	size = (*stack)->size;
-	moves = malloc(sizeof(int) * size);
-	if (!moves)
-		error_handling(stack, NULL);
-	while (size)
-	{
-		moves[--size] = (*stack)->cost_r;
-		
-	}
 }
 
 int		move_counter(t_stack *stack, char clu)

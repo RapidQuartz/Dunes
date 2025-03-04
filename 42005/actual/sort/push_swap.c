@@ -17,13 +17,18 @@
 
 void		push_swap(t_stack **stack_a, t_stack **stack_b)
 {
-	int	size;
+	int		size;
+	t_tree	**tree;
 
+	tree = NULL;
 	size = (*stack_a)->size;
 	if (size == 2)
 		do_sa(stack_a);
 	else if (size == 3)
 		clue_find(stack_a, (*stack_a)->size);
 	else if (size > 3)
-		debug("default 2");
+	{
+		tree  = tree_planter(stack_a, stack_b, tree);
+		forest(stack_a, stack_b, tree);
+	}
 }

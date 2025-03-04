@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/02 18:34:35 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/04 17:42:41 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ SRC = main.c \
 args/arg_inspector.c args/arg_array.c \
 check/sort_checker.c \
 cost/stack_assay.c cost/sum_cost.c \
+forest/forest.c \
+forest/decision_tree.c forest/make_tree.c forest/make_branch.c \
+forest/make_leaf.c forest/make_seed.c forest/make_trunk.c \
 ops/push.c ops/rotate.c ops/swap.c \
 stack/stack_indexer.c stack/stack_inspector.c \
 stack/stack_maker.c stack/stack_navigator.c \
