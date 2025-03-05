@@ -33,10 +33,146 @@ int		main(void)
 	return (0);
 }
 
+/* top and bottom quartile of the stack are most relevant
+max 500 numbers, probably less
+
+divide stack into top and bottom
+
+states:
+
+				a	b		a	b	
+0	[empty]		0	0		0	0	[empty]	0
+A	[0>m<251]		m	m		m	m	[size]	A
+B	[0>m<251]	 	m	0		0	m	[num]		C
+D	[0>m<251]		m	n	[251]	n	m	[op]		I
+E	[0>m<251]		m	o	[252]	o	m	[op]		J
+F	[0>m<251]		m	p	[253]	p	m	[op]		K
+G	[0>m<251]		m	q	[254]	q	m	[op]		L
+H	[0>m<251]		m	r	[255]	r	m	[op]		M
+==										
+N	[n = 251]		n	n	[op]
+O	[o = 252]		o	o	[op]
+P	[p = 253]		p	p	[op]
+Q	[q = 254]		q	q	[op]
+R	[r = 255]		r	r	[op]
+
+legend:
+cod	ind	category		ch_a	nom	ch_b	description
+0	i	[null/sorted]	-0-	{}	-0-	"null value/spacer"
+A	ii	[size/division]	-m-	{}	-m-	"stack size [eg. 2 1 = 3 total]"
+B	iii	[num	-	top]	-m-	{}	-0-	"element position for 1st half of stack"
+C	iv	[num	-	bot]	-0-	{}	-m-	"element position for 2nd half of stack"
+D	v	[op	-	top]	-m-	{pa}	-251-	"Push -m- to stack A"
+E	vi	[op	-	top]	-m-	{pb}	-252-	"Push -m- to stack B"
+F	vii	[op	-	top]	-m-	{sa}	-253-	"Swap -m- in stack A"
+G	viii	[op	-	top]	-m-	{sb}	-254-	"Swap -m- in stack B"
+H	ix	[op	-	top]	-255-	{ss}	-255-	"Swap both stacks"
+I	x	[info	-	st_A]	-251-	{AAA}	-0-	"STACK A"
+J	xi	[info	-	st_B]	-252-	{BBB}	-0-	"STACK B"
+K	xii	[op	-	rra]	-253-	{rra}	-m-	"Reverse Rotate stack A"
+L	xiii	[op	-	rrb]	-254-	{rrb}	-m-	"Reverse Rotate stack B"
+M	xiv	[op	-	rrr]	-255-	{rrr}	-m-	"Reverse Rotate both A&B"
+N	xv	[inst	-	STA]	-0-	{STA}	-251-	"start reading instructions"
+O	xvi	[inst	-	END]	-0-	{END}	-252-	"stop reading instructions"
+P	xvii	[op	-	bot]	-253-	{ra}	-253-	"Rotate stack A"
+Q	xviii	[op	-	bot]	-254-	{rb}	-254-	"Rotate stack B"
+R	xix	[op	-	bot]	-255-	{rr}	-255-	"Rotate both A&B"
+*/
+/*	index:	node[i]:	code:
+ab	i		-0><4-	{0}
+ab	ii		-1-		{A}
+a-	iii		-<size/2-	{B}
+-b	iv		->size/2-	{C}
+a-	v		-4+-		{D}
+-b	vi		-4+-		{E}
+a-	vii		-4+-		{F}
+-b	viii		-4+-		{G}
+ab	ix		-4+-		{H}
+ab	x		-2-		{I}
+ab	xi		-2-		{J}
+a-	xii		-4+-		{K}
+-b	xiii		-4+-		{L}
+ab	xiv		-4+-		{M}
+ab	xv		-3+-		{N}
+ab	xvi		-4+-		{O}		-ii-
+a-	xvii		-4+-		{P}		-ee-
+b-	xviii		-4+-		{Q}
+ab	xix		-4+-		{R}
+*/
+/*	helpers and operations:
+begin instruction	-ii-		{==}	"start recording instructions"
+end instruction	-ee-		{==}	"finish recording instructions"
+copy chars		-cc-		{==}	"copy char at ab[c]"
+paste chars		-pp-		{==}	"paste char at ab[c]"
+move chars +	-mm-		{==}	"move all chars in ab in by c[+]"
+move chars -	-nn-		{==}	"move all chars in ab in by c[-]"
+delete chars	-dd-		{==}	"remove char at ab[c]"
+count size		-zz-		{==}	"count size of stack ab"
+update count	-uu-		{==}	"update count of stack ab with c[->0<+]"
+*/
+/*	detailed process:
+n	 	=	1-250
+o		=	251
+v		=	252
+w		=	253
+x		=	254
+z		=	255
+
+node[#]	case	a-b			outcome
+0		q	0-0			{entropy}[new]
+0		p	n-n			{entropy}{score}
+0		o	o-o			{entropy}{not measured}
+0		v	v-v			{entropy}{measurement underway}
+0		w	w-w			{entropy}{measured, not applied}
+0		x	x-x			{entropy}{applied solution, need new measure}
+0		z	z-z			{entropy}{ordered}
+1		w	251-0			[this represents ONLY stack A]
+2		w	A-B			{a holds A & B}
+1		e	252-0			[this represents ONLY stack B]
+2		e	A-B			{b holds A & B}
+1		r	253-0			[this represents BOTH stack A & B]
+2		r	A-B			{a holds A}{b holds B}
+1		t	254-num		[this represents MOSTLY stack A]
+2		t	A-B			{a holds A until b[num]}{b holds B after b[num]}
+1		y	255-num		{this represents MOSTLY stack B}
+2		y	A-B			{a holds A until a[num]}{A holds B after a[num]}
+3		l	0-251			{start reading instructions}
+<4		q	0-0			{placeholder to proceed to next valid}
+<4		q	0-0			{placeholder to proceed to next valid}
+>4		j	0-252			{execute instructions then reevaluate}
+*/
+/*	process:	/{}[]/
+pa	--		{ii{mm}[aa+1]/{cc}[bb#1]{pp}[aa#1]/{mm}[bb-1]/{uu}[aa+1]{uu}[bb-1]ee}
+pb	--		{ii{mm}[bb+1]/{cc}[aa#1]{pp}[bb#1]/{mm}[aa-1]/{uu}[aa-1]/{uu}[bb-1]ee}/
+sa	--		{ii/{cc}[aa#2]/{cc}[aa#1]/{pp}[aa#1]/{pp}[aa#2]//ee}
+sb	--		{ii/{cc}[bb#2]/{cc}[bb#1]/{pp}[bb#1]/{pp}[bb#2]/ee}
+ss	--		{ii/{sa}/{sb}/ee}
+ra	--		{ii/{cc}[aa#1]/{mm}[aa-1]/{pp}[aa#L]/ee}
+rb	--		{ii/{cc}[bb#1]/{mm}[bb-1]/{pp}[bb#L]/ee}
+rr	--		{ii/{ra}/{rb}/ee}
+rra	--		{ii/{cc}[aa#L]/{mm}[aa+1]/{pp}[aa#1]/ee}
+rrb	--		{ii/{cc}[bb#L]/{mm}[bb+1]/{pp}[bb#1]/ee}
+rrr	--		{ii/{rra}/{rrb}/ee}
+*/
+/*	ops:
+pa	only relevant for top
+pb	only relevant for top
+sa	only relevant for top
+sb	only relevant for top
+ss	only relevant for top
+ra	mutually relevant
+rb	mutually relevant
+rr	mutually relevant
+rra	most relevant for bottom
+rrb	most relevant for bottom
+rrr	most relevant for bottom
+*/
+
 ////	DEBUG:STRUCT:
-typedef	struct s_byte
+//MOVED TO .h
+/* typedef	struct s_byte
 {
-	char	a;//null/pos[1-255]RA/RB/RR/RRA/RRB/RRR
-	char	b;//{0-}pos[256-500]PushA/PushB/SwitchStacks
-	/* data */
-} t_byte;
+	char			a;
+	char			b;
+	struct s_byte	*next;
+} t_byte; */

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/04 17:45:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:12:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ typedef struct s_tree
 	struct	s_tree	*next;
 } t_tree;
 
+typedef	struct s_byte
+{
+	char			*a;
+	char			*b;
+	struct s_byte	*next;
+} t_byte;
+
 ////		TREEDEFS:
 
 #ifndef MAX_MOVES
@@ -94,7 +101,7 @@ t_tree	**tree_planter(t_stack **stack_a, t_stack **stack_b, t_tree **tree);
 //	
 
 ////	FOREST:
-void		forest(t_stack **stack_a, t_stack **stack_b, t_tree **tree);
+void		forest(t_stack **stack_a, t_stack **stack_b);
 
 ////	TRUNK:
 void		trunk_alloc(t_stack **stack_a, t_tree **tree);
