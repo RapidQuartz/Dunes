@@ -28,7 +28,7 @@ void		push_swap(t_stack **stack_a, t_stack **stack_b)
 		clue_find(stack_a, (*stack_a)->size);
 	else if (size > 3)
 	{
-		tree  = tree_planter(stack_a, stack_b, tree);
-		forest(stack_a, stack_b, tree);
+		// tree  = tree_planter(stack_a, stack_b, tree);
+		forest(stack_a, stack_b);
 	}
 }

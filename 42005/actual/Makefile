@@ -6,21 +6,21 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/05 10:28:17 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/05 19:12:46 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
-LIB = /Users/akjoerse/Code/4_github/42001/libft #for mac
-# LIB = /home/akjoerse/42/999_GitHub/42001/libft/ #for linux
+# LIB = /Users/akjoerse/Code/4_github/42001/libft #for mac
+LIB = /home/akjoerse/42/999_GitHub/42001/libft/ #for linux
 LIBFT = libft.a
 SRC = main.c \
 args/arg_inspector.c args/arg_array.c \
 check/sort_checker.c \
 cost/stack_assay.c cost/sum_cost.c \
-forest/forest.c \
+forest/forest.c forest/new.c\
 forest/decision_tree.c forest/make_tree.c forest/make_branch.c \
 forest/make_leaf.c forest/make_seed.c forest/make_trunk.c \
 ops/push.c ops/rotate.c ops/swap.c \
