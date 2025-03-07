@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/05 15:12:21 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:28:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_tree
 
 typedef	struct s_byte
 {
-	char			*a;
-	char			*b;
+	unsigned char	*a;
+	unsigned char	*b;
 	struct s_byte	*next;
 } t_byte;
 
@@ -92,42 +92,77 @@ typedef	struct s_byte
 
 ////		TREEFUNCTIONS:
 
-//	combines error handling for brevity
-void		tree_error(t_tree **tr, t_tree **rs, t_stack **ss, t_stack **tt);
-//	frees the tree and sets it to NULL
-void		free_tree(t_tree **tree);
-//	is called to begin making the tree structure
-t_tree	**tree_planter(t_stack **stack_a, t_stack **stack_b, t_tree **tree);
-//	
-
 ////	FOREST:
 void		forest(t_stack **stack_a, t_stack **stack_b);
+////	FT:PROTO:
+//	'forest' introduces the new project to the stack
+void		forest(t_stack **stack_a, t_stack **stack_b);
+//	'worldtree' allocates memory according to stack size
+t_byte	*worldtree(t_byte *tree, short acorn);
+//	'baumschule' dispatches initializing functions
+void		baumschule(t_byte **tree, short acorn, t_stack **stack);
+//	'imprinting' currently not in use
+t_byte	*imprinting(t_byte **tree, short acorn, t_stack **stack);
+//	'init_sbyte' makes all variables 0 except for info at ab[]
+void		init_sbyte(t_byte **tree, short acorn);
+//	'transcribe_sbyte' fills initial t_byte with stack info, liek a snapshot
+void		transcribe_sbyte(t_byte **tree, short acorn, t_stack **stack);
+//	'init_branch' initializes the next branch, setting tree->next to the branch;
+void		init_branch(t_byte **tree, t_byte *branch, char ops);
+//	'perform_ops' attempts to perform the operation on the snapshot
+t_byte	*perform_ops(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_a' tries to implement the "pa" operation
+//pa	--		{ii{mm}[aa+1]/{cc}[bb#1]{pp}[aa#1]/{mm}[bb-1]/{uu}[aa+1]{uu}[bb-1]ee}
+///neo=		
+t_byte	*perform_a(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_b' tries to implement the "pb" operation
+//pb	--		{ii{mm}[bb+1]/{cc}[aa#1]{pp}[bb#1]/{mm}[aa-1]/{uu}[aa-1]/{uu}[bb-1]ee}/
+///neo=		
+t_byte	*perform_b(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_c' tries to implement the "sa" operation
+//sa	--		{ii/{cc}[aa#2]/{cc}[aa#1]/{pp}[aa#1]/{pp}[aa#2]//ee}
+///neo=		
+t_byte	*perform_c(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_d' tries to implement the "sb" operation
+//sb	--		{ii/{cc}[bb#2]/{cc}[bb#1]/{pp}[bb#1]/{pp}[bb#2]/ee}
+///neo=		
+t_byte	*perform_d(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_e' tries to implement the "ss" operation
+//ss	--		{ii/{sa}/{sb}/ee}
+///neo=		
+t_byte	*perform_e(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_f' tries to implement the "ra" operation
+//ra	--		{ii/{cc}[aa#1]/{mm}[aa-1]/{pp}[aa#L]/ee}
+///neo=		
+t_byte	*perform_f(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_g' tries to implement the "rb" operation
+//rb	--		{ii/{cc}[bb#1]/{mm}[bb-1]/{pp}[bb#L]/ee}
+///neo=		
+t_byte	*perform_g(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_h' tries to implement the "rr" operation
+//rr	--		{ii/{ra}/{rb}/ee}
+///neo=		
+t_byte	*perform_h(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_i' tries to implement the "rra" operation
+//rra	--		{ii/{cc}[aa#L]/{mm}[aa+1]/{pp}[aa#1]/ee}
+///neo=		
+t_byte	*perform_i(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_j' tries to implement the "rrb" operation
+//rrb	--		{ii/{cc}[bb#L]/{mm}[bb+1]/{pp}[bb#1]/ee}
+///neo=		
+t_byte	*perform_j(t_byte *branch, t_byte *shoot, char ops);
+//	'perform_k' tries to implement the "rrr" operation
+//rrr	--		{ii/{rra}/{rrb}/ee}
+///neo=		
+t_byte	*perform_k(t_byte *branch, t_byte *shoot, char ops);
 
-////	TRUNK:
-void		trunk_alloc(t_stack **stack_a, t_tree **tree);
-void		trunk_init(t_stack **stack_a, t_tree **tree);
-
-////	BRANCH:
+//	''
 //	
-void		branch_alloc(t_tree **tree);
-// void		branch_init(t_tree **tree);
 
-////	LEAF:
-//	
-void		leaf_alloc(t_tree **tree);
-
-////	SEED:
-//	
-void		seed_alloc(t_tree **tree);
-
-//	calls the plant_tree and advances stack
-t_tree	*make_tree(t_tree **tree, t_stack **stack);
-//	sets default and current values, init tree
-t_tree	*plant_tree(t_tree **trunk, t_tree **roots);
-//	sets `roots`, equivalent to `head`
-t_tree	**plant_roots(t_tree **tree, t_tree **roots);
-
-
+////	PLANT: begins branching out
+void		plant_tree(t_byte **tree, short acorn);
+//	legal actions?
+short		islegal(t_byte *tree, char ops);
 ////		FUNCTIONS:
 ///////		ACTUAL:
 

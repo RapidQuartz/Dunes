@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:38:48 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/05 19:41:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:46:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,5 @@ typedef	struct s_byte
 } t_byte;
 */
 
-////	FT:PROTO:
-//	'forest' introduces the new project to the stack
-void		forest(t_stack **stack_a, t_stack **stack_b);
-//	''
-t_byte	*worldtree(t_byte	*tree, short acorn);
-//	''
-void		baumschule(t_byte	**tree, short acorn, t_stack **stack);
-//	''
-t_byte	*imprinting(t_byte	**tree, short acorn, t_stack **stack);
-//	
+
 #endif

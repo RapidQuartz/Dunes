@@ -1,15 +1,3 @@
-#						[' new '](new.md#new)
-##						[' index '](new.md#index)
-###						[' lore '](new.md#lore)
-####						[' data '](new.md#data)
-#####						[' ent '](new.md#enterprise)
-######					[' clmx '](new.md#climax)
-#####						[' debug '](new.md#debug)
-####						[' notes '](new.md#notes)
-###						[' refs '](new.md#referents)
-##						[' error '](new.md#error)
-#						[' map '](new.md#map)
-
 #						new
 the new project is a result of a long journey through the backyard of c  
 it carries the legacy of the triplet endeavour much beloved for its originality  
@@ -17,21 +5,36 @@ furthermore it signifies a veritable metropolis of a rabbit warren
 so hang on tight  
 it might get bumpy  
 #		index
-##	what it is
-this index is meant to keep key concepts under wraps
-##	why it is
-because documentation makes it easier to unfuck your code
-##	how it is
-a tad on the neurotic side but otherwise maybe almost functional sometimes
 ###	[ix](#ix)
-#### 	[	' -legacy-		'](#legacy-intro)  
-#### 	[	' -states-		'](#states)  
-#### 	[	' -legend-		'](#legend)  
-#### 	[	' -stakops-		'](#operations)  
-#### 	[	' -classin-		'](#classification)  
-#### 	[	' -helpers-		'](#helpers-and-operations)  
-#### 	[	' -candidates-	'](#candidate-paths)  
+####	what it is
+this index is meant to keep key concepts under wraps
+####	why it is
+because documentation makes it easier to unfuck your code
+####	how it is
+a tad on the neurotic side but otherwise maybe almost functional *sometimes*
+###	[	' -data- 		'](new.md#data)  
+###	[	' -ent- 		'](new.md#enterprise)  
+###	[	' -lore- 		'](new.md#lore)  
+### 	[	' -legacy-		'](new.md#legacy-intro)  
+### 	[	' -states-		'](new.md#states-of-ab)  
+### 	[	' -legend-		'](new.md#legend)  
+### 	[	' -stakops-		'](new.md#operations)  
+### 	[	' -classin-		'](new.md#classification)  
+### 	[	' -helpers-		'](new.md#helpers-and-operations)  
+### 	[	' -instructions-	'](new.md#s_byte-instructions-detailed)  
+### 	[	' -candidates-	'](new.md#candidate-paths)  
+###	[	' -clmx- 		'](new.md#climax)  
+###	[	' -debug- 		'](new.md#debug)  
+###	[	' -notes- 		'](new.md#notes)  
+####	[	' -things to do-	'](new.md#things-to-do)  
+####	[	' -scratchpad-	'](new.md#scratchpad)  
+###	[	' -refs- 		'](new.md#referents)  
+###	[	' -error- 		'](new.md#error)  
+###	[	' -map- 		'](new.md#map)  
+###	
+
 #		lore
+###	[ix](#ix)
 ##	what it is
 this is the push swap project for [42 Berlin](https://42berlin.de) (2025.03.05)
 ##	why it is
@@ -39,6 +42,7 @@ complexity breeds in uncertainty and self made obsession rises from its ashes
 ##	how it is
 using two structs and some convoluted logic a list of numbers will be sorted
 ###	legacy intro
+###	[ix](#ix)
 <!-- 		legacy intro
 //this line intentionally left blank
 #include "../push_swap.h"
@@ -67,6 +71,7 @@ using two structs and some convoluted logic a list of numbers will be sorted
 // when followed by instructions below, and a stop signal above, the full command has been parsed.
 // set a while condition to read the sbyte and proceed from there. -->
 #		data
+###	[ix](#ix)
 ##	what it is
 info about the arguments provided and relevant analysis for decision algorithms
 ##	why it is
@@ -74,8 +79,22 @@ main struct carries most data and para-struct carries projection for algorithms
 ##	how it is
 see own files but suffice to say it aint pretty
 #		enterprise
+###	[ix](#ix)
 to finish this project as soon as possible while completing development of self
 
+###		states of ab
+###	[ix](#ix)
+the index of the `char *a` & `char *b` matters.  
+assuming an original stack of 9 members  
+21 indices will be reserved
+indices 0-4 are reserved  
+indices 1-2 info about the stack snapshot  
+indices 3-4 instructions for the decider  
+in a:  
+indices 5-9 hold the first 5 members' positions  
+in b:  
+indices 5-8 hold the last 4 members' positions  
+the final 12 indices hold instructions on how to operate on the stack
 
 <!--/*	states:
 
@@ -96,20 +115,34 @@ Q	[q = 254]		q	q	[op]
 R	[r = 255]		r	r	[op]
  -->
 ###		operations
-/*	ops:
-pa	only relevant for top
-pb	only relevant for top
-sa	only relevant for top
-sb	only relevant for top
-ss	only relevant for top
-ra	mutually relevant
-rb	mutually relevant
-rr	mutually relevant
-rra	most relevant for bottom
-rrb	most relevant for bottom
-rrr	most relevant for bottom
+###	[ix](#ix)
+/*	ops:  
+**pa**	*only relevant for* **top**  
+**pb**	*only relevant for* **top**  
+**sa**	*only relevant for* **top**  
+**sb**	*only relevant for* **top**  
+**ss**	*only relevant for* **top**  
+**ra**	*mutually relevant*  
+**rb**	*mutually relevant*  
+**rr**	*mutually relevant*  
+**rra**	*most relevant for* **bottom**  
+**rrb**	*most relevant for* **bottom**  
+**rrr**	*most relevant for* **bottom**  
 */
+####		legal operations
+//A//pa//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+//B//pb//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+//C//sa//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+//D//sb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+//E//ss//LEGAL if tree->a[1] == 253
+//F//ra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+//G//rb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+//H//rr//LEGAL if tree->a[1] == 253
+//I//rra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+//J//rrb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+//K//rrr//LEGAL if tree->a[1] == 253
 ###		legend
+###	[ix](#ix)
 <!--/*	legend:
 cod	ind	category		ch_a	nom	ch_b	description
 0	i	[null/sorted]	-0-	{}	-0-	"null value/spacer"
@@ -133,10 +166,8 @@ Q	xviii	[op	-	bot]	-254-	{rb}	-254-	"Rotate stack B"
 R	xix	[op	-	bot]	-255-	{rr}	-255-	"Rotate both A&B"
 */ -->
 ####		glossary
-##### 	candidate paths
-{==}	one of several attempted trees  
--							{==}	
 ###		classification
+###	[ix](#ix)
 <!--/*	classification:
 	index:	node[i]:	code:
 ab	i		-0><4-	{0}
@@ -160,6 +191,19 @@ b-	xviii		-4+-		{Q}
 ab	xix		-4+-		{R}
 */-->
 ###		helpers and operations:
+###	[ix](#ix)
+pa	--		b[0] = 65
+pb	--		b[0] = 66
+sa	--		b[0] = 67
+sb	--		b[0] = 68
+ss	--		b[0] = 69
+ra	--		b[0] = 70
+rb	--		b[0] = 71
+rr	--		b[0] = 72
+rra	--		b[0] = 73
+rrb	--		b[0] = 74
+rrr	--		b[0] = 75
+
 <!--/*	helpers and operations:
 begin instruction	-ii-		{==}	"start recording instructions"
 end instruction	-ee-		{==}	"finish recording instructions"
@@ -173,16 +217,24 @@ update count	-uu-		{==}	"update count of stack ab with c[->0<+]"
 */ --> 
 ####		helper functions
 
+
+	//transcription	-	transcribe stack to s_byte  
+					-	inscribe s_byte with information  
+	//sort state	-	perform calculations on s_byte  
+	//cost eval		-	evaluate calculation saliency  
+					-	prune inadequate paths  
+
+	//operation dispatch
 ####		s_byte complex operations
-**begin instruction**	*-ii-*		{==}	**"start recording instructions"**  
-**end instruction**	*-ee-*		{==}	**"finish recording instructions"**  
-**copy chars**		*-cc-*		{==}	**"copy char at ab[c]"**  
-**paste chars**		*-pp-*		{==}	**"paste char at ab[c]"**  
-**move chars +**		*-mm-*		{==}	**"move all chars in ab in by c[+]"**  
-**move chars -**		*-nn-*		{==}	**"move all chars in ab in by c[-]"**  
-**delete chars**		*-dd-*		{==}	**"remove char at ab[c]"**  
-**count size**		*-zz-*		{==}	**"count size of stack ab"**  
-**update count**		*-uu-*		{==}	**"update count of stack ab with c[->0<+]"**  
+**begin instruction**	*-ii-*	**"start recording instructions"**  
+**end instruction**	*-ee-*	**"finish recording instructions"**  
+**copy chars**		*-cc-*	**"copy char at ab[c]"**  
+**paste chars**		*-pp-*	**"paste char at ab[c]"**  
+**move chars +**		*-mm-*	**"move all chars in ab in by c[+]"**  
+**move chars -**		*-nn-*	**"move all chars in ab in by c[-]"**  
+**delete chars**		*-dd-*	**"remove char at ab[c]"**  
+**count size**		*-zz-*	**"count size of stack ab"**  
+**update count**		*-uu-*	**"update count of stack ab with c[->0<+]"**  
 ####		
 <!-- /*	s_byte operation process
 process:	/{}[]/
@@ -209,6 +261,15 @@ rrr	--		{ii/{rra}/{rrb}/ee}
 	struct s_byte	*next;
 } t_byte; */ -->
 ####		s_byte instructions detailed
+//push_a requires all A-stack values move +1
+//start by moving into the buffer at the end of *a
+//then move into buffer at end of *b
+//then copy buffer from end of *a to start of *b
+//increase `a_count` +1
+//decrease `b_count` +1
+//place delimiter 0-0 or similar at end of A, wherever that is.
+//
+
 <!-- /*	s_byte instructions detailed
 detailed instructions:
 n	 	=	1-250
@@ -226,26 +287,37 @@ node[#]	case	a-b			outcome
 0		w	w-w			{entropy}{measured, not applied}
 0		x	x-x			{entropy}{applied solution, need new measure}
 0		z	z-z			{entropy}{ordered}
-1		w	251-0			[this represents ONLY stack A]
-2		w	A-B			{a holds A & B}
+1		w	251-0			[this represents ONLY stack A] -
+2		w	A-B			{A holds A & B}
+3		w	0-0			{B holds none}
 1		e	252-0			[this represents ONLY stack B]
-2		e	A-B			{b holds A & B}
+2		w	0-0			{A holds none}
+3		e	A-B			{B holds A & B}
 1		r	253-0			[this represents BOTH stack A & B]
-2		r	A-B			{a holds A}{b holds B}
+2		r	A-B			{A holds A & B}
+3		l	A-B			{B holds A & B}
 1		t	254-num		[this represents MOSTLY stack A]
-2		t	A-B			{a holds A until b[num]}{b holds B after b[num]}
+2		t	A-B			{A holds A & B}
+3		l	A-B			{B holds A & B}
 1		y	255-num		{this represents MOSTLY stack B}
-2		y	A-B			{a holds A until a[num]}{A holds B after a[num]}
-3		l	0-251			{start reading instructions}
+2		y	A-B			{A holds A + B}
+3		l	A-B			{B holds A + B}
 <4		q	0-0			{placeholder to proceed to next valid}
 <4		q	0-0			{placeholder to proceed to next valid}
 >4		j	0-252			{execute instructions then reevaluate}
 */ -->
+##### 	candidate paths
+###	[ix](#ix)
+{==}	one of several attempted trees  
+-							{==}	
 #						climax
+###	[ix](#ix)
 when project makes and runs and performs as desired without crash at evaluation
 #		debug
+###	[ix](#ix)
 see own files but suffice to say it aint pretty
 #		notes
+###	[ix](#ix)
 //	circular array
 //	merge/chunk sort
 <!-- EXT//two stacks bisected
@@ -275,11 +347,25 @@ int		main(void)
 max 500 numbers, probably less
 
 divide stack into top and bottom -->
+####		things to do
+####		scratchpad
+{==}	
+{==}	
+{==}	
+{==}	
+{==}	
+{==}	
+{==}	
+{==}	
+{==}	
 #		referents
+###	[ix](#ix)
 see own files but suffice to say it aint pretty
 #		error
+###	[ix](#ix)
 see own files but suffice to say it aint pretty
 #						map
+###	[ix](#ix)
 
-[''](README.md)
-[](TODO.md)
+['README'](README.md)
+['TODO'](TODO.md)
