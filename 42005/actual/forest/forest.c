@@ -6,13 +6,14 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:42:23 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/07 14:55:18 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:51:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 #include "../new.h"
 
+void		print_tree(t_byte *tree);
 /* process:
 
 
@@ -25,6 +26,7 @@ void		forest(t_stack **stack_a, t_stack **stack_b)
  	t_byte	*tree;
 	 debug("and in that forest there lay an acorn");
 	short		acorn;
+	int		i;
 	
 	acorn = ((*stack_a)->size);
 	debug("the acorn was just the right size");
@@ -38,8 +40,36 @@ void		forest(t_stack **stack_a, t_stack **stack_b)
 	}
 	debug("and the sapling grew familiar with the world");
 	baumschule(&tree, acorn, stack_a);
+	///TODO: make a `while unsorted` condition
+	while (not_sorted(tree))
+	{
+		tree->xroad = ft_xroad(tree, acorn + 12);
+	}
+	print_tree(tree);
 }
-
+void		print_tree(t_byte *tree)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+	t_byte *branch;
+	
+	i = 0;
+	k = 0;
+	l = 12 + ((tree->a[2] + tree->b[2]) + (tree->a[2] + tree->b[2]));
+	// printf("");
+	while (tree != NULL && k < l)
+	{
+		printf(GRNTXT"branch number %d\n"DEFTXT, \
+			(tree->a[0] + (255 * tree->b[0])));
+		while (k < l)
+		{
+			printf("a:\t%d-%d\t:b\t {==} %d\n", tree->a[k], tree->b[k], k);
+			k++;
+		}
+	}
+}
 t_byte	*worldtree(t_byte *tree, short acorn)
 {
 	debug("and one day, it began to grow");
@@ -67,6 +97,12 @@ t_byte	*worldtree(t_byte *tree, short acorn)
 		debug("but the second died before it could grow");
 		return (NULL);
 	}
+/* 	yggdrasil->xroad = malloc(sizeof(t_xroad));
+	if (!yggdrasil->xroad)
+	{
+		debug("but the crossroads blew away before it could spread");
+		return (NULL);
+	} */
 	if (tree && tree != NULL)
 	{
 		debug("the branch tried to be set right");
@@ -83,9 +119,11 @@ void		baumschule(t_byte	**tree, short acorn, t_stack **stack)
 {
 	int	i;
 	int	j;
-
+	int	k;
+	
 	i = 0;
 	j = 0;
+	k = 0;
 	debug("and it found fertile soil in which to grow");
 	//transcription
 	debug("its genetic material informed it how to grow");
@@ -99,21 +137,6 @@ void		baumschule(t_byte	**tree, short acorn, t_stack **stack)
 		i++;
 	}
 	debug("and the sapling was perfectly formed and ready to grow further");
-	plant_tree(tree, acorn);
-	while ((*tree) != NULL)
-	{
-		i = 0;
-		printf("%d iteration of tree\n", j);
-		while (i < acorn + 12)
-		{
-			printf("a:\t%d-%d\t:b\t {==} %d\n", (*tree)->a[i], (*tree)->b[i], i);
-			i++;
-		}
-		if ((*tree)->next == NULL)
-			break ;
-		(*tree) = (*tree)->next;
-		j++;
-	}
 	//sort state
 	//cost eval
 	//operation dispatch
@@ -121,13 +144,10 @@ void		baumschule(t_byte	**tree, short acorn, t_stack **stack)
 
 void		init_sbyte(t_byte **tree, short acorn)
 {
-	if ((*tree)->next == NULL)
-	{
-		(*tree)->a[0] = 0;
-		(*tree)->b[0] = 0;
-	}
+	(*tree)->a[0] = 1;
+	(*tree)->b[0] = 0;
 	(*tree)->a[1] = 251;
-	(*tree)->b[1] = 251;
+	(*tree)->b[1] = 0;
 	(*tree)->a[2] = (acorn / 2)+(acorn % 2);
 	(*tree)->b[2] = (acorn / 2);
 	(*tree)->a[3] = 0;
@@ -135,22 +155,26 @@ void		init_sbyte(t_byte **tree, short acorn)
 	(*tree)->a[4] = 0;
 	(*tree)->b[4] = 0;
 }
+
+// initial transcription from t_stack to t_byte
 void		transcribe_sbyte(t_byte	**tree, short acorn, t_stack **stack)
 {
 	int		i;
-
+	t_stack	*ref;
+	
 	i = 5;
+	ref = (*stack);
 	while (i - 5 < ((*tree)->a[2]))
 	{
-		(*tree)->a[i] = (*stack)->pos;
-		(*stack) = (*stack)->next;
+		(*tree)->a[i] = ref->pos;
+		ref = ref->next;
 		i++;
 	}
 	i = 5;
 	while (i - 5 < (*tree)->b[2])
 	{
-		(*tree)->b[i] = (*stack)->pos;
-		(*stack) = (*stack)->next;
+		(*tree)->b[i] = ref->pos;
+		ref = ref->next;
 		i++;
 	}
 }

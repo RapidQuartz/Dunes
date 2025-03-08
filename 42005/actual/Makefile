@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/05 19:12:46 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/08 16:37:28 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ args/arg_inspector.c args/arg_array.c \
 check/sort_checker.c \
 cost/stack_assay.c cost/sum_cost.c \
 forest/forest.c forest/new.c\
+xroads/ft_xpush.c xroads/ft_xreverse.c xroads/ft_xroad.c \
+xroads/ft_xrotate.c xroads/ft_xswap.c xroads/helpers.c \
 forest/decision_tree.c forest/make_tree.c forest/make_branch.c \
 forest/make_leaf.c forest/make_seed.c forest/make_trunk.c \
 ops/push.c ops/rotate.c ops/swap.c \

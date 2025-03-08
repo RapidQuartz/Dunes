@@ -22,6 +22,7 @@ a tad on the neurotic side but otherwise maybe almost functional *sometimes*
 ### 	[	' -classin-		'](new.md#classification)  
 ### 	[	' -helpers-		'](new.md#helpers-and-operations)  
 ### 	[	' -instructions-	'](new.md#s_byte-instructions-detailed)  
+### 	[	' -s_byte index-	'](new.md#s_byte-index-explanation)  
 ### 	[	' -candidates-	'](new.md#candidate-paths)  
 ###	[	' -clmx- 		'](new.md#climax)  
 ###	[	' -debug- 		'](new.md#debug)  
@@ -226,6 +227,7 @@ update count	-uu-		{==}	"update count of stack ab with c[->0<+]"
 
 	//operation dispatch
 ####		s_byte complex operations
+###	[ix](#ix)
 **begin instruction**	*-ii-*	**"start recording instructions"**  
 **end instruction**	*-ee-*	**"finish recording instructions"**  
 **copy chars**		*-cc-*	**"copy char at ab[c]"**  
@@ -235,7 +237,22 @@ update count	-uu-		{==}	"update count of stack ab with c[->0<+]"
 **delete chars**		*-dd-*	**"remove char at ab[c]"**  
 **count size**		*-zz-*	**"count size of stack ab"**  
 **update count**		*-uu-*	**"update count of stack ab with c[->0<+]"**  
-####		
+####		s_byte index explanation  
+###	[ix](#ix)  
+index	name			a		b	-	description  
+0	iteration	-	0-255		0-255 -	(a[0]) + (b[0] * 255)  
+1	stack/ops	-	a/b/c		ops	-  	(a[1]: a, b, c) (b[1]: 1-11)
+2	contents:a	-	n		m	-  	(n members of stack A in *a, m members of stack A in *b)
+3	contents:b	-	n		m	-  	(n members of stack B in *a, m members of stack B in *b)
+4	entropy?	-	0-255		0-255 -	(a[4]: a-stack entropy) + (b[4]: b-stack entropy) (0 is empty, 1 is ordered)  
+5	numbers	-	0-255		0-255 -  
+x	delimiter	-	0		0	-  	if a[1] == a or a[1] == b, no delimiter. otherwise it shows where a-stack stops and b-stack begins
+x	end		-	255		255	-	end of stack in this char*
+
+
+
+
+
 <!-- /*	s_byte operation process
 process:	/{}[]/
 pa	--		{ii{mm}[aa+1]/{cc}[bb#1]{pp}[aa#1]/{mm}[bb-1]/{uu}[aa+1]{uu}[bb-1]ee}

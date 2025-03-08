@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:38:37 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/07 14:41:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:46:43 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		plant_tree(t_byte **tree, short acorn)
 	}
 }
 
+////	NB: deprecated in favor of ft_islegal
 ////	TODO:	consider if a certain size is necessary for certain moves
 ////	TODO:	consider past moves in another function, or send from this to that.
 //helper to validate moves
@@ -72,27 +73,27 @@ void		init_branch(t_byte **tree, t_byte *branch, char ops)
 
 t_byte	*perform_ops(t_byte *branch, t_byte *shoot, char ops)
 {
-	if (branch->b[0] = 65)
+	if (branch->b[0] == 65)
 		perform_a(branch, shoot, ops);
-	else if (branch->b[0] = 66)
+	else if (branch->b[0] == 66)
 		perform_b(branch, shoot, ops);
-	else if (branch->b[0] = 67)
+	else if (branch->b[0] == 67)
 		perform_c(branch, shoot, ops);
-	else if (branch->b[0] = 68)
+	else if (branch->b[0] == 68)
 		perform_d(branch, shoot, ops);
-	else if (branch->b[0] = 69)
+	else if (branch->b[0] == 69)
 		perform_e(branch, shoot, ops);
-	else if (branch->b[0] = 70)
+	else if (branch->b[0] == 70)
 		perform_f(branch, shoot, ops);
-	else if (branch->b[0] = 71)
+	else if (branch->b[0] == 71)
 		perform_g(branch, shoot, ops);
-	else if (branch->b[0] = 72)
+	else if (branch->b[0] == 72)
 		perform_h(branch, shoot, ops);
-	else if (branch->b[0] = 73)
+	else if (branch->b[0] == 73)
 		perform_i(branch, shoot, ops);
-	else if (branch->b[0] = 74)
+	else if (branch->b[0] == 74)
 		perform_j(branch, shoot, ops);
-	else if (branch->b[0] = 75)
+	else if (branch->b[0] == 75)
 		perform_k(branch, shoot, ops);
 	return (branch);
 }

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/07 14:28:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:34:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,38 @@ typedef	struct s_byte
 	unsigned char	*a;
 	unsigned char	*b;
 	struct s_byte	*next;
+	struct s_xroad	*xroad;
 } t_byte;
+
+typedef	struct s_xroad
+{
+	struct s_byte	*m[12];
+} t_xroad;
+////		XROADS:
+void		print_tree(t_byte *tree);
+//	checks sort by going through tree and xroads
+//	assigns sorting degree to tree->a[] and tree->b[]
+int		not_sorted(t_byte *tree);
+//	dispatches to other moves
+t_xroad	*ft_xroad(t_byte *snap, short acorn);
+t_byte	*ft_move(t_byte *snap, char op, short acorn);
+//	calls 'push' related functions for appropriate stack
+t_byte	*ft_xpush(t_byte *snap, t_byte *new, char op);
+//	iterates through for push A
+t_byte	*ft_paiter(t_byte *snap, t_byte *new, char op);
+//	iterates through for push B
+t_byte	*ft_pbiter(t_byte *snap, t_byte *new, char op);
+//	counts iterations and sets stack-mode depending on op
+t_byte	*iter_count(t_byte *snap, t_byte *new, char op);
+//	sets values to 0 before handing `new` on
+t_byte	*init_tbyte(t_byte *snap, t_byte *new, short acorn);
+t_byte	*ft_pscount(t_byte *snap, t_byte *new, int mode_a, int mode_b);
+//	TODO:
+t_byte	*ft_xreverse(t_byte *snap, t_byte *new, char op);
+t_byte	*ft_xrotate(t_byte *snap, t_byte *new, char op);
+t_byte	*ft_xswap(t_byte *snap, t_byte *new, char op);
+
+
 
 ////		TREEDEFS:
 

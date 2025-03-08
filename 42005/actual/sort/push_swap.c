@@ -18,7 +18,7 @@
 void		push_swap(t_stack **stack_a, t_stack **stack_b)
 {
 	int		size;
-	t_tree	**tree;
+	t_byte	**tree;
 
 	tree = NULL;
 	size = (*stack_a)->size;
@@ -30,5 +30,6 @@ void		push_swap(t_stack **stack_a, t_stack **stack_b)
 	{
 		// tree  = tree_planter(stack_a, stack_b, tree);
 		forest(stack_a, stack_b);
+
 	}
 }
