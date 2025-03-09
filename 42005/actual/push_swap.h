@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 19:38:55 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/09 20:10:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef	struct s_snap
 	unsigned short	*a;
 	unsigned short	*b;
 	unsigned short	*c;
-	unsigned short	*d;
+	unsigned short	op;
+	unsigned short	delta;
+	unsigned short	size;
 	struct s_ree	*prev;
 } t_snap;
 

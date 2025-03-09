@@ -6,34 +6,59 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:37:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 19:35:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/09 20:16:36 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
+unsigned short	get_delta(t_snap *snap);
 t_snap *take_snap(unsigned short *array, int argn)
 {
 	int		i;
-	int		factor;
 	t_snap	*snap;
 
 	i = 0;
 	snap = malloc(sizeof(*snap));
 	if (!snap)
 		return (NULL);
-	factor = 6 + argn;
-	snap->a = malloc(sizeof(unsigned short) * factor);
-	snap->b = malloc(sizeof(unsigned short) * factor);
-	snap->c = NULL;
-	snap->d = NULL;
+	snap->a = malloc(sizeof(unsigned short) * argn + 1);
+	snap->b = malloc(sizeof(unsigned short) * argn + 1);
+	snap->c = malloc(sizeof(unsigned short) * argn + 1);
 	snap->prev = NULL;
-	if (!(snap->a || snap->b))
+	if (!(snap->a || snap->b || snap->c))
 		return (NULL);
-	snap->a[0] = array[0];
+	snap->size = array[0];
+	snap->a[0] = snap->size;
+	snap->b[0] = 0;
 	while (i++ < argn)
-		snap->a[5 + i] = array[i];
+		snap->a[i] = array[i];
+	snap->c = get_delta(snap);
 	return (snap);
+}
+
+unsigned short	*get_delta(t_snap *snap)
+{
+	unsigned short	coll;
+	unsigned short	delta;
+	unsigned short	size;
+	int			i;
+	
+	i = 1;
+	coll = 0;
+	delta = 0;
+	size = snap->size;
+	while (i < size)
+	{
+		coll = snap->a[i];
+		if (coll < i)
+			coll = i - coll;
+		else if (coll > i)
+			coll = coll - i;
+		delta += coll;
+		snap->c[i] = delta;
+		i++;
+	}
+	return (snap->c);
 }
 
 long	get_number(char *arg, int argn)
