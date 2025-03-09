@@ -5,22 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/09 11:41:01 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/09 18:58:42 by akjoerse         ###   ########.fr        #
+#    Created: 2025/01/21 15:56:13 by akjoerse          #+#    #+#              #
+#    Updated: 2025/03/08 16:37:28 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-CC = cc -g -v
+CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
-# LIB = /Users/akjoerse/Code/4_github/42001/libft
-LIB = /home/akjoerse/42/999_GitHub/42001/libft/
+# LIB = /Users/akjoerse/Code/4_github/42001/libft #for mac
+LIB = /home/akjoerse/42/999_GitHub/42001/libft/ #for linux
 LIBFT = libft.a
-SRC = main.c push_swap.c \
-branch/new_branch.c \
-check/check_sort.c \
-init/arg_init.c \
-util/utilities.c util/error.c
+SRC = main.c \
+args/arg_inspector.c args/arg_array.c \
+check/sort_checker.c \
+cost/stack_assay.c cost/sum_cost.c \
+forest/forest.c forest/new.c\
+xroads/ft_xpush.c xroads/ft_xreverse.c xroads/ft_xroad.c \
+xroads/ft_xrotate.c xroads/ft_xswap.c xroads/helpers.c \
+forest/decision_tree.c forest/make_tree.c forest/make_branch.c \
+forest/make_leaf.c forest/make_seed.c forest/make_trunk.c \
+ops/push.c ops/rotate.c ops/swap.c \
+stack/stack_indexer.c stack/stack_inspector.c \
+stack/stack_maker.c stack/stack_navigator.c \
+sort/push_swap.c sort/stack_sorter.c sort/clue.c \
+util/utilities.c util/error_handling.c util/memory_utils.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)

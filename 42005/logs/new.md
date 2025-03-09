@@ -1,4 +1,47 @@
 #						new
+
+
+#	all is lost
+2025-03-09 19:19:56 i give up. this was a fools errand.  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
 the new project is a result of a long journey through the backyard of c  
 it carries the legacy of the triplet endeavour much beloved for its originality  
 furthermore it signifies a veritable metropolis of a rabbit warren  

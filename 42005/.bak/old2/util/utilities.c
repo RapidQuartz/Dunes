@@ -5,36 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 12:37:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 19:35:41 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/01/31 13:56:13 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/02/27 13:31:12 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-t_snap *take_snap(unsigned short *array, int argn)
-{
-	int		i;
-	int		factor;
-	t_snap	*snap;
-
-	i = 0;
-	snap = malloc(sizeof(*snap));
-	if (!snap)
-		return (NULL);
-	factor = 6 + argn;
-	snap->a = malloc(sizeof(unsigned short) * factor);
-	snap->b = malloc(sizeof(unsigned short) * factor);
-	snap->c = NULL;
-	snap->d = NULL;
-	snap->prev = NULL;
-	if (!(snap->a || snap->b))
-		return (NULL);
-	snap->a[0] = array[0];
-	while (i++ < argn)
-		snap->a[5 + i] = array[i];
-	return (snap);
-}
 
 long	get_number(char *arg, int argn)
 {
@@ -63,4 +39,51 @@ long	get_number(char *arg, int argn)
 			argn--;
 	}
 	return (num * neg);
+}
+
+
+
+t_stack	*find_top(t_stack *stack)
+{
+	t_stack	*top;
+	int	i = 0;
+	debug(YLWTXT"inside find stack top"DEFTXT);
+	
+	top = stack;
+	if (top->prev != NULL)
+	{
+		while (top->prev != NULL && i < 10)
+		{
+			i++;
+			top = top->prev;
+			printf("<%d>\n", i);
+			DEFTXT;
+		}
+	}
+	debug(GRNTXT"done with find top"DEFTXT);//SEGFAULT
+	return (top);
+}
+
+int		get_absolute(int rel)
+{
+	//debug("in get_absolute()");
+	if (rel < 0)
+		rel *= -1;
+	return (rel);
+}
+
+void		ouroboros(t_stack **snek, int argn)
+{
+	t_stack	*bottom;
+	
+	bottom = (*snek);
+	while (argn-- && bottom->next != NULL)
+		bottom = bottom->next;
+	if ((*snek)->prev == NULL && bottom->next == NULL)
+	{
+		bottom->next = (*snek);
+		(*snek)->head = snek;
+		(*snek)->prev = bottom;
+	}
+	return ;
 }
