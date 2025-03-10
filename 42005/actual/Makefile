@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 11:41:01 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/09 18:58:42 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/10 12:10:36 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ LIBFT = libft.a
 SRC = main.c push_swap.c \
 branch/new_branch.c \
 check/check_sort.c \
+cost/cost.c \
 init/arg_init.c \
 util/utilities.c util/error.c
 OBJ = $(SRC:.c=.o)

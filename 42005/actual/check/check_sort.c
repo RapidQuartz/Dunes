@@ -6,13 +6,25 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:35:30 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 17:43:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:39:57 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-
+/* 
+int	main(void)
+{
+	// int	array[] = {1, 2, 3};
+	// int	array[] = {3, 2, 1};
+	int	array[] = {3, 3, 3};
+	int	res = array_isunsorted(array, 3);
+	int	i = 0;
+	printf("::res::%d\n", res);
+	while (i < 3)printf("::\t%d::\n", array[i++]);
+	printf("\n");
+	return (0);
+} */
 int	array_isunsorted(int *a, int n)
 {
 	int	i;
@@ -39,16 +51,6 @@ int	array_isunsorted(int *a, int n)
 	}
 	return (0);
 }
-/* 
-int	main(void)
-{
-	// int	array[] = {1, 2, 3};
-	// int	array[] = {3, 2, 1};
-	int	array[] = {3, 3, 3};
-	int	res = array_isunsorted(array, 3);
-	int	i = 0;
-	printf("::res::%d\n", res);
-	while (i < 3)printf("::\t%d::\n", array[i++]);
-	printf("\n");
-	return (0);
-} */
+
+short		check_moves(t_ree *tree)
+while (1)

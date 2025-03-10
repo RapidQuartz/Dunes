@@ -174,17 +174,17 @@ R	[r = 255]		r	r	[op]
 **rrr**	*most relevant for* **bottom**  
 */
 ####		legal operations
-//A//pa//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
-//B//pb//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
-//C//sa//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
-//D//sb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
-//E//ss//LEGAL if tree->a[1] == 253
-//F//ra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
-//G//rb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
-//H//rr//LEGAL if tree->a[1] == 253
-//I//rra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
-//J//rrb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
-//K//rrr//LEGAL if tree->a[1] == 253
+1///A//pa//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+2///B//pb//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+3///C//sa//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+4///D//sb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+5///E//ss//LEGAL if tree->a[1] == 253
+6///F//ra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+7///G//rb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+8///H//rr//LEGAL if tree->a[1] == 253
+9///I//rra//LEGAL if tree->a[1] == 251 || tree->a[1] == 253
+10//J//rrb//LEGAL if tree->a[1] == 252 || tree->a[1] == 253
+11//K//rrr//LEGAL if tree->a[1] == 253
 ###		legend
 ###	[ix](#ix)
 <!--/*	legend:
