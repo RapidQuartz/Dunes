@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 17:33:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:09:04 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,20 @@ short		move_islegal(t_ree *tree, short op);
 
 
 ////	OPS:
-t_snap	*do_push(t_ree *tree, int op);
-t_snap	*do_swap(t_ree *tree, int op);
+t_snap	*do_push(t_snap *new, t_ree *tree, int op);
+t_snap	*do_swap(t_snap *new, t_ree *tree, int op);
 //
-unsigned short		*ft_rotate(unsigned short *obj);
-t_snap	*do_rotate(t_ree *tree, int op);
-t_snap	*do_reverse(t_ree *tree, int op);
-unsigned short		*ft_reverse(unsigned short *obj);
+t_snap	*ft_rotate(t_snap *new, short *mem, int op);
+t_snap	*do_rotate(t_snap *new, t_ree *tree, int op);
+t_snap	*do_reverse(t_snap *new, t_ree *tree, int op);
+t_snap	*ft_reverse(t_snap *new, short *mem, int op);
 
 ////	UTILITY:
 void		check_minmax(long int value, t_snap **stack);
 int		get_factor(int *array, int argn);
+
+t_snap	*transcribe_snap(t_snap *snap, t_snap *new);
+
 
 ////	ERROR:
 void		error_handling(t_snap **one, t_snap **other);

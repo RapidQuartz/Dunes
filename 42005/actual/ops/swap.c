@@ -3,30 +3,36 @@
 unsigned short	*ft_aswap(unsigned short *obj);
 
 
-t_snap	*do_swap(t_ree *tree, int op)
+t_snap	*do_swap(t_snap *new, t_ree *tree, int op)
 {
-	t_snap		*new;
-	unsigned short	*obj;
 	short			swap;
 
-	new = tree->moves[op];
+	new = transcribe_snap(tree->order, new);
 	//sa//ss
 	if (op == 3 || op == 5)
 	{
-		obj = new->a;
-		swap = obj[1];
-		obj[1] = obj[2];
-		obj[2] = swap;
-		new->a = obj;
+		swap = new->a[1];
+		new->a[1] = new->a[2];
+		new->a[2] = swap;
 	}
 	//sb//ss
 	if (op == 4 ||  op == 5)
 	{
-		obj = new->b;
-		swap = obj[1];
-		obj[1] = obj[2];
-		obj[2] = swap;
-		new->b = obj;
+		swap = new->b[1];
+		new->b[1] = new->b[2];
+		new->b[2] = swap;
 	}
+	return (new);
+}
+
+t_snap	*transcribe_snap(t_snap *snap, t_snap *new)
+{
+	int	i;
+
+	i = -1;
+	while (snap->a[0] > 0 && ++i <= snap->a[0])
+		new->a[i] = snap->a[i];
+	while (snap->b[0] > 0 && ++i <= snap->b[0])
+		new->b[i] = snap->a[i];
 	return (new);
 }
