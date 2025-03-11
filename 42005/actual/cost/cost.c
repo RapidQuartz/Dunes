@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:10:07 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/10 12:26:32 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:33:14 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,21 @@ t_snap	*get_delta(t_snap *snap)
 	cost = 0;
 	delta = 0;
 	size = snap->size;
-	snap->ac = get_acost(snap);
-	snap->bc = get_bcost(snap);
-	delta = snap->ac[0] + snap->ac[0]; 
+	if (snap->a != NULL)
+	{
+		snap->ac = get_acost(snap);
+		delta += snap->ac[0];
+	}
+	if (snap->b != NULL)
+	{
+		snap->bc = get_bcost(snap);
+		delta += snap->bc[0];
+	}
+	snap->delta = delta;
 	return (snap);
 }
 
-short	*get_acost(t_snap *snap)
+unsigned short	*get_acost(t_snap *snap)
 {
 	unsigned short	cost;//collective
 	unsigned short	delta;//difference between index and pos
@@ -56,7 +64,7 @@ short	*get_acost(t_snap *snap)
 	return (snap->ac);
 }
 
-short	*get_bcost(t_snap *snap)
+unsigned short	*get_bcost(t_snap *snap)
 {
 	unsigned short	cost;//collective
 	unsigned short	delta;//difference between index and pos

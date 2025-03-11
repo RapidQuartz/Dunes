@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 11:41:01 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/10 12:10:36 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/11 16:16:56 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,10 @@ LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
 SRC = main.c push_swap.c \
 branch/new_branch.c \
-check/check_sort.c \
+check/check_sort.c check/climb_tree.c\
 cost/cost.c \
 init/arg_init.c \
+ops/push.c ops/rotate.c ops/swap.c \
 util/utilities.c util/error.c
 OBJ = $(SRC:.c=.o)
 

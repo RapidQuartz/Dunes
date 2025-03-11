@@ -12,7 +12,66 @@
 []()
 
 
+#	2025-03-11 15:10:11
+#	tree formation
+:0; receive `int argc char **argv`
+::: convert into `int* array`
+:::: check `*array` sort
+::: produce `t_snap *stack` from `*array`
+:::: set `stack->delta`
+::: produce `t_ree *root` structure
+:::: associate `stack->tree` and `root->order`
 
+:1; check `stack` sort
+;:; return `stack` if sorted
+
+:2; branch out into `root->moves`
+::: set `root->moves[i]` while `i < 11`
+;::: `NULL` for illegal moves
+;::: produce `t_snap *moves` for legal moves
+;:::: set `root->moves[i] = moves`
+
+:3; compare all legal movesets
+;:: set `root->probation += root->moves->delta`
+
+:4; produce `t_ree *tree` structure
+:::: associate `moves->tree` and `tree->order`
+
+:1;check
+
+:2;branch
+
+:3;compare
+;v; `int sum_delta = 0`
+;t; `t_ree tree`
+;s; `t_snap active`
+;b; `int branch = 0`
+
+:b: `while branch++ < 11`
+:s:: `active = tree->moves[branch]`
+:v:; `sum_delta += active->delta`
+:;I; if `active->up != NULL`
+:s:; `active = active->up`
+:;E; else
+:v:: `probation[branch] = sum_delta`
+:v;; `sum_delta = 0`
+
+;i; `int i = 0`
+;i; `int j = 1`
+::: `while i++ < 10`
+:::: `while j++ < 11`
+:I::: if `probation[i] > probation[j]`
+::::: `tree->moves[i]->penalty += probation[i] - probation[j]`
+:EI:: else if `probation[i] < probation[j]`
+::::: `tree->moves[i]->penalty -= probation[j] - probation[i]`
+
+:::: ``
+:4;grow
+
+
+:: return to divergence point
+
+*/
 
 
 

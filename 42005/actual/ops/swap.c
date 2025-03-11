@@ -11,7 +11,7 @@ t_snap	*do_swap(t_ree *tree, int op)
 
 	new = tree->moves[op];
 	//sa//ss
-	if (op == 3 || 5)
+	if (op == 3 || op == 5)
 	{
 		obj = new->a;
 		swap = obj[1];
@@ -20,7 +20,7 @@ t_snap	*do_swap(t_ree *tree, int op)
 		new->a = obj;
 	}
 	//sb//ss
-	if (op == 4 || 5)
+	if (op == 4 ||  op == 5)
 	{
 		obj = new->b;
 		swap = obj[1];

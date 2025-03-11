@@ -6,13 +6,9 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:22:58 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 19:29:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:14:31 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-t_ree		new_branch(t_snap *snap, t_ree **head)
-{
-	
-}

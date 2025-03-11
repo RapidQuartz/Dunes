@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:57:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/10 17:21:49 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:27:15 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ t_snap	*do_rotate(t_ree *tree, int op)
 
 	new = tree->moves[op];
 	//rra//rrr
-	if (op == 6 || 8)
+	if (op == 6 || op == 8)
 	{
 		obj = new->a;
 		obj = ft_reverse(obj);
 		new->a = obj;
 	}
 	//rrb//rrr
-	if (op == 7 || 8)
+	if (op == 7 || op == 8)
 	{
 		obj = new->b;
 		obj = ft_reverse(obj);
@@ -36,7 +36,7 @@ t_snap	*do_rotate(t_ree *tree, int op)
 }
 
 //TOP to BOT
-short		*ft_rotate(unsigned short *obj)
+unsigned short	*ft_rotate(unsigned short *obj)
 {
 	short		top;
 	short		end;
@@ -63,14 +63,14 @@ t_snap	*do_reverse(t_ree *tree, int op)
 
 	new = tree->moves[op];
 	//rra//rrr
-	if (op == 9 || 11)
+	if (op == 9 || op == 11)
 	{
 		obj = new->a;
 		obj = ft_reverse(obj);
 		new->a = obj;
 	}
 	//rrb//rrr
-	if (op == 10 || 11)
+	if (op == 10 || op == 11)
 	{
 		obj = new->b;
 		obj = ft_reverse(obj);
@@ -80,7 +80,7 @@ t_snap	*do_reverse(t_ree *tree, int op)
 }
 
 //BOT to TOP
-short		*ft_reverse(unsigned short *obj)
+unsigned short	*ft_reverse(unsigned short *obj)
 {
 	short		size;
 	short		top;

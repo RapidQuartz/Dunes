@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:35:30 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/10 17:39:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:15:04 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,3 @@ int	array_isunsorted(int *a, int n)
 	}
 	return (0);
 }
-
-short		check_moves(t_ree *tree)
-while (1)
