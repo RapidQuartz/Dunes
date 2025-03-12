@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:06:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 17:59:11 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:20:12 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	stack = push_swap(&stack);
 	if (!stack || stack == NULL)
 		return (6);
-	// finale(stack);
+	free (stack);
 	return (0);
 }
 

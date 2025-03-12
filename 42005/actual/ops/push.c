@@ -23,7 +23,7 @@ void	ft_pushto(t_snap *old, t_snap *new, int op)
 		to[0] = old->a[0] + 1;
 		to[1] = old->b[1];
 		while (++i < to[0])
-			to[i] = old->a[i + 1];
+			to[i + 1] = old->a[i];
 		new->a = to;
 	}
 	if (op == 2)
@@ -32,7 +32,7 @@ void	ft_pushto(t_snap *old, t_snap *new, int op)
 		to[0] = old->b[0] + 1;
 		to[1] = old->a[1];
 		while (++i < to[0])
-			to[i] = old->b[i + 1];
+			to[i + 1] = old->b[i];
 		new->b = to;
 	}
 	return ;

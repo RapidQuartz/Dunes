@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:49:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 20:49:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:26:40 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_snap		*make_moves(t_ree *root, int op);
 t_snap *push_swap(t_snap **stack)
 {
 	short		i;
+	short		j;
+	short		k;
 	t_snap	*snap;
 	t_ree		*root;
 	int		delta;
@@ -33,13 +35,49 @@ t_snap *push_swap(t_snap **stack)
 
 	root = (*stack)->tree;
 	delta = root->order->delta;
-	while (root->moves[0] == NULL && dummy < 42)
+	j = 0;
+	k = 0;
+	while (root->moves[0] == NULL && dummy++ < 11)
 	{
+		i = 0;
 		root = branch_tree(root);
+		if (root->order != NULL)
+		{
+			j = 0;
+			printf("ITERATION: %d\nsize:%d\t delta:%d\t penalty:%d\t op:%d\n", root->iteration, \
+				root->order->size, root->order->delta, root->order->penalty, root->order->op);
+			while (j++ < root->order->size)
+				printf("a:\t%d=||=%d\t:b\n", root->order->a[j], root->order->b[j]);
+			
+		}
+		while (i++ < 11)
+		{
+			if (root->moves[i] != NULL)
+			{
+				j = 0;
+				printf("op: %d\t delta:%d\na-size:\t%d=||=%d\t:b-size\n", \
+				root->moves[i]->op, root->moves[i]->delta, root->moves[i]->a[0], root->moves[i]->b[0]);
+				fflush(stdout);
+				while (j++ < root->order->size)
+				{	
+					printf("a:\t%d=||=%d\t:b\n", root->moves[i]->a[j], root->moves[i]->b[j]);
+					fflush(stdout);
+				}
+			}
+		}
 		if (root == NULL)
 			return (NULL);
 		compare_branch(root);
-		print_branch(root);
+		if (k++ < 11)
+		{
+			while (root->moves[k] == NULL)
+				k++;
+			if (root->moves[k] != NULL)
+				root = root->moves[k]->tree;
+		}
+		else
+			break ;
+			// print_branch(root);
 	}
 	return (root->order);
 }
@@ -50,6 +88,7 @@ void		print_branch(t_ree *root)
 	while (i++ < 12)
 	{
 		j = 0;
+
 		if (root->moves[i] != NULL)
 		{
 			if (root->moves[i]->tree == NULL)
@@ -85,6 +124,8 @@ t_ree		*branch_tree(t_ree *root)
 			move = make_moves(root, op);
 			if (move == NULL)
 				return (NULL);
+			else
+				root->moves[op] = move;
 		}
 	}
 	return (root);
@@ -107,7 +148,6 @@ t_snap		*make_moves(t_ree *root, int op)
 		new = do_reverse(new, root, op);
 	new = get_delta(new);
 	root->probation[op] += new->delta;
-	root->moves[op] = new;
 	new->op = op;
 	new->up = root->order;
 	return (new);

@@ -9,9 +9,13 @@
 [=NOTES=](notes.md)
 [=LOG=](log.md)
 [](old.md)
+[debugging](#degubging)
 []()
 
-
+# 2025-03-12 19:18:44
+# degubging
+p {*new->a@5, *new->b@5}
+p {*old->a@5, *old->b@5}
 #	2025-03-11 15:10:11
 #	tree formation
 :0; receive `int argc char **argv`
