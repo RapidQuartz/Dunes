@@ -6,12 +6,14 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:11:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/09 19:00:07 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:06:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 /* (int argc, char **argv, int argn, int *array) */
+int	ft_normalizer(int lmnt, int index);
+t_snap		*arg_normalizer(t_snap *new);
 int		*arg_instigator(int argc, char **argv, int *array)
 {
 	int	index;
@@ -38,7 +40,43 @@ int		*arg_instigator(int argc, char **argv, int *array)
 	array = arg_array(argc, argv, argn, array);
 	return (array);
 }
+t_snap		*arg_normalizer(t_snap *new)
+{
+	int	i;
+	int	j;
+	int	max;
+	int	hi;
+	int	*mem;
+	
+	max = new->a[0];
+	hi = INT_MAX;
+	mem = malloc(sizeof(int) * max * 2);
+	if (!mem || mem == NULL)
+		return (NULL);
+	j = 1;
+	while (max--)
+	{
+		i = 0;
+		while (++i < max)
+		{
+			if (new->a[i] < hi)
+			{
+				hi = new->a[i];
+				mem[0] = hi;
+				mem[1] = i;
+			}
+		}
+		i = 0;
+		while (i < new->a[0])
+			new->b[mem[1]] = j++;
+	}
+}
 
+int	ft_normalizer(int lmnt, int index)
+{
+	
+	return (lmnt)
+}
 int	arg_counter(char *args)
 {
 	int	index;

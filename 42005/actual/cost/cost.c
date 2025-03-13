@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:10:07 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 17:33:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:25:36 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ unsigned short	*get_bcost(t_snap *snap)
 		{
 			cost = snap->b[i];
 			if (cost < i)
-				snap->bc[i] = i - cost;
-			else if (cost > i)
 				snap->bc[i] = cost - i;
+			else if (cost > i)
+				snap->bc[i] = i - cost;
 			else if (cost == i)
 				snap->bc[i] = 0;
 			delta += snap->bc[i];

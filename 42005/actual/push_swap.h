@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 20:09:04 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:02:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,45 @@
 # define MAX_ARG 500
 #endif
 
+typedef	enum e_ops
+{
+	NONE,
+	PA,
+	PB,
+	SA,
+	SB,
+	SS,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR,
+	END
+} t_ops;
+
 typedef	struct s_snap
 {
 	unsigned short	*a;
 	unsigned short	*b;
 	unsigned short	*ac;
 	unsigned short	*bc;
-	unsigned short	op;
+	t_ops			op;
+	t_ops			sol;
 	unsigned short	delta;
 	unsigned short	size;
 	unsigned short	penalty;
 	struct s_snap	*up;
 	struct s_ree	*tree;
 } t_snap;
+typedef	struct s_ree
+{
+	short			iteration;
+	t_snap		*order;
+	t_snap		*moves[12];
+	short			probation[12];
+} t_ree;
+t_snap		*arg_normalizer(t_snap *new);
 
 
 /* ideas 2025-03-11 11:25:47
@@ -54,13 +80,7 @@ using negatives to mark advantage is also an idea. then calculate:
 	is the absolute value of probation lower than others?
 probation should also represent the degree to which a branch has changed in entropy
 */
-typedef	struct s_ree
-{
-	short			iteration;
-	struct s_snap	*order;
-	struct s_snap	*moves[12];
-	short			probation[12];
-} t_ree;
+
 
 /* typedef	struct s_valinor
 {
@@ -72,6 +92,7 @@ typedef	struct s_ree
 t_ree		*new_branch(t_snap *snap, t_ree **head);
 void		compare_branch(t_ree *root);
 int		climb_tree(t_ree *tree, int i);
+t_snap		*make_moves(t_ree *root, t_ops op);
 
 int	array_isunsorted(int *a, int n);
 
@@ -100,17 +121,20 @@ unsigned short	*get_acost(t_snap *snap);
 unsigned short	*get_bcost(t_snap *snap);
 
 ////	MOVES:
-short		move_islegal(t_ree *tree, short op);
+short		move_islegal(t_ree *tree, t_ops op);
 
 
 ////	OPS:
-t_snap	*do_push(t_snap *new, t_ree *tree, int op);
-t_snap	*do_swap(t_snap *new, t_ree *tree, int op);
+char		*get_opname(t_ops op);
+
+
+t_snap	*do_push(t_snap *new, t_ree *tree, t_ops op);
+t_snap	*do_swap(t_snap *new, t_ree *tree, t_ops op);
 //
-t_snap	*ft_rotate(t_snap *new, short *mem, int op);
-t_snap	*do_rotate(t_snap *new, t_ree *tree, int op);
-t_snap	*do_reverse(t_snap *new, t_ree *tree, int op);
-t_snap	*ft_reverse(t_snap *new, short *mem, int op);
+t_snap	*ft_rotate(t_snap *new, short *mem, t_ops op);
+t_snap	*do_rotate(t_snap *new, t_ree *tree, t_ops op);
+t_snap	*do_reverse(t_snap *new, t_ree *tree, t_ops op);
+t_snap	*ft_reverse(t_snap *new, short *mem, t_ops op);
 
 ////	UTILITY:
 void		check_minmax(long int value, t_snap **stack);

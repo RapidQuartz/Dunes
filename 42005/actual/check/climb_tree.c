@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:42:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 20:49:01 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:37:03 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int		climb_tree(t_ree *tree, int i)
 	while (j++ < 11)
 	{
 		if (tree->moves[j] != NULL)
+		{
 			sum_delta += climb_tree(tree->moves[j]->tree, j);
+
+		}
 	}
 	return (sum_delta);
 }
