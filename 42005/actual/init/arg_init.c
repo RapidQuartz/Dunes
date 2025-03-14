@@ -6,14 +6,14 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:11:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/13 18:06:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:13:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 /* (int argc, char **argv, int argn, int *array) */
-int	ft_normalizer(int lmnt, int index);
-t_snap		*arg_normalizer(t_snap *new);
+int	ft_normalizer(unsigned short *rack, int index);
+t_snap		*arg_normalizer(t_snap *new, int *array);
 int		*arg_instigator(int argc, char **argv, int *array)
 {
 	int	index;
@@ -40,42 +40,36 @@ int		*arg_instigator(int argc, char **argv, int *array)
 	array = arg_array(argc, argv, argn, array);
 	return (array);
 }
-t_snap		*arg_normalizer(t_snap *new)
+t_snap		*arg_normalizer(t_snap *new, int *array)
 {
-	int	i;
-	int	j;
-	int	max;
-	int	hi;
-	int	*mem;
+	short			pos;
+	int			i;
+	int			j;
 	
-	max = new->a[0];
-	hi = INT_MAX;
-	mem = malloc(sizeof(int) * max * 2);
-	if (!mem || mem == NULL)
-		return (NULL);
-	j = 1;
-	while (max--)
+	new->b[0] = new->size;
+	i = 0;
+	j = INT_MIN;
+	while (i++ < array[0])
 	{
-		i = 0;
-		while (++i < max)
+		if (new->a[i] == 0 && array[i] > j)
 		{
-			if (new->a[i] < hi)
-			{
-				hi = new->a[i];
-				mem[0] = hi;
-				mem[1] = i;
-			}
+			pos = i;
+			j = array[i];
 		}
-		i = 0;
-		while (i < new->a[0])
-			new->b[mem[1]] = j++;
+		if (i == array[0] && new->a[pos] == 0)
+		{
+			new->a[pos] = new->b[0]--;
+			j = INT_MIN;
+			i = 0;
+		}
 	}
+	return (new);
 }
 
-int	ft_normalizer(int lmnt, int index)
+int	ft_normalizer(unsigned short *rack, int index)
 {
 	
-	return (lmnt)
+	return (rack);
 }
 int	arg_counter(char *args)
 {

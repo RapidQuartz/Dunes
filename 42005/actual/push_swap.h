@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:25:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ typedef	struct s_ree
 	t_snap		*moves[12];
 	short			probation[12];
 } t_ree;
-t_snap		*arg_normalizer(t_snap *new);
+t_snap		*arg_normalizer(t_snap *new, int *array);
+int	stack_isunsorted(t_snap *s);
 
 
 /* ideas 2025-03-11 11:25:47

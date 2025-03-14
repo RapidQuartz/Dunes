@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:06:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:46 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:25:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	main(int argc, char **argv)
 	if (!array)
 		return (3);
 	argn = array[0];
-	if (!array_isunsorted(array, argn))
-		return (4);
 	stack = init_stack(array, argn);
+	if (!stack_isunsorted(stack))
+		return (4);
 	root = init_tree(NULL, stack);
 	if (!root || root == NULL || !stack || stack == NULL)
 		return (5);
@@ -112,13 +112,16 @@ t_snap	*init_stack(int *array, int argn)
 	if (!(snap->a || snap->ac))
 		return (NULL);
 	snap->size = array[0];
+	while (i++ < snap->size)
+	{
+		snap->a[i] = 0;
+		snap->b[i] = 0;
+	}
 	snap->a[0] = snap->size;
-	while (i++ < argn)
-		snap->a[i] = array[i];
+	snap = arg_normalizer(snap, array);
 	snap = get_delta(snap);
 	snap->up = NULL;
 	free (array);
-	snap = arg_normalizer(snap);
 	return (snap);
 }
 

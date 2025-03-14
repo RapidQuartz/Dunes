@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:35:30 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/11 16:15:04 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:28:16 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ int	main(void)
 	printf("\n");
 	return (0);
 } */
+int	stack_isunsorted(t_snap *s)
+{
+	int j;
+	int ba;
+
+	ba = 0;
+	j = 1;
+	while (j++ < s->a[0])
+	{
+		if (s->a[j - 1] > s->a[j])
+			ba++;
+	}
+	if (ba > 0)
+		return (1);
+	return (0);
+}
 int	array_isunsorted(int *a, int n)
 {
 	int	i;
@@ -34,7 +50,7 @@ int	array_isunsorted(int *a, int n)
 	j = 0;
 	while (i + 1 < n)
 	{
-		i = j++;
+		i = ++j;
 		m = a[i];
 		// printf("\n:e:%d::%d::%d\n", i, j, m);
 		while (j + 1 < n)
