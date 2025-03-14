@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:49:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/13 17:33:46 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:41:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,10 @@ t_ree		*branch_tree(t_ree *root)
 	t_ops		op;
 	t_snap	*move;
 	t_ree		*tree;
+	int		unsorted;
 
 	op = NONE;
+	unsorted = 1;
 	while (++op < END)
 	{
 		if (move_islegal(root, op))
@@ -153,9 +155,11 @@ t_ree		*branch_tree(t_ree *root)
 			move = make_moves(root, op);
 			if (move == NULL)
 				return (NULL);
-			else if (move->delta != 0)
+			if (move->a[0] == move->size)
+				unsorted = stack_isunsorted(move);
+			if (move->delta != 0 && unsorted)
 				root->moves[op] = move;
-			else if (move->delta == 0)
+			else if (move->delta == 0 && !unsorted)
 				root->moves[0] = move;
 		}
 	}
