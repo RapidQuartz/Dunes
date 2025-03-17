@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:42:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/17 12:07:42 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:06:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,53 +45,107 @@ void		compare_branch(t_ree *root)
 {
 	int	i;
 	t_ree	*tree;
-	int	sheriff;
+	int	best;
+	int	worst;
 	short	delta;
 
 	i = 0;
 	delta = -1;
-	sheriff = -1;
+	best = -1;
+	worst = -1;
 	tree = root;
 	if (tree != NULL)
 	{
 		while (i++ < 11)
-			tree->probation[i] = climb_tree(tree, i);
-		while (--i > 1)
 		{
-			if (tree->probation[i] > delta)
-				sheriff = i;
-		}
-		if (tree->moves[sheriff] != NULL)
-		{
-			if (tree->moves[sheriff]->penalty >= 1000)
-				prune_branch(tree->moves[sheriff]);
-			else
-				tree->moves[sheriff]->penalty += 100;
+			best = find_bestdelta(tree);
+			if (best > 0 && tree->moves[best] != NULL)
+				grow_branch(tree->moves[best]);
+			worst = find_worstdelta(tree);
+			if (worst > 0 && tree->moves[worst] != NULL)
+				prune_branch(tree->moves[worst]);
+			if (i != worst)
+				tree->probation[i] = climb_tree(tree, i);
 		}
 	}
 }
 
+void	grow_branch(t_snap *best)
+{
+	best->tree = branch_tree(best);
+	//grow the most promising branch
+	//delete the others?
+	//or just keep them on retainer
+}
+int		find_worstdelta(t_ree *sub)
+{
+	int	i;
+	int	j;
+	int	d;
+
+	i = 0;
+	if (sub->order != NULL)
+	{
+		d = sub->order->delta;
+		while (i++ < 11)
+		{
+			if (sub->moves[i] != NULL && sub->moves[i]->delta > d)
+			{
+				d = sub->moves[i]->delta;
+				j = i;
+			}
+		}
+		if (d == sub->order->delta)
+			return (0);
+		else
+			return (j);
+	}
+}
+
+int		find_bestdelta(t_ree *sub)
+{
+	int	i;
+	int	j;
+	int	d;
+
+	i = 0;
+	if (sub->order != NULL)
+	{
+		d = sub->order->delta;
+		while (i++ < 11)
+		{
+			if (sub->moves[i] != NULL && sub->moves[i]->delta < d)
+			{
+				d = sub->moves[i]->delta;
+				j = i;
+			}
+		}
+		if (d == sub->order->delta)
+			return (0);
+		else
+			return (j);
+	}
+}
 int		climb_tree(t_ree *tree, int i)
 {
-	int	j;
 	int	sum_delta;
+	int	j;
 
 	j = 0;
 	sum_delta = 0;
-	while (j++ < 11)
+	if (tree->moves[i] != NULL && tree->moves[i]->tree != NULL)
 	{
-		if (tree->moves[j] != NULL)
+		while (j++ < 11)
 		{
-			sum_delta += climb_tree(tree->moves[j]->tree, j);
-			sum_delta += tree->moves[j]->delta;
+			if (tree->moves[j]->tree != NULL)
+				sum_delta += climb_tree(tree->moves[j]->tree, j);
 		}
+		sum_delta += tree->moves[i]->delta;
 	}
-	if (tree->order != NULL)
-		sum_delta += tree->order->delta;
 	return (sum_delta);
 }
 
-void	prune_branch(t_snap *crimscum)
+void	prune_branch(t_snap *worst)
 {
 	int		j;
 	t_snap	*branch;
@@ -99,11 +153,11 @@ void	prune_branch(t_snap *crimscum)
 	j = 0;
 	while (j++ < 11)
 	{
-		if (crimscum->tree->moves[j] != NULL)
+		if (worst->tree->moves[j] != NULL)
 		{
-			prune_branch(crimscum->tree->moves[j]);
-			free (crimscum->tree->moves[j]);
+			prune_branch(worst->tree->moves[j]);
+			free (worst->tree->moves[j]);
 		}
 	}
-	free (crimscum->tree);
+	free (worst->tree);
 }

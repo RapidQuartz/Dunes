@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:49:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/17 19:31:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:06:44 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,31 @@ t_snap *push_swap(t_snap **stack)
 	k = 0;
 	i = 0;
 	root = branch_tree(root);
-	while (k++ < j)
+	//`k`is a dummy measure to keep it from looping infinitely
+	while (k++ < j && root->moves[0] != NULL)
 	{
-		if (i++ == 11)
-			i = 1;
-		if (i < 11)
-			root = branch_tree(root->moves[i]->tree);
-		if (root != NULL && root->moves[0] != NULL)
-			return (root->moves[0]);
+		root = branch_tree(root);
 		compare_branch(root);
+		root = 
 	}
 	if (k == j)
 		debug("ran out of time");
-	return (root->order);
+	return (root->moves[0]);
 }
 
 t_ree		*branch_tree(t_ree *root)
 {
 	t_ops		op;
 	t_snap	*move;
+	t_snap	*trail;
 
 	op = NONE;
-	while (++op < END)
+	while (++op < END && !root->moves[0])
 	{
 		if (move_islegal(root, op))
 		{
 			move = make_moves(root, op);
-			if (unsorted || move->b > 0)
+			if (stack_isunsorted(move))
 				root->moves[op] = move;
 			else if (move->delta == 0 && !stack_isunsorted(move) && move->a[0] == move->size)
 				root->moves[0] = move;
@@ -65,7 +63,6 @@ t_ree		*branch_tree(t_ree *root)
 		{
 			move = NULL;
 			root->moves[op] = NULL;
-			root->probation[op] = -1;
 		}
 	}
 	return (root);
