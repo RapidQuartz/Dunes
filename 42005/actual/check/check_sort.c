@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:35:30 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/14 13:28:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:18:43 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,24 @@ int	stack_isunsorted(t_snap *s)
 {
 	int j;
 	int ba;
+	int ab;
 
+	
 	ba = 0;
+	ab = 0;
 	j = 1;
 	while (j++ < s->a[0])
 	{
 		if (s->a[j - 1] > s->a[j])
 			ba++;
 	}
-	if (ba > 0)
+	j = 1;
+	while (j++ < s->b[0])
+	{
+		if (s->b[j - 1] < s->b[j])
+			ab++;
+	}
+	if (ba > 0 || ab > 0)
 		return (1);
 	return (0);
 }

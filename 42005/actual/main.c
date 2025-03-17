@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:06:33 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/14 13:25:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:57:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,30 +99,28 @@ t_ree		*init_tree(t_ree *root, t_snap *snap)
 t_snap	*init_stack(int *array, int argn)
 {
 	int		i;
-	t_snap	*snap;
+	t_snap	*new;
 
 	i = 0;
-	snap = malloc(sizeof(*snap));
-	if (!snap)
+	new = malloc(sizeof(*new));
+	if (!new)
 		return (NULL);
-	snap->a = malloc(sizeof(unsigned short) * argn + 1);
-	snap->b = malloc(sizeof(unsigned short) * argn + 1);
-	snap->ac = malloc(sizeof(unsigned short) * argn + 1);
-	snap->bc = malloc(sizeof(unsigned short) * argn + 1);
-	if (!(snap->a || snap->ac))
+	new->a = malloc(sizeof(short) * argn + 1);
+	new->b = malloc(sizeof(short) * argn + 1);
+	new->ac = malloc(sizeof(short) * argn + 1);
+	new->bc = malloc(sizeof(short) * argn + 1);
+	new->ar = malloc(sizeof(short) * argn + 1);
+	new->br = malloc(sizeof(short) * argn + 1);
+	if (!(new->a || new->ac))
 		return (NULL);
-	snap->size = array[0];
-	while (i++ < snap->size)
-	{
-		snap->a[i] = 0;
-		snap->b[i] = 0;
-	}
-	snap->a[0] = snap->size;
-	snap = arg_normalizer(snap, array);
-	snap = get_delta(snap);
-	snap->up = NULL;
+	new->size = array[0];
+	new = nullify_new(new);
+	new->a[0] = new->size;
+	new = arg_normalizer(new, array);
+	new = get_delta(new);
+	new->up = NULL;
 	free (array);
-	return (snap);
+	return (new);
 }
 
 t_snap	*new_snap(t_ree *tree)
@@ -134,20 +132,19 @@ t_snap	*new_snap(t_ree *tree)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new->a = malloc(sizeof(unsigned short) * argn + 1);
-	new->b = malloc(sizeof(unsigned short) * argn + 1);
-	new->ac = malloc(sizeof(unsigned short) * argn + 1);
-	new->bc = malloc(sizeof(unsigned short) * argn + 1);
-	if (!(new->a || new->b || new->ac || new->bc))
+	new->a = malloc(sizeof(short) * argn + 1);
+	new->b = malloc(sizeof(short) * argn + 1);
+	new->ac = malloc(sizeof(short) * argn + 1);
+	new->bc = malloc(sizeof(short) * argn + 1);
+	new->ar = malloc(sizeof(short) * argn + 1);
+	new->br = malloc(sizeof(short) * argn + 1);
+	if (!(new->a || new->b || new->ac || new->bc || new->ar || new->br))
 		return (NULL);
+	new = nullify_new(new);
 	new->tree = new_tree(tree, new);
 	new->sol = 0;
 	new->up = tree->order;
 	new->size = argn;
-	new->a[0] = 0;
-	new->b[0] = 0;
-	new->ac[0] = 0;
-	new->bc[0] = 0;
 	return (new);
 }
 
@@ -165,4 +162,21 @@ t_ree		*new_tree(t_ree *root, t_snap *snap)
 		tree->moves[branches] = NULL;
 	tree->order = snap;
 	return (tree);
+}
+
+t_snap	*nullify_new(t_snap *new)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < new->size)
+	{
+		new->a[i] = 0;
+		new->b[i] = 0;
+		new->ac[i] = 0;
+		new->bc[i] = 0;
+		new->ar[i] = 0;
+		new->br[i] = 0;
+	}
+	return (new);
 }

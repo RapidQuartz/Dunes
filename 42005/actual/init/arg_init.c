@@ -6,13 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:11:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/14 13:13:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:51:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 /* (int argc, char **argv, int argn, int *array) */
-int	ft_normalizer(unsigned short *rack, int index);
 t_snap		*arg_normalizer(t_snap *new, int *array);
 int		*arg_instigator(int argc, char **argv, int *array)
 {
@@ -40,6 +39,7 @@ int		*arg_instigator(int argc, char **argv, int *array)
 	array = arg_array(argc, argv, argn, array);
 	return (array);
 }
+
 t_snap		*arg_normalizer(t_snap *new, int *array)
 {
 	short			pos;
@@ -66,11 +66,6 @@ t_snap		*arg_normalizer(t_snap *new, int *array)
 	return (new);
 }
 
-int	ft_normalizer(unsigned short *rack, int index)
-{
-	
-	return (rack);
-}
 int	arg_counter(char *args)
 {
 	int	index;

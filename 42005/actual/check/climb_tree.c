@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:42:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/13 16:37:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:07:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,28 @@ void		compare_branch(t_ree *root)
 	int	i;
 	t_ree	*tree;
 	int	sheriff;
+	short	delta;
 
 	i = 0;
+	delta = -1;
 	sheriff = -1;
 	tree = root;
-	while (i++ < 11)
-		tree->probation[i] = climb_tree(tree, i);
-	while (--i > 1)
+	if (tree != NULL)
 	{
-		if (tree->probation[i] > sheriff)
-			sheriff = i;
-	}
-	if (tree->moves[sheriff] != NULL)
-	{
-		if (tree->moves[sheriff]->penalty >= 1000)
-			prune_branch(tree->moves[sheriff]);
-		else
-			tree->moves[sheriff]->penalty += 100;
+		while (i++ < 11)
+			tree->probation[i] = climb_tree(tree, i);
+		while (--i > 1)
+		{
+			if (tree->probation[i] > delta)
+				sheriff = i;
+		}
+		if (tree->moves[sheriff] != NULL)
+		{
+			if (tree->moves[sheriff]->penalty >= 1000)
+				prune_branch(tree->moves[sheriff]);
+			else
+				tree->moves[sheriff]->penalty += 100;
+		}
 	}
 }
 
@@ -78,9 +83,11 @@ int		climb_tree(t_ree *tree, int i)
 		if (tree->moves[j] != NULL)
 		{
 			sum_delta += climb_tree(tree->moves[j]->tree, j);
-
+			sum_delta += tree->moves[j]->delta;
 		}
 	}
+	if (tree->order != NULL)
+		sum_delta += tree->order->delta;
 	return (sum_delta);
 }
 

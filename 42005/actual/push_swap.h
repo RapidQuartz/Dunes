@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/14 13:25:55 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:05:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ typedef	struct s_snap
 {
 	unsigned short	*a;
 	unsigned short	*b;
-	unsigned short	*ac;
-	unsigned short	*bc;
+	short			*ac;
+	short			*bc;
+	short			*ar;
+	short			*br;
 	t_ops			op;
 	t_ops			sol;
-	unsigned short	delta;
+	short	delta;
 	unsigned short	size;
 	unsigned short	penalty;
 	struct s_snap	*up;
@@ -68,7 +70,7 @@ typedef	struct s_ree
 } t_ree;
 t_snap		*arg_normalizer(t_snap *new, int *array);
 int	stack_isunsorted(t_snap *s);
-
+t_snap	*nullify_new(t_snap *new);
 
 /* ideas 2025-03-11 11:25:47
 init tree first
@@ -118,16 +120,18 @@ t_ree		*branch_tree(t_ree *root);
 
 ////	COST:
 t_snap	*get_delta(t_snap *snap);
-unsigned short	*get_acost(t_snap *snap);
-unsigned short	*get_bcost(t_snap *snap);
+short	*get_acost(t_snap *snap);
+short	*get_bcost(t_snap *snap);
 
 ////	MOVES:
 short		move_islegal(t_ree *tree, t_ops op);
+short		move_isredundant(t_ree *tree, t_ops op, t_ops prev);
 
 
 ////	OPS:
 char		*get_opname(t_ops op);
-
+void		print_tree(t_ree *root);
+void		print_branch(t_snap *snap);
 
 t_snap	*do_push(t_snap *new, t_ree *tree, t_ops op);
 t_snap	*do_swap(t_snap *new, t_ree *tree, t_ops op);

@@ -6,12 +6,13 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 11:41:01 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/11 16:16:56 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/17 11:46:37 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-CC = cc -g -v
+# CC = cc -g -v
+CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
 # LIB = /Users/akjoerse/Code/4_github/42001/libft
 LIB = /home/akjoerse/42/999_GitHub/42001/libft/
@@ -22,7 +23,7 @@ check/check_sort.c check/climb_tree.c\
 cost/cost.c \
 init/arg_init.c \
 ops/push.c ops/rotate.c ops/swap.c \
-util/utilities.c util/error.c
+util/utilities.c util/error.c util/print.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)

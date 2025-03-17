@@ -72,13 +72,108 @@ p {*old->a@5, *old->b@5}
 :::: ``
 :4;grow
 
-
 :: return to divergence point
 
 */
+#	freeing and pruning
+
+##	freeing
+freeing should happen once solution is found, or when a branch is pruned.
+
+since branches are recursive, the freeing function should:
+:while moves[i] is not NULL::
+	;: call itself with tree->moves[i]
+		;; repeat until tree->moves[i] is NULL.
+	;; free tree->moves[i]
+
+##	pruning
+pruning is how to keep calculations limited.
+once a certain level of complexity is reached, the less fortunate are culled.
+in practice this is an optimization that might be unhelpful.
+in theory it is crucial. a compromise must be found
+
+#	compare branch
+
+produces an aggregate measure of delta/entropy for an entire branch
+
+:1: does the branch diverge?
+:1:1:	what is the sum of delta for the entire branch?
+:2: what is the delta for the snap?
+:3:
+:4:
 
 
+<!-- /*	logix
+		what should 'delta' or 'a_cost' even symbolize?
+			::	how many moves from being in its right place, is a given member?
+		for a number in first half, 
+			if it belongs to first half
+				then it is 'pos - i'
+					ex:
 
+				pos	1 3 5 2 4
+				ind	1 2 3 4 5
+				
+				by this logic the '5' would be treated as 'first half'
+					it is '5 - 3 = 2' away
+					or in machine terms 'ac[i] = a[i] - i'
+				lets do '3'
+					it is '3 - 2 = 1' away
+					or 'ac[i] = a[i] - i'
+				what about '2'
+					'2 - 4 = -2'
+				what about aggregates?
+					having several '-' like values should incentivize 'rotate' type moves
+					having several '+' like values should incentivize 'reverse' type moves
+				what about accumulation?
+					a total sum of the absolute values of cost could be given to the 'delta'
+					OR a directional delta could be added
+					maybe a median value?
+					
+			if it does not belong to first half
+		for a number in second half,
+			if it belongs to second half
+			if it does not belong to second half
+
+			the first/second half stuff is really only useful to determine if one direction is better than another
+
+			i still need to 
+				'know'
+			that for:
+			pos	5 3 1 4 2
+			ind	1 2 3 4 5
+			it is sensible to think of '5' as having '-1' as value, not '+4'
+				which is greater:
+			[O]		pos - ind = 4
+			[X]		ind - pos = -4
+			instead, it should calculate position as ratio of size.
+				here, '5' is a 1/1 of size
+				
+				also, for 'ind 1' it can also be thought of as
+				'size + 1'
+					or
+				'index 6'
+				if the distance to the right index FORWARD is greater than BACKWARD
+
+				if i do 'if number is in first half and belongs in second' -> 'delta = size - index - pos == 5 - 1 - 5 == -1'
+				if i do 'if number is in first half and belongs in first' -> 'delta = pos - index == 3 - 2 == 1'
+			it is sensible to think of '2' as having '+1' as value, not '-3'
+				if i do 'if number is in second half and belongs in first' -> 'delta = size - index + pos == 5 - 5 + 2 == 2'
+				if i do 'if number is in second half and belongs in second' -> 'delta = pos - index == 4 - 4 == 0'
+
+			is this consistent?
+
+			relative delta
+				1/2
+					delta = size - index - pos
+				2/2
+					delta = size - index + pos
+			absolute delta
+				1/2
+					if (delta < 0) delta *= -1
+
+				
+		*/ -->
 
 #	strategy-log
 [readme-index](#readme-index)
