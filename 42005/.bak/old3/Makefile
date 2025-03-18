@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/18 16:30:29 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/18 16:33:01 by akjoerse         ###   ########.fr        #
+#    Created: 2025/03/09 11:41:01 by akjoerse          #+#    #+#              #
+#    Updated: 2025/03/18 16:32:53 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,30 +23,42 @@ check/check_sort.c check/climb_tree.c\
 cost/cost.c \
 init/arg_init.c \
 ops/push.c ops/rotate.c ops/swap.c \
-util/utility.c util/error.c util/print.c
+util/utilities.c util/error.c util/print.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)
 
 $(LIBFT):
+	@echo "$(GREEN)\n\n\n\n\t\t\tmaking the libft library\n$(RESET)"
+	# @sleep 2
 	make -C $(LIB)
 
 $(NAME): $(OBJ)
+	@echo "$(BLUE)\n\n\n\n\t\t\tcompiling\n$(RESET)"
+	# @sleep 2
 	$(CC) $^ -L/home/akjoerse/42/999_GitHub/42001/libft -lft -o $(NAME)
 
 
 $(OBJ): %.o: %.c
+	@echo "$(GREEN)\n\n\n\n\t\t\tmaking the object files\n$(RESET)"
 	$(CC) -c $^ -o $@
 
+
 clean:
+	@echo "$(YELLOW)\n\n\n\n\t\t\tremoving object files\n$(RESET)"
+	# @sleep 2
 	rm -f $(OBJ)
 	make -C $(LIB) clean	
 
 fclean: clean
+	@echo "$(YELLOW)\n\n\n\n\t\t\tremoving the program files\n$(RESET)"
+	# @sleep 2
 	rm -f $(NAME)
 	make -C $(LIB) fclean	
 
 re: fclean all
+	@echo "$(GREEN)\n\n\n\n\t\t\tremaking the project$(RESET)"
+	# @sleep 2
 
 RED    = \033[1;31m
 GREEN  = \033[1;32m

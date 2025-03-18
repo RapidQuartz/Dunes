@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:22:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/17 13:22:04 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:23:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ void		print_branch(t_snap *snap)
 	t_snap	*orig;
 	
 	i = 0;
-	if (snap != NULL && snap->tree != NULL && snap->up != NULL)
+	if (snap != NULL && snap->tree != NULL && (snap->up != NULL || snap->tree->iteration == 0))
 	{
-		printf("iteration: %d\t delta: %d\t probation: %d\n" \
-				"operation: %s\t previous operation: %s\n", \
-			snap->tree->iteration, snap->delta, snap->tree->probation[snap->op],\
+		printf("iteration: %d\t delta: %d\t probation: %d\n", \
+			snap->tree->iteration, snap->delta, snap->tree->probation[snap->op]);\
+		if (snap->up != NULL)
+			printf("operation: %s\t previous operation: %s\n", \
 				get_opname(snap->op), get_opname(snap->up->op));
 		j = 1;
 		while (j <= snap->size && (j <= snap->a[0] || j <= snap->b[0]))

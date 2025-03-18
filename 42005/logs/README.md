@@ -12,6 +12,19 @@
 [debugging](#degubging)
 []()
 
+# 2025-03-18 08:36:54
+
+### daily donk
+
+ * 0. initialise primordial snap
+ * 1. branch up to 11 times
+ * 2. control each branch and assign score
+ * 3. branch out lowest delta branch
+ * 4. control if branch delta lowers
+ * 5. if not, proceed to branch branches in ascending order of delta
+ * 6. {how does delta develop?}
+ * 7. prune highest delta after {n} diversions
+
 # 2025-03-12 19:18:44
 # degubging
 p {*new->a@5, *new->b@5}
