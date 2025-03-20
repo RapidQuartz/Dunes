@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:42:07 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/18 16:49:10 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:26:25 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	count_arg(int argc, char **argv)
 
 	i = 0;
 	argn = 0;
-	while (i++ < argc)
+	while (++i < argc)
 	{
 		num = arg_counter(argv[i]);
 		if (num == 0)

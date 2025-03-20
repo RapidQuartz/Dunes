@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/18 17:12:49 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:01:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 
 typedef	struct	s_n
 {
-	int		a;
-	int		asz;
-	int		b;
-	int		bsz;
+	int		val;
+	int		ssz;
 	int		siz;
 	struct s_n	*n;
 } t_n;
@@ -37,6 +35,8 @@ typedef	struct	s_n
 ///
 ///	INIT:
 t_n	*make_st(int *arr);
+t_n	*new_st(t_n *s, t_n *n);
+
 
 ///	ARG:
 int	count_arg(int argc, char **argv);
@@ -46,12 +46,18 @@ int	arg_checker(char a, char b);
 ///	ARR:
 int	*make_arr(int argc, char **argv, int argn, int *arr);
 void	check_minmax(long int value, t_n **st);
-int	*normalizer(int *arr, int argn);
+int	*arg_normalizer(int *arr, int siz);
+int	*arr_transcriber(int *arr, int *brr, int siz);
 
 ///	UTIL:
 long	get_number(char *arg, int argn);
 
+///	DEBUG:
+void		debug(char *str);
+void		d_end(void);
+void		d_arrayprint(int *arr);
+
 ///	PS:
-void	push_swap(t_n **st);
+void	push_swap(t_n **sta, t_n **stb);
 
 #endif

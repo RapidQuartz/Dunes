@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:42:01 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/18 17:12:38 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:33:57 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	*make_arr(int argc, char **argv, int argn, int *arr)
 
 	index = 1;
 	iter = 1;
+	arr = malloc(sizeof(int) * (argn + 1));
+	if (!arr || arr == NULL)
+		d_end();
 	arr[0] = argn;
 	while (iter < argc)
 	{
@@ -35,7 +38,6 @@ int	*make_arr(int argc, char **argv, int argn, int *arr)
 		}
 		iter++;
 	}
-	num = normalizer(arr, argn);
 	return (arr);
 }
 
@@ -44,34 +46,54 @@ void	check_minmax(long int value, t_n **st)
 	if (value > INT_MAX || value < INT_MIN)
 	{
 		if (st || (*st) != NULL)
-			error_handling(st, NULL);
+			d_end();
 		else
-			error_handling(NULL, NULL);
+			d_end();
 	}
 }
 
-int	*normalizer(int *arr)
+int	*arg_normalizer(int *arr, int siz)
 {
-	short			pos;
+	int	i;
+	int	*brr;
+
+	i = 0;
+	brr = malloc(sizeof(int) * (siz + 1));
+	if (!brr || brr == NULL)
+		d_end();
+	brr[i] = arr[0];
+	while (++i <= siz)
+	{
+		brr[i] = 0;
+	}
+	brr = arr_transcriber(arr, brr, siz);
+	free (arr);
+	return (brr);
+}
+
+int	*arr_transcriber(int *arr, int *brr, int siz)
+{
+	int			pos;
 	int			i;
 	int			j;
-	int			siz;
 	
 	i = 0;
+	pos = 0;
 	j = INT_MIN;
-	while (i++ < arr[0])
+	brr[0] = arr[0];
+	while (siz > 0 && i++ < arr[0])
 	{
-		if (arr[i] > j)
+		if (arr[i] > j && brr[i] == 0)
 		{
 			pos = i;
 			j = arr[i];
 		}
-		if (i == arr[0])
+		if (i == arr[0] && brr[pos] == 0)
 		{
-			new->a[pos] = new->b[0]--;
+			brr[pos] = siz--;
 			j = INT_MIN;
 			i = 0;
 		}
 	}
-	return (new);
+	return (brr);
 }
