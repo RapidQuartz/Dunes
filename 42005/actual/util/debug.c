@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:10:06 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/20 12:31:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:15:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,48 @@ void		d_end(void)
 	exit (2);
 }
 
-void		d_arrayprint(int *arr)
+void		d_print_stack(t_n **sta)
+{
+	int	i;
+	t_n	*s;
+	
+	i = 0;
+	s = (*sta);
+	s = (*(s->h));
+	while (i++ < s->i->v)
+	{
+		printf("node # %d:\t%d\n", i, s->v);
+		s = s->n;
+	}
+}
+void		d_print_cost(t_c **cst)
+{
+	int	i;
+	int	z;
+	t_c	*c;
+	t_n	*n;
+	
+	i = 0;
+	c = (*cst);
+	n = (*c->cap);
+	z = n->i->v;
+	while (i < z)
+	{
+		printf("cost for node: %d\t" \
+			"#\t%p#\t%p#\t%p  #\t%d#\t%d#\t%d#\t%d#\t\n" \
+			"\t\t\t\tc->cap#\t\tc->ego#\t\tc->tgt  #" \
+			"\tc->dif#\tc->dis#\tc->rot#\tc->rev\n", \
+		n->v, c->cap, c->ego, c->tgt, c->dif, c->dis, c->rot, c->rev);
+		if (i++ < z)
+		{
+			n = n->n;
+			c = n->c;
+		}
+	}
+}
+
+
+void		d_print_array(int *arr)
 {
 	int	i;
 	char	n;

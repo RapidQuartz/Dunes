@@ -6,18 +6,21 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 16:30:29 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/20 11:15:43 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/24 17:30:39 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-CC = cc -g -v
-# CC = cc -g
+# CC = cc -g -v
+CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
 # LIB = /Users/akjoerse/Code/4_github/42001/libft
 LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
-SRC = main.c push_swap.c arg.c arr.c init.c \
+SRC = main.c push_swap.c \
+arg.c arr.c init.c \
+check.c cost.c sort.c push.c\
+stack_nav.c \
 util/debug.c util/utility.c
 OBJ = $(SRC:.c=.o)
 

@@ -59,6 +59,8 @@
   "files.associations": {
     "push_swap.h": "c",
     "new.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "concepts": "c",
+    "type_traits": "c"
   }
 }
