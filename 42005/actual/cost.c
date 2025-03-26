@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/24 17:46:01 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:26:07 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,41 +32,66 @@ typedef	struct	s_c
 //	//  used to calculate moves  //
 //	//===========================//
 //	
-t_c		*init_cost(t_n **sta, t_c *cost)
+void		init_cost(t_n **sta, t_n **stb, t_c *c_a, t_c *c_b)
 {
-	t_n	*node;
-	int	size;
+	t_n	*n_a;
+	t_n	*n_b;
 	
-	node = (*(*sta)->h);
-	size = node->i->v;
-	if (cost == NULL)
-		cost = new_cost(node, cost, size);
-	while (size--)
-	{
-		cost = get_node_cost(node, cost);
-		node = node->n;
-		cost = node->c;
-	}
-	return (cost);
+	if (sta != NULL && (*sta)->i->v != 0)
+		n_a = (*(*sta)->h);
+	else
+		n_a = NULL;
+	if (stb != NULL && (*stb)->i->v != 0)
+		n_b = (*(*stb)->h);
+	else
+		n_b = NULL;
+	if (c_a == NULL && n_a != NULL)
+		c_a = new_cost(n_a, c_a, n_a->i->v);
+	if ((c_a != NULL || c_b != NULL) && (n_a != NULL || n_b != NULL))
+		get_cost(n_a, n_b, c_a, c_b);
 }
 
+void	get_cost(t_n *node_a, t_n *node_b, t_c *cost_a, t_c *cost_b)
+{
+	int	size_a;
+	int	size_b;
+
+	size_a = 0;
+	size_b = 0;
+	if (node_a != NULL)
+		size_a = node_a->i->v;
+	if (node_b != NULL)
+		size_b = node_a->i->v;
+	while (size_a> 0)
+	{
+		cost_a = get_node_cost(node_a, cost_a);
+		node_a = node_a->n;
+		cost_a = node_a->c;
+		size_a--;
+	}
+	while (size_b > 0)
+	{
+		cost_b = get_node_cost(node_b, cost_b);
+		node_b = node_b->n;
+		cost_b = node_b->c;
+		size_b--;
+	}
+}
 t_c	*new_cost(t_n *node, t_c *cost, int size)
 {
 	int	i;
-	t_n	**cap;
 
 	i = 0;
-	if (node == *node->h)
-		cap = node->h;
 	while (i++ < size)
 	{
 		cost = malloc(sizeof(*cost));
 		if (!cost || cost == NULL)
 			d_end();
 		cost->ego = node;
-		cost->cap = cap;
+		cost->cap = node->h;
 		node->c = cost;
 		cost->tgt = NULL;
+		cost->stk = 'A';
 		cost->mov = 0;
 		cost->dif = 0;
 		cost->dis = 0;
@@ -118,19 +143,19 @@ t_c	*get_node_cost(t_n *node, t_c *cost)
 	return (cost);
 }
 
-void		find_move(t_n **stack)
+void		find_move(t_n **stack_a, t_n **stack_b)
 {
 	t_n	*n;
 	t_n	*t;
 
-	n = (*stack);
+	n = (*stack_a);
 	t = n->c->tgt;
 	if (t->c->dif == -1 && n->c->rev == 1)//so if the target's 'next' is one lower than target
 		n->c->mov = 9;//9 is reverse
 	else if (t->c->dif == 1 && n->c->rev == 1)
 		n->c->mov = 0;//0 is NO MOVE
 	else if (t->c->dif > 1 || n->c->rev > 1)
-		n->c->mov = select_push_node(stack);
+		n->c->mov = select_push_node(stack_a);
 	}
 	
 	/*
@@ -140,3 +165,42 @@ int	select_push_node(t_n **stack)
 {
 }
 	*/
+
+/* PSEUDOCODE TO COMPLY WITH TURK */
+/* push 2 to B		-	ONCE
+initial_push()
+	push_b()
+	push_b()
+*/
+/* select next to push	-	REPEATS
+find_next()
+	if (head_a < head_b)
+		find_lower(head_a)
+			add_moves()
+	else if (head_a > head_b)
+		find_higher()
+			add_moves()
+*/
+/* rotate to next		-	REPEATS
+rotate_next()
+	if (stack_a != next)
+rotate_b()
+	if (stack_b != neighbor)
+*/
+/* push next		-	REPEATS
+push_next()
+	if (size_a > 3)
+*/
+/* final_three		-	ONCE
+sort_three()
+*/
+/* push back		-	ONCE
+if (stack_a = neighbor)
+	push_a()
+*/
+/* realign		-	ONCE
+if (stack_a != 1)
+	realign_a()
+	[find cheaper rot/rev]
+*/
+/* PSEUDOCODE TO COMPLY WITH TURK */

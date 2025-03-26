@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:32:08 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/24 14:26:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:39:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,26 @@ void	sort_three(t_n **sta)
 
 void	sort_stack(t_n **sta, t_n **stb)
 {
-	t_c	*cost;
+	t_c	*cost_a;
+	t_c	*cost_b;
 
-	if ((sta != NULL && (*sta)->c == NULL) || (stb != NULL&& (*stb)->c == NULL))
-		cost = NULL;
-	cost = init_cost(sta, cost);
-	if (cost != NULL)
-		find_move(sta);
-	if (cost->mov == 6 && cost->rot == 1)
-		rotate(sta);
-	else if (cost->mov == 9 && cost->rev == 1)
-		reverse(sta);
-	else if (cost->mov == 2)
-		push(sta, stb);
-	else if (cost->mov == 3)
-		swap(sta);
-	d_print_cost(&cost);
+	// if (sta == NULL && (*sta)->c == NULL)
+	cost_a = NULL;
+	// if (stb == NULL && (*stb)->c == NULL)
+	cost_b = NULL;
+	init_cost(sta, stb, cost_a, cost_b);
+	d_print_cost(&cost_a);
+	exec_turk(sta, stb);
 }
+/* find_move(sta, stb);
+if (cost_a->mov == 6 && cost_a->rot == 1)
+	rotate(sta);
+else if (cost_a->mov == 9 && cost_a->rev == 1)
+	reverse(sta);
+else if (cost_a->mov == 2)
+	push(sta, stb);
+else if (cost_a->mov == 3)
+	swap(sta); */
 
 void	reverse(t_n **sta)
 {

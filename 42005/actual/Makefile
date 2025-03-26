@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 16:30:29 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/24 17:30:39 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/03/26 12:35:56 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC = main.c push_swap.c \
 arg.c arr.c init.c \
 check.c cost.c sort.c push.c\
 stack_nav.c \
-util/debug.c util/utility.c
+util/debug.c util/utility.c turk.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(LIBFT) $(NAME)

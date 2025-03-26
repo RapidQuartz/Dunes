@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:50:39 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/24 17:55:46 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:37:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@ void	ft_push_dst(t_n **stack_dst, t_n *dst_info);
 void	push(t_n **stack_src, t_n **stack_dst)
 {
 	t_n	*src_info;
-	t_n	*src_head;
 	t_n	*dst_info;
 	t_n	**dst_head;
+	char	dst_stk;
 
 	src_info = (*stack_src)->i;
 	dst_info = (*stack_dst)->i;
-	
 	dst_head = src_info->h;
-	src_head = (*dst_head)->h;
-	dst_info->h = src_info->h;
+	dst_stk = (*dst_head)->c->stk;
+	dst_info->h = dst_head;
+	(*dst_head)->c->stk = dst_stk;
 	ft_push_src(stack_src, src_info);
 	ft_push_src(stack_dst, dst_info);
-
 }
 /* THIS ONE MIGHT WORK LEL
 void	push(t_n **stack_src, t_n **stack_dst)
@@ -131,5 +130,5 @@ void	ft_push_dst(t_n **stack_dst, t_n *dst_info)
 
 int	select_push_node(t_n **stack)
 {
-	
+	return (0);
 }

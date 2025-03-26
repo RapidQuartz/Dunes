@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/24 17:45:51 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:39:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef	struct	s_c
 	t_n		**cap;
 	t_n		*ego;
 	t_n		*tgt;
+	char		stk;
 	int		mov;
 	int		dif;
 	int		dis;
@@ -44,14 +45,23 @@ typedef	struct	s_c
 
 ///
 ///	COST:
-t_c		*init_cost(t_n **sta, t_c *cost);
+void		init_cost(t_n **sta, t_n **stb, t_c *c_a, t_c *c_b);
+void	get_cost(t_n *node_a, t_n *node_b, t_c *cost_a, t_c *cost_b);
 ///
-void		find_move(t_n **stack);
+void		find_move(t_n **stack_a, t_n **stack_b);
 ///	SORT:
 void	sort_stack(t_n **sta, t_n **stb);
 ///
 int	select_push_node(t_n **stack);
 ///
+///	TURK:
+void	exec_turk(t_n **sta, t_n **stb);
+t_n	*next_find(t_n **sta, t_n **stb);
+void	next_align(t_n **sta, t_n **stb, t_n *next);
+void	next_push(t_n **sta, t_n **stb, t_n *next);
+void	last_push(t_n **sta, t_n **stb);
+void	last_align(t_n **sta, t_n **stb);
+
 
 
 ///	INIT:
