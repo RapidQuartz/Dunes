@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 12:26:07 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:47:34 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	get_cost(t_n *node_a, t_n *node_b, t_c *cost_a, t_c *cost_b)
 		size_a = node_a->i->v;
 	if (node_b != NULL)
 		size_b = node_a->i->v;
-	while (size_a> 0)
+	while (size_a > 0)
 	{
 		cost_a = get_node_cost(node_a, cost_a);
 		node_a = node_a->n;
@@ -84,7 +84,8 @@ t_c	*new_cost(t_n *node, t_c *cost, int size)
 	i = 0;
 	while (i++ < size)
 	{
-		cost = malloc(sizeof(*cost));
+		if (cost == NULL)
+			cost = malloc(sizeof(*cost));
 		if (!cost || cost == NULL)
 			d_end();
 		cost->ego = node;

@@ -6,11 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 14:25:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:47:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+t_n	*highest_member_b(t_n **stb);
 
 /* on the process of the turk
 set target
@@ -24,7 +25,13 @@ void	exec_turk(t_n **sta, t_n **stb);
 void	exec_turk(t_n **sta, t_n **stb)
 {
 	t_n	*next;
+	t_n	*db;
+	int	v;
+	int	n;
+	int	p;
+	int	h;
 	
+	d_print_twostack_values(sta, stb, 1);
 	push(sta, stb);
 	push(sta, stb);
 	while ((*sta)->i->v > 3)
@@ -38,7 +45,7 @@ void	exec_turk(t_n **sta, t_n **stb)
 	}
 	sort_three(sta);
 	last_push(sta, stb);
-	last_align(sta, stb)
+	last_align(sta, stb);
 }
 
 void	next_find(t_n **sta, t_n **stb);
@@ -95,15 +102,15 @@ t_n	*highest_member_b(t_n **stb)
 }
 
 void	next_align(t_n **sta, t_n **stb, t_n *next);
+/* aligns stack A and B so each target is ready for pushing
+eg; if first to push is the second in B, this is reflected thus:
+	A[1]->c->tgt = B[2]
+	A[2]->c->tgt = B[1]
+then, instead of reordering B, reorder A so A[2] is on top
+consider "cost" the number of moves needed to align stacks
+*/
 void	next_align(t_n **sta, t_n **stb, t_n *next)
 {
-	/* aligns stack A and B so each target is ready for pushing
-	eg; if first to push is the second in B, this is reflected thus:
-		A[1]->c->tgt = B[2]
-		A[2]->c->tgt = B[1]
-	then, instead of reordering B, reorder A so A[2] is on top
-	consider "cost" the number of moves needed to align stacks
-	*/
 	int	rotate;
 	int	reverse;
 	t_n	*fwd;
@@ -122,8 +129,9 @@ void	next_align(t_n **sta, t_n **stb, t_n *next)
 		while (rev->c->tgt != next && next->c->rev++)
 			rev = rev->p;
 		if (next->c->rot < next->c->rev)
-			
+			next->c->rev = -1;
 		else
+			next->c->rot = -1;
 	}
 }
 

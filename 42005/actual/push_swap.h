@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 12:39:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:46:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	select_push_node(t_n **stack);
 ///
 ///	TURK:
 void	exec_turk(t_n **sta, t_n **stb);
-t_n	*next_find(t_n **sta, t_n **stb);
+void	next_find(t_n **sta, t_n **stb);
 void	next_align(t_n **sta, t_n **stb, t_n *next);
 void	next_push(t_n **sta, t_n **stb, t_n *next);
 void	last_push(t_n **sta, t_n **stb);
 void	last_align(t_n **sta, t_n **stb);
 
+///	DEBUGPRINTSTACKS:
+void	d_print_twostack_values(t_n **sta, t_n **stb, int mode);
 
 
 ///	INIT:
@@ -93,7 +95,7 @@ long	get_number(char *arg, int argn);
 void		debug(char *str);
 void		d_end(void);
 void		d_print_stack(t_n **sta);
-void		d_print_cost(t_c **cst);
+void		d_print_cost(t_c *cst);
 void		d_print_array(int *arr);
 
 

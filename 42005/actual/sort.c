@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:32:08 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 12:39:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:51:31 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	sort_stack(t_n **sta, t_n **stb)
 	// if (stb == NULL && (*stb)->c == NULL)
 	cost_b = NULL;
 	init_cost(sta, stb, cost_a, cost_b);
-	d_print_cost(&cost_a);
+	// d_print_cost(cost_a);
 	exec_turk(sta, stb);
 }
 /* find_move(sta, stb);
