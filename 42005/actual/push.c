@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:50:39 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 12:31:47 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:26:22 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,22 @@ int	*ft_pushfrom(t_stack *stk, int *src, int *dst);
 int	*ft_pushto(t_stack *stk, int *src, int *dst)
 {
 	int	i;
+	int	j;
 	int	n;
-	int	*t;
+	int	*s;
+	int	*d;
 
 	i = 1;
-	dst[0]++;
-	t = malloc(sizeof(int) * stk->size);
-	if (!t || t == NULL)
-		stk->err = 1;
-	t[1] = src[1];
-	while (i < dst[0])
-	{
-		n = dst[i];
-		t[++i] = n;
-	}
+	n = src[1];
+	while (i < src[0])
+		src[i++] = src[i];
+	src[0] -= 1;
+	dst[0] += 1;
+	i = dst[0];
+	while (i < 0)
+		dst[i--] = dst[i];
 	free (dst);
-	return (t);
+	return (d);
 }
 int	*ft_pushfrom(t_stack *stk, int *src, int *dst)
 {

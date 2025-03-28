@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 12:22:45 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:13:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ typedef	struct	s_stack
 	int			*co_a;
 	int			*st_b;
 	int			*co_b;
-	struct s_stack	**head;
-	struct s_stack	*prev;
-	struct s_stack	*next;
 	short			err;
 } t_stack;
 void	stack_genesis(t_stack **stack, int *array);
