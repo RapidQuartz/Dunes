@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 11:03:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:54:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ set target
 			can be smaller or greater
 			
 */
-void	exec_turk(t_n **sta, t_n **stb);
-void	exec_turk(t_n **sta, t_n **stb)
+// void	exec_turk(t_n **sta, t_n **stb);
+void	exec_turk(t_stack **stk)
 {
 debug("in exec_turk");
 	t_n	*next;
 	t_n	*db;
 
 debug(GRN"printing both stacks");
-	d_print_twostack_values(sta, stb, 1);
+	// d_print_twostack_values(sta, stb, 1);
 debug(YLW"attempting to push first number");
-	push(sta, stb);
+	push(stk, 2);
 debug(GRN"printing both stacks");
 	d_print_twostack_values(sta, stb, 1);
 debug(YLW"attempting to push second number");

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:50:39 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/27 13:07:02 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:31:47 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,142 @@ void	ft_push_src(t_n **stack_src, t_n *src_info);
 // void	ft_push_dst(t_n **stack_dst, t_n *dst_info);
 void	ft_push_dst(t_n **stack_dst, t_n *dst_info, t_n **new_head);
 /* THIS ONE MIGHT NOT */
-void	push(t_n **stack_src, t_n **stack_dst)
+void	push(t_stack **stack_src, int	idt)
 {
+	int	*sta;
+	int	*stb;
+
+	if (stack_src != NULL && (*stack_src)->st_a != NULL)
+		sta = (*stack_src)->st_a;
+	if (stack_src != NULL && (*stack_src)->st_b != NULL)
+		stb = (*stack_src)->st_b;
+	if (idt == 0)
+		ft_ppb(sta, stb);
+	else if (idt == 1)
+		ft_pa(sta, stb);
+	else if (idt == 2)
+		ft_pb(sta, stb);
+	
+}
+
+void	ft_ppb(int *sta, int *stb);
+void	ft_ppb(int *sta, int *stb)
+{
+	ft_pb(sta, stb);
+	ft_pb(sta, stb);
+}
+void	ft_pa(int *sta, int *stb);
+void	ft_pa(int *sta, int *stb)
+{
+	
+}
+void	ft_pb(int *sta, int *stb);
+void	ft_pb(int *sta, int *stb)
+{
+	
+}
+void	ft_push_b(t_stack *stk);
+void	ft_push_b(t_stack *stk)
+{
+	int	*t;
+	int	n;
+	int	i;
+
+	i = 0;
+	t = malloc(sizeof(int) * stk->size);
+	if (!t || t == NULL)
+		free (stk);
+	else
+	{
+		ft_pushto(stk, stk->st_a, stk->st_b);
+		ft_pushfrom(stk, stk->st_a, stk->st_b);
+		if (stk->err != 0)
+			d_end();
+	}
+}
+void	ft_push_a(t_stack *stk);
+void	ft_push_a(t_stack *stk)
+{
+	int	*t;
+	int	n;
+	int	i;
+
+	i = 0;
+	t = malloc(sizeof(int) * stk->size);
+	if (!t || t == NULL)
+		free (stk);
+	else
+	{
+		ft_pushto(stk, stk->st_b, stk->st_a);
+		ft_pushfrom(stk, stk->st_b, stk->st_a);
+		if (stk->err != 0)
+			d_end();
+	}
+}
+int	*ft_pushto(t_stack *stk, int *src, int *dst);
+int	*ft_pushfrom(t_stack *stk, int *src, int *dst);
+int	*ft_pushto(t_stack *stk, int *src, int *dst)
+{
+	int	i;
+	int	n;
+	int	*t;
+
+	i = 1;
+	dst[0]++;
+	t = malloc(sizeof(int) * stk->size);
+	if (!t || t == NULL)
+		stk->err = 1;
+	t[1] = src[1];
+	while (i < dst[0])
+	{
+		n = dst[i];
+		t[++i] = n;
+	}
+	free (dst);
+	return (t);
+}
+int	*ft_pushfrom(t_stack *stk, int *src, int *dst)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	src[0]--;
+	n = src[0];
+}
+int	*move_stack_fwd(int *stk, int num);
+int	*move_stack_fwd(int *stk, int num)
+{
+	int	*t;
+	int	n;
+	int	i;
+
+	i = 0;
+	t = malloc(sizeof(int) * stk[0]);
+	if (!t || t == NULL)
+		free (stk);
+	if (num == 0)
+		ft_pushfrom(stk);
+	else
+	{
+		n = stk[0];
+		while (i != n)	
+		{
+			t[num + i] = 
+		}
+	}
+	return (stk);
+}
+int	*move_stack_bwd(int *stk, int num);
+int	*move_stack_bwd(int *stk, int num)
+{
+	if (num != 0)
+	if (num <= -1)
+	if (num >= 1)
+	return (stk);
+}
+/*{ 
+	t_n	*src_info;
 	t_n	*src_info;
 	t_n	*dst_info;
 	t_n	**dst_head;
@@ -68,7 +202,7 @@ d_print_twostack_values(stack_src, stack_dst, 0);
 	
 d_print_twostack_values(stack_src, stack_dst, 1);
 	
-}
+} */
 /* THIS ONE MIGHT WORK LEL
 void	push(t_n **stack_src, t_n **stack_dst)
 {

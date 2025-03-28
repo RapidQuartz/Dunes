@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 11:07:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:22:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 # define YLW "\033[1;33m"
 # define DEF "\033[0m"
 
+// typedef	struct	s_n
 typedef	struct	s_stack
 {
+	int			size;
 	int			*st_a;
 	int			*co_a;
 	int			*st_b;
@@ -34,7 +36,11 @@ typedef	struct	s_stack
 	struct s_stack	**head;
 	struct s_stack	*prev;
 	struct s_stack	*next;
+	short			err;
 } t_stack;
+void	stack_genesis(t_stack **stack, int *array);
+// void	stack_genesis(t_stack **stack_a, t_stack **stack_b, int *array);
+// void	stack_genesis(t_n **stack_a, t_n **stack_b, int *array);
 
 typedef	struct	s_n
 {
@@ -72,7 +78,7 @@ void	sort_stack(t_n **sta, t_n **stb);
 int	select_push_node(t_n **stack);
 ///
 ///	TURK:
-void	exec_turk(t_n **sta, t_n **stb);
+void	exec_turk(t_stack **stk);
 void	next_find(t_n **sta, t_n **stb);
 void	next_align(t_n **sta, t_n **stb, t_n *next);
 void	next_push(t_n **sta, t_n **stb, t_n *next);
@@ -122,8 +128,9 @@ t_n	*info_node_b(void);
 
 
 ///	PS:
-void	push_swap(t_n **stack_a, t_n **stack_b);
-void	push(t_n **stack_src, t_n **stack_dst);
+void	push_swap(t_stack **stack);
+// void	push(t_n **stack_src, t_n **stack_dst);
+void	push(t_stack **stack_src, int	idt);
 
 
 ///	SORT:
@@ -139,7 +146,7 @@ void	reverse(t_n **sta);
 void	rotate(t_n **sta);
 void	swap(t_n **sta);
 
-void	push(t_n **stack_src, t_n **stack_dst);
+// void	push(t_n **stack_src, t_n **stack_dst);
 
 
 
