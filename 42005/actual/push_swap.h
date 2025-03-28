@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/27 12:46:45 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:07:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@
 #include <stddef.h>	
 #include <stdlib.h>
 #include <limits.h>
+
+# define RED "\033[1;31m"
+# define BLU "\033[1;34m"
+# define GRN "\033[1;32m"
+# define YLW "\033[1;33m"
+# define DEF "\033[0m"
+
+typedef	struct	s_stack
+{
+	int			*st_a;
+	int			*co_a;
+	int			*st_b;
+	int			*co_b;
+	struct s_stack	**head;
+	struct s_stack	*prev;
+	struct s_stack	*next;
+} t_stack;
 
 typedef	struct	s_n
 {

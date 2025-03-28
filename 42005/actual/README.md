@@ -99,6 +99,8 @@ prob need another array?
 
 ###	LOG:
 #####	
+
+debug("");
 #####	2025-03-26 09:34:25
 1. decide on days tasks
 	i. log tasks

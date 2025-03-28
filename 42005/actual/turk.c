@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/27 12:47:42 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:03:35 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,20 @@ set target
 void	exec_turk(t_n **sta, t_n **stb);
 void	exec_turk(t_n **sta, t_n **stb)
 {
+debug("in exec_turk");
 	t_n	*next;
 	t_n	*db;
-	int	v;
-	int	n;
-	int	p;
-	int	h;
-	
+
+debug(GRN"printing both stacks");
 	d_print_twostack_values(sta, stb, 1);
+debug(YLW"attempting to push first number");
 	push(sta, stb);
+debug(GRN"printing both stacks");
+	d_print_twostack_values(sta, stb, 1);
+debug(YLW"attempting to push second number");
 	push(sta, stb);
+debug(BLU"printing both stacks");
+	d_print_twostack_values(sta, stb, 1);
 	while ((*sta)->i->v > 3)
 	{
 		next_find(sta, stb);//finds target for whole A stack

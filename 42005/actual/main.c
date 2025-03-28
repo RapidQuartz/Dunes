@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:38:31 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/21 14:32:07 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:08:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char **argv)
 	argn = count_arg(argc, argv);
 	arr = make_arr(argc, argv, argn, arr);
 	arr = arg_normalizer(arr, argn);
-	sta = init_stack_a(arr);
-	stb = init_stack_b();
+	// sta = init_stack_a(arr);
+	// stb = init_stack_b();
 	if (stack_is_sorted(sta))
 	{
 		debug("sorted");

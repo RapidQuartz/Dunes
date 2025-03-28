@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:32:08 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 16:51:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:59:35 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	sort_stack(t_n **sta, t_n **stb)
 {
 	t_c	*cost_a;
 	t_c	*cost_b;
-
+debug(RED"DEFUNCT"DEF);
 	// if (sta == NULL && (*sta)->c == NULL)
 	cost_a = NULL;
 	// if (stb == NULL && (*stb)->c == NULL)
 	cost_b = NULL;
+debug("");
 	init_cost(sta, stb, cost_a, cost_b);
 	// d_print_cost(cost_a);
 	exec_turk(sta, stb);
