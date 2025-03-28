@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:50:39 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 13:27:19 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:32:35 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,31 +94,24 @@ int	*ft_pushfrom(t_stack *stk, int *src, int *dst);
 int	*ft_pushto(t_stack *stk, int *src, int *dst)
 {
 	int	i;
-	int	j;
-	int	n;
-	int	*s;
-	int	*d;
+	int	f;
 
 	i = 1;
-	n = src[1];
-	while (i < src[0])
-		src[i++] = src[i];
-	src[0] -= 1;
-	dst[0] += 1;
-	i = dst[0];
-	while (i < 0)
+	f = src[1];
+	i = dst[0] + 1;
+	while (i > 1)
 		dst[i--] = dst[i];
-	free (dst);
-	return (d);
+	dst[i] = f;
+	return (dst);
 }
 int	*ft_pushfrom(t_stack *stk, int *src, int *dst)
 {
 	int	i;
-	int	n;
+	int	l;
 
-	i = 0;
-	src[0]--;
-	n = src[0];
+	i = src[0];
+	while (--i > 0)
+		src[--i] = src[++i]
 }
 int	*move_stack_fwd(int *stk, int num);
 int	*move_stack_fwd(int *stk, int num)
