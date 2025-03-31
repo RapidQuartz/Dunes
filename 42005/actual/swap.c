@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 17:06:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:14:53 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/03/31 13:03:05 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/03/31 13:30:49 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// void	push_swap(t_n **stack_a, t_n **stack_b)
-void	push_swap(t_stack **stack)
+int	*swap_a(int *a)
 {
-	int	i;
-	t_stack	*stk;
-	
-	i = 0;
-	stk = (*stack);
-	if ((stk->a[0] == 2) && stk->a[1] > stk->a[2])
-		swap_a(stk->a);
-	else if (stk->a[0] == 3)
-		sort_three(stack);
-	else if (stk->a[0] > 3)
-		exec_turk(stack);
-	return ;
+	int	s;
+
+	s = a[1];
+	a[1] = a[2];
+	a[2] = s;
+	return (a);
 }
 
+int	*swap_b(int *b)
+{
+	int	s;
+
+	s = b[1];
+	b[1] = b[2];
+	b[2] = s;
+	return (b);
+}
+
+t_stack	*swap_s(t_stack *a)
+{
+	a->a = swap_a(a->a);
+	a->b = swap_b(a->b);
+	return (a);
+}

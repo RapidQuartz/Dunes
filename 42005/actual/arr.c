@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:42:01 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/20 12:33:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:19:31 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	*make_arr(int argc, char **argv, int argn, int *arr)
 		}
 		iter++;
 	}
-	return (arr);
+	return (arg_normalizer(arr, argn));
 }
 
 void	check_minmax(long int value, t_n **st)

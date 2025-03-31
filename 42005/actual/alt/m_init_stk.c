@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   m_init_stk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 17:06:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:14:53 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/03/31 11:21:31 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/03/31 11:50:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "alt.h"
 
-// void	push_swap(t_n **stack_a, t_n **stack_b)
-void	push_swap(t_stack **stack)
+// t_stk		*m_init_stk(a - argn/b - arr/c - args/d - valid)
+t_stk		*m_init_stk(int *a, t_stk *b)
 {
-	int	i;
-	t_stack	*stk;
-	
-	i = 0;
-	stk = (*stack);
-	if ((stk->a[0] == 2) && stk->a[1] > stk->a[2])
-		swap_a(stk->a);
-	else if (stk->a[0] == 3)
-		sort_three(stack);
-	else if (stk->a[0] > 3)
-		exec_turk(stack);
-	return ;
+	return (b);
+	return (NULL);
 }
-

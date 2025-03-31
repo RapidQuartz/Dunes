@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:10:06 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/27 12:47:15 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:23:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		d_end(void)
 {
 	exit (2);
 }
-
+/* 
 void		d_print_stack(t_n **sta)
 {
 	int	i;
@@ -48,7 +48,7 @@ void		d_print_stack(t_n **sta)
 		printf("node # %d:\t%d\n", i, s->v);
 		s = s->n;
 	}
-}
+} */
 void		d_print_cost(t_c *cst)
 {
 	int	i;

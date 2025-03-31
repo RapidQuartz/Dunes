@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   m_init_arg_check.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 17:06:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:14:53 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/03/31 11:21:26 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/03/31 11:37:43 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "alt.h"
 
-// void	push_swap(t_n **stack_a, t_n **stack_b)
-void	push_swap(t_stack **stack)
+int		m_check_args(int a, char **b);
+static int	check_arg_valid(int a, char **b);
+static int	check_arg_unique(int a, char **b);
+
+int	m_check_args(int a, char **b)
 {
-	int	i;
-	t_stack	*stk;
-	
-	i = 0;
-	stk = (*stack);
-	if ((stk->a[0] == 2) && stk->a[1] > stk->a[2])
-		swap_a(stk->a);
-	else if (stk->a[0] == 3)
-		sort_three(stack);
-	else if (stk->a[0] > 3)
-		exec_turk(stack);
-	return ;
+	if (check_arg_valid(a, b))
+		return (check_arg_unique(a, b));
+	else
+		return (NULL);
 }
-

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/26 16:47:34 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:06:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ t_c	*get_node_cost(t_n *node, t_c *cost)
 		cost->dis = cost->rot;
 	return (cost);
 }
-
+/* 
 void		find_move(t_n **stack_a, t_n **stack_b)
 {
 	t_n	*n;
@@ -157,7 +157,7 @@ void		find_move(t_n **stack_a, t_n **stack_b)
 		n->c->mov = 0;//0 is NO MOVE
 	else if (t->c->dif > 1 || n->c->rev > 1)
 		n->c->mov = select_push_node(stack_a);
-	}
+	} */
 	
 	/*
 	n->c->mov = 0;//

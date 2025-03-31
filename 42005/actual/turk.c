@@ -6,50 +6,74 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 11:54:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:06:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 t_n	*highest_member_b(t_n **stb);
 
-/* on the process of the turk
-set target
-	sets a target (in B) that is close to the element (in A)
-		the target:
-			is close in value
-			can be smaller or greater
-			
-*/
-// void	exec_turk(t_n **sta, t_n **stb);
+
 void	exec_turk(t_stack **stk)
 {
-debug("in exec_turk");
-	t_n	*next;
-	t_n	*db;
+	int 		*a;
+	int 		*b;
+	t_stack	*s;
 
-debug(GRN"printing both stacks");
-	// d_print_twostack_values(sta, stb, 1);
-debug(YLW"attempting to push first number");
-	push(stk, 2);
-debug(GRN"printing both stacks");
-	d_print_twostack_values(sta, stb, 1);
-debug(YLW"attempting to push second number");
-	push(sta, stb);
-debug(BLU"printing both stacks");
-	d_print_twostack_values(sta, stb, 1);
-	while ((*sta)->i->v > 3)
+	s = (*stk);
+	a = s->a;
+	b = s->b;
+	//	push 2
+	s = push_b(a, b, s);
+	s = push_b(a, b, s);
+	d_print_stack(s);
+/*	check rotation
+if (a[1])
+	biggest
+	smallest
+*/
+/*		align
+*/
+/*		push next
+*/
+//	last 3
+/*		sort 3
+*/
+/*	push back
+*/
+/*	output instructions
+*/
+}
+void	check_rotation(t_stack **stk)
+{
+	int		i;
+	int		h;
+	int		*a;
+	int		*b;
+	t_stack	*s;
+
+	i = 0;
+	s = (*stk);
+	a = s->a;
+	b = s->b;
+	if (a[1] > b[1])
 	{
-		next_find(sta, stb);//finds target for whole A stack
-		next = (*sta)->c->tgt;//
-		/* should actually optimize so A is aligned, but will iterate anyway. */
-		next_align(sta, stb, next);
-		next_push(sta, stb, next);
-		(*sta) = (*sta)->n;
+		h = 1;
+		while (i++ < b[0])
+		{
+			if (b[i] > b[h])
+				h = i;
+		}
+		s->d = h;
+		h = 1;
+		i = 0;
+		while (i++ < a[0])
+		{
+			if (a[i] > a[h])
+		}
 	}
-	sort_three(sta);
-	last_push(sta, stb);
-	last_align(sta, stb);
+	else if (s->a[1] < s->b[1])
+	(*stk) = s;
 }
 
 void	next_find(t_n **sta, t_n **stb);

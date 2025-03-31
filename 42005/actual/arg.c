@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:42:07 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/20 11:26:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:18:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ int	arg_counter(char *args)
 
 int	arg_checker(char a, char b)
 {
+	if ((a == ' ') &&	((b == ' ' || b == '-' || b == '+')) || \
+	((a == '-' || a == '+' || a == ' ') && (b >= '0' && b <= '9')) || \
+	((a <= '9' && a >= '0') && (b >= '0' && b <= '9')))
+		return (1);
+	else if ((a >= '0' && a <= '9') && (b == ' ' || b == '\0'))
+		return (2);
+	else
+		return (0);
+}
+/* int	arg_checker(char a, char b)
+{
 	if ((a == ' ') && \
 	((b == ' ' || b == '-' || b == '+') || \
 	(b >= '0' && b <= '9')) || \
@@ -67,4 +78,4 @@ int	arg_checker(char a, char b)
 			return (2);
 	}
 	return (0);
-}
+} */

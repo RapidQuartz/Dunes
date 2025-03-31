@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 13:13:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:00:03 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@
 // typedef	struct	s_n
 typedef	struct	s_stack
 {
-	int			size;
-	int			*st_a;
-	int			*co_a;
-	int			*st_b;
-	int			*co_b;
-	short			err;
+	int			*a;
+	int			*b;
+	int			*c;
+	int			d;
+	int			e;
 } t_stack;
-void	stack_genesis(t_stack **stack, int *array);
+t_stack	*stack_genesis(t_stack **stack, int *array);
 // void	stack_genesis(t_stack **stack_a, t_stack **stack_b, int *array);
 // void	stack_genesis(t_n **stack_a, t_n **stack_b, int *array);
 
@@ -114,7 +113,8 @@ long	get_number(char *arg, int argn);
 ///	DEBUG:
 void		debug(char *str);
 void		d_end(void);
-void		d_print_stack(t_n **sta);
+// void		d_print_stack(t_n **sta);
+void		d_print_stack(t_stack *s);
 void		d_print_cost(t_c *cst);
 void		d_print_array(int *arr);
 
@@ -125,23 +125,42 @@ t_n	*info_node_b(void);
 
 
 ///	PS:
-void	push_swap(t_stack **stack);
+void		push_swap(t_stack **stack);
 // void	push(t_n **stack_src, t_n **stack_dst);
-void	push(t_stack **stack_src, int	idt);
 
 
 ///	SORT:
-void	sort_three(t_n **sta);
-void	sort_stack(t_n **sta, t_n **stb);
+void		sort_three(t_stack **stk);
+int		*three_ops(int *a, int *b);
+// void	sort_three(t_n **sta);
+void		sort_stack(t_n **sta, t_n **stb);
 
 
 ///	CHECK:
-int	stack_is_sorted(t_n *sta);
+int		stack_is_sorted(t_n *sta);
+void		check_rotation(t_stack **stk);
 
-///	OPS:
-void	reverse(t_n **sta);
-void	rotate(t_n **sta);
-void	swap(t_n **sta);
+
+///	SWAP:
+int		*swap_a(int *a);
+int		*swap_b(int *b);
+t_stack	*swap_s(t_stack *a);
+
+///	ROTATE:
+int		*rotate_a(int *a);
+int		*rotate_b(int *b);
+t_stack	*rotate_s(t_stack *a);
+
+///	REVERSE:
+int		*reverse_a(int *a);
+int		*reverse_b(int *b);
+t_stack	*reverse_s(t_stack *a);
+
+///	PUSH:
+t_stack		*push_a(int *a, int *b, t_stack *c);
+t_stack		*push_b(int *a, int *b, t_stack *c);
+int			*realign_stack(int *s);
+int			*nullify_arr(int *arr, int size);
 
 // void	push(t_n **stack_src, t_n **stack_dst);
 

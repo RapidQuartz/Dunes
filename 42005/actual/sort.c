@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
@@ -6,114 +6,52 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:32:08 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/28 10:59:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:53:01 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(t_n **sta)
+void	sort_three(t_stack **stk)
 {
-	int	ops[3];
-	int	i;
-	t_n	*s;
+	int		ops[5];
+	int		i;
+	t_stack	*sta;
+	int		*s;
 
-	s = (*sta);
-	i = 0;
-	s = *s->h;
-	while (i < 3)
-		ops[i++] = 0;
-	if (((s->v < s->n->v) && (s->n->v > s->p->v) && (s->v > s->p->v)) || \
-	((s->v < s->n->v) && (s->n->v > s->p->v) && (s->v < s->p->v)))
+	sta = (*stk);
+	if (sta->a[0] == 3)
+		s = sta->a;
+	while (i++ < 4)
+		ops[i] = 0;
+	if ((s[1] < s[2]) && (s[1] < s[3]) &&  (s[2] > s[3]))//acb//rra//sa
 		ops[0] = 1;
-	if (((s->v > s->n->v) && (s->n->v < s->p->v) && (s->v > s->p->v)) || \
-	((s->v > s->n->v) && (s->n->v > s->p->v) && (s->v > s->p->v)))
+	if ((s[1] > s[2]) && (s[1] < s[3]) &&  (s[2] < s[3]))//bac//sa
 		ops[1] = 1;
-	if (((s->v < s->n->v) && (s->n->v > s->p->v) && (s->v < s->p->v)) || \
-	((s->v > s->n->v) && (s->n->v > s->p->v) && (s->v > s->p->v)) || \
-	((s->v > s->n->v) && (s->n->v < s->p->v) && (s->v < s->p->v)))
+	if ((s[1] < s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//bca//sa/rra
 		ops[2] = 1;
-	if (ops[0] == 1)
-		reverse(sta);
-	if (ops[1] == 1)
-		rotate(sta);
-	if (ops[2] == 1)
-		swap(sta);
+	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] < s[3]))//cab//ra
+		ops[3] = 1;
+	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//cba//rra
+		ops[4] = 1;
+	s = three_ops(s, ops);
+	(*stk) = sta;
+	return ;
 }
 
-void	sort_stack(t_n **sta, t_n **stb)
+int		*three_ops(int *a, int *b)
 {
-	t_c	*cost_a;
-	t_c	*cost_b;
-debug(RED"DEFUNCT"DEF);
-	// if (sta == NULL && (*sta)->c == NULL)
-	cost_a = NULL;
-	// if (stb == NULL && (*stb)->c == NULL)
-	cost_b = NULL;
-debug("");
-	init_cost(sta, stb, cost_a, cost_b);
-	// d_print_cost(cost_a);
-	exec_turk(sta, stb);
-}
-/* find_move(sta, stb);
-if (cost_a->mov == 6 && cost_a->rot == 1)
-	rotate(sta);
-else if (cost_a->mov == 9 && cost_a->rev == 1)
-	reverse(sta);
-else if (cost_a->mov == 2)
-	push(sta, stb);
-else if (cost_a->mov == 3)
-	swap(sta); */
+	int	i;
 
-void	reverse(t_n **sta)
-{
-	t_n	*s;
-	t_n	**h;
-
-	h = NULL;
-	s = (*sta);
-	h = &s->p;
-	s->i->n = (*h);
-	s->i->p = (*h)->p;
-	s->h = h;
-	sta = &s;
-	d_print_stack(&s);
-}
-
-void	rotate(t_n **sta)
-{
-	t_n	*s;
-	t_n	**h;
-
-	h = NULL;
-	s = (*sta);
-	h = &s->n;
-	s->i->n = (*h);
-	s->i->p = (*h)->p;
-	s->h = h;
-	sta = &s;
-	d_print_stack(&s);
-}
-
-void	swap(t_n **sta)
-{
-	t_n	*old_head;
-	t_n	*new_head;
-	t_n	*tail;
-	t_n	**head_ptr;
-
-	old_head = (*(*sta)->h);
-	new_head = old_head->n;
-	tail = old_head->p;
-	new_head->p = tail;
-	tail->n = new_head;
-	old_head->p = new_head;
-	old_head->n = new_head->n;
-	new_head->n = old_head;
-	head_ptr = &new_head;
-	new_head->h = head_ptr;
-	new_head->i->n = new_head;
-	new_head->i->p = tail;
-	sta = &new_head;
-	d_print_stack(sta);
+	i = 0;
+	while (i++ < 2)
+	{
+		if ((i == 1 && (b[0] == 1 || b[4] == 1)) || (i == 2 && b[2] == 1))
+			a = reverse_a(a);
+		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || (i == 2 && b[0] == 1))
+			a = swap_a(a);
+		if (i == 1 && b[3] == 1)
+			a = rotate_a(a);
+	}
+	return (a);
 }

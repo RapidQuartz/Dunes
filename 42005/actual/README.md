@@ -153,6 +153,33 @@ the next number to be pushed has two traits:
 
 
 ###	code path
+//// 3
+//// ST_DEFS:
+typedef	struct	s_stk
+{
+	int			*a;//a_stack
+	int			*b;//b_stack
+	int			*c;//cost
+	int			d;//data
+	int			e;//error
+} t_stk;
+//// 2
+<>()[]{}
+main
+t_stk	*m_init
+char	*m_init_arg
+	bool	m_check_arg_valid
+	int	m_check_arg_unique
+	= {int argn}
+ft	m_init_arr
+[argn][args]
+ft		m_init_stk
+t_stack	*stk;
+int		*arr;
+ft			arr_to_stk
+	
+
+//// 1
 <>()[]{}
 - template: <file>(function){description}[returns:{}][line:ft_calls]{call meaning}
 - <main.c>
