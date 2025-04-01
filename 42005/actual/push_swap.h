@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 15:00:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:23:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void		sort_stack(t_n **sta, t_n **stb);
 
 ///	CHECK:
 int		stack_is_sorted(t_n *sta);
-void		check_rotation(t_stack **stk);
+int		*check_rotation(int *a, int *b, int *c);
+// void		check_rotation(t_stack **stk);
 
 
 ///	SWAP:
@@ -164,6 +165,11 @@ int			*nullify_arr(int *arr, int size);
 
 // void	push(t_n **stack_src, t_n **stack_dst);
 
+///	FIND:
+int			find_highest_index(int *stk, int tgt);
+int			find_lowest_index(int *stk, int tgt);
+int			find_higher_index(int *stk, int tgt);
+int			find_lower_index(int *stk, int tgt);
 
 
 #endif

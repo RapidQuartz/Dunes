@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 15:06:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:23:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_turk(t_stack **stk)
 {
 	int 		*a;
 	int 		*b;
-	t_stack	*s;
+	t_stack		*s;
 
 	s = (*stk);
 	a = s->a;
@@ -27,10 +27,25 @@ void	exec_turk(t_stack **stk)
 	s = push_b(a, b, s);
 	s = push_b(a, b, s);
 	d_print_stack(s);
+	while (!stack_is_sorted(*stk))
+	{
+		check_rotation((*stk)->a, (*stk)->b, (*stk)->c);
+	}
 /*	check rotation
-if (a[1])
-	biggest
-	smallest
+if (a[1] > b[1])
+	is a[1] bigger than all of b?
+		YES - cost to rotate b so a[1] is 'below' highest
+			find_highest_index
+		NO	- cost to rotate b so a[1] is 'below' higher and 'above' smaller
+			find_higher_index
+			find_smaller_index
+if (a[1] < b[1])
+	is a[1] smaller than all of b?
+		YES	- cost to rotate b so a[1] is 'above' smallest
+			find_smallest_index
+		NO	- cost to rotate b so a[1] is 'above' smaller and 'below' higher
+			find_smaller_index
+			find_higher_index
 */
 /*		align
 */
@@ -45,6 +60,13 @@ if (a[1])
 */
 }
 void	check_rotation(t_stack **stk)
+{
+	int		i;
+
+	i = 0;
+	
+}
+/* void	check_rotation(t_stack **stk)
 {
 	int		i;
 	int		h;
@@ -74,7 +96,7 @@ void	check_rotation(t_stack **stk)
 	}
 	else if (s->a[1] < s->b[1])
 	(*stk) = s;
-}
+} */
 
 void	next_find(t_n **sta, t_n **stb);
 void	next_find(t_n **sta, t_n **stb)

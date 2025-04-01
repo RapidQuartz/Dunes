@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:06:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:14:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:28:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	push_swap(t_stack **stack)
 	
 	i = 0;
 	stk = (*stack);
-	if ((stk->a[0] == 2) && stk->a[1] > stk->a[2])
+	if (stack_is_sorted(stk))
+		return ;
+	if (stk->a[0] == 2)
 		swap_a(stk->a);
 	else if (stk->a[0] == 3)
 		sort_three(stack);
