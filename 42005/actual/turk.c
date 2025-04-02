@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/01 14:23:24 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:55:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	exec_turk(t_stack **stk)
 	{
 		check_rotation((*stk)->a, (*stk)->b, (*stk)->c);
 	}
+
+	HALLO
 /*	check rotation
 if (a[1] > b[1])
 	is a[1] bigger than all of b?
