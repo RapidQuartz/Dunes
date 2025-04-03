@@ -6,12 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:37:32 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/24 14:25:11 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:33:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/* 
 t_n	*init_stack_a(int *arr)
 {
 	int	i;
@@ -68,8 +68,8 @@ t_n	**head_node(t_n *new, t_n **head)
 	*head = new;
 	return (head);
 }
-/* 	curr->n = (*curr->h);
-	head->p = curr; */
+	curr->n = (*curr->h);
+	head->p = curr;
 
 t_n	*new_node(t_n *new, t_n *prev)
 {
@@ -114,3 +114,4 @@ void	info_node_a(t_n **head, int size)
 
 t_n	*info_node_b(void);
 
+ */

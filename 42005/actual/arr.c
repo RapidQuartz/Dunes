@@ -6,11 +6,13 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:42:01 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 12:19:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:38:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	check_minmax(long int value);
 
 int	*make_arr(int argc, char **argv, int argn, int *arr)
 {
@@ -33,14 +35,21 @@ int	*make_arr(int argc, char **argv, int argn, int *arr)
 		while (argi++ != count)
 		{
 			num = get_number(argv[iter], argi);
-			check_minmax(num, NULL);
+			check_minmax(num);
 			arr[index++] = num;
 		}
 		iter++;
 	}
 	return (arg_normalizer(arr, argn));
 }
+void	check_minmax(long int value)
+{
+	if (value >= INT_MAX || value <= INT_MIN)
+		d_end();
+	return ;
+}
 
+/* 
 void	check_minmax(long int value, t_n **st)
 {
 	if (value > INT_MAX || value < INT_MIN)
@@ -50,7 +59,7 @@ void	check_minmax(long int value, t_n **st)
 		else
 			d_end();
 	}
-}
+} */
 
 int	*arg_normalizer(int *arr, int siz)
 {

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:10:06 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:23:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:35:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		d_print_stack(t_n **sta)
 		s = s->n;
 	}
 } */
-void		d_print_cost(t_c *cst)
+/* void		d_print_cost(t_c *cst)
 {
 	int	i;
 	int	z;
@@ -73,7 +73,7 @@ void		d_print_cost(t_c *cst)
 			c = n->c;
 		}
 	}
-}
+} */
 
 
 void		d_print_array(int *arr)
@@ -99,7 +99,7 @@ void		d_print_array(int *arr)
 	}
 	write (1, "}\n", 2);
 }
-
+/* 
 void	d_print_twostack_values(t_n **sta, t_n **stb, int mode)
 {
 	int	aflag = 0;
@@ -210,3 +210,4 @@ if ((*stb) != NULL)
 		fflush(stdout);
 	}
 }
+ */

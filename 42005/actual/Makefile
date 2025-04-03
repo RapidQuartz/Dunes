@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 16:30:29 by akjoerse          #+#    #+#              #
-#    Updated: 2025/03/31 13:27:27 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/04/03 13:35:12 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra
 LIB = /home/akjoerse/42/999_GitHub/42001/libft/
 LIBFT = libft.a
 SRC = main.c stack.c push_swap.c \
-arg.c arr.c init.c \
+arg.c arr.c \
 check.c cost.c sort.c \
 push.c rotate.c reverse.c swap.c\
 stack_nav.c \

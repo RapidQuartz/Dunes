@@ -6,36 +6,126 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:22:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/01 14:51:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:21:25 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		*check_rotation(int *a, int *b, int *c)
+/*		check_rotation
+0.	can i push straight a->b?
+1.	should i rotate a/b/both?
+*/
+t_stack		*check_rotation(int *a, int *b, t_stack *c)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		l;
+	// c->c = ;
+	// c->d = ;
+	// c->e = ;
+	// c->f = ;
+	return (NULL);
+}
+/* checks:	:
+///if:	:stack A & B have only sequential values
+//return (-1) if stack A is NOT sequential
+//return (-2) if stack B is NOT sequential
+//return (-3) if both stacks are NOT sequential
+///if:	:rotating stack A or B helps
+//return (1) if BOTH stacks ARE sequential AND aligned
+//return (2) if rotating A makes BOTH sequential AND aligned
+//return (3) if rotating B makes BOTH sequential AND aligned
+//return (4) if rotating BOTH makes BOTH sequential AND aligned */
+int		pushback_solve_check(t_stack *stk)
+{
+	int	s;
+	int	a;
 
-	i = find_highest_index(b, a[1]);//what is the highest member of b?
-	//[0] = a[1] is biggest
-	//[i] = index of highest member
-	k = find_higher_index(b, a[1]);//
-	//[0] = a[1] is biggest
-	//[k] = index of +1 higher member
-	j = find_lowest_index(b, a[1]);//
-	//[0] = a[1] is smallest
-	//[j] = index of lowest member
-	l = find_lower_index(b, a[1]);//
-	//[0] = a[1] is smallest
-	//[l] = index of -1 lower member
-	if (a[1] > b[1])
-	if (a[1] < b[1])
+	s = not_sequential(stk->a, stk->b);
+	a = not_aligned(stk->a, stk->b);
+	if (a == 0)
+		return (s);
+	else if (a > 0)
+		return (a);
+	return (0);
 }
 
-int	*check_a_rotation
+/* checks:	:	
+//if:		:	values in A grow at +1 increments
+//if:		:	values in B shrink at -1 increments
+//
+//return (0)  if both stacks ARE sequential
+//return (-1) if stack A is NOT sequential
+//return (-2) if stack B is NOT sequential
+//return (-3) if both stacks are NOT sequential */
+int	not_sequential(int *a, int *b)
+{
+	int	i;
+	int	k;
+	int	l;
+
+	i = 0;
+	k = 0;
+	l = 0;
+	while ((a[0] > i || b[0] > i) && (k >= 0 || l >= 0))
+	{
+		i++;
+		if (a[0] >= i && (i == 1 || a[i] == k + 1) && (k >= 0))
+			k = a[i];
+		else if (a[0] >= i && a[i] != k + 1)
+			k = -1;
+		if (b[0] >= i && (i == 1 || b[i] == l - 1) && (l >= 0))
+			l = b[i];
+		else if (b[0] >= i && b[i] != l - 1)
+			l = -2;
+		if (a[0] == i && k >= 0)
+			k = 0;
+		if (b[0] == i && l >= 0)
+			l = 0;
+	}
+	return (k + l);
+}
+/* return (-1);
+return (-2);
+return (-3);
+return (1);
+return (0); */
+
+/* checks:	:
+//if:		:	stacks are aligned (the top of a fits into the top of b)
+//return (1) if BOTH stacks ARE sequential AND aligned
+//return (2) if rotating A makes BOTH sequential AND aligned
+//return (3) if rotating B makes BOTH sequential AND aligned
+//return (4) if rotating BOTH makes BOTH sequential AND aligned*/
+int	not_aligned(int *a, int *b)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (a[0] > i)
+	{
+		j = 1;
+		while (a[0] > i && b[0] > j)
+		{
+			if (a[i] == b[j] + 1 || a[i] == b[j] - 1)
+			{
+				if (i == 1 && j == 1)
+					return (1);
+				if (i > 1 && j == 1)
+					return (2);
+				if (i == 1 && j > 1)
+					return (3);	
+				if (i > 1 && j > 1)
+					return (4);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+
+// int	*check_a_rotation
 /*	check rotation
 if (a[1] > b[1])
 is a[1] bigger than all of b?
@@ -74,12 +164,12 @@ int	stack_is_sorted(t_stack *stk)
 			return (0);
 		i++;
 	}
-	if (stack_is_sequential(stk))
+	/* if (stack_is_sequential(stk))
 		return (1);
-	else
+	else */
 		return (0);
 }
-
+/* 
 int	stack_is_sequential(t_stack *stk)
 {
 	int		i;
@@ -106,7 +196,7 @@ int	stack_is_sequential(t_stack *stk)
 		}
 	}
 	return (1);
-}
+} */
 /* 
 int	stack_is_sorted(t_n *sta)
 {

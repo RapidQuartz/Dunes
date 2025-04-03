@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:38:31 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:25:11 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:42:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack;
+	t_stack	*s;
 	int		*arr;
+	int		*brr;
 	int		i;
 	int		argn;
 	
 	if (argc < 2)
 		return (-1);
 	arr = NULL;
-	stack = NULL;
-	stack_genesis(&stack, make_arr(argc, argv, count_arg(argc, argv), arr));
-	if (stack == NULL || stack->a == NULL || stack->b == NULL)
+	s = NULL;
+	s = stack_genesis(&s, make_arr(argc, argv, count_arg(argc, argv), arr));
+	if (s == NULL || s->a == NULL || s->b == NULL)
 		d_end();
 	else
-		push_swap(&stack);
-	d_print_stack(stack);
+		push_swap(&s);
+	d_print_stack(s);
 	d_end();
 }
 

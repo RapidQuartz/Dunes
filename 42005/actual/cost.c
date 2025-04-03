@@ -6,202 +6,507 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/03/31 14:06:42 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:35:35 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_c	*new_cost(t_n *node, t_c *cost, int size);
-t_c	*get_node_cost(t_n *node, t_c *cost);
-/*
-typedef	struct	s_c
-{
-	t_n		**cap;
-	t_n		*ego;
-	t_n		*tgt;
-	int		dif;
-	int		dis;
-	int		rot;
-	int		rev;
-} t_c;
+int		find_biggest(int *s);
+int		find_smallest(int *s);
+int		find_next_bigger(int *s, int n);
+int		find_next_smaller(int *s, int n);
+void		get_cost(t_stack *stk);
+t_stack	*compare_targets(t_stack *stk, int i);
+int		iterate_cost(int a, int *b);
+
+/*	get_cost_2
+
 */
-//	
-//	//===========================//
-//	// initializes `cost` struct //
-//	//  used to calculate moves  //
-//	//===========================//
-//	
-void		init_cost(t_n **sta, t_n **stb, t_c *c_a, t_c *c_b)
-{
-	t_n	*n_a;
-	t_n	*n_b;
-	
-	if (sta != NULL && (*sta)->i->v != 0)
-		n_a = (*(*sta)->h);
-	else
-		n_a = NULL;
-	if (stb != NULL && (*stb)->i->v != 0)
-		n_b = (*(*stb)->h);
-	else
-		n_b = NULL;
-	if (c_a == NULL && n_a != NULL)
-		c_a = new_cost(n_a, c_a, n_a->i->v);
-	if ((c_a != NULL || c_b != NULL) && (n_a != NULL || n_b != NULL))
-		get_cost(n_a, n_b, c_a, c_b);
-}
-
-void	get_cost(t_n *node_a, t_n *node_b, t_c *cost_a, t_c *cost_b)
-{
-	int	size_a;
-	int	size_b;
-
-	size_a = 0;
-	size_b = 0;
-	if (node_a != NULL)
-		size_a = node_a->i->v;
-	if (node_b != NULL)
-		size_b = node_a->i->v;
-	while (size_a > 0)
-	{
-		cost_a = get_node_cost(node_a, cost_a);
-		node_a = node_a->n;
-		cost_a = node_a->c;
-		size_a--;
-	}
-	while (size_b > 0)
-	{
-		cost_b = get_node_cost(node_b, cost_b);
-		node_b = node_b->n;
-		cost_b = node_b->c;
-		size_b--;
-	}
-}
-t_c	*new_cost(t_n *node, t_c *cost, int size)
+/*	counting cost
+while ()
+*/
+/*	*/
+/*	*/
+/*	*/
+void		get_cost(t_stack *stk)
 {
 	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
-	while (i++ < size)
+	j = 0;
+	k = 0;
+	while (i++ < stk->a[0])
 	{
-		if (cost == NULL)
-			cost = malloc(sizeof(*cost));
-		if (!cost || cost == NULL)
-			d_end();
-		cost->ego = node;
-		cost->cap = node->h;
-		node->c = cost;
-		cost->tgt = NULL;
-		cost->stk = 'A';
-		cost->mov = 0;
-		cost->dif = 0;
-		cost->dis = 0;
-		cost->rot = -1;
-		cost->rev = -1;
-		if (node->n != *node->h)
-			node = node->n;
+		stk->c[i] = find_biggest(stk->b);
+		stk->d[i] = find_smallest(stk->b);
+		stk->e[i] = find_next_bigger(stk->b, stk->a[i]);
+		stk->f[i] = find_next_smaller(stk->b, stk->a[i]);
+		stk = compare_targets(stk, i);
 	}
-	cost = (*node->h)->c;
-	return (cost);
 }
-
-/* gets a pair: node//cost and determines:
-t_n*	tgt	what is the target?
-			'one higher' (for most members)
-			or 'smallest' (for greatest value))
-			or 'custom' (in other cases)
-int	dif	what is the difference in size to the next number?
-int	dis	what is the distance to the number one higher?
-int	rot	how many rotations positive (bubbling) to reach target
-int	rev	how many rotations negative (sinking) to reach target
+/* seems the logic is just to put it
+	above the next smaller/below the next bigger
 */
-t_c	*get_node_cost(t_n *node, t_c *cost)
-{
-	int	n;
-	int	t;
-	int	z;
-	t_n	*seco;
+//
+/*convert from target to moves:
+it basically only wants to be
+above the next smaller
+or
+below the next bigger
 
-	seco = node;
-	n = node->v;
-	z = node->i->v;
-	if (n == z)
-		n = 0;
-	t = n + 1;
-	while (cost->rot++ < z && node->v != t)
-		node = node->n;
-	while (cost->rev++ < z && seco->v != t)
-		seco = seco->p;
-	cost->tgt = node;
-	if (cost->ego->v == z)
-		cost->dif = 1;
-	else
-		cost->dif = cost->ego->n->v - cost->ego->v;
-	if (cost->rev < cost->rot)
-		cost->dis = cost->rev;
-	else
-		cost->dis = cost->rot;
-	return (cost);
-}
-/* 
-void		find_move(t_n **stack_a, t_n **stack_b)
+*/
+t_stack	*compare_targets(t_stack *stk, int i)
 {
-	t_n	*n;
-	t_n	*t;
-
-	n = (*stack_a);
-	t = n->c->tgt;
-	if (t->c->dif == -1 && n->c->rev == 1)//so if the target's 'next' is one lower than target
-		n->c->mov = 9;//9 is reverse
-	else if (t->c->dif == 1 && n->c->rev == 1)
-		n->c->mov = 0;//0 is NO MOVE
-	else if (t->c->dif > 1 || n->c->rev > 1)
-		n->c->mov = select_push_node(stack_a);
-	} */
+	if (stk->e[i] == 0 && stk->a[i] > stk->b[stk->e[i]])//it's biggest
+	if (stk->f[i] == 0 && stk->a[i] < stk->b[stk->f[i]])//it's smallest
+	if (stk->e[i] != 0 && stk->f[i] != 0)//it's middle
+	{
+		//compare values of e[] f[] ->
+		//halfway or not?
+		//so... before halfway::
+		//i < (size / 2 + size % 2)
+		//so... up = i (distance from top where 1 is NULL)
+		//so... after halfway::
+		//i > (size / 2 + size % 2)
+		//so... down = size - i + 2 (distance from bottom, plus one for over the hump)
+		//if index is 1, it is 'free' (costs 1/PUSH)
+		//if index is `size` it costs 1 (reverse) + 1 (push)
+	}
+	if (stk->b[stk->f[i]] == 0)
+	if (stk->c[i] < (stk->s / 2 + stk->s % 2))
+		;
+	else if (stk->c[i] > (stk->s / 2 + stk->s % 2))
+		;
+		stk->d[i]
+	if (stk->b[stk->c[i]] < stk->a[i] || stk->b[stk->d[i]] > stk->a[i])
+		//
+	//a[i] is bigger than the biggest || smaller than the smallest
+	else
+	//a[i] is NOT bigger than the biggest || NOT smaller than the smallest
+//OR
+	//a[i] is smaller than the smallest number
+//A	//we want it ABOVE the biggest::
+	if (stk->b[stk->c[i]] > stk->a[i] || stk->b[stk->d[i]] < stk->a[i])
+	//a[i] is smaller than the biggest (and bigger than the smallest)
+//B	//we want it ABOVE the next smaller
+//	(if it is smallest or biggest: ABOVE the biggest)
+//	(if it isn't smallest or biggest: ABOVE the next smaller)
+	//a[i] is bigger than the smallest
+//OR
+	//a[i] is smaller than the biggest)
 	
-	/*
-	n->c->mov = 0;//
-int	select_push_node(t_n **stack);
-int	select_push_node(t_n **stack)
-{
+	return (stk);
 }
-	*/
 
-/* PSEUDOCODE TO COMPLY WITH TURK */
-/* push 2 to B		-	ONCE
-initial_push()
-	push_b()
-	push_b()
+int		ft_find_cheapest(int *a, t_stack *s)
+{
+	int	i;
+	int	ch;
+	int	ind;
+
+	i = 0;
+	ch = INT_MAX;
+	ind = 0;
+	while (i++ < a[0])
+	{
+		if (stk->)
+		if (stk->)
+		if (stk->)
+		if (stk->)
+	}
+}
+/*	the issue of modulo
+
+if (index < size / 2 + size % 2)//(then rotate)
+if (index > size / 2 + size % 2)//(then reverse)
+
 */
-/* select next to push	-	REPEATS
-find_next()
-	if (head_a < head_b)
-		find_lower(head_a)
-			add_moves()
-	else if (head_a > head_b)
-		find_higher()
-			add_moves()
+/* aligning stack to cost
+//A	//we want it BELOW the smallest::
+	//stack top should be stk->d[i] + 1
+	//unless stk->d[i] == b[0])
+	//in which case stack top should be 1
 */
-/* rotate to next		-	REPEATS
-rotate_next()
-	if (stack_a != next)
-rotate_b()
-	if (stack_b != neighbor)
+/*	comparing targets
+
+the target number which requires the fewest moves to align, is the best
+if it is
+bigger 	than a[i]
+	find out if it is the NEXT bigger number in b[]
+smaller	than a[i]
+	find out if it is the NEXT smaller number in b[]
+
+if this approach would allow numbers to be pushed to a next
+which is highest but not next higher:
+	then alignment would be necessary later.
+
+
+so it seems like finding the NEXT is all that is needed
+if a number is bigger
+(if (a[i] < b[big]))
+then compare cost of aligning to smaller
+if no number is bigger
+(if (a[i] > b[big]))
+then it would sit ABOVE the next SMALLER
+if a number is smaller
+(if (a[i] > b[small]))
+then compare cost of aligning to bigger
+if no number is smaller
+(if (a[i] < b[small]))
+it would sit ABOVE the biggest.
 */
-/* push next		-	REPEATS
-push_next()
-	if (size_a > 3)
+/*	finding the right target
+		to do::
+		stk->e[i] = find_biggest
+			index of biggest
+		stk->f[i] = find_smallest
+			index of smallest
+		
+		if (b[j] > a[i])
+//biggest is BIGGER than a[i], we need the 'next bigger than a[i]
+		stk->e[i] = find_bigger
+			index of NEXT bigger
+		if (b[k] > a[i])
+//smallest is SMALLER than a[i], we need the 'next smaller than a[i]
+		stk->f[i] = find_smaller
+			index of NEXT smaller
+		*/
+	
+//returns index of biggest number in stack provided
+int		find_biggest(int *s)
+{
+	int	i;
+	int	ind;
+	int	big;
+	
+	i = 0;
+	ind = 0;
+	big = INT_MIN;
+	while (i++ < s[0])
+	{
+		if (s[i] > big)
+		{
+			big = s[i];
+			ind = i;
+		}
+	}
+	return (ind);
+}
+
+int		find_smallest(int *s)
+{
+	int	i;
+	int	ind;
+	int	sml;
+	
+	i = 0;
+	ind = 0;
+	sml = INT_MAX;
+	while (i++ < s[0])
+	{
+		if (s[i] < sml)
+		{
+			sml = s[i];
+			ind = i;
+		}
+	}
+	return (ind);
+}
+
+int		find_next_bigger(int *s, int n)
+{
+	int	i;
+	int	ind;
+	int	big;//previous smaller
+	bool	found;//next smaller
+	
+	i = 0;
+	ind = 0;
+	big = INT_MIN;
+	found = false;
+	while (i++ < s[0])
+	{
+		if (s[i] > n && (found == false || (found == true && big > s[i])))
+		{
+			big = s[i];
+			found = true;
+			ind = i;
+		}
+	}
+	return (ind);
+}
+
+int		find_next_smaller(int *s, int n)
+{
+	int	i;
+	int	ind;
+	int	sml;//previous smaller
+	bool	found;//next smaller
+	
+	i = 0;
+	ind = 0;
+	sml = INT_MAX;
+	found = false;
+	while (i++ < s[0])
+	{
+		if (s[i] < n && (found == false || (found == true && sml < s[i])))
+		{
+			sml = s[i];
+			found = true;
+			ind = i;
+		}
+	}
+	return (ind);
+}
+
+
+int		iterate_cost(int a, int *b)
+{
+	int	j;
+	
+	j = 0;
+	while (j++ < b[0])
+	{
+		if ((a + 1) == b[j])
+			return (j);
+		else if ((a - 1) == b[j])
+			return (-j);
+	}
+	return (0);
+}
+/*	get_cost_1
+1.	check cost of aligning stack/s to different pushed values
+	i.	cost of pushing
+		a.	a[1] without aligning b[1]
+		((c[1] = 0))
+		((d = 1))
+		((e = 1))
+		b.	a[1] by aligning b[j]
+		((c[1] = steps +/- to rotate b[j]))
+		((d = 1))
+		((e = j))
+		c.	a[i] without aligning b[1]
+		((c[i] = 0))
+		((d = i))
+		((e = 1))
+		d.	a[i] by aligning b[]
+		((c[i] == steps +/- to rotate b[j]))
+		((d = i))
+		((e = j))
+	ii.	store `cost`(*) at `c[i]`(**)
+		((*) cost == steps to rotate b)
+		((**) i == index of target (the one to be pushed))
+	iii.	store `target index` at `d`
+	iv.	verify that `d != 0`
+	--	this way, multiple `candidates` can be evaluated
+	--	the `a[index]` of the `winner` can be stored as `d`
+	--	OR should it store the `value` of the target?
+	--	the `b[index]` of the `target` can be stored as `e`
+	--	OR should it store the `value` of the target? */
+/* void		get_cost(t_stack *s)
+{
+	//cost of pushing
+	////a.	a[1] without aligning b[1]
+	//	def	//t_stack stk->
+			//
+	////b.	a[1] by aligning b[j]
+	//	def	//
+			//
+	////c.	a[i] without aligning b[1]
+	//	def	//
+			//
+	////d.	a[i] by aligning b[]
+	//	def	//
+			//
+} */
+
+void		check_alignment(t_stack *s, int a, int b)
+{
+	if (a == 1 && b == 1)
+		s->c[a]++;
+		s->d[b]++;
+	if (a == 1 && b != 1)
+		return ;
+	if (a != 1 && b == 1)
+		return ;
+	if (a != 1 && b != 1)
+		return ;
+}
+/* what IS `cost` anyway?
+int	*c
+	i = index in A stack
+	c[i] = moves to align A
+int	*d
+	j = index in B stack
+	d[j] = moves to align B
+int	e
+	e = target in a[]
+int	f
+	f = target in b[]
 */
-/* final_three		-	ONCE
-sort_three()
+/* what IS `alignment` anyway?
+desired target:
+	a: the number in a the fewest moves from top
+	b: the number in b the fewest moves from top
+process:
+	first try a[1] with b[1]
+		if a[1] == b[1] +/- 1
+			c[1] == 0if (i < size/2)
+					== i
+				if (i > size/2)
+					== size - i
+		if a[1] == b[j] +/- 1
+			c[1] == 0
+			d[j] ==
+				if (j <= b_size/2)
+					== j
+				if (j > b_size/2)
+					== size - j
 */
-/* push back		-	ONCE
-if (stack_a = neighbor)
-	push_a()
+/*	moves 'n notation
+[PUSH]
+[+]	PA
+[-]	PB
+{ROTATE}
+{+}	RA
+{-}	RB
+}REVERSE{
+}+{	RRA
+}-{	RRB
+{{BOTH}}
+{{+}} RR
+{{-}} RRR
+(SWAP)
+(+)	SA
+(-)	SB
+((SWAP))
+
 */
-/* realign		-	ONCE
-if (stack_a != 1)
-	realign_a()
-	[find cheaper rot/rev]
-*/
-/* PSEUDOCODE TO COMPLY WITH TURK */
+/*
+size		3	2	2	3
+size/2	1	1	1	1
+		
+		a	b	a	b
+		1	5	3	1
+		3	2	4	5
+		4			2
+
+i	=	1		
+j	=	2
+
+c[1]	=	0		0
+d[1]	=	0		
+
+c[2]	=	1
+d[2]	=	2
+c[3]	=	1
+e	=	1
+f	=	1
+
+e symbolizes "what is index of desired 'next' number in a?"
+f symbolizes "what is index of desired 'next' number in b?"
+
+a	b	x	a	b	y	a	b
+1	5	x	5	2	y	2	5
+3	2	x	1		y	3		
+4		x	3		y	4		
+			4			1
+		[+1]+1[+1](+1){-1}	{{+1}}+1{-1}+1
+** here we have the 'desired' "end of turk":
+	3 numbers in a
+	a is sorted (not sequential)
+	b is sorted (not sequential)
+
+***	then the question is:
+	"which b[] should be pushed back?"
+x		e = 1 (1)
+		f = 1 (5)
+OR
+y		e = 2 (3)
+		f = 2 (2)
+	"how much should a[] rotate?"
+x		c[1] = 0 (nothing)
+OR
+y		c[2] = 1 (to bring 3 to top)
+	"how much should b[] rotate?"
+x		d[1] = 0 (nothing)
+OR
+y		d[2] = 1 (to bring 2 to top)
+
+RESULT:
+
+x	=	\1\ PA	\2\
+y	=	\1\ RR->PA	\2\
+
+a	b
+5	2
+1	
+3	
+4	
+
+			e == 1
+			f == j
+	then try a[i] with b[1] until i == a[0]
+		if a[i] == b[1] +/- 1
+			c[i] ==
+				if (i <= a_size/2)
+					== i
+				if (i > a_size/2)
+					== size - i
+			d[1] == 0
+			e == i
+			f == 1
+	last try a[i] with b[j] until j == b[0] && i == a[0]
+		if a[i] == b[j] +/- 1
+			c[i] == 
+				if (i <= a_size/2)
+					== i
+				if (i > a_size/2)
+					== size - i
+			d[j] == 0
+				if (j <= b_size/2)
+					== j
+				if (j > b_size/2)
+					== size - j
+			e == i
+			f == j
+	finally if none of the above are possible
+		look for smallest/largest
+
+****	last one
+	"which b[] should be pushed back?"
+		e = 1 (2)
+	"how much should a[] rotate?"
+		c[1] = 2 (rotate + 2 (up two))
+	"how much should b[] rotate?"
+		d[1] = 0 (nothing)
+
+*****	align
+	while ((e != 1 && c[e] != 0) || (f != 1 && d[f] != 0))
+	{
+		if (c[e] > 0)
+		{
+			rotate_a()
+			c[e]--;
+		}
+		if (c[e] < 0)
+		{
+			reverse_a()
+			c[e]++;
+		}
+		if (d[f] > 0)
+		{
+			rotate_b()
+			d[f]--;
+		}
+		if (d[f] < 0)
+		{
+			reverse_b()
+			d[f]++;
+		}
+	}
+				*/
+
