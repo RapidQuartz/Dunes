@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:06:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/01 13:28:51 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:47:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	push_swap(t_stack **stack)
 	else if (stk->a[0] == 3)
 		sort_three(stack);
 	else if (stk->a[0] > 3)
-		exec_turk(stack);
+		exec_turk(stack, 0);
 	return ;
 }
 

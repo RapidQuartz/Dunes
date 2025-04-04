@@ -6,15 +6,37 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:27:05 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 13:52:01 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:47:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/*	turk process::
+{turk::
+push 2
+{loop::
+check sort
+
+{unsorted::stay loop
+	get cost
+	select target
+	align or not
+	store moves
+	do moves
+::unsorted}::stay loop}
+
+{sorted::break loop
+	realign or not
+	push back
+	return
+::sorted}::break loop}
+return
+::turk}
+
+*/
 void	exec_turk(t_stack **stk)
 {
-	int 		i;
 	int 		*a;
 	int 		*b;
 	t_stack		*s;
@@ -26,14 +48,17 @@ void	exec_turk(t_stack **stk)
 	s = push_b(a, b, s);
 	s = push_b(a, b, s);
 	d_print_stack(s);
-	get_cost(s);
-	// i = pushback_solve_check(s);
-	// while (!not_sequential(a, b) || not_aligned(a, b))
-	// {
-	// 	s = check_rotation(a, b, s);
-	// 	//
-	// 	i = pushback_solve_check(s);
-	// }
+	while (unsorted(s));
+	{
+		get_cost(s);
+		select_target(s);
+		align_or_not(s);
+		store_moves(s);
+		do_moves(s);
+	}
+	realign_or_not(s);
+	push_back(s);
+	return ;
 }
 /*	check rotation
 if (a[1] > b[1])

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 11:10:32 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 13:43:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:28:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,24 @@ t_stack	*stack_genesis(t_stack **stack, int *array)
 		stk = stack_init_second(&stk, array[0]);
 		if (!stk || stk == NULL)
 			return (NULL);
-		return (stk);
+		(*stack) = stk;
+		return (*stack);
 	}
 	else
 		return (NULL);
 }
 
 ///first part
+//*g
 //*o
 //*a
 //*b
 t_stack	*stack_init_first(t_stack **stack, int size)
 {
 	if (!stack || stack == NULL || !(*stack) || (*stack) == NULL)
+		return (NULL);
+	(*stack)->g = nullify_arr((*stack)->g, size);
+	if (!(*stack)->g || (*stack)->g == NULL)
 		return (NULL);
 	(*stack)->o = nullify_arr((*stack)->o, MAX_OPS);
 	if (!(*stack)->o || (*stack)->o == NULL)

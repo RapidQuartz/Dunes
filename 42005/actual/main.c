@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:38:31 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 13:42:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:05:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	main(int argc, char **argv)
 		return (-1);
 	arr = NULL;
 	s = NULL;
-	s = stack_genesis(&s, make_arr(argc, argv, count_arg(argc, argv), arr));
+	argn = count_arg(argc, argv);
+	arr = make_arr(argc, argv, argn, arr);
+	if (array_sorted(arr, 1))
+		d_end();
+	s = stack_genesis(&s, arr);
 	if (s == NULL || s->a == NULL || s->b == NULL)
 		d_end();
 	else

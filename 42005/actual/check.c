@@ -6,17 +6,138 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:22:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 12:21:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:08:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+///	KEEPERS:
+bool		arrays_in_sequence(t_stack *s);
+//? easier to have a simple one like this:: ?
+bool		array_sorted(int *a, int mode);
+//then do a special check for tops
+//then i can use that one function 3 times::
+//initially before "sorting"
+//to check A
+//to check B
+
 /*		check_rotation
 0.	can i push straight a->b?
 1.	should i rotate a/b/both?
 */
-t_stack		*check_rotation(int *a, int *b, t_stack *c)
+
+/*	array_unsorted
+TRUE 	if		::
+the i = 1 value is not 1
+any value from i = 1 to i = size is not in sequence
+the i = size value is not size
+FALSE	if		::
+every value is in sequence
+*/
+
+/*	stacks_unsorted
+TRUE	if		::
+some values are in B
+some values are NOT in sequence
+
+FALSE	if		::
+every value is in A
+every value in A is in sequence
+
+*/
+bool		unsorted(t_stack *s)
+{
+	if ((((s->a != NULL && s->b != NULL) \
+	&& (s->a[0] >= 1 && s->b[0] >= 1))) \
+	&& (s->a[1] == s->b[1] + 1)
+	&& ((array_sorted(s->a, 1)) \
+	&& (array_sorted(s->b, -1))))
+		return (false);
+	else
+	return (true);
+}
+
+bool		array_sorted(int *a, int mode)
+{
+	int	i;
+	int	num;
+
+	i = 0;
+	if (a == NULL || (a != NULL && a[0] <= 1))
+		return (true);
+	else
+		num = a[++i];
+	while (a != NULL && a[0] > i++)
+	{
+		if (a[i] != num + mode)
+			return (false);
+		num = a[i];
+	}
+	return (true);
+}
+/*	array_in_sequence*/
+bool		arrays_in_sequence(t_stack *s)
+{
+	int	i;
+	int	j;
+	int	a_num;
+	int	b_num;
+
+	i = 0;
+	j = 0;
+	if (s->a != NULL && s->a[0] > 1)
+		a_num = s->a[1];
+	if (s->b != NULL && s->b[0] > 1)
+		b_num = s->b[1];
+	if (((s->a != NULL && s->b != NULL) && (s->a[0] >= 1 && s->b[0] >= 1)) \
+	&& (s->a[1] - 1 != s->b[1]))
+		return (false);
+	while (s != NULL && (i++ < s->a[0] || j++ < s->b[0]))
+	{
+		if ((s->a != NULL && i < s->a[0] && (s->a[i] - 1 != a_num)) \
+		|| (s->b != NULL && j < s->b[0] && (s->b[j] + 1 != b_num)))
+			return (false);
+		if (s->a != NULL && s->a[0] > i)
+			a_num = s->a[i];
+		if (s->b != NULL && s->b[0] > j)
+			b_num = s->b[j];
+	}
+	return (true);
+}
+/*	top_adjacent
+bool	top_adjacent(int top_a, int top_b)
+{
+	if (top_a + 1 == top_b)
+		return (true);
+	else
+		return (false);
+}
+*/
+/*	stacks_in_sequence
+TRUE	if		::
+every value in A is in sequence
+the top of A is in sequence with the top of B
+every value in B is in sequence
+
+FALSE	if		::
+some values are NOT in sequence
+the top of A is NOT in sequence with the top of B
+
+*/
+/* 
+bool		in_sequence(t_stack *s)
+{
+	int	i;
+
+	if ((array_in_sequence(s->a)) && (array_in_sequence(s->b)))
+		return (true);
+	else
+		return (false);
+} */
+
+
+t_stack	*check_rotation(int *a, int *b, t_stack *c)
 {
 	// c->c = ;
 	// c->d = ;
@@ -104,7 +225,7 @@ int	not_aligned(int *a, int *b)
 	while (a[0] > i)
 	{
 		j = 1;
-		while (a[0] > i && b[0] > j)
+		while (a[0] > i && b[0] >= j)
 		{
 			if (a[i] == b[j] + 1 || a[i] == b[j] - 1)
 			{

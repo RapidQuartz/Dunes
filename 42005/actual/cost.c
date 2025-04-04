@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 16:35:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:00:26 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,88 +47,16 @@ void		get_cost(t_stack *stk)
 		stk = compare_targets(stk, i);
 	}
 }
-/* seems the logic is just to put it
+/*	placement logics
+	seems the logic is just to put it
 	above the next smaller/below the next bigger
 */
-//
 /*convert from target to moves:
 it basically only wants to be
 above the next smaller
 or
 below the next bigger
 
-*/
-t_stack	*compare_targets(t_stack *stk, int i)
-{
-	if (stk->e[i] == 0 && stk->a[i] > stk->b[stk->e[i]])//it's biggest
-	if (stk->f[i] == 0 && stk->a[i] < stk->b[stk->f[i]])//it's smallest
-	if (stk->e[i] != 0 && stk->f[i] != 0)//it's middle
-	{
-		//compare values of e[] f[] ->
-		//halfway or not?
-		//so... before halfway::
-		//i < (size / 2 + size % 2)
-		//so... up = i (distance from top where 1 is NULL)
-		//so... after halfway::
-		//i > (size / 2 + size % 2)
-		//so... down = size - i + 2 (distance from bottom, plus one for over the hump)
-		//if index is 1, it is 'free' (costs 1/PUSH)
-		//if index is `size` it costs 1 (reverse) + 1 (push)
-	}
-	if (stk->b[stk->f[i]] == 0)
-	if (stk->c[i] < (stk->s / 2 + stk->s % 2))
-		;
-	else if (stk->c[i] > (stk->s / 2 + stk->s % 2))
-		;
-		stk->d[i]
-	if (stk->b[stk->c[i]] < stk->a[i] || stk->b[stk->d[i]] > stk->a[i])
-		//
-	//a[i] is bigger than the biggest || smaller than the smallest
-	else
-	//a[i] is NOT bigger than the biggest || NOT smaller than the smallest
-//OR
-	//a[i] is smaller than the smallest number
-//A	//we want it ABOVE the biggest::
-	if (stk->b[stk->c[i]] > stk->a[i] || stk->b[stk->d[i]] < stk->a[i])
-	//a[i] is smaller than the biggest (and bigger than the smallest)
-//B	//we want it ABOVE the next smaller
-//	(if it is smallest or biggest: ABOVE the biggest)
-//	(if it isn't smallest or biggest: ABOVE the next smaller)
-	//a[i] is bigger than the smallest
-//OR
-	//a[i] is smaller than the biggest)
-	
-	return (stk);
-}
-
-int		ft_find_cheapest(int *a, t_stack *s)
-{
-	int	i;
-	int	ch;
-	int	ind;
-
-	i = 0;
-	ch = INT_MAX;
-	ind = 0;
-	while (i++ < a[0])
-	{
-		if (stk->)
-		if (stk->)
-		if (stk->)
-		if (stk->)
-	}
-}
-/*	the issue of modulo
-
-if (index < size / 2 + size % 2)//(then rotate)
-if (index > size / 2 + size % 2)//(then reverse)
-
-*/
-/* aligning stack to cost
-//A	//we want it BELOW the smallest::
-	//stack top should be stk->d[i] + 1
-	//unless stk->d[i] == b[0])
-	//in which case stack top should be 1
 */
 /*	comparing targets
 
@@ -157,6 +85,228 @@ then compare cost of aligning to bigger
 if no number is smaller
 (if (a[i] < b[small]))
 it would sit ABOVE the biggest.
+
+//	RAMBLINS::
+//compare values of e[] f[] ->
+		//halfway or not?
+		//so... before halfway::
+		//i < (size / 2 + size % 2)
+		//so... up = i (distance from top where 1 is NULL)
+		//so... after halfway::
+		//i > (size / 2 + size % 2)
+		//so... down = size - i + 2 (distance from bottom, plus one for over the hump)
+		//if index is 1, it is 'free' (costs 1/PUSH)
+		//if index is `size` it costs 1 (reverse) + 1 (push)
+
+	```
+t_stack	*compare_targets(t_stack *stk, int i)
+{
+	if (stk->e[i] == 0 && stk->a[i] > stk->b[stk->e[i]])//it's biggest
+	if (stk->f[i] == 0 && stk->a[i] < stk->b[stk->f[i]])//it's smallest
+	if (stk->e[i] != 0 && stk->f[i] != 0)//it's middle
+	{
+		
+	}
+	if (stk->b[stk->f[i]] == 0)
+	if (stk->c[i] < (stk->s / 2 + stk->s % 2))
+		;
+	else if (stk->c[i] > (stk->s / 2 + stk->s % 2))
+		;
+		stk->d[i]
+	if (stk->b[stk->c[i]] < stk->a[i] || stk->b[stk->d[i]] > stk->a[i])
+		//
+	//a[i] is bigger than the biggest || smaller than the smallest
+	else
+	//a[i] is NOT bigger than the biggest || NOT smaller than the smallest
+//OR
+	//a[i] is smaller than the smallest number
+//A	//we want it ABOVE the biggest::
+	if (stk->b[stk->c[i]] > stk->a[i] || stk->b[stk->d[i]] < stk->a[i])
+	//a[i] is smaller than the biggest (and bigger than the smallest)
+//B	//we want it ABOVE the next smaller
+//	(if it is smallest or biggest: ABOVE the biggest)
+//	(if it isn't smallest or biggest: ABOVE the next smaller)
+	//a[i] is bigger than the smallest
+//OR
+	//a[i] is smaller than the biggest)
+	
+	return (stk);
+	```
+*/
+/*	'pad'
+	if (stk->e[i] == 0 && stk->a[i] > stk->b[stk->e[i]])//it's biggest
+	if (stk->f[i] == 0 && stk->a[i] < stk->b[stk->f[i]])//it's smallest
+	if (stk->e[i] != 0 && stk->f[i] != 0)//it's middle
+
+*/
+t_stack	*compare_targets(t_stack *stk, int i)
+{
+	return (stk);
+}
+
+/*	process:
+compare	::	[i] of c, d, e, f
+assign	::	val[] = {c, d, e, f}
+		::	ch = }cheapest value{
+		::	ind = }index of cheapest value{
+
+*/
+//	selects lowest value from 'biggest, smallest, bigger, smaller'
+int		ft_find_cheapest(int *a, t_stack *s)
+{
+	int	i;
+	int	ch;
+	int	ind;
+	int	val[4];
+
+	i = 0;
+	ch = INT_MAX;
+	ind = 0;
+	while (i++ < a[0])
+	{	
+		val[0] = s->c[i];
+		val[1] = s->d[i];
+		val[2] = s->e[i];
+		val[3] = s->f[i];
+		ft_cheapest_mode(val, s, i);
+	}
+}
+
+/*	process:
+compare	:: the values v[0-3] represent [i] of {c, d, e, f}
+find		:: the lowest one
+assign	:: 1-4 to s->g to represent {c, d, e, f}
+		::
+pseudo	;; need a way to	::
+					:: use the ->[x] that is cheapest
+		;; 1-4 just says WHICH of the indexes is smaller 
+		;; so i dont really need anything fancy
+		;; because the return is quite simple: which B[i] is the target?
+		;; then, s->g denotes which is cheaper for that A[i]
+		;; and in the `actual rotation/move function` s->g is checked
+		;; and depending on if it is {1-4}, the target is chosen {c-f}
+		;;
+					:: 
+					:: 
+
+TODO:::
+something needs to call `ft_find_cheapest`
+that something will use s->g to select target
+then call a move/align function
+which
+	calls
+		and
+	stores
+		the actual operation
+
+and then returns to
+	turk
+		to check
+			sort
+				and
+			status
+:::
+
+
+|||arch|||
+<<0>>
+	turk
+<<1>>
+	check sort
+<<2>>
+	find cheapest
+<<3>>
+	do & store moves
+<<4>>
+	reproduce/print moves
+|||
+;;;
+<<0>>
+turk
+<<1>>	check sort
+		UNSORTED
+>>2>>	find cheapest
+>>3>> do & store moves
+		SORTED
+<<4<<	return and output moves ()
+;;;
+
+
+*/
+void		ft_cheapest_mode(int *v, t_stack *s, int i)
+{
+	if (v[0] != 0 && v[0] < v[1] && v[0] < v[2] && v[0] < v[3])
+		s->g[i] = s->c[i];
+	else if (v[1] != 0 && v[1] < v[0] && v[1] < v[2] && v[1] < v[3])
+		s->g[i] = s->d[i];
+	else if (v[2] < v[0] && v[2] < v[1] && v[2] < v[3])
+		s->g[i] = s->e[i];
+	else if (v[3] < v[0] && v[3] < v[1] && v[3] < v[2])
+		s->g[i] = s->f[i];
+}
+
+//
+/*	decides whether to align
+
+when to align?
+
+	when Btarget is not at top
+	when Atarget is not at top
+
+how to decide?
+	
+	compare all cost values for all a[i]
+	select A/B-target based on:
+		how far from top/bottom?
+		how good match?
+			?(better to go +1 / -1)
+			?(better to do fewest moves)
+			?(better to go simple)
+*/
+void		align_or_not(t_stack *s, int i)
+{
+	int	t;
+	int	s;
+	
+	s = (s->b[0] / 2 + s->b[0] % 2);
+	while ()
+	{
+		t = s->g[i];
+		if (t >= s)
+			s = -1;
+		else if (t < s)
+			s = 1;
+	}
+}
+
+void		do_and_store(t_stack *s)
+{
+	int	target;
+	target = s->g;
+}
+/* int		ft_cheapest_mode(int *v, t_stack *s, int i)
+{
+	if (v[0] < v[1] && v[0] < v[2] && v[0] < v[3])
+		s->g[i] = 1;
+	else if (v[1] < v[0] && v[1] < v[2] && v[1] < v[3])
+		s->g[i] = 2;
+	else if (v[2] < v[0] && v[2] < v[1] && v[2] < v[3])
+		s->g[i] = 3;
+	else if (v[3] < v[0] && v[3] < v[1] && v[3] < v[2])
+		s->g[i] = 4;
+} */
+
+/*	the issue of modulo
+
+if (index < size / 2 + size % 2)//(then rotate)
+if (index > size / 2 + size % 2)//(then reverse)
+
+*/
+/*	aligning stack to cost
+//A	//we want it BELOW the smallest::
+	//stack top should be stk->d[i] + 1
+	//unless stk->d[i] == b[0])
+	//in which case stack top should be 1
 */
 /*	finding the right target
 		to do::

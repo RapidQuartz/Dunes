@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/03 15:14:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:26:41 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef	struct	s_stack
 	int			*d;//b-cost
 	int			*e;//absolute a-cost
 	int			*f;//absolute b-cost
+	int			*g;//absolute g
 } t_stack;
 t_stack	*stack_genesis(t_stack **stack, int *array);
 // void	stack_genesis(t_stack **stack_a, t_stack **stack_b, int *array);
