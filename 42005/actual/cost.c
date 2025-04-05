@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/04 15:00:26 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/05 19:49:36 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,15 +233,26 @@ turk
 
 
 */
+void		ft_findnext(int *v, t_stack *s)
+{
+	if (v[2] == 0 && v[3] != 0)//`bigger` doesn`t exist but `smaller` does
+		;
+	else if (v[2] != 0 && v[3] == 0)//`bigger` exists but `smaller` doesn't
+		;
+	else if (v[2] != 0 && v[3] != 0)//`bigger` and `smaller` both exist
+		;
+	return ;
+}
+
 void		ft_cheapest_mode(int *v, t_stack *s, int i)
 {
-	if (v[0] != 0 && v[0] < v[1] && v[0] < v[2] && v[0] < v[3])
+	if (v[0] < v[1] && v[0] < v[2] && v[0] < v[3])
 		s->g[i] = s->c[i];
-	else if (v[1] != 0 && v[1] < v[0] && v[1] < v[2] && v[1] < v[3])
+	else if (v[1] < v[0] && v[1] < v[2] && v[1] < v[3])
 		s->g[i] = s->d[i];
-	else if (v[2] < v[0] && v[2] < v[1] && v[2] < v[3])
+	else if (v[2] != 0 && v[2] < v[0] && v[2] < v[1] && v[2] < v[3])
 		s->g[i] = s->e[i];
-	else if (v[3] < v[0] && v[3] < v[1] && v[3] < v[2])
+	else if (v[1] != 0 && v[3] < v[0] && v[3] < v[1] && v[3] < v[2])
 		s->g[i] = s->f[i];
 }
 
@@ -365,7 +376,21 @@ int		find_smallest(int *s)
 	}
 	return (ind);
 }
+/*
+int	dist;
+int	cost;
+int	tgt;
 
+dist = (size_a / 2 + size_a % 2)
+tgt = find_next_bigger(s, a[i]);
+if (!tgt)
+	tgt = find_next_smaller(s, a[i]);
+if (tgt < (size_a / 2 + size_a % 2))
+if (i < (size_a / 2 + size_a % 2))
+	cost = i + tgt;
+else
+	cost = size - i + tgt;
+if (find_next_bigger(s, a[i])) */
 int		find_next_bigger(int *s, int n)
 {
 	int	i;
