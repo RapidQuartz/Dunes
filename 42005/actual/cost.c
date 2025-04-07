@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:54:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/05 19:49:36 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:36:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,78 @@ void		get_cost(t_stack *stk)
 		stk = compare_targets(stk, i);
 	}
 }
+/*
+e[i]	-	the index which is bigger than a[i] 
+	b[e[i]]
+f[i]	-	the index which is smaller than a[i]
+	b[f[i]]
+
+
+which is cheaper?
+
+moving b[f[i]] to toppom
+
+moving b[e[i]] to bottom
+
+cost of moving b[2] and b[size] is same
+b[2+1]//b[size-1]
+
+
+while (i++)
+{
+cost[i] = finder(i, stk)
+}
+//a[i]()
+finder(int i, t_stk *stk)
+{
+
+int	cost_big;
+int	cost_smol;
+int	size;
+int	mid;
+
+size = stk->b[0]
+mid =	((stk->b[0] / 2) + (stk->b[0] % 2))
+cost_big = 0;
+cost_smol = 0;
+
+
+if (e[i] != 0 && e[i] > mid)
+	cost_big = e[i] - size - 2;
+else if (e[i] != 0 && e[i] <= mid)
+	cost_big = e[i];
+if (f[i] != 0 && f[i] > mid)
+	cost_smol = f[i] - size - 1;
+if (f[i] != 0 && f[i] <= mid)
+	cost_smol = f[i];
+if (cost_smol == 0)
+	return (cost_big);
+else if (cost_big == 0)
+	return (cost_smol)
+else if (cost_smol != 0 && cost_big)
+{
+	if (cost_smol < cost_big)
+		return
+}
+	return ()
+	
+while (j++ < m && z-- > m)
+{
+	if (j == e[i])
+	else if (j == f[i])
+	if (z == e[i])
+	else if (z == f[i])
+}
+}	
+*/
+/* common and singular operations
+
+if CAN use double ops
+find out
+if CANT
+
+diff bet abs value of index difs
+*/
 /*	placement logics
 	seems the logic is just to put it
 	above the next smaller/below the next bigger
@@ -137,10 +209,23 @@ t_stack	*compare_targets(t_stack *stk, int i)
 	if (stk->e[i] == 0 && stk->a[i] > stk->b[stk->e[i]])//it's biggest
 	if (stk->f[i] == 0 && stk->a[i] < stk->b[stk->f[i]])//it's smallest
 	if (stk->e[i] != 0 && stk->f[i] != 0)//it's middle
-
+size - 1;
 */
 t_stack	*compare_targets(t_stack *stk, int i)
 {
+	int	lower;
+	int	higher;
+	int	j;
+	int	k;
+
+	if (stk->f[i] != 0)
+		lower = stk->f[i];
+	else
+		lower = 0;
+	if (stk->e[i] != 0)
+		higher = stk->e[i];
+	else
+		higher = 0;
 	return (stk);
 }
 

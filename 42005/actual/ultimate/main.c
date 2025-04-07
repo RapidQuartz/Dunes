@@ -6,16 +6,16 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:24:06 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/06 19:26:45 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:08:09 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 //		declarations
-void		error_end(t_stk **nexus);
+void		error_end_stk(t_stk **nexus);
 void		ft_put(char *str);
-int		arg_check(int count, char *arg);
+int		*arg_check(char *arg, int *argn, int j);
 
 
 //		take args. check them.
@@ -28,19 +28,19 @@ int		main(int argc, char **argv)
 	i = 0;
 	argn = 0;
 	if (!(argc >= 2 && argc <= 501))
-		error_end(NULL);
+		error_end_stk(NULL);
 	while (i++ < argc)
 		argn += arg_check(argc, argv[i]);
 	nexus = arr_to_stk(arg_to_arr(argn, argv));
 	if (!nexus || nexus == NULL)
-		error_end(nexus);
+		error_end_stk(nexus);
 	push_swap(nexus);
 	return (0);
 }
 
 ////		ERROR:
 //		attempt to free memory and exit
-void		error_end(t_stk **nexus)
+void		error_end_stk(t_stk **nexus)
 {
 	if (!nexus)
 		exit (2);
@@ -69,7 +69,7 @@ void		ft_put(char *str)
 	write (1, '\n', 1);
 }
 
-int		arg_check(int count, char *arg)
+int		*arg_check(char *arg, int *argn, int j)
 {
 	int	i;
 	char	c;
@@ -93,7 +93,7 @@ int		arg_check(int count, char *arg)
 		else if (in == 1 && (c == ' ' || c == '\0'))
 			argn++;
 		else if (in == -1 && !(c >= '0' && c <= '9'))
-			error_end(NULL);
+			error_end_stk(NULL);
 	}
 	return (argn);
 }
