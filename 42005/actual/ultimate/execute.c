@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/07 18:08:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:53:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ it exists to allow vscode to debug.
 */
 //		declarations
 ///	MAIN:C:
-int		*arg_check(char *arg, int *argn, int j);
-int		*arg_to_arr(int *argn, char **argv);
+int			*arg_check(char *arg, int *argn, int j);
+int			*arg_to_arr(int *argn, char **argv);
 t_stk		*arr_to_stk(int *arr);
 bool		arg_duplicate(int	*arr);
 long		arg_to_int(char *arg, int argn);
@@ -33,27 +33,27 @@ void		push_back(t_stk *stk);
 ///		PUSH:C:
 t_stk		*push_a(int *a, int *b, t_stk *c);
 t_stk		*push_b(int *a, int *b, t_stk *c);
-int		*realign_stack(int *s);
+int			*realign_stack(int *s);
 ///		SWAP:C:
-int		*swap_a(int *a);
-int		*swap_b(int *b);
-t_stk		*swap_s(t_stk *a);
+int			*swap_a(int *a);
+int			*swap_b(int *b);
+t_stk		*swap_s(t_stk *s);
 ///		ROTATE:C:
-int		*rotate_a(int *a);
-int		*rotate_b(int *b);
+int			*rotate_a(int *a, int post);
+int			*rotate_b(int *b, int post);
 t_stk		*rotate_s(t_stk *a);
 ///		REVERSE:C:
-int		*reverse_a(int *a);
-int		*reverse_b(int *b);
+int			*reverse_a(int *a, int post);
+int			*reverse_b(int *b, int post);
 t_stk		*reverse_s(t_stk *a);
 ///		SORT:THREE:C:
 void		sort_three(t_stk **stk);
-int		*three_ops(int *a, int *b);
+int			*three_ops(int *a, int *b);
 
 ///	COST:C:
 void		get_cost(t_stk *s, int *a, int *b, int *c);
-int		find_next_bigger(int *s, int n);
-int		find_next_smaller(int *s, int n);
+int			find_next_bigger(int *s, int n);
+int			find_next_smaller(int *s, int n);
 void		select_target(t_stk *s);
 void		align_or_not(t_stk *s);
 void		store_moves(t_stk *s);
@@ -67,7 +67,7 @@ void		error_end_stk(t_stk **nexus);
 
 ////	MAIN:C:
 //		take args. check them.
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	int	i;
 	int	*argn_map;
@@ -99,7 +99,7 @@ int		main(int argc, char **argv)
 }
 //MINUS 9 DEBUG LINES
 
-int		*arg_check(char *arg, int *argn, int j)
+int			*arg_check(char *arg, int *argn, int j)
 {
 	int	i;
 	int	in;
@@ -125,7 +125,7 @@ int		*arg_check(char *arg, int *argn, int j)
 	return (argn);
 }
 
-int		*arg_to_arr(int *argn, char **argv)
+int			*arg_to_arr(int *argn, char **argv)
 {
 	int	i;
 	int	j;
@@ -170,6 +170,7 @@ t_stk		*arr_to_stk(int *arr)
 		error_end_stk(&nexus);//FREE ARR
 	while (i++ < arr[0])
 		nexus->a[i] = arr[i];
+	free (arr);
 	return (nexus);
 }
 
@@ -256,14 +257,17 @@ void		exec_turk(t_stk **stk)
 	push_back(s);
 	return ;
 }
+
 void		realign_or_not(t_stk *stk)
 {
 	return ;
 }
+
 void		push_back(t_stk *stk)
 {
 	return ;
 }
+
 ////		COST:C:
 void		get_cost(t_stk *s, int *a, int *b, int *c)
 {
@@ -331,24 +335,28 @@ int		find_next_smaller(int *s, int n)
 	}
 	return (ind);
 }
+
 void		select_target(t_stk *s)
 {
 	
 }
+
 void		align_or_not(t_stk *s)
 {
 	
 }
+
 void		store_moves(t_stk *s)
 {
 	
 }
+
 void		do_moves(t_stk *s)
 {
 	
 }
-////		PUSH:C:
 
+////		PUSH:C:
 t_stk		*push_a(int *a, int *b, t_stk *c)
 {
 	int	i;
@@ -367,6 +375,7 @@ t_stk		*push_a(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	b = realign_stack(b);
+	write (1, "pa\n", 3);
 	return (c);
 }
 
@@ -388,6 +397,7 @@ t_stk		*push_b(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	a = realign_stack(a);
+	write (1, "pb\n", 3);
 	return (c);
 }
 
@@ -414,6 +424,7 @@ int		*realign_stack(int *s)
 	s[0]--;
 	return (s);
 }
+
 ////		SWAP:C:
 int		*swap_a(int *a)
 {
@@ -422,6 +433,7 @@ int		*swap_a(int *a)
 	s = a[1];
 	a[1] = a[2];
 	a[2] = s;
+	write (1, "sa\n", 3);
 	return (a);
 }
 
@@ -432,19 +444,31 @@ int		*swap_b(int *b)
 	s = b[1];
 	b[1] = b[2];
 	b[2] = s;
+	write (1, "sa\n", 3);
 	return (b);
 }
 
-t_stk		*swap_s(t_stk *a)
+t_stk		*swap_s(t_stk *s)
 {
-	a->a = swap_a(a->a);
-	a->b = swap_b(a->b);
-	return (a);
+	int	*a;
+	int	*b;
+	int	n;
+	int	m;
+
+	a = s->a;
+	b = s->b;
+	n = a[1];
+	a[1] = a[2];
+	a[2] = n;
+	m = b[1];
+	b[1] = b[2];
+	b[2] = m;
+	write (1, "ss\n", 3);
+	return (s);
 }
 
 ////		ROTATE:C:
-
-int		*rotate_a(int *a)
+int		*rotate_a(int *a, int post)
 {
 	int	i;
 	int	s;
@@ -461,10 +485,12 @@ int		*rotate_a(int *a)
 		a[i] = m;
 		m = n;
 	}
+	if (post == 1)
+		write (1, "ra\n", 3);
 	return (a);
 }
 
-int		*rotate_b(int *b)
+int		*rotate_b(int *b, int post)
 {
 	int	i;
 	int	s;
@@ -481,19 +507,22 @@ int		*rotate_b(int *b)
 		b[i] = m;
 		m = n;
 	}
+	if (post == 1)
+		write (1, "rb\n", 3);
 	return (b);
 }
 
 t_stk		*rotate_s(t_stk *a)
 {
-	a->a = rotate_a(a->a);
-	a->b = rotate_b(a->b);
+	a->a = rotate_a(a->a, 0);
+	a->b = rotate_b(a->b, 0);
+	write (1, "rr\n", 3);
 	return (a);
 }
 
 ////		REVERSE:C:
 
-int		*reverse_a(int *a)
+int		*reverse_a(int *a, int post)
 {
 	int	i;
 	int	s;
@@ -509,10 +538,12 @@ int		*reverse_a(int *a)
 		a[i] = m;
 		m = n;
 	}
+	if (post == 1)
+		write (1, "rra\n", 4);
 	return (a);
 }
 
-int		*reverse_b(int *b)
+int		*reverse_b(int *b, int post)
 {
 	int	i;
 	int	s;
@@ -528,18 +559,20 @@ int		*reverse_b(int *b)
 		b[i] = m;
 		m = n;
 	}
+	if (post == 1)
+		write (1, "rrb\n", 4);
 	return (b);
 }
 
 t_stk		*reverse_s(t_stk *a)
 {
-	a->a = reverse_a(a->a);
-	a->b = reverse_b(a->b);
+	a->a = reverse_a(a->a, 0);
+	a->b = reverse_b(a->b, 0);
+	write (1, "rrr\n", 4);
 	return (a);
 }
 
 ////		SORT:THREE:C:
-
 void		sort_three(t_stk **stk)
 {
 	int		ops[5];
@@ -579,12 +612,12 @@ int		*three_ops(int *a, int *b)
 		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || (i == 2 && b[0] == 1))
 			a = swap_a(a);
 		if (i == 1 && b[3] == 1)
-			a = rotate_a(a);
+			a = rotate_a(a, 1);
 	}
 	return (a);
 }
+
 ////		UTIL:C:
-//		converts arg to int
 long		arg_to_int(char *arg, int argn)
 {
 	long	num;
@@ -611,6 +644,7 @@ long		arg_to_int(char *arg, int argn)
 	}
 	return (num * mag);
 }
+
 //		outputs a string and a newline
 void		ft_put(char *str)
 {
@@ -637,15 +671,17 @@ void		ft_put_struct(t_stk **stk)
 	i = 0;
 	while (i++ && i <= s->a[0] || i <= s->b[0])
 	{
+		printf("a: ");
 		if (i <= s->a[0])
-		{
-			printf("");
-		}
-		
+			printf("%d", s->a[i]);
+		else
+			printf("-");
+		printf("b: ");
 		if (i <= s->b[0])
-		{
-			
-		}
+			printf("%d", s->b[i]);
+		else
+			printf("-");
+		printf("\n");
 	}
 }
 
