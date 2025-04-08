@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/08 15:16:13 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:22:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,10 +284,12 @@ t_stk		*arr_to_stk(int *arr)
 	s->d = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->a_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->b_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->c_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->x = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->y = (int *)malloc(sizeof(int) * arr[0] + 1);
-	if (s->a == NULL || s->b == NULL || s->c == NULL || s->x == NULL || \
-	s->d == NULL || s->a_cost == NULL || s->b_cost == NULL || s->y == NULL)
+	if (s->a == NULL || s->b == NULL || s->c == NULL || s->d == NULL || \
+	s->a_cost == NULL || s->b_cost == NULL || s->c_cost == NULL || \
+	s->x == NULL || s->y == NULL)
 		error_end_stk(&s);//FREE ARR
 	while (i++ < arr[0])
 		s->a[i] = arr[i];
@@ -449,8 +451,6 @@ was: if (c[0] == 0))
 void		get_cost(t_stk *s, int *a, int *b, int *c)
 {
 	int	i;
-	int	*a_cost;
-	int	*b_cost;
 	int	*d;
 	int	a_mid;
 	int	b_mid;
@@ -467,8 +467,57 @@ void		get_cost(t_stk *s, int *a, int *b, int *c)
 		s->y[i] = find_next_bigger(b, a[i]);
 		c[i] = find_closer(s, s->x[i], s->y[i]);//index for target
 		d[i] = select_move(c, i, a_mid, b_mid);//decides what move to do
+		if (d[i] != 0)
+			set_cost(s, i, c[i], d[i]);
 	}
 }
+
+void		set_cost(t_stk *s, int i, int t, int d)
+{
+	if (d == -1)//ROTATE A `x` times
+		s->a_cost[i] = set_rotate(s->a, i);
+	if (d == -2)//ROTATE B `y` times
+		s->b_cost[t] = set_rotate(s->b, t);
+	if (d == -3)//REVERSE A `x` times
+		s->a_cost[i] = set_reverse(s->a, i);
+	if (d == -4)//REVERSE B `y` times
+		s->b_cost[t] = set_reverse(s->b, t);
+	if (d == -5)//ROTATE BOTH `x` times
+		s->c_cost[i] = set_rotate_both(s->a, s->b, i, t);
+	if (d == -6)//REVERSE BOTH `x` times
+		s->c_cost[i] = set_reverse_both(s->a, s->b, i, t);
+	if (d == -7)//ROTATE A `x` times & REVERSE B `y` times
+	{
+		s->a_cost[i] = set_rotate(s->a, i);
+		s->b_cost[t] = set_reverse(s->b, t);
+	}
+	if (d == -8)//REVERSE A `x` times & ROTATE B `y` times
+	{
+		s->a_cost[i] = set_reverse(s->a, i);
+		s->b_cost[t] = set_rotate(s->b, t);
+	}
+}
+
+int	set_rotate(int *r, int x)
+{
+		
+}
+
+int	set_reverse(int *r, int x)
+{
+		
+}
+
+int	set_rotate_both(int *r, int *q, int x, int y)
+{
+		
+}
+
+int	set_reverse_both(int *r, int *q, int x, int y)
+{
+		
+}
+
 
 int		select_move(int *c, int i, int a_mid, int b_mid)
 {
@@ -476,11 +525,11 @@ int		select_move(int *c, int i, int a_mid, int b_mid)
 	
 	if (i == 1 && c[i] == 1)
 		result = 0;
-	else if ((a_mid > i) && t == 1)
+	else if ((a_mid > i) && c[i] == 1)
 		result = -1;
 	else if (i == 1 && (b_mid > c[i]))
 		result = -2;
-	else if ((a_mid < i) && t == 1)
+	else if ((a_mid < i) && c[i] == 1)
 		result = -3;
 	else if (i == 1 && (b_mid < c[i]))
 		result = -4;
