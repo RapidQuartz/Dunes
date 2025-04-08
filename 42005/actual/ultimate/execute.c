@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/08 13:31:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:16:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,68 @@ need to do the whole "divide by ten" thing i guess
 or. i dunno. maybe investigate it.
 {it was missing "num +=" so it never plussed the stuff. lol.}
 */
+/* ALTERNATIVE FOR GET_COST
+
+2:
+instead of 'which is bigger, x[i] or y[i]?'
+it should be 'which is closer to the top?'
+which is found by saying
+
+void		find_closer(t_stk *s, int i)
+{
+	int	i;
+	
+	i = 0;
+	x = s->x;
+	y = s->y;
+	while (s->a[0] > i++)
+		if (x[i] != 0 && y[i] != 0)
+			get_closer_b(0, s, i, s->b)
+		else if (x[i] != 0 && y[i] == 0)
+			get_closer_b(1, s, i, s->b)
+		else if (x[i] == 0 && y[i] != 0)
+			get_closer_b(2, s, i, s->b)
+}
+	
+void		get_closer_b(int mode, t_stk *s, int i, int *b)
+{
+	int	*x;
+	int	*y;
+	int	x_closer;
+	int	y_closer;
+
+	x = s->x;
+	y = s->y;
+	x_closer = 0;
+	y_closer = 0;
+	if ((mode == 0 || mode == 1) && x[i] < (b[0] / 2 + b[0] % 2))
+		x_closer = (b[0] / 2 + b[0] % 2) - x[i]
+	else if ((mode == 0 || mode == 1) && x[i] > (b[0] / 2 + b[0] % 2))
+		x_closer = x[i] - (b[0] / 2 + b[0] % 2)
+	if ((mode == 0 || mode == 2) && y[i] < (b[0] / 2 + b[0] % 2))
+		y_closer = (b[0] / 2 + b[0] % 2) - y[i]
+	else if ((mode == 0 || mode == 2) && y[i] > (b[0] / 2 + b[0] % 2))
+		y_closer = y[i] - (b[0] / 2 + b[0] % 2)
+	if (mode == 1 || (mode == 0 && x_closer < y_closer))
+		s->d[i] = x_closer
+	else if (mode == 2 || (mode == 0 && x_closer > y_closer))
+		s->d[i] = y_closer
+}
+
+1:
+OR! should i compare x[i] and y[i]
+pick whichever is cheaper to align
+then set that as target
+
+
+cus now what im doing is say "if there isnt a smaller, go for bigger. but smaller can be buried and i dont care"
+worth looking into LATER
+*/
 //	filename
 //		declarations
 ///	MAIN:C:
-int			*arg_check(char *arg, int *argn, int j);
-int			*arg_to_arr(int *argn, char **argv);
+int		*arg_check(char *arg, int *argn, int j);
+int		*arg_to_arr(int *argn, char **argv);
 t_stk		*arr_to_stk(int *arr);
 bool		arg_duplicate(int *arr);
 int		*arr_normalize(int *arr);
@@ -64,27 +121,27 @@ void		push_back(t_stk *stk);
 ///		PUSH:C:
 t_stk		*push_a(int *a, int *b, t_stk *c);
 t_stk		*push_b(int *a, int *b, t_stk *c);
-int			*realign_stack(int *s);
+int		*realign_stack(int *s);
 ///		SWAP:C:
-int			*swap_a(int *a);
-int			*swap_b(int *b);
+int		*swap_a(int *a);
+int		*swap_b(int *b);
 t_stk		*swap_s(t_stk *s);
 ///		ROTATE:C:
-int			*rotate_a(int *a, int post);
-int			*rotate_b(int *b, int post);
+int		*rotate_a(int *a, int post);
+int		*rotate_b(int *b, int post);
 t_stk		*rotate_s(t_stk *a);
 ///		REVERSE:C:
-int			*reverse_a(int *a, int post);
-int			*reverse_b(int *b, int post);
+int		*reverse_a(int *a, int post);
+int		*reverse_b(int *b, int post);
 t_stk		*reverse_s(t_stk *a);
 ///		SORT:THREE:C:
 void		sort_three(t_stk **stk);
-int			*three_ops(int *a, int *b);
+int		*three_ops(int *a, int *b);
 
 ///	COST:C:
 void		get_cost(t_stk *s, int *a, int *b, int *c);
-int			find_next_bigger(int *s, int n);
-int			find_next_smaller(int *s, int n);
+int		find_next_bigger(int *s, int n);
+int		find_next_smaller(int *s, int n);
 void		select_target(t_stk *s);
 void		align_or_not(t_stk *s);
 void		store_moves(t_stk *s);
@@ -387,6 +444,103 @@ void		push_back(t_stk *stk)
 now: if (c[i] == 0)
 was: if (c[0] == 0))
 */
+
+
+void		get_cost(t_stk *s, int *a, int *b, int *c)
+{
+	int	i;
+	int	*a_cost;
+	int	*b_cost;
+	int	*d;
+	int	a_mid;
+	int	b_mid;
+
+	i = 0;
+	d = s->d;
+	a_mid = (a[0] / 2 + a[0] % 2);
+	b_mid = (b[0] / 2 + b[0] % 2);
+	// a_cost = s->a_cost;
+	// b_cost = s->b_cost;
+	while (i++ < a[0])
+	{
+		s->x[i] = find_next_smaller(b, a[i]);
+		s->y[i] = find_next_bigger(b, a[i]);
+		c[i] = find_closer(s, s->x[i], s->y[i]);//index for target
+		d[i] = select_move(c, i, a_mid, b_mid);//decides what move to do
+	}
+}
+
+int		select_move(int *c, int i, int a_mid, int b_mid)
+{
+	int	result;
+	
+	if (i == 1 && c[i] == 1)
+		result = 0;
+	else if ((a_mid > i) && t == 1)
+		result = -1;
+	else if (i == 1 && (b_mid > c[i]))
+		result = -2;
+	else if ((a_mid < i) && t == 1)
+		result = -3;
+	else if (i == 1 && (b_mid < c[i]))
+		result = -4;
+	else if ((a_mid > i) && (b_mid > c[i]))
+		result = -5;
+	else if ((a_mid < i) && (b_mid < c[i]))
+		result = -6;
+	else if ((a_mid > i) && (b_mid < c[i]))
+		result = -7;
+	else if ((a_mid < i) && (b_mid > c[i]))
+		result = -8;
+	return (result);
+}
+
+int		find_closer(t_stk *s, int *x, int *y)
+{
+	int	i;
+	int	closer;
+	
+	
+	i = 0;
+	closer = 0;
+	while (s->a[0] > i++)
+	{
+		if (x[i] != 0 && y[i] != 0)
+			closer = get_closer_b(0, s, i, s->b);
+		else if (x[i] != 0 && y[i] == 0)
+			closer = get_closer_b(1, s, i, s->b);
+		else if (x[i] == 0 && y[i] != 0)
+			closer = get_closer_b(2, s, i, s->b);
+	}
+	return (closer);
+}
+	
+int		get_closer_b(int mode, t_stk *s, int i, int *b)
+{
+	int	*x;
+	int	*y;
+	int	x_closer;
+	int	y_closer;
+
+	x = s->x;
+	y = s->y;
+	x_closer = 0;
+	y_closer = 0;
+	if ((mode == 0 || mode == 1) && x[i] < (b[0] / 2 + b[0] % 2))
+		x_closer = (b[0] / 2 + b[0] % 2) - x[i];
+	else if ((mode == 0 || mode == 1) && x[i] > (b[0] / 2 + b[0] % 2))
+		x_closer = x[i] - (b[0] / 2 + b[0] % 2);
+	if ((mode == 0 || mode == 2) && y[i] < (b[0] / 2 + b[0] % 2))
+		y_closer = (b[0] / 2 + b[0] % 2) - y[i];
+	else if ((mode == 0 || mode == 2) && y[i] > (b[0] / 2 + b[0] % 2))
+		y_closer = y[i] - (b[0] / 2 + b[0] % 2);
+	if (mode == 1 || (mode == 0 && x_closer < y_closer))
+		return (x_closer);
+	else if (mode == 2 || (mode == 0 && x_closer > y_closer))
+		return (y_closer);
+}
+
+/* 
 void		get_cost(t_stk *s, int *a, int *b, int *c)
 {
 	int	i;
@@ -396,10 +550,27 @@ void		get_cost(t_stk *s, int *a, int *b, int *c)
 	j = 0;
 	while (i++ < a[0])
 	{
-		c[i] = find_next_smaller(b, a[i]);
-		if (c[i] == 0)
-			c[i] = find_next_bigger(b, a[i]);
-			//-1 because 'bigger' needs to be on bottom
+		s->x[i] = find_next_smaller(b, a[i]);
+		s->y[i] = find_next_bigger(b, a[i]);
+		if (s->x[i] != 0 && s->y[i] != 0 && s->x[i] < s->y[i])//both exist and - is bigger
+		else if (s->x[i] != 0 && s->y[i] != 0 && s->x[i] > s->y[i])//both exist and - is bigger
+		//there IS a smaller in B and it's in the TOP half
+		//the cost of aligning it is s->x - 1
+		if (s->x[i] != 0 && b[0] / 2 + b[0] % 2 > c[i])
+			s->b_cost = (s->x[i] - 1);
+//there IS a smaller in B and it's in the BOTTOM half
+//the cost of aligning it is (s->x * -1) - 1
+		else if (s->x[i] != 0 && b[0] / 2 + b[0] % 2 < c[i])
+			s->b_cost = (-s->x[i] - 1);
+//there ISN'T a smaller in B but BIGGER is in the TOP half
+//the cost of aligning it is s->y - 1
+		if (s->x == 0 && s->y[i] != 0 && b[0] / 2 + b[0] % 2 > c[i])
+			s->b_cost = (s->x[i] - 1);
+//there ISN'T a smaller in B but BIGGER is in the BOTTOM half
+//the cost of aligning it is (s->y * -1) - 1
+		else if (s->x == 0 && s->y[i] != 0 && b[0] / 2 + b[0] % 2 < c[i])
+			s->b_cost = (-s->x[i] - 1);
+
 		if (b[0] / 2 + b[0] % 2 < c[i])
 			s->b_cost[i] = -c[i] - 2;
 		//-2 because from 'size' it takes 2 moves to push
@@ -411,7 +582,7 @@ void		get_cost(t_stk *s, int *a, int *b, int *c)
 		else if (a[0] / 2 + a[0] % 2 > i)
 			s->a_cost[i] = i;
 	}
-}
+} */
 
 int		find_next_bigger(int *s, int n)
 {
@@ -836,7 +1007,7 @@ int		*three_ops(int *a, int *b)
 	while (i++ < 2)
 	{
 		if ((i == 1 && (b[0] == 1 || b[4] == 1)) || (i == 2 && b[2] == 1))
-			a = reverse_a(a);
+			a = reverse_a(a, 1);
 		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || (i == 2 && b[0] == 1))
 			a = swap_a(a);
 		if (i == 1 && b[3] == 1)
