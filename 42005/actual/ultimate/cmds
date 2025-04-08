@@ -1,0 +1,7 @@
+cc -g execute.c -o push_swap
+gdb push_swap
+r "1 2 3 4 5"
+r "1 2 3 4 0"
+p nexus->
+p arr[0]
+b arr_unsorted

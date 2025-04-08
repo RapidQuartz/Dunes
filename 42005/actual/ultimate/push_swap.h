@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/07 13:57:58 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:27:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ typedef	struct	s_stk
 	int			*a;
 	int			*b;
 	int			*c;
-	int			*ops;
+	int			*d;
+	int			*a_cost;
+	int			*b_cost;
+	int			*x;
+	int			*y;
+	// int			*ops;
 } t_stk;
 #
 

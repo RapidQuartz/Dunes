@@ -6,26 +6,57 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/07 18:08:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:28:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*	EXECUTE_C IS A SINGLE DOC VERSION OF PUSH_SWAP
-it exists to allow vscode to debug.
+
+2025-04-08	TODO:1:2:3:4:5:6:
+:1:
+this check for too few arguments needs to come after args are parsed:
+L113	if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
+			error_end_arr(argn_map);
+:2:
+around here, args need to be normalized
+L119	if (!arg_duplicate(arr))
+		nexus = arr_to_stk(arr);
+:3:
+make the following functions::
+void		select_target(t_stk *s)
+void		align_or_not(t_stk *s)
+void		store_moves(t_stk *s)
+void		do_moves(t_stk *s)
+void		realign_or_not(t_stk *stk)
+void		push_back(t_stk *stk)
+:4:
+look over the get_cost
+:5:
+make "sort_three" clause for stack
+:6:
+fix the atoi monster, it doesnt work lol
+need to do the whole "divide by ten" thing i guess
+or. i dunno. maybe investigate it.
+{it was missing "num +=" so it never plussed the stuff. lol.}
 */
+//	filename
 //		declarations
 ///	MAIN:C:
 int		*arg_check(char *arg, int *argn, int j);
 int		*arg_to_arr(int *argn, char **argv);
 t_stk		*arr_to_stk(int *arr);
-bool		arg_duplicate(int	*arr);
+bool		arg_duplicate(int *arr);
+int		*arr_normalize(int *arr);
+int		*arg_normalizer(int *arr, int siz);
+int		*arr_transcriber(int *arr, int *brr, int siz);
 long		arg_to_int(char *arg, int argn);
+bool		arr_unsorted(int *arr);
 
 ///	PUSH:SWAP:C:
 void		push_swap(t_stk **nexus);
-bool		check_sort(t_stk *nexus);
+bool		stack_unsorted(t_stk *nexus);
 ///		TURK:C:
 void		exec_turk(t_stk **stk);
 void		realign_or_not(t_stk *stk);
@@ -58,6 +89,7 @@ void		select_target(t_stk *s);
 void		align_or_not(t_stk *s);
 void		store_moves(t_stk *s);
 void		do_moves(t_stk *s);
+////		SPLIT:THIS:
 
 ///	UTIL:C:
 void		ft_put(char *str);
@@ -67,31 +99,33 @@ void		error_end_stk(t_stk **nexus);
 
 ////	MAIN:C:
 //		take args. check them.
+
 int		main(int argc, char **argv)
 {
 	int	i;
 	int	*argn_map;
 	//DEBUG
-	int	count = 2;
-	char *vars[] = { "dummy", "1 3 2" };
+	// int	count = 2;
+	// char 	*vars[] = { "dummy", "1 3 2" };
+	// argc = count;
+	// argv = vars;
 	//DEBUG
 	int	*arr;
 	t_stk	*nexus;
 
 	i = 0;
 	argn_map = (int *)malloc(sizeof(int) * (argc + 1));
-	// if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
-	// 	error_end_arr(argn_map);
-	//DEBUG
-	argc = count;
-	argv = vars;
-	//DEBUG
+	if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
+		error_end_arr(argn_map);
 	argn_map[0] = 0;
 	while (++i < argc)
 		argn_map = arg_check(argv[i], argn_map, i);
 	arr = arg_to_arr(argn_map, argv);
-	if (!arg_duplicate(arr))
-		nexus = arr_to_stk(arr);
+	free (argn_map);
+	if (!arr || arr == NULL || arg_duplicate(arr))
+		error_end_arr(arr);
+	arr = arg_normalizer(arr, arr[0]);
+	nexus = arr_to_stk(arr);
 	if (!nexus || nexus == NULL)
 		error_end_stk(&nexus);
 	push_swap(&nexus);
@@ -154,23 +188,53 @@ int		*arg_to_arr(int *argn, char **argv)
 	return (arr);
 }
 
+bool		arr_unsorted(int *arr)
+{
+	int	i;
+	int	n;
+	int	z;
+
+	i = 1;
+	z = arr[0];
+	n = arr[i];
+	while (i++ < z)
+	{
+		if (arr[i] - 1 == n)
+			n = arr[i];
+		else
+			return (true);
+	}
+	return (false);
+}
+
+/*		TODO:2025-04-08:
+L188make a combo-free for stack and arrays?
+////		DONE:added '+1'
+//182-184//	nexus->a = (int *)malloc(sizeof(int) * arr[0] + 1);
+*/
 t_stk		*arr_to_stk(int *arr)
 {
-	t_stk	*nexus;
+	t_stk	*s;
 	int	i;
 
 	i = -1;
-	nexus = malloc(sizeof(*nexus));
-	if (!nexus || nexus == NULL)
+	s = malloc(sizeof(*s));
+	if (!s || s == NULL)
 		error_end_arr(arr);
-	nexus->a = (int *)malloc(sizeof(int) * arr[0]);
-	nexus->b = (int *)malloc(sizeof(int) * arr[0]);
-	nexus->c = (int *)malloc(sizeof(int) * arr[0]);
-	if (nexus->a == NULL || nexus->b == NULL || nexus->c == NULL)
-		error_end_stk(&nexus);//FREE ARR
+	s->a = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->b = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->c = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->d = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->a_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->b_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->x = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->y = (int *)malloc(sizeof(int) * arr[0] + 1);
+	if (s->a == NULL || s->b == NULL || s->c == NULL || s->x == NULL || \
+	s->d == NULL || s->a_cost == NULL || s->b_cost == NULL || s->y == NULL)
+		error_end_stk(&s);//FREE ARR
 	while (i++ < arr[0])
-		nexus->a[i] = arr[i];
-	return (nexus);
+		s->a[i] = arr[i];
+	return (s);
 }
 
 bool		arg_duplicate(int	*arr)
@@ -192,6 +256,56 @@ bool		arg_duplicate(int	*arr)
 	}
 	return (false);	
 }
+
+//	SPECIAL IMPORT
+
+int	*arr_normalizer(int *arr, int siz)
+{
+	int	i;
+	int	*brr;
+
+	i = 0;
+	brr = malloc(sizeof(int) * (siz + 1));
+	if (!brr || brr == NULL)
+		error_end_arr(arr);
+	brr[i] = arr[0];
+	while (++i <= siz)
+	{
+		brr[i] = 0;
+	}
+	brr = arr_transcriber(arr, brr, siz);
+	free (arr);
+	return (brr);
+}
+
+int	*arr_transcriber(int *arr, int *brr, int siz)
+{
+	int			pos;
+	int			i;
+	int			j;
+	
+	i = 0;
+	pos = 0;
+	j = INT_MIN;
+	brr[0] = arr[0];
+	while (siz > 0 && i++ < arr[0])
+	{
+		if (arr[i] > j && brr[i] == 0)
+		{
+			pos = i;
+			j = arr[i];
+		}
+		if (i == arr[0] && brr[pos] == 0)
+		{
+			brr[pos] = siz--;
+			j = INT_MIN;
+			i = 0;
+		}
+	}
+	return (brr);
+}
+//	SPECIAL IMPORT
+
 ////		PUSH:SWAP:C:
 void		push_swap(t_stk **nexus)
 {
@@ -207,7 +321,8 @@ void		push_swap(t_stk **nexus)
 	return ;
 }
 
-bool		check_sort(t_stk *nexus)
+//R:TRUE[unsorted]:FALSE[sorted]
+bool		stack_unsorted(t_stk *nexus)
 {
 	int	i;
 	
@@ -227,8 +342,8 @@ bool		check_sort(t_stk *nexus)
 	else
 		return (true);
 }
-////		TURK:C:
 
+////		TURK:C:
 void		exec_turk(t_stk **stk)
 {
 	int 		*a;
@@ -244,7 +359,7 @@ void		exec_turk(t_stk **stk)
 	s = push_b(a, b, s);
 	if (a[0] >= 5)
 		s = push_b(a, b, s);
-	while (check_sort(s))
+	while (check_sort(s) && a[0] > 3)
 	{
 		get_cost(s, a, b, c);
 		select_target(s);
@@ -265,6 +380,10 @@ void		push_back(t_stk *stk)
 	return ;
 }
 ////		COST:C:
+/*		DONE:
+now: if (c[i] == 0)
+was: if (c[0] == 0))
+*/
 void		get_cost(t_stk *s, int *a, int *b, int *c)
 {
 	int	i;
@@ -275,14 +394,19 @@ void		get_cost(t_stk *s, int *a, int *b, int *c)
 	while (i++ < a[0])
 	{
 		c[i] = find_next_smaller(b, a[i]);
-		if (c[0] == 0)
-			c[i] = find_next_bigger(b, a[i]) - 1;
+		if (c[i] == 0)
+			c[i] = find_next_bigger(b, a[i]);
 			//-1 because 'bigger' needs to be on bottom
 		if (b[0] / 2 + b[0] % 2 < c[i])
-			c[i] = -c[i] - 2;
-			//-2 because from 'size' it takes 2 moves to push
-			//(index 2 carries the cost of 'rotate & push')
+			s->b_cost[i] = -c[i] - 2;
+		//-2 because from 'size' it takes 2 moves to push
 //NB:		this cost is *negative*. it still carries 'absolute cost'
+		else if (b[0] / 2 + b[0] % 2 > c[i])
+			s->b_cost[i] = c[i];
+		if (a[0] / 2 + a[0] % 2 < i)
+			s->a_cost[i] = -i - 2;
+		else if (a[0] / 2 + a[0] % 2 > i)
+			s->a_cost[i] = i;
 	}
 }
 
@@ -331,6 +455,112 @@ int		find_next_smaller(int *s, int n)
 	}
 	return (ind);
 }
+
+// void		select_target(t_stk *s, int size)
+/* PSEUDO:
+legend:
+a[i]		subject
+b[c[i]]	target
+d[i]		a_cost
+e[i]		b_cost
+
+what I have:
+c[i] == COST (not yet index) for number lower-or-higher-than a[i]
+the one with the lowest cost wins*/
+
+/* LOGIX
+d[i] = 0	NO MOVE
+		if both i == 1 and t == 1
+d[i] = -1	ROTATE A
+		if a[i] in top half and t == 1
+d[i] = -2	ROTATE B
+		if i == 1 and b[t] in top half
+d[i] = -3	REVERSE A
+		if a[i] in bottom half and t == 1
+d[i] = -4	REVERSE B
+		if i == 1 and b[t] in bottom half
+d[i] = -5	ROTATE BOTH
+		if both a[i] and b[t] are in top half
+d[i] = -6	REVERSE BOTH
+		if both a[i] and b[t] are in bottom half
+d[i] = -7	ROTATE A & REVERSE B
+		if a[i] but not b[t] are in top half
+d[i] = -8	REVERSE A & ROTATE B
+		if a[i] but not b[t] are in bottom half
+*/
+/* PRIORITY
+if (d[i] == 0)
+	;//go to push
+else if (d[i] == -1)
+else if (d[i] == -2)
+else if (d[i] == -3)
+else if (d[i] == -4)
+else if (d[i] == -5)
+else if (d[i] == -6)
+else if (d[i] == -7)
+else if (d[i] == -8)
+*/
+/* IMPLEMENTATION
+1. get index of subject and target
+sub = i;
+tgt = c[i];
+2. compare to size/placement and assign d[i] mode
+d[i] = {LOGIX}
+3. get index for new target depending on d[i] mode
+NB: for `in stack B and smaller` we want index 1
+difference between `t` and 1
+NB: for `in stack B and bigger` we want index SIZE
+difference between `t` and SIZE
+NB: for `in stack A and smaller` we want index SIZE
+difference between `i` and SIZE
+NB: for `in stack A and bigger` we want index 1
+difference between `i` and 1
+X. get cost by summing indices and considering over the hump
+4. get a_moves `x` and b_moves `y`
+5. do combo moves if both are same direction until one is correct
+6. so single moves on remaining
+*/
+/* D-MODE
+if (i == 1 && c[i] == 1)
+	d[i] = 0;
+else if ((a[0] / 2 + a[0] % 2 > i) && t == 1)
+	d[i] = -1;
+else if (i == 1 && (b[0] / 2 + b[0] % 2 > c[i]))
+	d[i] = -2;
+else if ((a[0] / 2 + a[0] % 2 < i) && t == 1)
+	d[i] = -3;
+else if (i == 1 && (b[0] / 2 + b[0] % 2 < c[i]))
+	d[i] = -4;
+else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 > c[i]))
+	d[i] = -5;
+else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 < c[i]))
+	d[i] = -6;
+else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 < c[i]))
+	d[i] = -7;
+else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 > c[i]))
+	d[i] = -8;
+*/
+/* D-MOVE
+if (d[i] == -0)
+	;//NO MOVE
+if (d[i] == -1)
+	;//ROTATE A `x` times
+if (d[i] == -2)
+	;//ROTATE B `y` times
+if (d[i] == -3)
+	;//REVERSE A `x` times
+if (d[i] == -4)
+	;//REVERSE B `y` times
+if (d[i] == -5)
+	;//ROTATE BOTH `x` times
+if (d[i] == -6)
+	;//REVERSE BOTH `x` times	
+if (d[i] == -7)
+	;//ROTATE A `x` times & REVERSE B `y` times
+if (d[i] == -8)
+	;//REVERSE A `x` times & ROTATE B `y` times
+*/
+// void		select_target_index(t_stk *s)
 void		select_target(t_stk *s)
 {
 	
@@ -602,7 +832,7 @@ long		arg_to_int(char *arg, int argn)
 		if ((c >= '0' && c <= '9') && argn == 1)
 		{
 			num *= 10;
-			num = c - '0';
+			num += c - '0';
 		}
 		if (argn == 1 && c == '-')
 			mag *= -1;
