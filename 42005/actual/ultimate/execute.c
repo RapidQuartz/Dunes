@@ -6,15 +6,59 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/08 16:22:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:14:36 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*	EXECUTE_C IS A SINGLE DOC VERSION OF PUSH_SWAP
-
-2025-04-08	TODO:1:2:3:4:5:6:
+:::::::*/
+/*	2025-04-09	TODO:1:2:3:4:5:6:
+:::::::
+:1:
+make:ft:int		get_abs(int num);//return (abs);
+//takes:		an int that is either positive or negative
+//returns:		a positive int
+:2:
+set up t_stk->size
+:3:
+store::
+index/distance from top of i == a_cost
+target for i
+index/distance from top of target for i == b_cost
+:4:
+somethign fucky is up...
+i need the following:
+compare:		
+if (i > a_mid)
+	a_cost = 
+if (i < a_mid)
+	a_cost = 
+:5:
+ok now working on check_sort_a check_sort_b and check_sort
+check_sort
+	calls 
+check_sort_a
+	checks sort for stack a
+		returns based on state
+			0	-	`size` numbers are in a[0], from `1` to `size`
+			1	-	all the numbers in a[0] are +/- 1 in rising sequence
+			2	-	all the numbers in a[0] are +/- 1 
+			3	-	some of the numbers in a[0] are +/- > 1 
+check_sort_b
+	checks sort for stack b
+		returns based on state
+			0	-	0 numbers are in b[0]
+			1	-	all the numbers in b[0] are +/- 1 in falling sequence
+			2	-	all the numbers in b[0] are +/- 1 
+			3	-	some of the numbers in b[0] are +/- > 1 
+:6:
+TODO: testing. havent run this beast at all. lol.
+:::::::
+*/
+/*	2025-04-08	TODO:1:2:3:4:5:6:
+:::::::
 :1:
 this check for too few arguments needs to come after args are parsed:
 L113	if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
@@ -40,6 +84,7 @@ fix the atoi monster, it doesnt work lol
 need to do the whole "divide by ten" thing i guess
 or. i dunno. maybe investigate it.
 {it was missing "num +=" so it never plussed the stuff. lol.}
+:::::::
 */
 /* ALTERNATIVE FOR GET_COST
 
@@ -84,9 +129,9 @@ void		get_closer_b(int mode, t_stk *s, int i, int *b)
 	else if ((mode == 0 || mode == 2) && y[i] > (b[0] / 2 + b[0] % 2))
 		y_closer = y[i] - (b[0] / 2 + b[0] % 2)
 	if (mode == 1 || (mode == 0 && x_closer < y_closer))
-		s->d[i] = x_closer
+		s->b_ops[i] = x_closer
 	else if (mode == 2 || (mode == 0 && x_closer > y_closer))
-		s->d[i] = y_closer
+		s->b_ops[i] = y_closer
 }
 
 1:
@@ -100,16 +145,20 @@ worth looking into LATER
 */
 //	filename
 //		declarations
+/////	WIP:
+int		get_abs(int num);//return (abs);
 ///	MAIN:C:
 int		*arg_check(char *arg, int *argn, int j);
 int		*arg_to_arr(int *argn, char **argv);
 t_stk		*arr_to_stk(int *arr);
+t_stk		*stk_allocator(int *arr, t_stk *s);
 bool		arg_duplicate(int *arr);
 int		*arr_normalize(int *arr);
 int		*arg_normalizer(int *arr, int siz);
 int		*arr_transcriber(int *arr, int *brr, int siz);
 long		arg_to_int(char *arg, int argn);
 bool		arr_unsorted(int *arr);
+int		check_sort(t_stk *s);
 
 ///	PUSH:SWAP:C:
 void		push_swap(t_stk **nexus);
@@ -127,25 +176,26 @@ int		*swap_a(int *a);
 int		*swap_b(int *b);
 t_stk		*swap_s(t_stk *s);
 ///		ROTATE:C:
-int		*rotate_a(int *a, int post);
-int		*rotate_b(int *b, int post);
-t_stk		*rotate_s(t_stk *a);
+void		rotate_a(t_stk *s, int post);
+void		rotate_b(t_stk *s, int post);
+void		rotate_s(t_stk *s);
 ///		REVERSE:C:
-int		*reverse_a(int *a, int post);
-int		*reverse_b(int *b, int post);
-t_stk		*reverse_s(t_stk *a);
+void		reverse_a(t_stk *s, int post);
+void		reverse_b(t_stk *s, int post);
+void		reverse_s(t_stk *s);
 ///		SORT:THREE:C:
 void		sort_three(t_stk **stk);
 int		*three_ops(int *a, int *b);
 
 ///	COST:C:
-void		get_cost(t_stk *s, int *a, int *b, int *c);
+void		get_cost(t_stk *s, int *a, int *b);
+void		compare_cost(t_stk *s, int *a, int *b);
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);
 void		select_target(t_stk *s);
 void		align_or_not(t_stk *s);
 void		store_moves(t_stk *s);
-void		do_moves(t_stk *s);
+void		do_moves(t_stk *s, int *a, int *b, int *c);
 ////		SPLIT:THIS:
 
 ///	UTIL:C:
@@ -280,16 +330,18 @@ t_stk		*arr_to_stk(int *arr)
 		error_end_arr(arr);
 	s->a = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->b = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->c = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->d = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->a_mov = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->b_mov = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->a_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->b_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
 	s->c_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->x = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->y = (int *)malloc(sizeof(int) * arr[0] + 1);
-	if (s->a == NULL || s->b == NULL || s->c == NULL || s->d == NULL || \
-	s->a_cost == NULL || s->b_cost == NULL || s->c_cost == NULL || \
-	s->x == NULL || s->y == NULL)
+	s->a_tgt = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->b_tgt = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->sm = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->bg = (int *)malloc(sizeof(int) * arr[0] + 1);
+	if (s->a == NULL || s->b == NULL || s->a_cost == NULL || \
+s->b_cost == NULL || s->c_cost == NULL ||	s->sm == NULL || s->a_tgt == NULL \
+|| s->bg == NULL || s->a_mov == NULL || s->b_mov == NULL || s->b_tgt == NULL)
 		error_end_stk(&s);//FREE ARR
 	while (i++ < arr[0])
 		s->a[i] = arr[i];
@@ -380,6 +432,28 @@ void		push_swap(t_stk **nexus)
 	return ;
 }
 
+/*
+RETURNS::
+0	-	s->a[0] == s->size, s->a[i] == i, s->b[0] == 0
+1	-	UNSORTED
+*/
+int		check_sort(t_stk *s)
+{
+	if (check_sort_a != 0 && check_sort_b != 0)
+		return (1);
+	return (0);
+}
+
+int		check_sort_a(t_stk *s)
+{
+	return (0);
+}
+
+int		check_sort_b(t_stk *s)
+{
+	return (0);
+}
+
 //R:TRUE[unsorted]:FALSE[sorted]
 bool		stack_unsorted(t_stk *nexus)
 {
@@ -407,28 +481,52 @@ void		exec_turk(t_stk **stk)
 {
 	int 		*a;
 	int 		*b;
-	int 		*c;
 	t_stk		*s;
 
 	s = (*stk);
-	a = s->a;
-	b = s->b;
-	c = s->c;
 	//	push 2
-	s = push_b(a, b, s);
-	if (a[0] >= 5)
-		s = push_b(a, b, s);
-	while (check_sort(s) && a[0] > 3)
+	s = push_b(s->a, s->b, s);
+	if (s->a[0] >= 5)
+		s = push_b(s->a, s->b, s);
+	while (check_sort(s) && s->a[0] > 3)
 	{
-		get_cost(s, a, b, c);
-		select_target(s);
-		align_or_not(s);
-		store_moves(s);
-		do_moves(s);
+		s->a_mid = (s->a[0] / 2 + s->a[0] % 2);
+		s->b_mid = (s->b[0] / 2 + s->b[0] % 2);
+		get_cost(s, s->a, s->b);
+		do_moves(s, s->a_cost, s->b_cost, s->c_cost);
+		s = push_b(s->a, s->b, s);
 	}
 	realign_or_not(s);
 	push_back(s);
 	return ;
+}
+
+void		do_moves(t_stk *s, int *a, int *b, int *c)
+{
+	int	a_tgt;
+	int	b_tgt;
+	
+	a_tgt = s->a_tgt[0];
+	b_tgt = s->b_tgt[0];
+	while (get_abs(a[0]) != 0 || get_abs(b[0]) != 0);
+	{
+		if (a[0] < 0 && b[0] < 0)
+			reverse_s(s);
+		else if (a[0] > 0 && b[0] > 0)
+			rotate_s(s);
+		else
+		{
+			if (a[0] > 0 && (b[0] == 0 || b[0] < 0))
+				rotate_a(s, 1);
+			else if (a[0] < 0 && (b[0] == 0 || b[0] > 0))
+				reverse_a(s, 1);
+			if (b[0] > 0 && (a[0] == 0 || a[0] < 0))
+				rotate_b(s, 1);
+			else if (b[0] < 0 && (a[0] == 0 || a[0] > 0))
+				reverse_b(s, 1);
+		}
+		c[0]--;
+	}
 }
 
 void		realign_or_not(t_stk *stk)
@@ -447,191 +545,92 @@ now: if (c[i] == 0)
 was: if (c[0] == 0))
 */
 
-
-void		get_cost(t_stk *s, int *a, int *b, int *c)
+//
+/*		get_cost
+- finds smaller-than-a[i]-in-B if it exists
+- finds bigger-than-a[i]-in-B if it exists
+--	calls move-setter
+*/
+void		get_cost(t_stk *s, int *a, int *b)
 {
 	int	i;
-	int	*d;
-	int	a_mid;
-	int	b_mid;
-
+		
 	i = 0;
-	d = s->d;
-	a_mid = (a[0] / 2 + a[0] % 2);
-	b_mid = (b[0] / 2 + b[0] % 2);
-	// a_cost = s->a_cost;
-	// b_cost = s->b_cost;
 	while (i++ < a[0])
 	{
-		s->x[i] = find_next_smaller(b, a[i]);
-		s->y[i] = find_next_bigger(b, a[i]);
-		c[i] = find_closer(s, s->x[i], s->y[i]);//index for target
-		d[i] = select_move(c, i, a_mid, b_mid);//decides what move to do
-		if (d[i] != 0)
-			set_cost(s, i, c[i], d[i]);
+		s->sm[i] = find_next_smaller(b, a[i]);
+		s->bg[i] = find_next_bigger(b, a[i]);
+		s->b_cost[i] = set_cost(s->sm[i], s->bg[i], s, i);
 	}
+	s->c_cost = get_collective_cost(s->a_cost, s->b_cost, s->c_cost, a[0]);
+	return ;
 }
 
-void		set_cost(t_stk *s, int i, int t, int d)
+/*		set_bigsmall
+- sets move-cost based on
+- - if both exist -> cheapest 
+- - if one exists -> that one
+sets index of target in B for target i in A
+*/
+//really what it does is:
+//- set cost
+int		set_cost(int smaller, int bigger, t_stk *s, int i)
 {
-	if (d == -1)//ROTATE A `x` times
-		s->a_cost[i] = set_rotate(s->a, i);
-	if (d == -2)//ROTATE B `y` times
-		s->b_cost[t] = set_rotate(s->b, t);
-	if (d == -3)//REVERSE A `x` times
-		s->a_cost[i] = set_reverse(s->a, i);
-	if (d == -4)//REVERSE B `y` times
-		s->b_cost[t] = set_reverse(s->b, t);
-	if (d == -5)//ROTATE BOTH `x` times
-		s->c_cost[i] = set_rotate_both(s->a, s->b, i, t);
-	if (d == -6)//REVERSE BOTH `x` times
-		s->c_cost[i] = set_reverse_both(s->a, s->b, i, t);
-	if (d == -7)//ROTATE A `x` times & REVERSE B `y` times
-	{
-		s->a_cost[i] = set_rotate(s->a, i);
-		s->b_cost[t] = set_reverse(s->b, t);
-	}
-	if (d == -8)//REVERSE A `x` times & ROTATE B `y` times
-	{
-		s->a_cost[i] = set_reverse(s->a, i);
-		s->b_cost[t] = set_rotate(s->b, t);
-	}
-}
-
-int	set_rotate(int *r, int x)
-{
-		
-}
-
-int	set_reverse(int *r, int x)
-{
-		
-}
-
-int	set_rotate_both(int *r, int *q, int x, int y)
-{
-		
-}
-
-int	set_reverse_both(int *r, int *q, int x, int y)
-{
-		
-}
-
-
-int		select_move(int *c, int i, int a_mid, int b_mid)
-{
-	int	result;
+	int	c;
+	int	d;
 	
-	if (i == 1 && c[i] == 1)
-		result = 0;
-	else if ((a_mid > i) && c[i] == 1)
-		result = -1;
-	else if (i == 1 && (b_mid > c[i]))
-		result = -2;
-	else if ((a_mid < i) && c[i] == 1)
-		result = -3;
-	else if (i == 1 && (b_mid < c[i]))
-		result = -4;
-	else if ((a_mid > i) && (b_mid > c[i]))
-		result = -5;
-	else if ((a_mid < i) && (b_mid < c[i]))
-		result = -6;
-	else if ((a_mid > i) && (b_mid < c[i]))
-		result = -7;
-	else if ((a_mid < i) && (b_mid > c[i]))
-		result = -8;
-	return (result);
+	if (i <= s->a_mid)
+		s->a_cost[i] = i - 1;
+	else if (i > s->a_mid)
+		s->a_cost[i] = i - s->a[0];
+	if (smaller != 0 && smaller <= s->b_mid)
+		c = (smaller - 1);
+	else if (smaller != 0 && smaller > s->b_mid)
+		c = (smaller - s->b[0]);
+	if (bigger != 0 && bigger <= s->b_mid)
+		d = (bigger - 1);
+	else if (bigger != 0 && bigger > s->b_mid)
+		d = (bigger - s->b[0]);
+	if ((bigger == 0 && smaller != 0) || (get_abs(c) < get_abs(d)))
+	{
+		s->b_tgt[i] = smaller;
+		return (c);
+	}
+	else if ((bigger != 0 && smaller == 0) || (get_abs(c) > get_abs(d)))
+	{
+		s->b_tgt[i] = bigger;
+		return (d);
+	}
 }
 
-int		find_closer(t_stk *s, int *x, int *y)
+/*		compare_cost
+- compares the cost of different moves
+- selects the one that is cheapest
+*/
+int		*get_collective_cost(int *a, int *b, int *c, t_stk *s)
 {
 	int	i;
-	int	closer;
-	
-	
-	i = 0;
-	closer = 0;
-	while (s->a[0] > i++)
-	{
-		if (x[i] != 0 && y[i] != 0)
-			closer = get_closer_b(0, s, i, s->b);
-		else if (x[i] != 0 && y[i] == 0)
-			closer = get_closer_b(1, s, i, s->b);
-		else if (x[i] == 0 && y[i] != 0)
-			closer = get_closer_b(2, s, i, s->b);
-	}
-	return (closer);
-}
-	
-int		get_closer_b(int mode, t_stk *s, int i, int *b)
-{
-	int	*x;
-	int	*y;
-	int	x_closer;
-	int	y_closer;
-
-	x = s->x;
-	y = s->y;
-	x_closer = 0;
-	y_closer = 0;
-	if ((mode == 0 || mode == 1) && x[i] < (b[0] / 2 + b[0] % 2))
-		x_closer = (b[0] / 2 + b[0] % 2) - x[i];
-	else if ((mode == 0 || mode == 1) && x[i] > (b[0] / 2 + b[0] % 2))
-		x_closer = x[i] - (b[0] / 2 + b[0] % 2);
-	if ((mode == 0 || mode == 2) && y[i] < (b[0] / 2 + b[0] % 2))
-		y_closer = (b[0] / 2 + b[0] % 2) - y[i];
-	else if ((mode == 0 || mode == 2) && y[i] > (b[0] / 2 + b[0] % 2))
-		y_closer = y[i] - (b[0] / 2 + b[0] % 2);
-	if (mode == 1 || (mode == 0 && x_closer < y_closer))
-		return (x_closer);
-	else if (mode == 2 || (mode == 0 && x_closer > y_closer))
-		return (y_closer);
-}
-
-/* 
-void		get_cost(t_stk *s, int *a, int *b, int *c)
-{
-	int	i;
-	int	j;
+	int	bargain;
+	int	offer;
 
 	i = 0;
-	j = 0;
-	while (i++ < a[0])
+	bargain = INT_MAX;
+	while (i++ < s->a[0])
 	{
-		s->x[i] = find_next_smaller(b, a[i]);
-		s->y[i] = find_next_bigger(b, a[i]);
-		if (s->x[i] != 0 && s->y[i] != 0 && s->x[i] < s->y[i])//both exist and - is bigger
-		else if (s->x[i] != 0 && s->y[i] != 0 && s->x[i] > s->y[i])//both exist and - is bigger
-		//there IS a smaller in B and it's in the TOP half
-		//the cost of aligning it is s->x - 1
-		if (s->x[i] != 0 && b[0] / 2 + b[0] % 2 > c[i])
-			s->b_cost = (s->x[i] - 1);
-//there IS a smaller in B and it's in the BOTTOM half
-//the cost of aligning it is (s->x * -1) - 1
-		else if (s->x[i] != 0 && b[0] / 2 + b[0] % 2 < c[i])
-			s->b_cost = (-s->x[i] - 1);
-//there ISN'T a smaller in B but BIGGER is in the TOP half
-//the cost of aligning it is s->y - 1
-		if (s->x == 0 && s->y[i] != 0 && b[0] / 2 + b[0] % 2 > c[i])
-			s->b_cost = (s->x[i] - 1);
-//there ISN'T a smaller in B but BIGGER is in the BOTTOM half
-//the cost of aligning it is (s->y * -1) - 1
-		else if (s->x == 0 && s->y[i] != 0 && b[0] / 2 + b[0] % 2 < c[i])
-			s->b_cost = (-s->x[i] - 1);
-
-		if (b[0] / 2 + b[0] % 2 < c[i])
-			s->b_cost[i] = -c[i] - 2;
-		//-2 because from 'size' it takes 2 moves to push
-//NB:		this cost is *negative*. it still carries 'absolute cost'
-		else if (b[0] / 2 + b[0] % 2 > c[i])
-			s->b_cost[i] = c[i];
-		if (a[0] / 2 + a[0] % 2 < i)
-			s->a_cost[i] = -i - 2;
-		else if (a[0] / 2 + a[0] % 2 > i)
-			s->a_cost[i] = i;
+		c[i] = get_abs(a[i]) + get_abs(b[i]);
+		if (c[i] < bargain || i == 1)
+		{
+			bargain = c[i];
+			offer = i;
+		}
 	}
-} */
+	s->a_tgt[0] = offer;
+	s->b_tgt[0] = s->b_tgt[offer];
+	s->a_cost[0] = a[offer];
+	s->b_cost[0] = b[s->b_tgt[offer]];
+	c[0] = bargain;
+	return (c);
+}
 
 int		find_next_bigger(int *s, int n)
 {
@@ -679,127 +678,7 @@ int		find_next_smaller(int *s, int n)
 	return (ind);
 }
 
-// void		select_target(t_stk *s, int size)
-/* PSEUDO:
-legend:
-a[i]		subject
-b[c[i]]	target
-d[i]		a_cost
-e[i]		b_cost
-
-what I have:
-c[i] == COST (not yet index) for number lower-or-higher-than a[i]
-the one with the lowest cost wins*/
-
-/* LOGIX
-d[i] = 0	NO MOVE
-		if both i == 1 and t == 1
-d[i] = -1	ROTATE A
-		if a[i] in top half and t == 1
-d[i] = -2	ROTATE B
-		if i == 1 and b[t] in top half
-d[i] = -3	REVERSE A
-		if a[i] in bottom half and t == 1
-d[i] = -4	REVERSE B
-		if i == 1 and b[t] in bottom half
-d[i] = -5	ROTATE BOTH
-		if both a[i] and b[t] are in top half
-d[i] = -6	REVERSE BOTH
-		if both a[i] and b[t] are in bottom half
-d[i] = -7	ROTATE A & REVERSE B
-		if a[i] but not b[t] are in top half
-d[i] = -8	REVERSE A & ROTATE B
-		if a[i] but not b[t] are in bottom half
-*/
-/* PRIORITY
-if (d[i] == 0)
-	;//go to push
-else if (d[i] == -1)
-else if (d[i] == -2)
-else if (d[i] == -3)
-else if (d[i] == -4)
-else if (d[i] == -5)
-else if (d[i] == -6)
-else if (d[i] == -7)
-else if (d[i] == -8)
-*/
-/* IMPLEMENTATION
-1. get index of subject and target
-sub = i;
-tgt = c[i];
-2. compare to size/placement and assign d[i] mode
-d[i] = {LOGIX}
-3. get index for new target depending on d[i] mode
-NB: for `in stack B and smaller` we want index 1
-difference between `t` and 1
-NB: for `in stack B and bigger` we want index SIZE
-difference between `t` and SIZE
-NB: for `in stack A and smaller` we want index SIZE
-difference between `i` and SIZE
-NB: for `in stack A and bigger` we want index 1
-difference between `i` and 1
-X. get cost by summing indices and considering over the hump
-4. get a_moves `x` and b_moves `y`
-5. do combo moves if both are same direction until one is correct
-6. so single moves on remaining
-*/
-/* D-MODE
-if (i == 1 && c[i] == 1)
-	d[i] = 0;
-else if ((a[0] / 2 + a[0] % 2 > i) && t == 1)
-	d[i] = -1;
-else if (i == 1 && (b[0] / 2 + b[0] % 2 > c[i]))
-	d[i] = -2;
-else if ((a[0] / 2 + a[0] % 2 < i) && t == 1)
-	d[i] = -3;
-else if (i == 1 && (b[0] / 2 + b[0] % 2 < c[i]))
-	d[i] = -4;
-else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 > c[i]))
-	d[i] = -5;
-else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 < c[i]))
-	d[i] = -6;
-else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 < c[i]))
-	d[i] = -7;
-else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 > c[i]))
-	d[i] = -8;
-*/
-/* D-MOVE
-if (d[i] == -0)
-	;//NO MOVE
-if (d[i] == -1)
-	;//ROTATE A `x` times
-if (d[i] == -2)
-	;//ROTATE B `y` times
-if (d[i] == -3)
-	;//REVERSE A `x` times
-if (d[i] == -4)
-	;//REVERSE B `y` times
-if (d[i] == -5)
-	;//ROTATE BOTH `x` times
-if (d[i] == -6)
-	;//REVERSE BOTH `x` times	
-if (d[i] == -7)
-	;//ROTATE A `x` times & REVERSE B `y` times
-if (d[i] == -8)
-	;//REVERSE A `x` times & ROTATE B `y` times
-*/
-// void		select_target_index(t_stk *s)
 void		select_target(t_stk *s)
-{
-	
-}
-
-void		align_or_not(t_stk *s)
-{
-	
-}
-
-void		store_moves(t_stk *s)
-{
-	
-}
-
-void		do_moves(t_stk *s)
 {
 	
 }
@@ -916,108 +795,116 @@ t_stk		*swap_s(t_stk *s)
 }
 
 ////		ROTATE:C:
-int		*rotate_a(int *a, int post)
+void		rotate_a(t_stk *s, int post)
 {
 	int	i;
-	int	s;
+	int	size;
 	int	m;
 	int	n;
 
-	s = a[0];
-	i = s;
-	m = a[s];
-	a[s] = a[1];
+	size = s->a[0];
+	i = size;
+	m = s->a[size];
+	s->a[size] = s->a[1];
 	while (i-- > 1)
 	{
-		n = a[i];
-		a[i] = m;
+		n = s->a[i];
+		s->a[i] = m;
 		m = n;
 	}
+	if (s->a_cost[0] > 0)
+		s->a_cost[0]--;
 	if (post == 1)
 		write (1, "ra\n", 3);
 	return (a);
 }
 
-int		*rotate_b(int *b, int post)
+void		rotate_b(t_stk *s, int post)
 {
 	int	i;
-	int	s;
+	int	size;
 	int	m;
 	int	n;
 
-	s = b[0];
-	i = s;
-	m = b[s];
-	b[s] = b[1];
+	size = s->b[0];
+	i = size;
+	m = s->b[size];
+	s->b[size] = s->b[1];
 	while (i-- > 1)
 	{
-		n = b[i];
-		b[i] = m;
+		n = s->b[i];
+		s->b[i] = m;
 		m = n;
 	}
+	if (s->b_cost[0] > 0)
+		s->b_cost[0]--;
 	if (post == 1)
 		write (1, "rb\n", 3);
 	return (b);
 }
 
-t_stk		*rotate_s(t_stk *a)
+void		rotate_s(t_stk *s)
 {
-	a->a = rotate_a(a->a, 0);
-	a->b = rotate_b(a->b, 0);
+	rotate_a(s->a, 0);
+	rotate_b(s->b, 0);
 	write (1, "rr\n", 3);
-	return (a);
+	return (s);
 }
 
 ////		REVERSE:C:
 
-int		*reverse_a(int *a, int post)
+void		reverse_a(t_stk *s, int post)
 {
 	int	i;
-	int	s;
+	int	size;
 	int	m;
 	int	n;
 
 	i = 0;
-	s = a[0];
-	m = a[s];
-	while (i++ < s)
+	size = s->a[0];
+	m = s->a[size];
+	while (i++ < size)
 	{
-		n = a[i];
-		a[i] = m;
+		n = s->a[i];
+		s->a[i] = m;
 		m = n;
 	}
+	if (s->a_cost[0] < 0)
+		s->a_cost[0]++;
 	if (post == 1)
 		write (1, "rra\n", 4);
 	return (a);
 }
 
-int		*reverse_b(int *b, int post)
+void		reverse_b(t_stk *s, int post)
 {
 	int	i;
-	int	s;
+	int	size;
 	int	m;
 	int	n;
 
 	i = 0;
-	s = b[0];
-	m = b[s];
-	while (i++ < s)
+	size = s->b[0];
+	m = s->b[size];
+	while (i++ < size)
 	{
-		n = b[i];
-		b[i] = m;
+		n = s->b[i];
+		s->b[i] = m;
 		m = n;
 	}
+	if (s->b_cost[0] < 0)
+		s->b_cost[0]++;
 	if (post == 1)
 		write (1, "rrb\n", 4);
 	return (b);
 }
 
-t_stk		*reverse_s(t_stk *a)
+void		reverse_s(t_stk *s)
 {
-	a->a = reverse_a(a->a, 0);
-	a->b = reverse_b(a->b, 0);
+	reverse_a(s->a, 0);
+	reverse_b(s->b, 0);
 	write (1, "rrr\n", 4);
-	return (a);
+	return (s);
 }
 
 ////		SORT:THREE:C:
@@ -1087,10 +974,19 @@ long		arg_to_int(char *arg, int argn)
 		}
 		if (argn == 1 && c == '-')
 			mag *= -1;
-		else if ((c >= '0' && c <= '9')  && (arg[i] == ' ' || arg[i] == '\0'))
+		else if ((c >= '0' && c <= '9') && \
+		(arg[i] == ' ' || arg[i] == '\0'))
 			argn--;
 	}
 	return (num * mag);
+}
+
+//		returns a positive integer
+int		get_abs(int num)
+{
+	if (num < 0)
+		num *= -1;
+	return (num);
 }
 
 //		outputs a string and a newline
@@ -1108,6 +1004,7 @@ void		ft_put(char *str)
 	write (1, "\n", 1);
 }
 
+//		outputs the structure/stacks
 void		ft_put_struct(t_stk **stk)
 {
 	t_stk	*s;
@@ -1121,19 +1018,20 @@ void		ft_put_struct(t_stk **stk)
 	{
 		printf("a: ");
 		if (i <= s->a[0])
-			printf("%d", s->a[i]);
+			printf("%b_ops", s->a[i]);
 		else
 			printf("-");
 		printf("b: ");
 		if (i <= s->b[0])
-			printf("%d", s->b[i]);
+			printf("%b_ops", s->b[i]);
 		else
 			printf("-");
 		printf("\n");
 	}
 }
 
-//		attempt to free memory and exit
+///	TODO:	add flag/mode to exit or return control
+//		attempt to free array from memory and exit
 void		error_end_arr(int *array)
 {
 	if (array)
@@ -1142,6 +1040,8 @@ void		error_end_arr(int *array)
 	exit (2);
 }
 
+///	TODO:	add flag/mode to exit or return control
+//		attempt to free stack from memory and exit
 void		error_end_stk(t_stk **nexus)
 {
 	if (nexus)
@@ -1149,3 +1049,145 @@ void		error_end_stk(t_stk **nexus)
 	ft_put("Error");
 	exit (2);
 }
+
+
+//////	WIP:
+
+//
+int	set_rotate(int *r, int x)
+{
+		
+}
+
+int	set_reverse(int *r, int x)
+{
+		
+}
+
+int	set_rotate_both(int *r, int *q, int x, int y)
+{
+		
+}
+
+int	set_reverse_both(int *r, int *q, int x, int y)
+{
+		
+}
+
+//ROTATE *r//REVERSE *q
+int	set_rotrev_both(int *r, int *q, int x, int y)
+{
+	
+}
+
+
+void		store_moves(t_stk *s)
+{
+	
+}
+
+
+// void		select_target(t_stk *s, int size)
+/* PSEUDO:
+legend:
+a[i]		subject
+b[c[i]]	target
+b_ops[i]		a_cost
+e[i]		b_cost
+
+what I have:
+c[i] == COST (not yet index) for number lower-or-higher-than a[i]
+the one with the lowest cost wins*/
+/* LOGIX
+b_ops[i] = 0	NO MOVE
+		if both i == 1 and t == 1
+b_ops[i] = -1	ROTATE A
+		if a[i] in top half and t == 1
+b_ops[i] = -2	ROTATE B
+		if i == 1 and b[t] in top half
+b_ops[i] = -3	REVERSE A
+		if a[i] in bottom half and t == 1
+b_ops[i] = -4	REVERSE B
+		if i == 1 and b[t] in bottom half
+b_ops[i] = -5	ROTATE BOTH
+		if both a[i] and b[t] are in top half
+b_ops[i] = -6	REVERSE BOTH
+		if both a[i] and b[t] are in bottom half
+b_ops[i] = -7	ROTATE A & REVERSE B
+		if a[i] but not b[t] are in top half
+b_ops[i] = -8	REVERSE A & ROTATE B
+		if a[i] but not b[t] are in bottom half
+*/
+/* PRIORITY
+if (b_ops[i] == 0)
+	;//go to push
+else if (b_ops[i] == -1)
+else if (b_ops[i] == -2)
+else if (b_ops[i] == -3)
+else if (b_ops[i] == -4)
+else if (b_ops[i] == -5)
+else if (b_ops[i] == -6)
+else if (b_ops[i] == -7)
+else if (b_ops[i] == -8)
+*/
+/* IMPLEMENTATION
+1. get index of subject and target
+sub = i;
+tgt = c[i];
+2. compare to size/placement and assign b_ops[i] mode
+b_ops[i] = {LOGIX}
+3. get index for new target depending on b_ops[i] mode
+NB: for `in stack B and smaller` we want index 1
+difference between `t` and 1
+NB: for `in stack B and bigger` we want index SIZE
+difference between `t` and SIZE
+NB: for `in stack A and smaller` we want index SIZE
+difference between `i` and SIZE
+NB: for `in stack A and bigger` we want index 1
+difference between `i` and 1
+X. get cost by summing indices and considering over the hump
+4. get a_moves `x` and b_moves `y`
+5. do combo moves if both are same direction until one is correct
+6. so single moves on remaining
+*/
+/* D-MODE::DEPRECATED?
+if (i == 1 && c[i] == 1)
+	b_ops[i] = 0;
+else if ((a[0] / 2 + a[0] % 2 > i) && t == 1)
+	b_ops[i] = -1;
+else if (i == 1 && (b[0] / 2 + b[0] % 2 > c[i]))
+	b_ops[i] = -2;
+else if ((a[0] / 2 + a[0] % 2 < i) && t == 1)
+	b_ops[i] = -3;
+else if (i == 1 && (b[0] / 2 + b[0] % 2 < c[i]))
+	b_ops[i] = -4;
+else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 > c[i]))
+	b_ops[i] = -5;
+else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 < c[i]))
+	b_ops[i] = -6;
+else if ((a[0] / 2 + a[0] % 2 > i) && (b[0] / 2 + b[0] % 2 < c[i]))
+	b_ops[i] = -7;
+else if ((a[0] / 2 + a[0] % 2 < i) && (b[0] / 2 + b[0] % 2 > c[i]))
+	b_ops[i] = -8;
+*/
+/* D-MOVE::DEPRECATED?
+if (b_ops[i] == -0)
+	;//NO MOVE
+if (b_ops[i] == -1)
+	;//ROTATE A `x` times
+if (b_ops[i] == -2)
+	;//ROTATE B `y` times
+if (b_ops[i] == -3)
+	;//REVERSE A `x` times
+if (b_ops[i] == -4)
+	;//REVERSE B `y` times
+if (b_ops[i] == -5)
+	;//ROTATE BOTH `x` times
+if (b_ops[i] == -6)
+	;//REVERSE BOTH `x` times	
+if (b_ops[i] == -7)
+	;//ROTATE A `x` times & REVERSE B `y` times
+if (b_ops[i] == -8)
+	;//REVERSE A `x` times & ROTATE B `y` times
+*/
+// void		select_target_index(t_stk *s)
