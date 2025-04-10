@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/09 21:06:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/10 19:49:50 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 /*	EXECUTE_C IS A SINGLE DOC VERSION OF PUSH_SWAP
 :::::::*/
+/*	2025-04-10	TODO:
+:::::::
+
+*/
 /*	2025-04-09	TODO:1:2:3:4:5:6:
 :::::::
 :1:
@@ -147,6 +151,10 @@ worth looking into LATER
 //		declarations
 /////	WIP:
 int		get_abs(int num);//return (abs);
+void		final_twist(t_stk *s);
+void		preen(t_stk *s);
+void		biggest_bois(t_stk *s, int *guys);
+
 ///	MAIN:C:
 int		*arg_check(char *arg, int *argn, int j);
 int		*arg_to_arr(int *argn, char **argv);
@@ -167,6 +175,7 @@ void		push_swap(t_stk **nexus);
 bool		stack_unsorted(t_stk *nexus);
 ///		TURK:C:
 void		exec_turk(t_stk **stk);
+void		ft_clear_values(t_stk *s);
 void		realign_or_not(t_stk *s);
 void		push_back(t_stk *stk);
 ///		PUSH:C:
@@ -204,7 +213,7 @@ int		*get_collective_cost(int *a, int *b, int *c, t_stk *s);
 
 ///	UTIL:C:
 void		ft_put(char *str);
-void		ft_put_struct(t_stk **stk);
+void		ft_put_struct(t_stk *stk);
 void		error_end_arr(int *array);
 void		error_end_stk(t_stk **nexus);
 
@@ -236,11 +245,12 @@ int		main(int argc, char **argv)
 	if (!arr || arr == NULL || arg_duplicate(arr))
 		error_end_arr(arr);
 	arr = arr_normalizer(arr, arr[0]);
-	nexus = arr_to_stk(arr, nexus);
+	nexus = arr_to_stk(arr, nexus);//TODO:1
 	if (!nexus || nexus == NULL)
 		error_end_stk(&nexus);
+	ft_put_struct(nexus);
 	push_swap(&nexus);
-	ft_put_struct(&nexus);
+	ft_put_struct(nexus);
 	return (0);
 }
 //MINUS 9 DEBUG LINES
@@ -322,7 +332,7 @@ bool		arr_unsorted(int *arr)
 /*		TODO:2025-04-08:
 L188make a combo-free for stack and arrays?
 ////		DONE:added '+1'
-//182-184//	nexus->a = (int *)malloc(sizeof(int) * arr[0] + 1);
+//182-184//	nexus->a = (int *)malloc(sizeof(int) * (arr[0] + 1));
 */
 t_stk		*arr_to_stk(int *arr, t_stk *s)
 {
@@ -332,23 +342,23 @@ t_stk		*arr_to_stk(int *arr, t_stk *s)
 	s = malloc(sizeof(*s));
 	if (!s || s == NULL)
 		error_end_arr(arr);
-	s->a = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->b = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->a_mov = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->b_mov = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->a_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->b_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->c_cost = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->a_tgt = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->b_tgt = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->sm = (int *)malloc(sizeof(int) * arr[0] + 1);
-	s->bg = (int *)malloc(sizeof(int) * arr[0] + 1);
+	s->size = arr[0];
+	s->a = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->b = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->a_mov = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->b_mov = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->a_cost = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->b_cost = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->c_cost = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->a_tgt = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->b_tgt = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->sm = (int *)malloc(sizeof(int) * (s->size + 1));
+	s->bg = (int *)malloc(sizeof(int) * (s->size + 1));
 	if (s->a == NULL || s->b == NULL || s->a_cost == NULL || \
 s->b_cost == NULL || s->c_cost == NULL ||	s->sm == NULL || s->a_tgt == NULL \
 || s->bg == NULL || s->a_mov == NULL || s->b_mov == NULL || s->b_tgt == NULL)
 		error_end_stk(&s);//FREE ARR
-	s->size = arr[0];
-	while (i++ < arr[0])
+	while (s->size >= ++i)
 		s->a[i] = arr[i];
 	return (s);
 }
@@ -358,13 +368,17 @@ bool		arg_duplicate(int	*arr)
 	int	i;
 	int	j;
 	int	sub;
+	int	size;
 
 	i = 0;
-	while (arr[0] > i++)
+	if (!(arr[0] > 0))
+		return (true);//TODO: ERROR handling
+	size = arr[0];
+	while (size > i++)
 	{
 		j = 0;
 		sub = arr[i];
-		while (arr[0] > j++)
+		while (size > j++)
 		{
 			if (j != i && sub == arr[j])
 				return (true);
@@ -384,6 +398,8 @@ int	*arr_normalizer(int *arr, int siz)
 	brr = malloc(sizeof(int) * (siz + 1));
 	if (!brr || brr == NULL)
 		error_end_arr(arr);
+	if (!(arr[0] > 0))
+		return (NULL);//TODO: ERROR handling
 	brr[i] = arr[0];
 	while (++i <= siz)
 	{
@@ -394,7 +410,7 @@ int	*arr_normalizer(int *arr, int siz)
 	return (brr);
 }
 
-int	*arr_transcriber(int *arr, int *brr, int siz)
+int	*arr_transcriber(int *arr, int *brr, int siz)//TODO: send `s->size` as param
 {
 	int			pos;
 	int			i;
@@ -448,19 +464,23 @@ int		check_sort(t_stk *s)
 	int	b;
 	
 	if (s->a[0] > 0)
-		a = check_sort_a(s);
+		a = check_sort_a(s);//TODO:2
 	else
 		return (3);
-	if (s->b[0] > 0)
-		b = check_sort_b(s);
-	else
-		b = 0;
-	if (a == 0 && b == 0)
+	if (a != 0)
+	{
+		if (s->b[0] > 0)
+			b = check_sort_b(s);//TODO:3
+		else
+			b = 0;
+	}
+	else if (a == 0)
 		return (0);
 	else if (a == 1 && b == 1)
 		return (1);
 	else
 		return (2);
+	return (3);
 }
 /* check_sort_a
 	checks sort for stack a
@@ -480,13 +500,14 @@ int		check_sort_a(t_stk *s)
 	i = 0;
 	seq = 1;
 	a = s->a;
+	gd = INT_MIN;
 	while (i++ < s->a[0])
 	{
-		n = a[i];
-		if (i == 1 || a[i] - n > gd)
+		if (i > 1 && a[i] - n > gd)
 			gd = a[i] - n;
 		if (seq == 1 && i > 1 && a[i] - 1 != n)
 			seq = 0;
+		n = a[i];
 	}
 	if (a[0] == s->size && gd == 1 && seq == 1)
 		return (0);
@@ -563,22 +584,46 @@ void		exec_turk(t_stk **stk)
 
 	s = (*stk);
 	//	push 2
-	s = push_b(s->a, s->b, s);
-	if (s->a[0] >= 5)
+	s = push_b(s->a, s->b, s);//TODO:9
+	if (s->size >= 5)
 		s = push_b(s->a, s->b, s);
 	while (check_sort(s) && s->a[0] > 3)
 	{
-		s->a_mid = (s->a[0] / 2 + s->a[0] % 2);
-		s->b_mid = (s->b[0] / 2 + s->b[0] % 2);
-		get_cost(s, s->a, s->b);
+		ft_clear_values(s);
+		get_cost(s, s->a, s->b);//TODO:3
 		do_moves(s, s->a_cost, s->b_cost, s->c_cost);
 		s = push_b(s->a, s->b, s);
-		ft_put_struct(&s);
+		ft_put_struct(s);
 	}
 	sort_three(&s);
+	ft_put_struct(s);
+	ft_clear_values(s);
 	realign_or_not(s);
-	// push_back(s);
+	(*stk) = s;
 	return ;
+}
+
+void		ft_clear_values(t_stk *s)
+{
+	int	i;
+
+	i = 0;
+	s->a_mid = (s->a[0] / 2 + s->a[0] % 2);
+	s->b_mid = (s->b[0] / 2 + s->b[0] % 2);
+	while (i < s->size)
+	{
+		
+		s->a_tgt[i] = 0;
+		s->b_tgt[i] = 0;
+		s->a_mov[i] = 0;
+		s->b_mov[i] = 0;
+		s->a_cost[i] = 0;
+		s->b_cost[i] = 0;
+		s->c_cost[i] = 0;
+		s->sm[i] = 0;
+		s->bg[i] = 0;
+		i++;
+	}
 }
 
 void		do_moves(t_stk *s, int *a, int *b, int *c)
@@ -594,11 +639,11 @@ void		do_moves(t_stk *s, int *a, int *b, int *c)
 			if (a[0] > 0 && (b[0] == 0 || b[0] < 0))
 				rotate_a(s, 1);
 			else if (a[0] < 0 && (b[0] == 0 || b[0] > 0))
-				reverse_a(s, 1);
+				reverse_a(s, 1);//TODO:10
 			if (b[0] > 0 && (a[0] == 0 || a[0] < 0))
 				rotate_b(s, 1);
 			else if (b[0] < 0 && (a[0] == 0 || a[0] > 0))
-				reverse_b(s, 1);
+				reverse_b(s, 1);//TODO:11
 		}
 		c[0]--;
 	}
@@ -606,17 +651,99 @@ void		do_moves(t_stk *s, int *a, int *b, int *c)
 
 void		realign_or_not(t_stk *s)
 {
-	while (check_sort(s) && s->a[0] < s->size)
+	int	*a;
+	int	*b;
+	int	z;
+	
+	a = s->a;
+	b = s->b;
+	z = s->size;
+	preen(s);
+	ft_put_struct(s);
+	while (check_sort(s) && s->a[0] < z)
 	{
-		s->a_mid = (s->a[0] / 2 + s->a[0] % 2);
-		s->b_mid = (s->b[0] / 2 + s->b[0] % 2);
-		get_cost(s, s->b, s->a);
-		do_moves(s, s->a_cost, s->b_cost, s->c_cost);
-		s = push_a(s->a, s->b, s);
-		ft_put_struct(&s);
+		printf("check_sort:	%d\n", check_sort(s));
+		ft_clear_values(s);
+		if (s->a[0] != z && s->b[0] > 0 && s->a[1] > s->b[1])// && !(s->b[0] > 0 && s->a[s->a[0]] > s->b[1]))
+			s = push_a(s->a, s->b, s);//TODO:8
+		if ((s->a[0] == z && a[1] != 1) || \
+		(s->b[0] > 0 && s->a[s->a[0]] > s->b[1]))
+			reverse_a(s, 1);
+		ft_put_struct(s);
 	}
+	printf("FINAL\ncheck_sort:	%d\n", check_sort(s));
 	return ;
 }
+
+/*
+is a[1] or a[a[0]] compatible with b[1]?
+
+simplified:
+
+is a[1] bigger than b[1]?
+OR
+is there no smaller number than a[1] in b[i]?
+OR
+is a[size] smaller?
+OR
+is any a[i] smaller than b[1]?
+OR
+is there any a[i] > b[1]
+	AND
+	i != 1
+OR
+if (a[SIZE] > b[1])
+{
+	while (a[SIZE] > b[1])
+		reverse_a(s);
+}
+*/
+
+void		biggest_bois(t_stk *s, int *guys)
+{
+	int	big_lad;
+	int	big_lass;
+	int	size;
+	int	i;
+
+	i = 1;
+	size = s->b[0];
+	big_lad = 1;
+	big_lass = INT_MIN;
+	while (i++ < size)
+	{
+		if (s->b[i] > s->b[big_lad])
+		{
+			big_lad = i;
+			big_lass = s->b[i];
+		}
+	}
+	guys[0] = big_lad;
+	guys[1] = big_lass;
+	return ;
+}
+
+//find biggest, bring to top
+void		preen(t_stk *s)
+{
+	int	big_guys[2];
+
+	biggest_bois(s, big_guys);
+	while (s->b[1] != big_guys[1])
+	{
+		if (big_guys[0] <= s->b_mid)
+			rotate_b(s, 1);
+		else if (big_guys[0] > s->b_mid)
+			reverse_b(s, 1);
+	}
+}
+
+void		final_twist(t_stk *s)
+{
+	
+}
+
+
 
 void		push_back(t_stk *stk)
 {
@@ -642,11 +769,11 @@ void		get_cost(t_stk *s, int *a, int *b)
 	i = 0;
 	while (i++ < a[0])
 	{
-		s->sm[i] = find_next_smaller(b, a[i]);
-		s->bg[i] = find_next_bigger(b, a[i]);
+		s->sm[i] = find_next_smaller(b, a[i]);//TODO:7
+		s->bg[i] = find_next_bigger(b, a[i]);//TODO:6
 		set_cost(s->sm[i], s->bg[i], s, i);
 	}
-	s->c_cost = get_collective_cost(s->a_cost, s->b_cost, s->c_cost, s);
+	s->c_cost = get_collective_cost(s->a_cost, s->b_cost, s->c_cost, s);//TODO:5
 	return ;
 }
 
@@ -666,16 +793,16 @@ void		set_cost(int smaller, int bigger, t_stk *s, int i)
 	if (i <= s->a_mid)
 		s->a_cost[i] = i - 1;
 	else if (i > s->a_mid)
-		s->a_cost[i] = i - s->a[0];
+		s->a_cost[i] = i - s->a[0] -1;//changed: added '-1'
 	if (smaller != 0 && smaller <= s->b_mid)
 		c = (smaller - 1);
 	else if (smaller != 0 && smaller > s->b_mid)
-		c = (smaller - s->b[0]);
+		c = (smaller - s->b[0] - 1);//changed: added '-1'
 	if (bigger != 0 && bigger <= s->b_mid)
-		d = (bigger - 1);
+		d = (bigger - 2);
 	else if (bigger != 0 && bigger > s->b_mid)
-		d = (bigger - s->b[0]);
-	if ((bigger == 0 && smaller != 0) || (get_abs(c) < get_abs(d)))
+		d = (bigger - s->b[0]);//changed: added '-1'
+	if ((bigger == 0 && smaller != 0) || (get_abs(c) <= get_abs(d)))
 	{
 		s->b_tgt[i] = smaller;
 		s->b_cost[i] = c;
@@ -703,15 +830,16 @@ int		*get_collective_cost(int *a, int *b, int *c, t_stk *s)
 	{
 		c[i] = get_abs(a[i]) + get_abs(b[i]);
 		if (c[i] < bargain || i == 1)
-		{
-			bargain = c[i];
+		{// a_cost[i] = 2,  b_cost[i] = -2,  c_cost[i] = 4
+			bargain = c[i];//cheapest combination of a + b realignment
 			offer = i;
 		}
 	}
 	s->a_tgt[0] = offer;
-	s->b_tgt[0] = s->b_tgt[offer];
+	s->b_tgt[0] = s->b_tgt[offer];//
+	// s->b_tgt[0] = s->b_tgt[offer];//should be "a_tgt[offer]"
 	s->a_cost[0] = a[offer];
-	s->b_cost[0] = b[s->b_tgt[offer]];
+	s->b_cost[0] = b[offer];
 	c[0] = bargain;
 	return (c);
 }
@@ -990,12 +1118,13 @@ void		sort_three(t_stk **stk)
 	t_stk		*sta;
 	int		*s;
 
+	i = 0;
 	sta = (*stk);
 	if (sta->a[0] == 3)
 		s = sta->a;
 	while (i++ < 4)
 		ops[i] = 0;
-	if ((s[1] < s[2]) && (s[1] < s[3]) &&  (s[2] > s[3]))//acb//rra//sa
+	if ((s[1] < s[2]) && (s[1] < s[3]) && (s[2] > s[3]))
 		ops[0] = 1;
 	if ((s[1] > s[2]) && (s[1] < s[3]) &&  (s[2] < s[3]))//bac//sa
 		ops[1] = 1;
@@ -1003,7 +1132,7 @@ void		sort_three(t_stk **stk)
 		ops[2] = 1;
 	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] < s[3]))//cab//ra
 		ops[3] = 1;
-	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//cba//rra
+	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//cba//rra/sa
 		ops[4] = 1;
 	sta = three_ops(sta, ops);
 	(*stk) = sta;
@@ -1019,7 +1148,8 @@ t_stk		*three_ops(t_stk *s, int *b)
 	{
 		if ((i == 1 && (b[0] == 1 || b[4] == 1)) || (i == 2 && b[2] == 1))
 			reverse_a(s, 1);
-		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || (i == 2 && b[0] == 1))
+		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || \
+		(i == 2 && (b[0] == 1 || b[4] == 1)))
 			swap_a(s);
 		if (i == 1 && b[3] == 1)
 			rotate_a(s, 1);
@@ -1080,29 +1210,28 @@ void		ft_put(char *str)
 }
 
 //		outputs the structure/stacks
-void		ft_put_struct(t_stk **stk)
+void		ft_put_struct(t_stk *stk)
 {
-	t_stk	*s;
 	int	i;
 	int	a;
 	int	b;
 
-	s = (*stk);
 	i = 0;
-	while (++i && i <= s->a[0] || i <= s->b[0])
+	while (++i && i <= stk->a[0] || i <= stk->b[0])
 	{
 		printf("a: ");
-		if (i <= s->a[0])
-			printf("%d\t", s->a[i]);
+		if (i <= stk->a[0])
+			printf("%d\t", stk->a[i]);
 		else
 			printf("-\t");
 		printf("b: ");
-		if (i <= s->b[0])
-			printf("%d", s->b[i]);
+		if (i <= stk->b[0])
+			printf("%d", stk->b[i]);
 		else
 			printf("-");
 		printf("\n");
 	}
+	printf("\n");
 }
 
 ///	TODO:	add flag/mode to exit or return control
@@ -1131,7 +1260,7 @@ void		error_end_stk(t_stk **nexus)
 //
 
 
-// void		select_target(t_stk *s, int size)
+
 /* PSEUDO:
 legend:
 a[i]		subject
@@ -1234,4 +1363,77 @@ if (b_ops[i] == -7)
 if (b_ops[i] == -8)
 	;//REVERSE A `x` times & ROTATE B `y` times
 */
-// void		select_target_index(t_stk *s)
+/*	2025-04-10 13:04:06	-	program output:
+`
+c4c1c4% ./push_swap "900 32 55 6434 1 435 -29 442"
+pb
+pb
+pb
+a: 8    b: 4
+a: 2    b: 3
+a: 5    b: 7
+a: 1    b: -
+a: 6    b: -
+pb
+a: 2    b: 8
+a: 5    b: 4
+a: 1    b: 3
+a: 6    b: 7
+pb
+a: 5    b: 2
+a: 1    b: 8
+a: 6    b: 4
+a: -    b: 3
+a: -    b: 7
+sa
+pa
+a: 2    b: 8
+a: 1    b: 4
+a: 5    b: 3
+a: 6    b: 7
+pa
+a: 8    b: 4
+a: 2    b: 3
+a: 1    b: 7
+a: 5    b: -
+a: 6    b: -
+pa
+a: 4    b: 3
+a: 8    b: 7
+a: 2    b: -
+a: 1    b: -
+a: 5    b: -
+a: 6    b: -
+pa
+a: 3    b: 7
+a: 4    b: -
+a: 8    b: -
+a: 2    b: -
+a: 1    b: -
+a: 5    b: -
+a: 6    b: -
+pa
+a: 7    b: -
+a: 3    b: -
+a: 4    b: -
+a: 8    b: -
+a: 2    b: -
+a: 1    b: -
+a: 5    b: -
+a: 6    b: -
+
+a: 7    b: -
+a: 3    b: -
+a: 4    b: -
+a: 8    b: -
+a: 2    b: -
+a: 1    b: -
+a: 5    b: -
+a: 6    b: -
+`
+
+*/
+/*	2025-04-10 13:29:14	-		lessons and fixes
+WIP	-->	null out values after use, before new calculation
+
+*/
