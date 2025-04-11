@@ -58,7 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "makefile.configureOnOpen": true,
   "files.associations": {
-	"push_swap.h": "c",
-	"cmds": "c"
-}
+    "push_swap.h": "c",
+    "cmds": "c"
+  }
 }

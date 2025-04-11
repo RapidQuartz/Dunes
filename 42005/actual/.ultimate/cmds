@@ -36,7 +36,6 @@ int		check_sort_b(t_stk *s);
 
 ///	PUSH:SWAP:C:
 void		push_swap(t_stk **nexus);
-bool		stack_unsorted(t_stk *nexus);
 ///		TURK:C:
 void		exec_turk(t_stk **stk);
 void		ft_clear_values(t_stk *s);
@@ -415,28 +414,6 @@ int		check_sort_b(t_stk *s)
 	if (gd == 1)
 		return (2);
 	return (3);
-}
-
-//R:TRUE[unsorted]:FALSE[sorted]
-bool		stack_unsorted(t_stk *nexus)
-{
-	int	i;
-	
-	i = 1;
-	while (i < nexus->a[0] || i < nexus->b[0])
-	{
-		if (i > 1 && i < nexus->a[0] && nexus->a[i - 1] != nexus->a[i] - 1)
-				return (true);
-		if (i > 1 && i < nexus->b[0] && nexus->b[i - 1] != nexus->b[i] + 1)
-				return (true);
-		i++;
-	}
-	if (0 < nexus->a[0] && 0 < nexus->b[0] && nexus->a[1] - 1 == nexus->b[1])
-		return (false);
-	else if (0 < nexus->a[0])
-		return (false);
-	else
-		return (true);
 }
 
 ////		TURK:C:
