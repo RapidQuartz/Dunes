@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/10 19:49:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:06:26 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,9 @@ int		get_abs(int num);//return (abs);
 void		final_twist(t_stk *s);
 void		preen(t_stk *s);
 void		biggest_bois(t_stk *s, int *guys);
+int		goldilox(t_stk *s);
+int		bears_come_home(t_stk *s);
+
 
 ///	MAIN:C:
 int		*arg_check(char *arg, int *argn, int j);
@@ -165,10 +168,7 @@ int		*arr_normalize(int *arr);
 int		*arr_normalizer(int *arr, int siz);
 int		*arr_transcriber(int *arr, int *brr, int siz);
 long		arg_to_int(char *arg, int argn);
-bool		arr_unsorted(int *arr);
-int		check_sort(t_stk *s);
-int		check_sort_a(t_stk *s);
-int		check_sort_b(t_stk *s);
+bool		unsorted(t_stk *s);
 
 ///	PUSH:SWAP:C:
 void		push_swap(t_stk **nexus);
@@ -441,7 +441,7 @@ int	*arr_transcriber(int *arr, int *brr, int siz)//TODO: send `s->size` as param
 ////		PUSH:SWAP:C:
 void		push_swap(t_stk **nexus)
 {
-	if(check_sort(*nexus))
+	if(unsorted(*nexus))
 	{
 		if ((*nexus)->a[0] == 2)
 			(*nexus) = swap_a((*nexus));
@@ -453,126 +453,24 @@ void		push_swap(t_stk **nexus)
 	return ;
 }
 
-/*
-RETURNS::
-0	-	s->a[0] == s->size, s->a[i] == i, s->b[0] == 0
-1	-	UNSORTED
-*/
-int		check_sort(t_stk *s)
+bool		unsorted(t_stk *s)
 {
-	int	a;
-	int	b;
-	
-	if (s->a[0] > 0)
-		a = check_sort_a(s);//TODO:2
-	else
-		return (3);
-	if (a != 0)
-	{
-		if (s->b[0] > 0)
-			b = check_sort_b(s);//TODO:3
-		else
-			b = 0;
-	}
-	else if (a == 0)
-		return (0);
-	else if (a == 1 && b == 1)
-		return (1);
-	else
-		return (2);
-	return (3);
-}
-/* check_sort_a
-	checks sort for stack a
-		returns based on state
-			0	-	`size` numbers are in a[0], from `1` to `size`
-			1	-	all the numbers in a[0] are +/- 1 in rising sequence
-			2	-	all the numbers in a[0] are +/- 1 
-			3	-	some of the numbers in a[0] are +/- > 1  */
-int		check_sort_a(t_stk *s)
-{
-	int	gd;//greatest_distance;
-	int	seq;
 	int	i;
-	int	*a;
-	int	n;//key number
-
+	int	bigger;
+	int	smaller;
+	
 	i = 0;
-	seq = 1;
-	a = s->a;
-	gd = INT_MIN;
+	if (s->b[0] > 0)
+		return (true);
 	while (i++ < s->a[0])
 	{
-		if (i > 1 && a[i] - n > gd)
-			gd = a[i] - n;
-		if (seq == 1 && i > 1 && a[i] - 1 != n)
-			seq = 0;
-		n = a[i];
+		bigger = find_next_bigger(s->a, s->a[i]);
+		smaller = find_next_smaller(s->a, s->a[i]);
+		if ((bigger != 0 && bigger != i + 1) \
+		|| (smaller != 0 && smaller != i - 1))
+			return (true);
 	}
-	if (a[0] == s->size && gd == 1 && seq == 1)
-		return (0);
-	if (gd == 1 && seq == 1)
-		return (1);
-	if (gd == 1 && seq != 1)
-		return (2);
-	return (3);
-}
-/* check_sort_b
-	checks sort for stack b
-		returns based on state
-			0	-	0 numbers are in b[0]
-			1	-	all the numbers in b[0] are +/- 1 in falling sequence
-			2	-	all the numbers in b[0] are +/- 1 
-			3	-	some of the numbers in b[0] are +/- > 1  */
-int		check_sort_b(t_stk *s)
-{
-	int	gd;//greatest_distance;
-	int	seq;
-	int	i;
-	int	*b;
-	int	n;//key number
-
-	gd = 0;
-	seq = 1;
-	i = 0;
-	b = s->b;
-	while (i++ < s->b[0])
-	{
-		n = b[i];
-		if (i == 1 || b[i] - n > gd)
-			gd = b[i] - n;
-		if (seq == 1 && i > 1 && b[i] + 1 != n)
-			seq = 0;
-	}
-	if (b[0] == 0)
-		return (0);
-	if (gd == 1 && seq == 1)
-		return (1);
-	if (gd == 1)
-		return (2);
-	return (3);
-}
-
-//R:TRUE[unsorted]:FALSE[sorted]
-bool		stack_unsorted(t_stk *nexus)
-{
-	int	i;
-	
-	i = 1;
-	while (i < nexus->a[0] || i < nexus->b[0])
-	{
-		if (i > 1 && i < nexus->a[0] && nexus->a[i - 1] != nexus->a[i] - 1)
-				return (true);
-		if (i > 1 && i < nexus->b[0] && nexus->b[i - 1] != nexus->b[i] + 1)
-				return (true);
-		i++;
-	}
-	if (0 < nexus->a[0] && 0 < nexus->b[0] && nexus->a[1] - 1 == nexus->b[1])
-		return (false);
-	else if (0 < nexus->a[0])
-		return (false);
-	else
-		return (true);
+	return (false);
 }
 
 ////		TURK:C:
@@ -587,7 +485,7 @@ void		exec_turk(t_stk **stk)
 	s = push_b(s->a, s->b, s);//TODO:9
 	if (s->size >= 5)
 		s = push_b(s->a, s->b, s);
-	while (check_sort(s) && s->a[0] > 3)
+	while (unsorted(s) && s->a[0] > 3)
 	{
 		ft_clear_values(s);
 		get_cost(s, s->a, s->b);//TODO:3
@@ -651,30 +549,74 @@ void		do_moves(t_stk *s, int *a, int *b, int *c)
 
 void		realign_or_not(t_stk *s)
 {
-	int	*a;
-	int	*b;
-	int	z;
+	int	porridge;
 	
-	a = s->a;
-	b = s->b;
-	z = s->size;
+	porridge = 0;
 	preen(s);
 	ft_put_struct(s);
-	while (check_sort(s) && s->a[0] < z)
+	while (unsorted(s) && s->a[0] != s->size)
 	{
-		printf("check_sort:	%d\n", check_sort(s));
 		ft_clear_values(s);
-		if (s->a[0] != z && s->b[0] > 0 && s->a[1] > s->b[1])// && !(s->b[0] > 0 && s->a[s->a[0]] > s->b[1]))
-			s = push_a(s->a, s->b, s);//TODO:8
-		if ((s->a[0] == z && a[1] != 1) || \
-		(s->b[0] > 0 && s->a[s->a[0]] > s->b[1]))
+		if (s->a[0] != s->size)
+			porridge = goldilox(s);
+		else if (s->a[0] == s->size)
+			porridge = bears_come_home(s);
+		if (porridge < 0)
 			reverse_a(s, 1);
+		else if (porridge > 0)
+			rotate_a(s, 1);
+		else if (porridge == 0 && s->b[0] > 0)
+			s = push_a(s->a, s->b, s);//TODO:8
 		ft_put_struct(s);
 	}
-	printf("FINAL\ncheck_sort:	%d\n", check_sort(s));
 	return ;
 }
 
+int		bears_come_home(t_stk *s)
+{
+	int	i;
+	int	papabear;
+
+	i = 0;
+	papabear = 0;
+	if (s->a[1] != 1)
+	{
+		while (i++ < s->a[0] && papabear == 0)
+		{
+			if (s->a[i] == 1)
+				papabear = i;
+		}
+		if (papabear <= s->a_mid)
+			papabear = 1;
+		else if (papabear > s->a_mid)
+			papabear = -1;
+	}
+	return (papabear);
+}
+
+int		goldilox(t_stk *s)
+{
+	int 	nb;
+	int 	ns;
+
+	nb = find_next_bigger(s->a, s->b[1]);
+	ns = find_next_smaller(s->a, s->b[1]);
+	if (nb != 0 && nb != 1)
+	{
+		if (nb <= s->a_mid)
+			return (1);
+		else if (nb > s->a_mid)
+			return (-1);
+	}
+	else if (nb == 0 && ns != 0 && ns != s->a[0])
+	{
+		if (ns > s->a_mid)
+			return (-1);
+		else if (ns <= s->a_mid)
+			return (1);
+	}
+	return (0);
+}
 /*
 is a[1] or a[a[0]] compatible with b[1]?
 
@@ -709,7 +651,7 @@ void		biggest_bois(t_stk *s, int *guys)
 	i = 1;
 	size = s->b[0];
 	big_lad = 1;
-	big_lass = INT_MIN;
+	big_lass = s->b[1];
 	while (i++ < size)
 	{
 		if (s->b[i] > s->b[big_lad])
@@ -1124,34 +1066,33 @@ void		sort_three(t_stk **stk)
 		s = sta->a;
 	while (i++ < 4)
 		ops[i] = 0;
-	if ((s[1] < s[2]) && (s[1] < s[3]) && (s[2] > s[3]))
+	if ((s[1] < s[2]) && (s[1] < s[3]) && (s[2] > s[3]))//acb//sa/ra
 		ops[0] = 1;
 	if ((s[1] > s[2]) && (s[1] < s[3]) &&  (s[2] < s[3]))//bac//sa
 		ops[1] = 1;
-	if ((s[1] < s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//bca//sa/rra
+	if ((s[1] < s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//bca//rra
 		ops[2] = 1;
 	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] < s[3]))//cab//ra
 		ops[3] = 1;
-	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//cba//rra/sa
+	if ((s[1] > s[2]) && (s[1] > s[3]) &&  (s[2] > s[3]))//cba//sa//rra
 		ops[4] = 1;
 	sta = three_ops(sta, ops);
 	(*stk) = sta;
 	return ;
 }
 
-t_stk		*three_ops(t_stk *s, int *b)
+t_stk		*three_ops(t_stk *s, int *ops)
 {
 	int	i;
 
 	i = 0;
 	while (i++ < 2)
 	{
-		if ((i == 1 && (b[0] == 1 || b[4] == 1)) || (i == 2 && b[2] == 1))
+		if ((i == 1 && ops[2] == 1) || (i == 2 && ops[4] == 1))
 			reverse_a(s, 1);
-		if ((i == 1 && (b[1] == 1 || b[2] == 1)) || \
-		(i == 2 && (b[0] == 1 || b[4] == 1)))
+		if (i == 1 && (ops[0] == 1 || ops[1] == 1 || ops[4] == 1))
 			swap_a(s);
-		if (i == 1 && b[3] == 1)
+		if ((i == 1 && ops[3] == 1) || (i == 2 && ops[0] == 1))
 			rotate_a(s, 1);
 	}
 	return (s);
