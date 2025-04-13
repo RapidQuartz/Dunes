@@ -1,13 +1,13 @@
 
 ///		MAIN:C:
-// int		main(int argc, char **argv);
-void		push_swap(t_stk **nexus);
+int		main(int argc, char **argv);
+void		push_swap(t_stk *nexus);
 void		exec_turk(t_stk **stk);
-void		sort_three(t_stk **stk);
+void		sort_three(t_stk *sta);
 t_stk		*three_ops(t_stk *s, int *b);
 ///		INIT:C:
 long		arg_to_int(char *arg, int argn);
-int		*arg_to_arr(int *argn, char **argv);
+int		*arg_to_arr(int *arr, int *argn, char **argv);
 int		*arr_normalizer(int *arr, int siz);
 t_stk		*arr_to_stk(int *arr, t_stk *s);
 int		*arr_transcriber(int *arr, int *brr, int siz);
@@ -39,6 +39,8 @@ int		*get_collective_cost(int *a, int *b, int *c, t_stk *s);
 bool		arg_duplicate(int *arr);
 int		*arg_check(char *arg, int *argn, int j);
 bool		unsorted(t_stk *s);
+bool		ifnull(t_stk *s);
+
 ///		FIND:C:
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);

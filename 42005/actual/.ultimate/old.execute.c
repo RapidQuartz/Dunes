@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   old.execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/11 17:03:17 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:57:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 ///		MAIN:C:
 // int		main(int argc, char **argv);
-void		push_swap(t_stk **nexus);
+void		push_swap(t_stk *nexus);
 void		exec_turk(t_stk **stk);
-void		sort_three(t_stk **stk);
+void		sort_three(t_stk *stk);
 t_stk		*three_ops(t_stk *s, int *b);
 ///		INIT:C:
 long		arg_to_int(char *arg, int argn);
@@ -50,7 +50,7 @@ void		set_cost(int smaller, int bigger, t_stk *s, int i);
 int		*get_collective_cost(int *a, int *b, int *c, t_stk *s);
 ///		CHECK:C:
 bool		arg_duplicate(int *arr);
-int		*arg_check(char *arg, int *argn, int j);
+int		*arg_count(char *arg, int *argn, int j);
 bool		unsorted(t_stk *s);
 ///		FIND:C:
 int		find_next_bigger(int *s, int n);
@@ -66,7 +66,52 @@ void		ft_liberation(t_stk **s);
 ////		ERROR:C:
 void		error_end_arr(int *array);
 void		error_end_stk(t_stk **nexus);
+t_stk	*cube(t_stk *t);
+void	holo(t_stk *t, char *op);
 ///
+///	WIP:
+
+char	*defop(char *str, char *op, int i);
+
+char	*defop(char *str, char *op, int i)
+{
+	while (str[++i - 1] != '\0')
+		op[i] = str[i];
+	return (op);
+}
+
+t_stk	*cube(t_stk *t)
+{
+	t->step++;
+
+	return (t);
+}
+
+void	holo(t_stk *t, char *op)
+{
+	int 	i;
+	int	lines;
+	
+	if (op[0] != '\0')
+		t->p_op = defop(op, t->p_op, 0);
+	i = 0;
+	// Clear screen or section
+	write(1, "\033[H\033[J", 6); // Move to top and clear screen
+	// Print op count
+	dprintf(1, "Step: %d\n", t->step);
+	// Print stacks
+	for (int i = 0; i < MAX_DISPLAY; i++)
+	{
+	    dprintf(1, "A: %-5d   B: %-5d\n", t->a[i], t->b[i]);
+	}
+	// Print last op
+	dprintf(1, "\nLast op: %s\n", t->p_op);
+	
+	// Optionally pause or wait for key press
+	usleep(1000000); // 0.1s per frame
+	t = cube(t);
+}
+
 
 ////	MAIN:C:
 //		take args. check them.
@@ -83,7 +128,7 @@ int		main(int argc, char **argv)
 		error_end_arr(argn_map);
 	argn_map[0] = 0;
 	while (++i < argc)
-		argn_map = arg_check(argv[i], argn_map, i);
+		argn_map = arg_count(argv[i], argn_map, i);
 	arr = arg_to_arr(argn_map, argv);
 	free (argn_map);
 	if (!arr || arr == NULL || arg_duplicate(arr))
@@ -99,7 +144,7 @@ int		main(int argc, char **argv)
 	return (0);
 }
 
-int			*arg_check(char *arg, int *argn, int j)
+int			*arg_count(char *arg, int *argn, int j)
 {
 	int	i;
 	int	in;
@@ -178,6 +223,9 @@ t_stk		*arr_to_stk(int *arr, t_stk *s)
 s->b_cost == NULL || s->c_cost == NULL ||	s->sm == NULL || s->a_tgt == NULL \
 || s->bg == NULL || s->a_mov == NULL || s->b_mov == NULL || s->b_tgt == NULL)
 		error_end_stk(&s);//FREE ARR
+	s->p_op = malloc(sizeof(char) * 4);
+	s->p_op[0] = '\0';
+	s->step = -1;
 	while (s->size >= ++i)
 		s->a[i] = arr[i];
 	return (s);
@@ -259,7 +307,7 @@ int	*arr_transcriber(int *arr, int *brr, int siz)//TODO: send `s->size` as param
 //	SPECIAL IMPORT
 
 ////		PUSH:SWAP:C:
-void		push_swap(t_stk **nexus)
+void		push_swap(t_stk *nexus)
 {
 	if(unsorted(*nexus))
 	{
@@ -612,7 +660,7 @@ t_stk		*push_a(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	b = realign_stack(b);
-	write (1, "pa\n", 3);
+	holo(c, "pa");// (1, "pa\n", 3);
 	return (c);
 }
 
@@ -634,7 +682,7 @@ t_stk		*push_b(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	a = realign_stack(a);
-	write (1, "pb\n", 3);
+	holo(c, "pb");//write (1, "pb\n", 3);
 	return (c);
 }
 
@@ -670,7 +718,7 @@ t_stk		*swap_a(t_stk *s)
 	n = s->a[1];
 	s->a[1] = s->a[2];
 	s->a[2] = n;
-	write (1, "sa\n", 3);
+	holo(s, "sa");//write (1, "sa\n", 3);
 	return (s);
 }
 
@@ -681,7 +729,7 @@ t_stk		*swap_b(t_stk *s)
 	n = s->b[1];
 	s->b[1] = s->b[2];
 	s->b[2] = n;
-	write (1, "sa\n", 3);
+	holo(s, "sb");//write (1, "sa\n", 3);
 	return (s);
 }
 
@@ -697,7 +745,7 @@ t_stk		*swap_s(t_stk *s)
 	m = s->b[1];
 	s->b[1] = s->b[2];
 	s->b[2] = m;
-	write (1, "ss\n", 3);
+	holo(s, "ss");//write (1, "ss\n", 3);
 	return (s);
 }
 
@@ -722,7 +770,7 @@ void		rotate_a(t_stk *s, int post)
 	if (s->a_cost[0] > 0)
 		s->a_cost[0]--;
 	if (post == 1)
-		write (1, "ra\n", 3);
+		holo(s, "ra");//write (1, "ra\n", 3);
 }
 
 void		rotate_b(t_stk *s, int post)
@@ -745,14 +793,14 @@ void		rotate_b(t_stk *s, int post)
 	if (s->b_cost[0] > 0)
 		s->b_cost[0]--;
 	if (post == 1)
-		write (1, "rb\n", 3);
+		holo(s, "rb");//write (1, "rb\n", 3);
 }
 
 void		rotate_s(t_stk *s)
 {
 	rotate_a(s, 0);
 	rotate_b(s, 0);
-	write (1, "rr\n", 3);
+	holo(s, "rr");//write (1, "rr\n", 3);
 }
 
 ////		REVERSE:C:
@@ -776,7 +824,7 @@ void		reverse_a(t_stk *s, int post)
 	if (s->a_cost[0] < 0)
 		s->a_cost[0]++;
 	if (post == 1)
-		write (1, "rra\n", 4);
+		holo(s, "rra");//write (1, "rra\n", 4);
 }
 
 void		reverse_b(t_stk *s, int post)
@@ -798,18 +846,18 @@ void		reverse_b(t_stk *s, int post)
 	if (s->b_cost[0] < 0)
 		s->b_cost[0]++;
 	if (post == 1)
-		write (1, "rrb\n", 4);
+		holo(s, "rrb");//write (1, "rrb\n", 4);
 }
 
 void		reverse_s(t_stk *s)
 {
 	reverse_a(s, 0);
 	reverse_b(s, 0);
-	write (1, "rrr\n", 4);
+	holo(s, "rrr");//write (1, "rrr\n", 4);
 }
 
 ////		SORT:THREE:C:
-void		sort_three(t_stk **stk)
+void		sort_three(t_stk *stk)
 {
 	int		ops[5];
 	int		i;
@@ -863,8 +911,8 @@ void		ft_liberation(t_stk **s)
 	free ((*s)->b_tgt);
 	free ((*s)->a_mov);
 	free ((*s)->b_mov);
-	free ((*s)->a_ops);
-	free ((*s)->b_ops);
+	free ((*s)->ops);
+	free ((*s)->ops);
 	free ((*s)->a_cost);
 	free ((*s)->b_cost);
 	free ((*s)->c_cost);
@@ -923,10 +971,15 @@ void		ft_put(char *str)
 	}
 	write (1, "\n", 1);
 }
-
+/* void display_state(int *a, int *b,  char *last_op, int step_count); */
+/* void display_state(int *a, int *b,  char *last_op, int step_count)
+int size_a;
+int size_b;
+; */
 //		outputs the structure/stacks
 void		ft_put_struct(t_stk *stk)
 {
+	holo(stk, "\0");
 	int	i;
 	int	a;
 	int	b;
@@ -971,7 +1024,6 @@ void		error_end_stk(t_stk **nexus)
 
 
 //////	WIP:
-
 //
 
 

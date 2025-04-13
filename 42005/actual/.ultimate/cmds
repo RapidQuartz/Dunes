@@ -35,7 +35,7 @@ int		check_sort_a(t_stk *s);
 int		check_sort_b(t_stk *s);
 
 ///	PUSH:SWAP:C:
-void		push_swap(t_stk **nexus);
+void		push_swap(t_stk *nexus);
 ///		TURK:C:
 void		exec_turk(t_stk **stk);
 void		ft_clear_values(t_stk *s);
@@ -58,7 +58,7 @@ void		reverse_a(t_stk *s, int post);
 void		reverse_b(t_stk *s, int post);
 void		reverse_s(t_stk *s);
 ///		SORT:THREE:C:
-void		sort_three(t_stk **stk);
+void		sort_three(t_stk *sta);
 t_stk		*three_ops(t_stk *s, int *b);
 
 ///	COST:C:
@@ -302,7 +302,7 @@ int	*arr_transcriber(int *arr, int *brr, int siz)//TODO: send `s->size` as param
 //	SPECIAL IMPORT
 
 ////		PUSH:SWAP:C:
-void		push_swap(t_stk **nexus)
+void		push_swap(t_stk *nexus)
 {
 	if(check_sort(*nexus))
 	{
@@ -952,7 +952,7 @@ void		reverse_s(t_stk *s)
 }
 
 ////		SORT:THREE:C:
-void		sort_three(t_stk **stk)
+void		sort_three(t_stk *st)
 {
 	int		ops[5];
 	int		i;

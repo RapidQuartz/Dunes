@@ -1,9 +1,7 @@
-
 NAME = push_swap
 CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
-SRC = \
-main.c \
+SRC = main.c \
 init.c \
 turk.c \
 push_swap.c \
@@ -19,10 +17,10 @@ OBJ = $(SRC:.c=.o)
 all:	$(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $^ -o $(NAME)
+	$(CC) $(CFLAGS) $^ -o $(NAME)
 
 $(OBJ): %.o: %.c
-	$(CC) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:
 	rm -f $(OBJ)

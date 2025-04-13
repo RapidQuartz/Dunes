@@ -72,10 +72,10 @@ the b-stack
 `t_stk->(int)**c`
 the storage of cost and operations (more on this later.)
 
-f. the `t_stk *nexus` is at last passed to a function`void push_swap(t_stk **nexus)`, which will call and trigger various sorting processes. firstly depending on the count of arguments {nexus->a[0] == (i = [2], ii = [3], iii = [>3])} and secondly depending on its sortedness. (more on this later)
+f. the `t_stk *nexus` is at last passed to a function`void push_swap(t_stk *nexus)`, which will call and trigger various sorting processes. firstly depending on the count of arguments {nexus->a[0] == (i = [2], ii = [3], iii = [>3])} and secondly depending on its sortedness. (more on this later)
 
 i. if (nexus->a[1] > nexus->a[2]) --> swap them and return
-ii. {a separate, hardcoded function `t_stk *sort_three(t_stk *nexus)`}
+ii. {a separate, hardcoded function `t_stk *sort_three(t_stk nexus)`}
 iii. the turk algorithm.
 
 g. the turk algorithm will:

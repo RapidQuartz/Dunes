@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/11 15:06:26 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:57:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ long		arg_to_int(char *arg, int argn);
 bool		unsorted(t_stk *s);
 
 ///	PUSH:SWAP:C:
-void		push_swap(t_stk **nexus);
+void		push_swap(t_stk *nexus);
 bool		stack_unsorted(t_stk *nexus);
 ///		TURK:C:
 void		exec_turk(t_stk **stk);
@@ -195,7 +195,7 @@ void		reverse_a(t_stk *s, int post);
 void		reverse_b(t_stk *s, int post);
 void		reverse_s(t_stk *s);
 ///		SORT:THREE:C:
-void		sort_three(t_stk **stk);
+void		sort_three(t_stk *stk);
 t_stk		*three_ops(t_stk *s, int *b);
 
 ///	COST:C:
@@ -439,7 +439,7 @@ int	*arr_transcriber(int *arr, int *brr, int siz)//TODO: send `s->size` as param
 //	SPECIAL IMPORT
 
 ////		PUSH:SWAP:C:
-void		push_swap(t_stk **nexus)
+void		push_swap(t_stk *nexus)
 {
 	if(unsorted(*nexus))
 	{
@@ -1053,7 +1053,7 @@ void		reverse_s(t_stk *s)
 }
 
 ////		SORT:THREE:C:
-void		sort_three(t_stk **stk)
+void		sort_three(t_stk *stk)
 {
 	int		ops[5];
 	int		i;
