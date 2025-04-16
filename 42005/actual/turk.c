@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 19:02:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:40:12 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	do_moves(t_stk *s, int *a, int *b, int *c)
 {
-	// usleep(20000);
-	// printf("STEPS:\n%d\n", s->steps++);
 	s->steps++;
 	while (get_abs(a[0]) != 0 || get_abs(b[0]) != 0)
 	{
@@ -38,55 +36,26 @@ void	do_moves(t_stk *s, int *a, int *b, int *c)
 	}
 }
 
-int	*realign_stack(int *s)
-{
-	int	i;
-	int	m;
-	int	n;
-
-	if (s[0] > 0)
-	{
-		i = s[0];
-		m = s[i];
-		s[i] = 0;
-		while (i-- != 1)
-		{
-			n = s[i];
-			s[i] = m;
-			m = n;
-		}
-	}
-	else
-		s[1] = 0;
-	s[0]--;
-	return (s);
-}
-
 void	realign_or_not(t_stk *s)
 {
 	int	porridge;
 
 	porridge = 0;
 	preen(s);
-	//ft_put_struct(s);
-	// while (unsorted(s) || s->a[0] != s->size)
 	while (unsorted(s))
 	{
-		// usleep(20000);
 		s->steps++;
 		ft_clear_values(s);
 		if (s->a[0] != s->size)
 			porridge = goldilox(s);
 		else if (s->a[0] == s->size)
 			porridge = bears_come_home(s);
-		// printf("STEPS:\n%d\n", s->steps++);
 		if (porridge < 0)
 			reverse_a(s, 1);
 		else if (porridge > 0)
 			rotate_a(s, 1);
 		else if (porridge == 0 && s->b[0] > 0)
 			s = push_a(s->a, s->b, s);
-		//ft_put_struct(s);
 	}
 	return ;
 }

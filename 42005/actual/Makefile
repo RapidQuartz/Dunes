@@ -3,6 +3,7 @@ CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
 SRC = main.c \
 init.c \
+array.c \
 turk.c \
 push_swap.c \
 rotate.c \

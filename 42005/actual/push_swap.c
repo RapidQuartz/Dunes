@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 17:27:13 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:32:34 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,58 @@
 t_stk	*push_a(int *a, int *b, t_stk *c)
 {
 	int	i;
-	int	s;
 	int	m;
 	int	n;
 
 	i = 0;
 	a[0]++;
-	s = a[0];
 	m = b[1];
-	while (i++ < s)
+	while (i++ < a[0])
 	{
 		n = a[i];
 		a[i] = m;
 		m = n;
 	}
-	b = realign_stack(b);
-		write (1, "pa\n", 3);
-	// ft_keep_op("pa", c);
+	i = b[0];
+	b[0]--;
+	m = b[i];
+	b[i] = 0;
+	while (--i > 0)
+	{
+		n = b[i];
+		b[i] = m;
+		m = n;
+	}
+	ft_put("pa");
 	return (c);
 }
 
 t_stk	*push_b(int *a, int *b, t_stk *c)
 {
 	int	i;
-	int	s;
 	int	m;
 	int	n;
 
 	i = 0;
 	b[0]++;
-	s = b[0];
 	m = a[1];
-	while (i++ < s)
+	while (i++ < b[0])
 	{
 		n = b[i];
 		b[i] = m;
 		m = n;
 	}
-	a = realign_stack(a);
-		write (1, "pb\n", 3);
-	// ft_keep_op("pb", c);
+	i = a[0];
+	m = a[i];
+	a[0]--;
+	a[i] = 0;
+	while (--i > 0)
+	{
+		n = a[i];
+		a[i] = m;
+		m = n;
+	}
+	ft_put("pb");
 	return (c);
 }
 
@@ -65,8 +77,7 @@ t_stk	*swap_a(t_stk *s)
 	n = s->a[1];
 	s->a[1] = s->a[2];
 	s->a[2] = n;
-	write (1, "sa\n", 3);
-	// write (1, "\1", 3);
+	ft_put("sa");
 	return (s);
 }
 
@@ -77,8 +88,7 @@ t_stk	*swap_b(t_stk *s)
 	n = s->b[1];
 	s->b[1] = s->b[2];
 	s->b[2] = n;
-	// write (1, "\1", 3);
-	write (1, "sa\n", 3);
+	ft_put("sb");
 	return (s);
 }
 
@@ -93,6 +103,6 @@ t_stk	*swap_s(t_stk *s)
 	m = s->b[1];
 	s->b[1] = s->b[2];
 	s->b[2] = m;
-	write (1, "ss\n", 3);
+	ft_put("ss");
 	return (s);
 }

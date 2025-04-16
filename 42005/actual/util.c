@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:48 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 17:31:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:39:01 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,6 @@ void	ft_put(char *str)
 		write (1, &c, 1);
 	}
 	write (1, "\n", 1);
-}
-
-//		outputs the structure/stacks
-void	ft_put_struct(t_stk *stk)
-{
-	int	i;
-
-	i = 1;
-	while (i <= stk->a[0] || i <= stk->b[0])
-	{
-		printf("a: ");
-		if (stk->a[0] == 0 || stk->a[0] < i)
-			printf("-\t");
-		else if (i <= stk->a[0])
-			printf("%d\t", stk->a[i]);
-		printf("b: ");
-		if (stk->b[0] == 0 || stk->b[0] < i)
-			printf("-");
-		else if (i <= stk->b[0])
-			printf("%d", stk->b[i]);
-		printf("\n");
-		i++;
-	}
-	printf("\n");
 }
 
 void	ft_clear_values(t_stk *s)
@@ -89,7 +65,6 @@ void	ft_liberation(t_stk **s)
 	free ((*s)->b_tgt);
 	free ((*s)->a_mov);
 	free ((*s)->b_mov);
-	// free ((*s)->ops);
 	free ((*s)->a_cost);
 	free ((*s)->b_cost);
 	free ((*s)->c_cost);

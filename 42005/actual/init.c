@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 18:43:21 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/14 08:38:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ t_stk	*arr_to_stk(int *arr, t_stk *s)
 	if (!s || s == NULL)
 		error_end_arr(arr);
 	s->size = arr[0];
-	// s->ops = ft_make_null_arr(s->size * 11);
 	s->a = ft_make_null_arr(s->size + 1);
 	s->b = ft_make_null_arr(s->size + 1);
 	s->a_mov = ft_make_null_arr(s->size + 1);

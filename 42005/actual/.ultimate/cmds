@@ -11,6 +11,13 @@ b arr_unsorted
 r "-1234123 346546 13121 55352 0 -3314"
 r "900 32 55 6434 1 435 -29 442"
 
+// testing 500 random numbers
+// ./push_swap "$(seq -2147483648 2147483647 | head -n 500 | shuf | tr '\n' ' ')"
+// bad idea actually, only takes first 500 of that set.
+
+./push_swap "$(seq -10000 10000 | shuf | head -n 500 | tr '\n' ' ')"
+
+
 <<<<execute.c>>>
 #include "push_swap.h"
 /////	WIP:

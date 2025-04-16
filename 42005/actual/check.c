@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:07:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 18:42:48 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:41:09 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ bool	arg_duplicate(int	*arr)
 		{
 			if (j != i && sub == arr[j])
 			{
-				ft_put("duplicate!!!");
-				printf("sub: %d\narr[j]: %d", sub, arr[j]);
 				return (true);
 			}
 		}

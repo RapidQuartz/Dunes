@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 19:00:47 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:52:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ int		*arg_to_arr(int *arr, int *argn, char **argv);
 int		*arr_normalizer(int *arr, int siz);
 t_stk	*arr_to_stk(int *arr, t_stk *s);
 int		*arr_transcriber(int *arr, int *brr, int siz);
+// array.c
+int		*ft_make_null_arr(int n);
+int		*ft_argn_map(int *argn_map, int argc, char **argv);
 // turk.c
 void	do_moves(t_stk *s, int *a, int *b, int *c);
-int		*realign_stack(int *s);
 void	realign_or_not(t_stk *s);
-void	preen(t_stk *s);
-int		bears_come_home(t_stk *s);
+void	preen(t_stk *s);//RENAME
+int		bears_come_home(t_stk *s);//RENAME
 // push_swap.c
 t_stk	*push_a(int *a, int *b, t_stk *c);
 t_stk	*push_b(int *a, int *b, t_stk *c);
@@ -78,6 +80,7 @@ void	reverse_s(t_stk *s);
 // cost.c
 void	get_cost(t_stk *s, int *a, int *b);
 void	set_cost(int smaller, int bigger, t_stk *s, int i);
+void	set_target(t_stk *s, int i, int target, int cost);
 int		*get_collective_cost(int *a, int *b, int *c, t_stk *s);
 // check.c
 bool	arg_duplicate(int *arr);
@@ -87,22 +90,16 @@ bool	ifnull(t_stk *s);
 // find.c
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);
-void		biggest_bois(t_stk *s, int *guys);
-int		goldilox(t_stk *s);
+void	biggest_bois(t_stk *s, int *guys);//RENAME
+int		goldilox(t_stk *s);//RENAME
 // util.c
 int		get_abs(int num);
-void		ft_put(char *str);
-void		ft_put_ops(t_stk *stk);
-void		ft_put_struct(t_stk *stk);
-void		ft_clear_values(t_stk *s);
-void		ft_liberation(t_stk **s);
+void	ft_put(char *str);//REFACTOR(use this instead of 'write' calls)
+void	ft_put_struct(t_stk *stk);
+void	ft_clear_values(t_stk *s);
+void	ft_liberation(t_stk **s);
 // error.c
-void		error_end_arr(int *array);
-void		error_end_stk(t_stk **nexus);
-bool	error_duplo(t_stk *s);
-void	put_num(int num);
-void	ft_scrbl(t_stk *s, int i);
-void	ft_keep_op(char *op, t_stk *s);
-int	*ft_make_null_arr(int n);
+void	error_end_arr(int *array);
+void	error_end_stk(t_stk **nexus);
 
 #endif
