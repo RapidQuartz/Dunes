@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:54 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:51:48 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:21:41 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	*ft_argn_map(int *argn_map, int argc, char **argv)
 	while (++i < argc)
 		argn_map = arg_count(argv[i], argn_map, i);
 	if (argn_map == NULL)
-		free (argn);
+		error_end_arr(argn);
 	return (argn_map);
 }

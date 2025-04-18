@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:07:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:41:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:31:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,36 @@ int	*arg_count(char *arg, int *argn, int j)
 	in = 0;
 	while (arg[i] != '\0')
 	{
-		if (in == 0 && (arg[i] == '+' || arg[i] == '-'))
+		if (!(arg[i] == '+' || arg[i] == '-' || arg[i] == ' ' || \
+		(arg[i] >= '0' && arg[i] <= '9')) ||
+		((in == -1) && !(arg[i] >= '0' && arg[i] <= '9') \
+		(in == 1 && !(arg[i] != ' ' && arg[i] != '\0')))
+			return (NULL);
+		else if (in == 0 && (arg[i] == '+' || arg[i] == '-'))
 			in = -1;
 		else if (in <= 0 && arg[i] >= '0' && arg[i] <= '9')
 		{
 			in = 1;
 			argn[j]++;
 		}
-		else if (in == -1 && !(arg[i] >= '0' && arg[i] <= '9'))
-			return (NULL);
 		else if (in == 1 && (arg[i] == ' ' || arg[i] == '\0'))
 			in = 0;
 		i++;
 	}
 	argn[0] += argn[j];
 	return (argn);
+}
+
+bool	validator(char **arg, char prev)
+{
+	if (prev == NULL)
+		return (false);
+	if ((prev == ' ' || prev == '+' || prev == '-') &&
+	(arg )
+	if (arg == '-' || arg == '+')
+		arg++;
+	while (arg >= '0' && arg <= '9')
+		arg++;
 }
 
 bool	unsorted(t_stk *s)

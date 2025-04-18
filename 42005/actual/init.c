@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/14 08:38:45 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/18 09:59:36 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ long	arg_to_int(char *arg, int argn)
 		if (argn == 1 && c == '-')
 			mag *= -1;
 		else if ((c >= '0' && c <= '9') && \
-		(arg[i] == ' ' || arg[i] == '\0'))
+		!(arg[i] >= '0' && arg[i] <= '9'))
 			argn--;
 	}
 	return (num * mag);

@@ -1,9 +1,10 @@
-####	2025-04-16 10:26:32
-
 #####	UNTESTED
 [changed `push_a` and `push_b` to incorporate `realign_stack`](tempo.c)
 
 #####	TODO:
+##	EDGE CASES
+
+./push_swap "00 01 0020" -> "3. 1. 2."
 
 ######	HIGH PRIORITY
 -	DO NOT SHOW ERROR IF LIST IS SORTED: SHOW NOTHING
