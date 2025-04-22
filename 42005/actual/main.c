@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:29 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:52:21 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:41:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	main(int argc, char **argv)
 	int		i;
 	int		*argn_map;
 	int		*arr;
-	t_stk	*nexus;
+	t_stk	*stack;
 
 	i = 0;
 	argn_map = NULL;
 	arr = NULL;
-	nexus = NULL;
+	stack = NULL;
 	argn_map = ft_argn_map(argn_map, argc, argv);
 	if (argn_map == NULL)
 		error_end_arr(NULL);
@@ -31,11 +31,11 @@ int	main(int argc, char **argv)
 	if ((!arr || arr == NULL) || arg_duplicate(arr))
 		error_end_arr(arr);
 	arr = arr_normalizer(arr, arr[0]);
-	nexus = arr_to_stk(arr, nexus);
-	if (!nexus || nexus == NULL)
-		error_end_stk(&nexus);
-	push_swap(nexus);
-	ft_liberation(&nexus);
+	stack = arr_to_stk(arr, stack);
+	if (!stack || stack == NULL)
+		error_end_stk(&stack);
+	push_swap(stack);
+	ft_liberation(&stack);
 	return (0);
 }
 

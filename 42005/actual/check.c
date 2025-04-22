@@ -6,11 +6,24 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:07:36 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:41:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:01:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+bool	illegal(char *arg, int i)
+{
+	while (arg[i] != '\0')
+	{
+		if (!(arg[i] >= '0' && arg[i] <= '9') && \
+		(!(arg[i] == ' ' || arg[i] == '+' || arg[i] == '-') || \
+		(i > 0 && (arg[i - 1] == '-' || arg[i - 1] == '\0'))))
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 bool	arg_duplicate(int	*arr)
 {
@@ -45,6 +58,33 @@ int	*arg_count(char *arg, int *argn, int j)
 
 	i = 0;
 	in = 0;
+	if (illegal(arg, i))
+		return (NULL);
+	while (arg[i] != '\0')
+	{
+		if (in == 0 && (arg[i] == '+' || arg[i] == '-'))
+			in = -1;
+		else if (in <= 0 && arg[i] >= '0' && arg[i] <= '9')
+		{
+			in = 1;
+			argn[j]++;
+		}
+		else if (in == 1 && (arg[i] == ' ' || arg[i] == '\0'))
+			in = 0;
+		i++;
+	}
+	argn[0] += argn[j];
+	return (argn);
+}
+
+/* 
+int	*arg_count(char *arg, int *argn, int j)
+{
+	int	i;
+	int	in;
+
+	i = 0;
+	in = 0;
 	while (arg[i] != '\0')
 	{
 		if (in == 0 && (arg[i] == '+' || arg[i] == '-'))
@@ -63,7 +103,7 @@ int	*arg_count(char *arg, int *argn, int j)
 	argn[0] += argn[j];
 	return (argn);
 }
-
+ */
 bool	unsorted(t_stk *s)
 {
 	int	i;

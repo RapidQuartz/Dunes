@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:52:58 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:49:47 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	set_cost(int smaller, int bigger, t_stk *s, int i);
 void	set_target(t_stk *s, int i, int target, int cost);
 int		*get_collective_cost(int *a, int *b, int *c, t_stk *s);
 // check.c
+bool	illegal(char *arg, int i);
 bool	arg_duplicate(int *arr);
 int		*arg_count(char *arg, int *argn, int j);
 bool	unsorted(t_stk *s);

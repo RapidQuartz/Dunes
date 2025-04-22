@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:54 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:51:48 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:41:42 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	*ft_argn_map(int *argn_map, int argc, char **argv)
 	i = 0;
 	argn = NULL;
 	argn_map = ft_make_null_arr(argc + 1);
-	if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
+	if (!argn_map || argn_map == NULL)
 		error_end_arr(argn_map);
 	argn = argn_map;
 	while (++i < argc)
