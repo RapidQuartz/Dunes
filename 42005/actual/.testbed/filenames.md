@@ -1,7 +1,7 @@
 
 ///		MAIN:C:
 int		main(int argc, char **argv);
-void		push_swap(t_stk *nexus);
+void		push_swap(t_stk *s);
 void		exec_turk(t_stk **stk);
 void		sort_three(t_stk *sta);
 t_stk		*three_ops(t_stk *s, int *b);
@@ -53,7 +53,7 @@ void		ft_put_struct(t_stk *stk);
 void		ft_clear_values(t_stk *s);
 ////		ERROR:C:
 void		error_end_arr(int *array);
-void		error_end_stk(t_stk **nexus);
+void		error_end_stk(t_stk **s);
 ///
 echo "#include \"push_swap.h\"" >> main.c ;
 echo "#include \"push_swap.h\"" >> init.c ;

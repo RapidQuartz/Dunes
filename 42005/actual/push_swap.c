@@ -6,13 +6,13 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:32:34 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/19 08:27:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stk	*push_a(int *a, int *b, t_stk *c)
+t_stk	*push_a(int *a, int *b, t_stk *s)
 {
 	int	i;
 	int	m;
@@ -38,10 +38,10 @@ t_stk	*push_a(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	ft_put("pa");
-	return (c);
+	return (s);
 }
 
-t_stk	*push_b(int *a, int *b, t_stk *c)
+t_stk	*push_b(int *a, int *b, t_stk *s)
 {
 	int	i;
 	int	m;
@@ -67,7 +67,7 @@ t_stk	*push_b(int *a, int *b, t_stk *c)
 		m = n;
 	}
 	ft_put("pb");
-	return (c);
+	return (s);
 }
 
 t_stk	*swap_a(t_stk *s)

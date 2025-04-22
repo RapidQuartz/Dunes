@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:18 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 12:55:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/19 08:31:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	find_next_smaller(int *s, int n)
 	return (ind);
 }
 
-void	biggest_bois(t_stk *s, int *guys)
+void	biggest_element(t_stk *s, int *arr)
 {
 	int	big_lad;
 	int	big_lass;
@@ -85,12 +85,12 @@ void	biggest_bois(t_stk *s, int *guys)
 			big_lass = s->b[i];
 		}
 	}
-	guys[0] = big_lad;
-	guys[1] = big_lass;
+	arr[0] = big_lad;
+	arr[1] = big_lass;
 	return ;
 }
 
-int	goldilox(t_stk *s)
+int	pushback_alignment(t_stk *s)
 {
 	int	nb;
 	int	ns;

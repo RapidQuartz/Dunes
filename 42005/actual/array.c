@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:24:54 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/17 12:21:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:17:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,49 @@ int	*ft_make_null_arr(int n)
 	return (arr);
 }
 
-int	*ft_argn_map(int *argn_map, int argc, char **argv)
+
+int	*arg_to_arr(int *arr, int *argn, char **argv)
 {
 	int		i;
-	int		*argn;
+	int		j;
+	long	num;
+	int		n;
+
+	i = 1;
+	j = 0;
+	arr = ft_make_null_arr(argn[0] + 1);
+	if (!arr || arr == NULL)
+		error_end_arr(arr);
+	arr[0] = argn[0];
+	while (i <= argn[0] && ++j)
+	{
+		n = 0;
+		while (n++ < argn[j])
+		{
+			num = arg_to_int(argv[j], n);
+			if (num < INT_MIN || num > INT_MAX)
+				error_end_arr(arr);
+			arr[i++] = (int)num;
+		}
+	}
+	free (argn);
+	return (arr);
+}
+
+int	*arr_normalizer(int *arr, int siz)
+{
+	int	i;
+	int	*brr;
 
 	i = 0;
-	argn = NULL;
-	argn_map = ft_make_null_arr(argc + 1);
-	if (!(argc >= 2 && argc <= 501) || (!argn_map || argn_map == NULL))
-		error_end_arr(argn_map);
-	argn = argn_map;
-	while (++i < argc)
-		argn_map = arg_count(argv[i], argn_map, i);
-	if (argn_map == NULL)
-		error_end_arr(argn);
-	return (argn_map);
+	brr = NULL;
+	brr = ft_make_null_arr(siz + 1);
+	if (!brr || brr == NULL)
+		error_end_arr(arr);
+	if (!(arr[0] > 0))
+		return (NULL);
+	brr[i] = arr[0];
+	brr = arr_transcriber(arr, brr, siz);
+	free (arr);
+	return (brr);
 }

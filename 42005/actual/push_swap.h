@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/16 12:52:58 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:18:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_stk
 {
 	int			steps;
+	int			flag;
 	int			size;
 	int			*a;
 	int			*b;
@@ -39,33 +40,77 @@ typedef struct s_stk
 	int			*c_cost;
 	int			*sm;
 	int			*bg;
-	int			a_sort;
-	int			b_sort;
-	int			c_sort;
 }	t_stk;
+
+typedef struct s_hold
+{
+	int			arg_num;
+	int			*arg_map;
+	char			*arg_key;
+	struct s_stk	*stk;
+}	t_hold;
+//
+typedef enum	e_perm
+{
+	PERM_NULL = '\0',
+	PERM_MIN = '-',
+	PERM_PLU = '+',
+	PERM_ZERO = '0',
+	PERM_ONE = '1',
+	PERM_TWO = '2',
+	PERM_THREE = '3',
+	PERM_FOUR = '4',
+	PERM_FIVE = '5',
+	PERM_SIX = '6',
+	PERM_SEVEN = '7',
+	PERM_EIGHT = '8',
+	PERM_NINE = '9',
+	PERM_SPACE = ' ',
+	PERM_TAB = '\t',
+	PERM_NEW = '\n',
+	END
+}	t_perm;
+//
+char	*ft_split_put(int *i, char *b, char **c, int *d);
+void	ft_num_array(int *a, int *b, char *c);
+int	*check_legal_arg(int *i, char **c, int l, int n);
+t_hold *ft_init_test(int a, char **c);
+//
+bool	legal_arg(char *c);
+int	get_argnum(char *c);
+int	get_arglen(char *c);
 // main.c
 int		main(int argc, char **argv);
-void	push_swap(t_stk *nexus);
-void	exec_turk(t_stk *stk);
-void	sort_three(t_stk *sta);
+void	push_swap(t_stk *s);
+void	exec_turk(t_stk *s);
+void	sort_three(t_stk *s);
 t_stk	*three_ops(t_stk *s, int *ops);
 // init.c
+t_stk	*ft_arg_stk(t_hold *key, t_stk *s);
+int	*char_to_int(int *arr, int *ind, char *arg);
+//
+int	check_flag(int argc, char **argv);
 long	arg_to_int(char *arg, int argn);
-int		*arg_to_arr(int *arr, int *argn, char **argv);
-int		*arr_normalizer(int *arr, int siz);
+t_stk	*arr_to_stk(int *arr, t_stk *s);
+t_stk	*stk_init(int *arr, t_stk *s);
+int	*arr_transcriber(int *arr, int *brr, int siz);
+
 t_stk	*arr_to_stk(int *arr, t_stk *s);
 int		*arr_transcriber(int *arr, int *brr, int siz);
 // array.c
 int		*ft_make_null_arr(int n);
 int		*ft_argn_map(int *argn_map, int argc, char **argv);
+int		*arg_to_arr(int *arr, int *argn, char **argv);
+int		*arr_normalizer(int *arr, int siz);
 // turk.c
+void	first_moves(t_stk *s);
 void	do_moves(t_stk *s, int *a, int *b, int *c);
 void	realign_or_not(t_stk *s);
-void	preen(t_stk *s);//RENAME
-int		bears_come_home(t_stk *s);//RENAME
+void	realign_biggest_b(t_stk *s);
+int		final_alignment(t_stk *s);
 // push_swap.c
-t_stk	*push_a(int *a, int *b, t_stk *c);
-t_stk	*push_b(int *a, int *b, t_stk *c);
+t_stk	*push_a(int *a, int *b, t_stk *s);
+t_stk	*push_b(int *a, int *b, t_stk *s);
 t_stk	*swap_a(t_stk *s);
 t_stk	*swap_b(t_stk *s);
 t_stk	*swap_s(t_stk *s);
@@ -87,19 +132,21 @@ bool	arg_duplicate(int *arr);
 int		*arg_count(char *arg, int *argn, int j);
 bool	unsorted(t_stk *s);
 bool	ifnull(t_stk *s);
+char	**flagged_argv(int argc, char **argv);
 // find.c
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);
-void	biggest_bois(t_stk *s, int *guys);//RENAME
-int		goldilox(t_stk *s);//RENAME
+void	biggest_element(t_stk *s, int *guys);
+int		pushback_alignment(t_stk *s);
 // util.c
 int		get_abs(int num);
-void	ft_put(char *str);//REFACTOR(use this instead of 'write' calls)
-void	ft_put_struct(t_stk *stk);
+void	ft_put(char *str);
+void	ft_put_struct(t_stk *s);
 void	ft_clear_values(t_stk *s);
 void	ft_liberation(t_stk **s);
 // error.c
 void	error_end_arr(int *array);
-void	error_end_stk(t_stk **nexus);
-
+void	error_end_stk(t_stk **s);
+void	do_flag(t_stk *s);
+void	ft_put_steps(int steps);
 #endif

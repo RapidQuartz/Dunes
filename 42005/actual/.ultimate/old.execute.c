@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:31:51 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 18:57:21 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/19 08:31:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		*arr_transcriber(int *arr, int *brr, int siz);
 void		do_moves(t_stk *s, int *a, int *b, int *c);
 int		*realign_stack(int *s);
 void		realign_or_not(t_stk *s);
-void		preen(t_stk *s);
-int		bears_come_home(t_stk *s);
+void		realign_biggest_b(t_stk *s);
+int		final_alignment(t_stk *s);
 ///		PUSH:SWAP:C:
 t_stk		*push_a(int *a, int *b, t_stk *c);
 t_stk		*push_b(int *a, int *b, t_stk *c);
@@ -55,8 +55,8 @@ bool		unsorted(t_stk *s);
 ///		FIND:C:
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);
-void		biggest_bois(t_stk *s, int *guys);
-int		goldilox(t_stk *s);
+void		biggest_element(t_stk *s, int *guys);
+int		pushback_alignment(t_stk *s);
 ///		UTIL:C:
 int		get_abs(int num);//return (abs);
 void		ft_put(char *str);
@@ -419,15 +419,15 @@ void		realign_or_not(t_stk *s)
 	int	porridge;
 	
 	porridge = 0;
-	preen(s);
+	realign_biggest_b(s);
 	ft_put_struct(s);
 	while (unsorted(s) && s->a[0] != s->size)
 	{
 		ft_clear_values(s);
 		if (s->a[0] != s->size)
-			porridge = goldilox(s);
+			porridge = pushback_alignment(s);
 		else if (s->a[0] == s->size)
-			porridge = bears_come_home(s);
+			porridge = final_alignment(s);
 		if (porridge < 0)
 			reverse_a(s, 1);
 		else if (porridge > 0)
@@ -439,7 +439,7 @@ void		realign_or_not(t_stk *s)
 	return ;
 }
 
-int		bears_come_home(t_stk *s)
+int		final_alignment(t_stk *s)
 {
 	int	i;
 	int	papabear;
@@ -461,7 +461,7 @@ int		bears_come_home(t_stk *s)
 	return (papabear);
 }
 
-int		goldilox(t_stk *s)
+int		pushback_alignment(t_stk *s)
 {
 	int 	nb;
 	int 	ns;
@@ -485,7 +485,7 @@ int		goldilox(t_stk *s)
 	return (0);
 }
 
-void		biggest_bois(t_stk *s, int *guys)
+void		biggest_element(t_stk *s, int *guys)
 {
 	int	big_lad;
 	int	big_lass;
@@ -510,11 +510,11 @@ void		biggest_bois(t_stk *s, int *guys)
 }
 
 //	find biggest in B and bring it to top
-void		preen(t_stk *s)
+void		realign_biggest_b(t_stk *s)
 {
 	int	big_guys[2];
 
-	biggest_bois(s, big_guys);
+	biggest_element(s, big_guys);
 	while (s->b[1] != big_guys[1])
 	{
 		if (big_guys[0] <= s->b_mid)

@@ -6,11 +6,70 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/18 09:59:36 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:17:31 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+//k--sentence,a--argc,c--argv,i--position
+
+int		check_flag(int a, char **c);
+
+//NEW
+
+//OLD
+/* int	check_flag(int argc, char **argv)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (argv[1][i] != '\0' && i < 3 && argv[1][i] != ' ')
+	{
+		if (argv[1][0] == '-')
+		{
+			if (i > 0 && argv[1][i] == 'c')
+				flag += 1;
+			else if (i > 0 && argv[1][i] == 's')
+				flag += 2;
+		}
+		else if (argv[1][0] != '-')
+			break ;
+		i++;
+	}
+	return (flag);
+} */
+
+//
+
+int	*char_to_int(int *arr, int *ind, char *arg)
+{
+	long	num;
+
+	while (arg[ind[0]] != '\0')
+	{
+		num = 0;
+		ind[1] = 1;
+		while (arg[ind[0]] != ' ' && arg[ind[0]] != '\0')
+		{
+			if ((arg[ind[0]] >= '0' && arg[ind[0]] <= '9'))
+			{
+				num *= 10;
+				num += arg[ind[0]] - '0';
+			}
+			else if (arg[ind[0]] == '-')
+				ind[1] *= -1;
+			ind[0]++;				
+		}
+		if (num * ind[1] > INT_MAX || num * ind[1] < INT_MIN)
+			return (NULL);
+		arr[ind[2]++] = num * ind[1];
+	}
+	free (ind);
+	return (arr);
+}
+//
 
 long	arg_to_int(char *arg, int argn)
 {
@@ -39,64 +98,59 @@ long	arg_to_int(char *arg, int argn)
 	}
 	return (num * mag);
 }
-
-int	*arg_to_arr(int *arr, int *argn, char **argv)
+t_stk	*ft_arg_stk(t_hold *key, t_stk *s);
+t_stk	*ft_arg_stk(t_hold *key, t_stk *s)
 {
-	int		i;
-	int		j;
-	long	num;
-	int		n;
+	size_t	siz;
+	int		*arr;
 
-	i = 1;
-	j = 0;
-	arr = ft_make_null_arr(argn[0] + 1);
-	if (!arr || arr == NULL)
+	arr = key->arg_map;
+	siz = arr[0] + 1;
+	s = stk_init(arr, s);
+	if (!s || s == NULL)
 		error_end_arr(arr);
-	arr[0] = argn[0];
-	while (i <= argn[0] && ++j)
-	{
-		n = 0;
-		while (n++ < argn[j])
-		{
-			num = arg_to_int(argv[j], n);
-			if (num < INT_MIN || num > INT_MAX)
-				error_end_arr(arr);
-			arr[i++] = (int)num;
-		}
-	}
-	free (argn);
-	return (arr);
+	s->b = ft_make_null_arr(siz);
+	s->a_mov = ft_make_null_arr(siz);
+	s->b_mov = ft_make_null_arr(siz);
+	s->a_cost = ft_make_null_arr(siz);
+	s->b_cost = ft_make_null_arr(siz);
+	s->c_cost = ft_make_null_arr(siz);
+	s->a_tgt = ft_make_null_arr(siz);
+	s->b_tgt = ft_make_null_arr(siz);
+	s->sm = ft_make_null_arr(siz);
+	s->bg = ft_make_null_arr(siz);
+	if (ifnull(s))
+		error_end_stk(&s);
+	free (key);
+	return (s);
 }
 
-int	*arr_normalizer(int *arr, int siz)
-{
-	int	i;
-	int	*brr;
-
-	i = 0;
-	brr = NULL;
-	brr = ft_make_null_arr(siz + 1);
-	if (!brr || brr == NULL)
-		error_end_arr(arr);
-	if (!(arr[0] > 0))
-		return (NULL);
-	brr[i] = arr[0];
-	brr = arr_transcriber(arr, brr, siz);
-	free (arr);
-	return (brr);
-}
-
-t_stk	*arr_to_stk(int *arr, t_stk *s)
+t_stk	*stk_init(int *arr, t_stk *s)
 {
 	int	i;
 
 	i = -1;
-	s = NULL;
+	if (arr != NULL && arr[0] > 0)
+		error_end_arr(arr);
 	s = malloc(sizeof(*s));
 	if (!s || s == NULL)
 		error_end_arr(arr);
+	else
+		s->a = ft_make_null_arr(arr[0] + 1);
+	if (!s->a || s->a == NULL)
+		error_end_stk(&s);
 	s->size = arr[0];
-	s->a = ft_make_null_arr(s->size + 1);
+	while (++i <= arr[0])
+		s->a[i] = arr[i];
+	s->steps = 0;
+	s->flag = 0;
+	return (s);
+}
+
+t_stk	*arr_to_stk(int *arr, t_stk *s)
+{
+	s = NULL;
+	s = stk_init(arr, s);
 	s->b = ft_make_null_arr(s->size + 1);
 	s->a_mov = ft_make_null_arr(s->size + 1);
 	s->b_mov = ft_make_null_arr(s->size + 1);
@@ -109,8 +163,6 @@ t_stk	*arr_to_stk(int *arr, t_stk *s)
 	s->bg = ft_make_null_arr(s->size + 1);
 	if (ifnull(s))
 		error_end_stk(&s);
-	while (s->size >= ++i)
-		s->a[i] = arr[i];
 	free (arr);
 	return (s);
 }

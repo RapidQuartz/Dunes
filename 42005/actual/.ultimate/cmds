@@ -23,8 +23,8 @@ r "900 32 55 6434 1 435 -29 442"
 /////	WIP:
 int		get_abs(int num);//return (abs);
 void		final_twist(t_stk *s);
-void		preen(t_stk *s);
-void		biggest_bois(t_stk *s, int *guys);
+void		realign_biggest_b(t_stk *s);
+void		biggest_element(t_stk *s, int *guys);
 
 ///	MAIN:C:
 int		*arg_check(char *arg, int *argn, int j);
@@ -506,7 +506,7 @@ void		realign_or_not(t_stk *s)
 	a = s->a;
 	b = s->b;
 	z = s->size;
-	preen(s);
+	realign_biggest_b(s);
 	ft_put_struct(s);
 	while (check_sort(s) && s->a[0] < z)
 	{
@@ -547,7 +547,7 @@ if (a[SIZE] > b[1])
 }
 */
 
-void		biggest_bois(t_stk *s, int *guys)
+void		biggest_element(t_stk *s, int *guys)
 {
 	int	big_lad;
 	int	big_lass;
@@ -572,11 +572,11 @@ void		biggest_bois(t_stk *s, int *guys)
 }
 
 //find biggest, bring to top
-void		preen(t_stk *s)
+void		realign_biggest_b(t_stk *s)
 {
 	int	big_guys[2];
 
-	biggest_bois(s, big_guys);
+	biggest_element(s, big_guys);
 	while (s->b[1] != big_guys[1])
 	{
 		if (big_guys[0] <= s->b_mid)

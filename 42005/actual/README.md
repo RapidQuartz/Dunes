@@ -1,36 +1,49 @@
-#####	UNTESTED
+##	DONE
+
+###	FINISHED
+
+###	UNTESTED
 [changed `push_a` and `push_b` to incorporate `realign_stack`](tempo.c)
+##	TODO:
+###	Add functions to .h:
+- [ ] void	do_flag(t_stk *s)
+- [ ] void	first_moves(t_stk *s)
+- [ ] void	ft_put_steps(int steps)
 
-#####	TODO:
-##	EDGE CASES
 
-./push_swap "00 01 0020" -> "3. 1. 2."
 
-######	HIGH PRIORITY
+###	EDGE CASES
+
+
+- [ ] "00 0000 0002 000200"
+- [ ] "12-31" reads as "-1231"
+
+###	HIGH PRIORITY
 -	DO NOT SHOW ERROR IF LIST IS SORTED: SHOW NOTHING
--	test [tempo.c - changes to push_x functions](tempo.c)
--	ADD 'MULTIPLE ZEROES' CONTINGENCY FUNCTIONS:
-	-	eg: "00 0000 0002 000200"
-	-	(find out which should be treated as valid)
+- [x] test [tempo.c - changes to push_x functions](tempo.c)
+- [ ] ADD 'MULTIPLE ZEROES' CONTINGENCY FUNCTIONS:
+
 -	consider renaming `novelty name` functions such as:
-	-	`bears_come_home`
-	-	`biggest_bois`
-	-	`preen`
-	-	`goldilox`
-	-	`ft_liberation`
--	remove superfluous/unused fn's
--	review `error_end_arr` & `error_end_stk` fn's
-	-	consider replacing with single `error` fn
-		-	[description of new error fn](#new-error-fn)
+	- [ ] `bears_come_home`
+	- [ ] `biggest_bois`
+	- [ ] `preen`
+	- [ ] `goldilox`
+	- [ ] `ft_liberation`
+- [ ] remove superfluous/unused fn's
+- [ ] review `error_end_arr` & `error_end_stk` fn's
+	- [ ] [consider replacing with single `error` fn](#new-error-fn)
 -	norminette whole folder
 -	evaluation preparations:
 	-	find evaluation sheet
 		-	how many moves permitted?
 	-	test based on evaluation sheet
 	-	commit and push
-######	MEDIUM PRIORITY
+###	MEDIUM PRIORITY
 
-######	LOW PRIORITY
+###	LOW PRIORITY
+-	add flags:  
+	-c *show move count*  
+	-v *visualize stacks*  
 -	add algo-improvements if too many moves:
 	-	consider adding [similar algorithm for `push back to A` as `push out to B`](#push-back-same-way)
 	-	consider [`pushing back to A` before `3 members remaining` threshold](#premature-pushback)
@@ -51,7 +64,7 @@ there might be a benefit to considering the `state of stack A` vis-a-vis the `st
 for example: if the `bottom of stack B` matches `bottom of stack A` or similar, more than it matches then pushing back  
 
 ###	premature pushback
-there might be a state, when the benefit of sorting by halfw
+there might be a state, when the benefit of sorting by pushing back halfway, outweighs the benefit of pushing until *A* is empty
 
 ##	DEPRECATED
 
@@ -184,6 +197,7 @@ there might be a state, when the benefit of sorting by halfw
 ####	put_num
 
 	void	put_num(int num);
+
 	void	put_num(int num)
 	{
 		int	mem;
@@ -253,4 +267,183 @@ there might be a state, when the benefit of sorting by halfw
 	}
 
 ####
+####	permitted chars
+
+0	-		PERM_NULL = '\0'
+1	-		PERM_MIN = '-'
+2	-		PERM_PLU = '+'
+3	-		PERM_ZERO = '0'
+4	-		PERM_ONE = '1'
+5	-		PERM_TWO = '2'
+6	-		PERM_THREE = '3'
+7	-		PERM_FOUR = '4'
+8	-		PERM_FIVE = '5'
+9	-		PERM_SIX = '6'
+10	-		PERM_SEVEN = '7'
+11	-		PERM_EIGHT = '8'
+12	-		PERM_NINE = '9'
+13	-		PERM_SPACE = ' '
+14	-		PERM_TAB = '\t'
+15	-		PERM_NEW = '\n'
+
+####	permitted flags
+
+0	-		PERM_NULL = '\0'
+	//	ends processing
+1	-		PERM_MIN = '-'
+	//	forbids flag 1/2
+2	-		PERM_PLU = '+'
+	//	forbids flag 1/2
+
+####	permitted args
+
+3	-		PERM_ZERO = '0'
+4	-		PERM_ONE = '1'
+5	-		PERM_TWO = '2'
+6	-		PERM_THREE = '3'
+7	-		PERM_FOUR = '4'
+8	-		PERM_FIVE = '5'
+9	-		PERM_SIX = '6'
+10	-		PERM_SEVEN = '7'
+11	-		PERM_EIGHT = '8'
+12	-		PERM_NINE = '9'
+
+####	permitted whitespace
+
+13	-		PERM_SPACE = ' '
+14	-		PERM_TAB = '\t'
+15	-		PERM_NEW = '\n'
+
+####	permitted end
+0	-		PERM_NULL = '\0'
+
 ####
+
+0     NUL '\0' (null character)   
+1     SOH (start of heading)      
+2     STX (start of text)         
+3     ETX (end of text)           
+4     EOT (end of transmission)   
+5     ENQ (enquiry)               
+6     ACK (acknowledge)           
+7     BEL '\a' (bell)             
+8     BS  '\b' (backspace)        
+9     HT  '\t' (horizontal tab)   
+10    LF  '\n' (new line)         
+11    VT  '\v' (vertical tab)     
+12    FF  '\f' (form feed)        
+13    CR  '\r' (carriage ret)     
+14    SO  (shift out)             
+15    SI  (shift in)              
+16    DLE (data link escape)      
+17    DC1 (device control 1)      
+18    DC2 (device control 2)      
+19    DC3 (device control 3)      
+20    DC4 (device control 4)      
+21    NAK (negative ack.)         
+22    SYN (synchronous idle)      
+23    ETB (end of trans. blk)     
+24    CAN (cancel)                
+25    EM  (end of medium)         
+26    SUB (substitute)            
+27    ESC (escape)                
+28    FS  (file separator)        
+29    GS  (group separator)       
+30    RS  (record separator)      
+31    US  (unit separator)        
+32    SPACE                       
+33    !                           
+34    "                           
+35    #                           
+36    $                           
+37    %                           
+38    &                           
+39    '                           
+40    (                           
+41    )                           
+42    *                           
+43    +                           
+44    ,                           
+45    -                           
+46    .                           
+47    /                           
+48    0                           
+49    1                           
+50    2                           
+51    3                           
+52    4                           
+53    5                           
+54    6                           
+55    7                           
+56    8                           
+57    9                           
+58    :                           
+59    ;                           
+60    <                           
+61    =                           
+62    >                           
+63    ?                           
+64    @
+65    A
+66    B
+67    C
+68    D
+69    E
+70    F
+71    G
+72    H
+73    I
+74    J
+75    K
+76    L
+77    M
+78    N
+79    O
+80    P
+81    Q
+82    R
+83    S
+84    T
+85    U
+86    V
+87    W
+88    X
+89    Y
+90    Z
+91    [
+92    \  '\\'
+93    ]
+94    ^
+95    _
+96    `
+97    a
+98    b
+99    c
+100   d
+101   e
+102   f
+103   g
+104   h
+105   i
+106   j
+107   k
+108   l
+109   m
+110   n
+111   o
+112   p
+113   q
+114   r
+115   s
+116   t
+117   u
+118   v
+119   w
+120   x
+121   y
+122   z
+123   {
+124   |
+125   }
+126   ~
+127   DEL
