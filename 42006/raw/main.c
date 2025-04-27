@@ -1,12 +1,20 @@
 
-#include <mlx.h>
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*mlx_win;
+	// int	i;
+	// int	j;
+	ft_printf
+	// i = 0;
+	// j = 0;
+	// if (argc < 2)
+	// 	return (1);
+	// while (argv[i][j] != '\0')
+	// {
+	// 	while (argv[i][j] != '\0')
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 420, 420, "Hello World!");
-	mlx_loop(mlx);
+	// 		j++;
+	// 	i++;
+	// }
+	return (0);
 }

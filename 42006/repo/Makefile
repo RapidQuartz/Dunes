@@ -6,18 +6,20 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:08:49 by akjoerse          #+#    #+#              #
-#    Updated: 2025/04/23 17:30:10 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/04/27 19:57:26 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = FdF
-CC = cc -g
+INC = -I. -I./mlx -I./libft/
+CC = cc -g -v
 CF = -Wall -Werror -Wextra
 RM = rm -f
 LIBFT = libft.a
-SRC = src
-DIR_LIBFT = libft
-LIB = $(DIR_LFT)/$(LIBFT)
+SRC = main.c \
+src/arg_processing.c src/init_mlx.c src/map_matrix.c src/parse_map.c \
+src/read_map.c src/fdf_util.c
+MLX = 
 OBJ = $(SRC:.c=.o)
 
 all:	$(NAME)
@@ -25,24 +27,24 @@ all:	$(NAME)
 # ONE RING APPROACH::COMBO PTF AND GNL INTO LIBFT
 # $(NAME): $(OBJ) $(LIBFT) 
 # 	$(CC) $(CF)
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CF) $(OBJ) -L$(DIR_LIBFT) -lft \
-	-lftprinft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): $(OBJ) libft/libft.a 
+	$(CC) $(CF) $(OBJ) -L. -lft \
+	-lmlx -lX11 -lXext -lm -o $(NAME)
 
-$(LIBFT):
-	@make -C $(DIR_LFT)
+libft/libft.a:
+	@make -C libft/
+	cp libft/libft.a ./
 
 %.o: %.c
-	$(CC) $(CF) -c $< -o $@
+	$(CC) $(CF) $(INC) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)
-	@make clean -C $(DIR_LFT)
+	@make clean -C libft/
 
 fclean: clean
 	$(RM) $(NAME)
-	@make fclean -C $(DIR_LFT)
-	
+	@make fclean -C libft/
 	
 re: fclean all
 
