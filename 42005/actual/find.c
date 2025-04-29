@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:18 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/13 12:55:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:38:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,31 +66,31 @@ int	find_next_smaller(int *s, int n)
 	return (ind);
 }
 
-void	biggest_bois(t_stk *s, int *guys)
+void	find_bigs(t_stk *s, int *arr)
 {
-	int	big_lad;
-	int	big_lass;
+	int	big_num;
+	int	big_ind;
 	int	size;
 	int	i;
 
 	i = 1;
 	size = s->b[0];
-	big_lad = 1;
-	big_lass = s->b[1];
+	big_num = 1;
+	big_ind = s->b[1];
 	while (i++ < size)
 	{
-		if (s->b[i] > s->b[big_lad])
+		if (s->b[i] > s->b[big_num])
 		{
-			big_lad = i;
-			big_lass = s->b[i];
+			big_num = i;
+			big_ind = s->b[i];
 		}
 	}
-	guys[0] = big_lad;
-	guys[1] = big_lass;
+	arr[0] = big_num;
+	arr[1] = big_ind;
 	return ;
 }
 
-int	goldilox(t_stk *s)
+int	set_alignment(t_stk *s)
 {
 	int	nb;
 	int	ns;

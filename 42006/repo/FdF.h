@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/27 20:45:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:03:45 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 	///	`char **g`	:: color value stored at `x,y`
 typedef struct	s_map
 {
+	int	x_max;
+	int	y_max;
 	char	**map_lines;
 	int	**map_values;
 	int	**map_colors;
@@ -58,13 +60,16 @@ int	get_exit(void *param);
 void	map_matrix(char *c, t_map **map);
 //	read_map.c
 char	*read_map(int fd);
-t_map	*init_map(char *map_str, int x_max, int y_max);
+t_map	*init_map(t_map **blank, int y_max, int x_max);
 t_map	*parse_map_str(char *map_str);
+void	populate_map(t_map *map, char *map_str, char *chart);
 //	parse_map.c
 void	parse_color(char **map_str, int x_siz, int y_siz);
 void	parse_mono(char **map_str, int x_siz, int y_siz);
 //	fdf_util.c
 int	fdf_countlines(char *str);
+int	fdf_countrows(char *str);
 int	fdf_countelem(char *str);
+
 //
 #endif

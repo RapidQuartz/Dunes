@@ -6,41 +6,13 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:59 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/27 20:43:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:56:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../FdF.h"
 
-/* tasks:
--	verify input
--	deal with color
--	deal with mono
-// */
-/*	//made to get dimensions of map string, but might be useless
-int	*get_dimensions(char **map_str)
-{
-	int	i;
-	int	j;
-	int	x;
-	int	y;
-	int	*coords;
-
-	i = 0;
-	j = 0;
-	x = 0;
-	y = 0;
-	coords = ft_calloc(2, sizeof(int));
-	while (map_str != NULL && map_str[i] != NULL && map_str[i][j] != '\0')
-	{
-		if (map_str[i][j] == ' ')
-			x++;
-		else if (map_str[i][j] == '\n')
-			y++;
-	}
-} */
 //	TODO: discover number of lines/elements from splitting
-//	TODO:	parse map backwards::x++::y--;;
 //	TODO: split string into ministrings split by ' ' for easier atoi.
 void	parse_mono(char **map_str, int x_siz, int y_siz)
 {

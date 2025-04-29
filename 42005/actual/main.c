@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:29 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/22 17:41:20 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:42:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 	t_stk	*stack;
 
 	i = 0;
+	if (argc < 2)
+		return (-1);
 	argn_map = NULL;
 	arr = NULL;
 	stack = NULL;
@@ -39,16 +41,17 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	push_swap(t_stk *nexus)
+//printf("MOVES: %d\n", stack->steps);//FOR DEBUG ONLY//MOVE 4 LINES UP
+void	push_swap(t_stk *stack)
 {
-	if (nexus != NULL && nexus->a != NULL && unsorted(nexus))
+	if (stack != NULL && stack->a != NULL && unsorted(stack))
 	{
-		if (nexus->a[0] == 2)
-			nexus = swap_a(nexus);
-		else if (nexus->a[0] == 3)
-			sort_three(nexus);
-		else if (nexus->a[0] > 3)
-			exec_turk(nexus);
+		if (stack->a[0] == 2)
+			stack = swap_a(stack);
+		else if (stack->a[0] == 3)
+			sort_three(stack);
+		else if (stack->a[0] > 3)
+			exec_turk(stack);
 	}
 	return ;
 }
@@ -76,28 +79,28 @@ void	exec_turk(t_stk *s)
 	return ;
 }
 
-void	sort_three(t_stk *sta)
+void	sort_three(t_stk *s)
 {
 	int		*ops;
-	int		*s;
+	int		*a;
 
-	s = NULL;
+	a = NULL;
 	ops = ft_make_null_arr(5);
-	if (sta != NULL && sta->a != NULL && sta->a[0] == 3)
-		s = sta->a;
+	if (ops != NULL && s != NULL && s->a != NULL && s->a[0] == 3)
+		a = s->a;
 	else
 		return ;
-	if (s != NULL && (s[1] < s[2]) && (s[1] < s[3]) && (s[2] > s[3]))
+	if (a != NULL && (a[1] < a[2]) && (a[1] < a[3]) && (a[2] > a[3]))
 		ops[0] = 1;
-	if (s != NULL && (s[1] > s[2]) && (s[1] < s[3]) && (s[2] < s[3]))
+	if (a != NULL && (a[1] > a[2]) && (a[1] < a[3]) && (a[2] < a[3]))
 		ops[1] = 1;
-	if (s != NULL && (s[1] < s[2]) && (s[1] > s[3]) && (s[2] > s[3]))
+	if (a != NULL && (a[1] < a[2]) && (a[1] > a[3]) && (a[2] > a[3]))
 		ops[2] = 1;
-	if (s != NULL && (s[1] > s[2]) && (s[1] > s[3]) && (s[2] < s[3]))
+	if (a != NULL && (a[1] > a[2]) && (a[1] > a[3]) && (a[2] < a[3]))
 		ops[3] = 1;
-	if (s != NULL && (s[1] > s[2]) && (s[1] > s[3]) && (s[2] > s[3]))
+	if (a != NULL && (a[1] > a[2]) && (a[1] > a[3]) && (a[2] > a[3]))
 		ops[4] = 1;
-	sta = three_ops(sta, ops);
+	s = three_ops(s, ops);
 	free (ops);
 	return ;
 }

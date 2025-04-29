@@ -150,6 +150,34 @@ there might be a state, when the benefit of sorting by halfw
 		printf("MOVES:\n%d\n", s->steps);
 	}
 
+####	ft_put_struct
+
+	void	ft_put_struct(t_stk *stk);
+	
+	void	ft_put_struct(t_stk *stk)
+	{
+		int	i;
+
+		i = 1;
+		while (i <= stk->a[0] || i <= stk->b[0])
+		{
+			printf("a: ");
+			if (stk->a[0] == 0 || stk->a[0] < i)
+				printf("-\t");
+			else if (i <= stk->a[0])
+				printf("%d\t", stk->a[i]);
+			printf("b: ");
+			if (stk->b[0] == 0 || stk->b[0] < i)
+				printf("-");
+			else if (i <= stk->b[0])
+				printf("%d", stk->b[i]);
+			printf("\n");
+			i++;
+		}
+		printf("\n");
+	}
+
+
 ####	ft_scrbl
 
 	void	ft_scrbl(t_stk *s, int i);

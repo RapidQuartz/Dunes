@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/22 17:49:47 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:45:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ typedef struct s_stk
 }	t_stk;
 // main.c
 int		main(int argc, char **argv);
-void	push_swap(t_stk *nexus);
-void	exec_turk(t_stk *stk);
-void	sort_three(t_stk *sta);
+void	push_swap(t_stk *stack);
+void	exec_turk(t_stk *s);
+void	sort_three(t_stk *s);
 t_stk	*three_ops(t_stk *s, int *ops);
 // init.c
 long	arg_to_int(char *arg, int argn);
@@ -61,8 +61,8 @@ int		*ft_argn_map(int *argn_map, int argc, char **argv);
 // turk.c
 void	do_moves(t_stk *s, int *a, int *b, int *c);
 void	realign_or_not(t_stk *s);
-void	preen(t_stk *s);//RENAME
-int		bears_come_home(t_stk *s);//RENAME
+void	realign_b(t_stk *s);
+int		final_alignment(t_stk *s);
 // push_swap.c
 t_stk	*push_a(int *a, int *b, t_stk *c);
 t_stk	*push_b(int *a, int *b, t_stk *c);
@@ -91,16 +91,16 @@ bool	ifnull(t_stk *s);
 // find.c
 int		find_next_bigger(int *s, int n);
 int		find_next_smaller(int *s, int n);
-void	biggest_bois(t_stk *s, int *guys);//RENAME
-int		goldilox(t_stk *s);//RENAME
+void	find_bigs(t_stk *s, int *arr);
+int		set_alignment(t_stk *s);
 // util.c
 int		get_abs(int num);
-void	ft_put(char *str);//REFACTOR(use this instead of 'write' calls)
+void	ft_put(char *str);
 void	ft_put_struct(t_stk *stk);
 void	ft_clear_values(t_stk *s);
 void	ft_liberation(t_stk **s);
 // error.c
 void	error_end_arr(int *array);
-void	error_end_stk(t_stk **nexus);
+void	error_end_stk(t_stk **stack);
 
 #endif
