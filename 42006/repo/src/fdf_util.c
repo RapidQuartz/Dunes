@@ -6,12 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 19:52:07 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/29 15:56:16 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:03:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../FdF.h"
-
+/* 
 int	fdf_countlines(char *str)
 {
 	int	i;
@@ -117,7 +117,7 @@ int	countrows_set(char c)
 		return (4);
 	else
 		return (-1);
-}
+} */
 /* 
 int	fdf_countrows(char *str)
 {

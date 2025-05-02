@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:58:04 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/29 16:07:58 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:23:25 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,33 @@
 
 //	MOVE TO .h or leave here
 char	*read_map(int fd);
-t_map	*init_map(t_map **blank, int y_max, int x_max);
+t_map	*init_map(t_map **head, t_map *tmp);
 t_map	*parse_map_str(char *map_str);
+//
+int	map_section(char *chart, int j);
+//
+t_map	*init_map(t_map **head, t_map *tmp)
+{
+	t_map	*map;
 
+	map = malloc(sizeof(*map));
+	if ((!map || map == NULL) && (!tmp || tmp == NULL))
+		return (NULL);
+	else if ((tmp && tmp != NULL) && (!map || map != NULL))
+		free_map(tmp);
+	else if ((map && map != NULL) && (!head || *head == NULL))
+	{
+		head = malloc(sizeof(**head));
+		if (!head || head == NULL)
+			free_map(tmp);
+		*head = map;
+	}
+	if (head && *head != NULL)
+		map->head = head;
+	return (map);
+}
+
+//
 char	*read_map(int fd)
 {
 	char		*line;
@@ -57,6 +81,49 @@ t_map	*parse_map_str(char *map_str)
 	return (map);
 } */
 
+void	free_map(t_map *map)
+{
+	t_map	*tmp;
+
+	tmp = NULL;
+	while (map != NULL)
+	{
+		if (map->next != NULL)
+		{
+			tmp = map->next;
+			free (map);
+			map = tmp;
+		}
+		else if (map->next == NULL)
+		{
+			free (map);
+			leave_now();
+		}
+	}
+}
+
+t_map	*do_map(t_map *map, char **lines, int l_num, int r_num)
+{
+	t_map	**head;
+	t_map	*tmp;
+	int	i;
+	
+	i = 0;
+	head = NULL;
+	tmp = NULL;
+	while (i < l_num)
+	{
+		map = init_map(head, tmp);
+		map->map_line = ft_split(lines[i], ' ');
+		map->l_num = i++;
+		map->next = NULL;
+		if (l_num > i)
+			tmp = map;
+		map->x_size = r_num;
+		map->y_size = l_num;
+	}
+	return ((*map->head));
+}
 //takes a string of `\n` separated lines of numbers
 t_map	*parse_map_str(char *map_str)
 {
@@ -64,28 +131,25 @@ t_map	*parse_map_str(char *map_str)
 	char 		**chart;
 	int		i;
 	int		j;
-	int		k;
 
 	map = NULL;
 	chart = NULL;
 	i = 0;
 	j = 0;
-	k = 0;
-	chart = ft_split(map_str, ' ');
+	chart = ft_split(map_str, '\n');
+	free (map_str);
+	while (chart[i][j] != '\0')
+		j++;
 	while (chart[i] != NULL)
-	{
-		k = map_section(chart[i], j);
-		map = data_divider(chart, i, j, map);
-		
-	}
-	if (k == 1)
-	map = init_map(&map, fdf_countlines(map_str), fdf_countrows(map_str));
-	populate_map(map, map_str, chart);
+		i++;
+	map = do_map(map, chart, i, j);
 	return (map);
 }
 int	map_section(char *chart, int j)
 {
-	
+	if (chart || j)
+		return (0);
+	return (0);
 }
 /* t_map	*parse_map_str(char *map_str)
 {
@@ -109,6 +173,7 @@ int	map_section(char *chart, int j)
 
 	return (map);
 } */
+/* 
 void	populate_map(t_map *map, char *map_str, char *chart)
 {
 	int	i;
@@ -124,8 +189,8 @@ void	populate_map(t_map *map, char *map_str, char *chart)
 		i++;
 	}
 	chart = NULL;
-}
-
+} */
+/* 
 t_map	*init_map(t_map **blank, int y_max, int x_max)
 {
 	t_map	*map;
@@ -148,4 +213,4 @@ t_map	*init_map(t_map **blank, int y_max, int x_max)
 		return (NULL);
 	(*blank) = map;
 	return (*blank);
-}
+} */

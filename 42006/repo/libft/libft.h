@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:33:06 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/27 15:02:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:49:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,19 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-// // ft_printf functions
-// int		ft_printf(const char *format, ...);
-// int		ft_ptfcha(char c);
-// int		ft_ptfstr(const char *format);
-// int		ft_vex(const char format, va_list ap);
-// int		ft_ptfhex(unsigned long long int num, const char format);
-// int		ft_ptfhex_len(unsigned long long int num);
-// void	ft_ptfhex_put(unsigned long long int num, const char format);
-// int		ft_ptfptr(unsigned long long ptr);
-// int		ft_ptfint(int num);
-// int		ft_ptfint_put(int num);
-// int		ft_ptfuin_put(unsigned int num);
-// int		ft_ptfnumlen(unsigned int num);
-// char	*ft_uitoa(unsigned int num);
+// ft_printf functions
+int		ft_printf(const char *format, ...);
+int		ft_ptfcha(char c);
+int		ft_ptfstr(const char *format);
+int		ft_vex(const char format, va_list ap);
+int		ft_ptfhex(unsigned long long int num, const char format);
+int		ft_ptfhex_len(unsigned long long int num);
+void	ft_ptfhex_put(unsigned long long int num, const char format);
+int		ft_ptfptr(unsigned long long ptr);
+int		ft_ptfint(int num);
+int		ft_ptfint_put(int num);
+int		ft_ptfuin_put(unsigned int num);
+int		ft_ptfnumlen(unsigned int num);
+char	*ft_uitoa(unsigned int num);
 
 #endif
