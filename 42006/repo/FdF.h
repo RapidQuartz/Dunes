@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/10 23:51:44 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:55:47 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	check_params(char **a, int i, int j);
 //	initialization
 int	init_fdf(int f, char *p);
 //	map parsing
-char	*read_map(int fdf);
+char	*read_map(int fd);
 //	error handling
 int	error_end(int fd, char *params, t_map *map);
 //

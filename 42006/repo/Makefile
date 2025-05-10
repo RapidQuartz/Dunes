@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:08:49 by akjoerse          #+#    #+#              #
-#    Updated: 2025/05/10 23:33:12 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/05/10 23:58:33 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC = main.c \
 src/init_fdf.c \
 src/drawing/draw_hline.c src/drawing/draw_map.c src/drawing/draw_vline.c \
 src/parsing/create_map.c src/parsing/parse_mapfile.c \
-src/utility/get_dimensions.c src/utility/line_end.c src/utility/line_start.c 
+src/utility/get_dimensions.c src/utility/line_end.c src/utility/line_start.c \
+src/utility/check_input.c src/utility/error_handling.c
 OBJ = $(SRC:.c=.o)
 
 all:	$(NAME)
