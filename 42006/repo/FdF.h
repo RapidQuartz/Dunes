@@ -6,80 +6,54 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:20 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/02 19:02:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:51:44 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-////	MiniLibX	—	graphics library
-# include "./mlx/mlx.h"
+////	External Inclusions
+# include <math.h>
+////	Internal Inclusions
 # include "./libft/libft.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include "./libft/get_next_line/get_next_line.h"
-//
-////	definitions
-///	window dimensions
-#ifndef HEIGHT
-# define HEIGHT 480
-#endif
-#ifndef WIDTH
-# define WIDTH 480
-#endif
-//
-////	typedefs
-///	structs
-	////	s_map::stores map:
-	///	`int	x;`	:: maximum `width x`
-	///	`int	y;`	:: maximum `height y`
-	///	`int **z`	:: height value stored at `x,y`
-	///	`char **g`	:: color value stored at `x,y`
-/* typedef struct	s_map
+////	MiniLibX	—	graphics library
+# include "./mlx/mlx.h"
+//	typedefs
+typedef struct s_map
 {
-	int	x_max;
-	int	y_max;
-	char	**map_lines;
-	int	**map_values;
-	int	**map_colors;
+	struct s_pts	*points;
+	struct s_dim	*dimensions;
+	struct s_pos	*position;
+	char			*map_string;
 }	t_map;
- */
-typedef struct	s_map
+typedef struct s_pos
 {
-	int			l_num;
-	int			x_size;
-	int			y_size;
-	char			**map_line;
-	struct s_map	**head;
-	struct s_map	*next;
-}	t_map;
-
-///	enums
-//
-////	funcs
-///	main.c
-// int	main(int a, char **c);
-void	leave_now(void);
-///	src/
-//	scratch_map.c
-void	scratch_map(void *mlx, void *win, t_map *map);
-//	init_mlx.c
-void	init_mlx_routine(t_map *map);
-int	get_keystroke(int key, void *param);
-int	get_exit(void *param);
-//	map_matrix.c
-void	map_matrix(char *c, t_map **map);
-//	read_map.c
-char	*read_map(int fd);
-// t_map	*init_map(t_map **blank, int y_max, int x_max);
-t_map	*parse_map_str(char *map_str);
-void	populate_map(t_map *map, char *map_str, char *chart);
-//	parse_map.c
-void	parse_color(char **map_str, int x_siz, int y_siz);
-void	parse_mono(char **map_str, int x_siz, int y_siz);
-//	fdf_util.c
-int	fdf_countlines(char *str);
-int	fdf_countrows(char *str);
-int	fdf_countelem(char *str);
-
+	int	placeholder;
+} t_pos;
+typedef struct s_dim
+{
+	int	x_limit;
+	int	y_limit;
+	int	s_width;
+	int	s_height;
+} t_dim;
+typedef struct s_pts
+{
+	int	*x;
+	int	*y;
+	int	*z;
+	int	*c;	
+} t_pts;
+//	check input
+bool	check_file(char **a, int i, int j);
+bool	check_params(char **a, int i, int j);
+//	initialization
+int	init_fdf(int f, char *p);
+//	map parsing
+char	*read_map(int fdf);
+//	error handling
+int	error_end(int fd, char *params, t_map *map);
 //
 #endif

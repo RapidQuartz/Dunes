@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "../libft/libft.h"
 /* compilation string:
 cc -g test.c -Llibft -lft
 */
@@ -485,8 +485,8 @@ void	f_strtrim(void)
 	char *str;
 	char *set;
 
-	str = ft_strdup("this string has 29 characters");
-	set = ft_strdup("0123456789");
+	str = ft_strdup("this string string has 29 characters");
+	set = ft_strdup("this ring");
 	ft_printf("\n//ft_strtrim returns... lets find out. it goes through string char *s1 (%s) to find out if it is made up of cahracters from string char *set (%s) \n", str, set);
 	ft_printf("%s\n", ft_strtrim(str, set));
 }
@@ -500,10 +500,24 @@ void	f_substr(void)
 
 	start = 22;
 	len = 7;
-	str = ft_strdup("this is a string, and it should find itself.");
+	if (ft_st)
+	str = ft_strdup("0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n0  0 10 10  0  0 10 10  0  0  0 10 10 10 10 10  0  0  0\n0  0 10 10  0  0 10 10  0  0  0  0  0  0  0 10 10  0  0\n0  0 10 10  0  0 10 10  0  0  0  0  0  0  0 10 10  0  0\n0  0 10 10 10 10 10 10  0  0  0  0 10 10 10 10  0  0  0\n0  0  0 10 10 10 10 10  0  0  0 10 10  0  0  0  0  0  0\n0  0  0  0  0  0 10 10  0  0  0 10 10  0  0  0  0  0  0\n0  0  0  0  0  0 10 10  0  0  0 10 10 10 10 10 10  0  0\n0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n");
 	ft_printf("\n//ft_substr returns a null-terminated string from input string char *s (%s), starting at position start (%u), while string length of s (%u) is greater than the starting position, until len (%u) characters have been copied\n", str, start, ft_strlen(str), len);
 	ft_printf("%s\n", ft_substr(str, start, len));
 }
+// //	ft_substr test
+// void	f_substr(void)
+// {
+// 	char 			*str;
+// 	unsigned int	start;
+// 	size_t		len;
+
+// 	start = 22;
+// 	len = 7;
+// 	str = ft_strdup("this is a string, and it should find itself.");
+// 	ft_printf("\n//ft_substr returns a null-terminated string from input string char *s (%s), starting at position start (%u), while string length of s (%u) is greater than the starting position, until len (%u) characters have been copied\n", str, start, ft_strlen(str), len);
+// 	ft_printf("%s\n", ft_substr(str, start, len));
+// }
 
 //	ft_tolower test
 void	f_tolower(void)
@@ -554,8 +568,9 @@ int	main(void)
 	// f_putendl_fd();
 	// f_putnbr_fd();
 	// f_putstr_fd();
-	f_split();
-	// f_strchr();
+	// f_split();
+	f_strchr();
+	f_strrchr();
 	// f_strdup();
 	// f_striteri();
 	// f_strjoin();
@@ -565,9 +580,8 @@ int	main(void)
 	// f_strmapi();
 	// f_strncmp();
 	// f_strnstr();
-	// f_strrchr();
 	// f_strtrim();
-	// f_substr();
+	f_substr();
 	// f_tolower();
 	// f_toupper();
 	return (0);

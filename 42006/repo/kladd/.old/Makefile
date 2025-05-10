@@ -6,7 +6,7 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:08:49 by akjoerse          #+#    #+#              #
-#    Updated: 2025/05/10 23:33:12 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/05/10 16:37:33 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@ CF = -Wall -Werror -Wextra
 RM = @rm -f
 LIBFT = libft.a
 SRC = main.c \
-src/init_fdf.c \
-src/drawing/draw_hline.c src/drawing/draw_map.c src/drawing/draw_vline.c \
-src/parsing/create_map.c src/parsing/parse_mapfile.c \
-src/utility/get_dimensions.c src/utility/line_end.c src/utility/line_start.c 
+src/arg_processing.c src/init_mlx.c src/map_matrix.c src/parse_map.c \
+src/read_map.c src/fdf_util.c src/draw_map.c
+#src/scratch_map.c
+MLX = 
 OBJ = $(SRC:.c=.o)
 
 all:	$(NAME)
@@ -46,7 +46,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 	@make fclean -sC libft/
-	@if [ -e "libft.a" ]; then rm libft.a; fi
+	@rm libft.a
 	
 re: fclean all
 

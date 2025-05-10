@@ -35,6 +35,7 @@ mlx_pixel_put(mlx, win, X-coord, Y-coord, Color)
 ###	[rosettacode source](https://rosettacode.org/wiki/Xiaolin_Wu%27s_line_algorithm#C)  
 C
 
+0 10 20,0xFF0000 15,0xFF0000 12 15,0xFF0000
 This implementation follows straightforwardly the pseudocode given on Wikipedia. (Further analysis of the code could give suggestions for improvements).
 
 <!-- 	void draw_line_antialias(

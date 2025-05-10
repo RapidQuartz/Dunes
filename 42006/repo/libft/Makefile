@@ -6,13 +6,13 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 18:49:04 by akjoerse          #+#    #+#              #
-#    Updated: 2025/04/27 14:05:49 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/05/06 03:04:16 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 INC = -Ilibft.h -I./ft_printf -I./get_next_line
-CC = cc -g
+CC = @cc -g
 CFLAGS = -Wall -Werror -Wextra $(INC)
 all: $(NAME)
 # libft vanilla
@@ -35,16 +35,16 @@ GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 OBJ = $(SRC:%.c=%.o) $(PTF:%.c=%.o) $(GNL:%.c=%.o)
 
 $(NAME): $(OBJ)
-	ar -rcs $(NAME) $(OBJ)
+	@ar -rcs $(NAME) $(OBJ)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
