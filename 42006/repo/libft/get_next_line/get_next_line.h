@@ -6,14 +6,14 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:05:52 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/23 19:14:12 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:48:23 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 1000
 # endif
 
 # include <unistd.h>

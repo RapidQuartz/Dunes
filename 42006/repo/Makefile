@@ -6,11 +6,11 @@
 #    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:08:49 by akjoerse          #+#    #+#              #
-#    Updated: 2025/05/10 23:58:33 by akjoerse         ###   ########.fr        #
+#    Updated: 2025/05/12 13:27:58 by akjoerse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = FdF
+NAME = fdf
 INC = -I. -I./mlx -I./libft/
 CC = @cc -g
 CF = -Wall -Werror -Wextra
@@ -21,14 +21,13 @@ src/init_fdf.c \
 src/drawing/draw_hline.c src/drawing/draw_map.c src/drawing/draw_vline.c \
 src/parsing/create_map.c src/parsing/parse_mapfile.c \
 src/utility/get_dimensions.c src/utility/line_end.c src/utility/line_start.c \
-src/utility/check_input.c src/utility/error_handling.c
+src/utility/check_input.c src/utility/error_handling.c src/utility/debug.c \
+src/utility/helpers.c
 OBJ = $(SRC:.c=.o)
+#	maybe include an `objects` directory to keep things neat
 
 all:	$(NAME)
 	
-# ONE RING APPROACH::COMBO PTF AND GNL INTO LIBFT
-# $(NAME): $(OBJ) $(LIBFT) 
-# 	$(CC) $(CF)
 $(NAME): $(OBJ) libft/libft.a 
 	$(CC) $(CF) $(OBJ) -L. -lft \
 	-lmlx -lX11 -lXext -lm -o $(NAME)

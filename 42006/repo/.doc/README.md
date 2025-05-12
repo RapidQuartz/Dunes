@@ -1,1 +1,1 @@
-../README.md
+/home/akjoerse/42/006_FdF/README.md
