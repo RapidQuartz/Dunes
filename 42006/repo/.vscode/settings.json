@@ -60,6 +60,10 @@
     "ft_printf.h": "c",
     "fdf.h": "c",
     "random": "c",
-    "mlx.h": "c"
+    "mlx.h": "c",
+    "init.h": "c",
+    "struct.h": "c",
+    "func.h": "c",
+    "stddef.h": "c"
   }
 }

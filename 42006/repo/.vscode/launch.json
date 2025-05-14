@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/akjoerse/42/006_FdF/repo",
-      "program": "/home/akjoerse/42/006_FdF/repo/build/Debug/outDebug",
+      "cwd": "/home/akjoerse/42/999_GitHub/42006/repo/kladd/.old",
+      "program": "/home/akjoerse/42/999_GitHub/42006/repo/kladd/.old/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

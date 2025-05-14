@@ -1,13 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_processing.c                                   :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 14:57:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/04/27 14:57:16 by akjoerse         ###   ########.fr       */
+/*   Created: 2025/05/14 10:26:11 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/05/14 10:57:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../FdF.h"
+# include "fdf.h"
+void	error(void)
+{
+	printf(RED"\n{{ERROR}}\n"DEF);////TODO:replace with libft
+	exit (0);
+}
