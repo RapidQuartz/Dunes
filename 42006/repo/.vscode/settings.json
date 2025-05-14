@@ -57,13 +57,14 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "ft_printf.h": "c",
-    "fdf.h": "c",
-    "random": "c",
-    "mlx.h": "c",
-    "init.h": "c",
-    "struct.h": "c",
-    "func.h": "c",
-    "stddef.h": "c"
-  }
+	"ft_printf.h": "c",
+	"fdf.h": "c",
+	"random": "c",
+	"mlx.h": "c",
+	"init.h": "c",
+	"struct.h": "c",
+	"func.h": "c",
+	"stddef.h": "c",
+	"get_next_line.h": "c"
+}
 }
