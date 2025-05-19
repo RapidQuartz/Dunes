@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/19 13:06:41 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:58:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 char	*extract_color(char *col, int start);
 void	init_points(char ***lmn, t_fdf *fdf, int x, int y);
 int	get_lmn_len(char *lmn);
-t_pts	plot_point(char *hei, char *col);
+t_pts	plot_point(char *hei, char *col, t_pts pts);
 int	convert_color(char *col);
 char	*extract_height(char *num, int end);
 
@@ -43,6 +43,7 @@ void	init_fdf(t_fdf *fdf)
 		i++;
 	}
 	init_points(fdf->map->elements, fdf, 0, 0);
+	free_map(fdf->map, fdf->dim);
 }
 
 void	init_null_dim(t_fdf *fdf)
@@ -63,17 +64,17 @@ void	init_points(char ***lmn, t_fdf *fdf, int x, int y)
 	char	*col;
 
 	lmn_len = 0;
-	while (lmn[y][x])
+	while (y < fdf->dim->max_y)
 	{
 		i = 0;
 		lmn_len = get_lmn_len(lmn[y][x]);
 		if (lmn_len < 0)
-			col = extract_color(lmn[y][x], -lmn_len + 3);
+			col = extract_color(lmn[y][x], -lmn_len);
 		else if (lmn_len > 0)
 			col = DEFCOL;
 		lmn_len = ft_abs(lmn_len);
 		num = extract_height(lmn[y][x], lmn_len);
-		fdf->pts[y][x] = plot_point(num, col);
+		fdf->pts[y][x] = plot_point(num, col, fdf->pts[y][x]);
 		x++;
 		if (!lmn[y][x])
 		{
@@ -82,10 +83,8 @@ void	init_points(char ***lmn, t_fdf *fdf, int x, int y)
 		}
 	}
 }
-t_pts	plot_point(char *hei, char *col)
+t_pts	plot_point(char *hei, char *col, t_pts pts)
 {
-	t_pts	pts;
-	
 	pts.c = convert_color(col);
 	pts.z = ft_atoi(hei);
 	return (pts);
@@ -113,7 +112,7 @@ char	*extract_height(char *num, int end)
 	char	*height;
 	
 	i = 0;
-	height = malloc(sizeof(char) * end);
+	height = malloc(sizeof(char) * end + 1);
 	if (!height || height == NULL)
 		exit (0);//TODO:integrate into exit function;
 	while (i < end)
@@ -121,6 +120,7 @@ char	*extract_height(char *num, int end)
 		height[i] = num[i];
 		i++;
 	}
+	height[i] = '\0';
 	return (height);
 }
 
@@ -135,7 +135,7 @@ char	*extract_color(char *col, int start)
 	out = malloc(sizeof(char) * len + 1);
 	if (!out || out == NULL)
 		return (NULL);
-	while (col[start + i] != '\0' && (start + i ) < len)
+	while (col[start + i] != '\0' && i < len)
 	{
 		out[i] = col[start + i];
 		i++;
