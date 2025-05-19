@@ -1,11 +1,17 @@
 
 NAME = fdf
-INC = -I. -I./mlx -I./libft/
+INC = -I./inc -I./mlx -I./libft/
 CC = @cc -g
 CF = -Wall -Werror -Wextra
 RM = @rm -f
 LIBFT = libft.a
-SRC = main.c init.c error.c
+SRC = main.c error.c \
+src/init_fdf.c \
+src/parsing/parse_mapfile.c src/parsing/create_map.c \
+src/parsing/parse_color.c \
+src/utility/helpers.c
+# src/
+# src/parsing/
 OBJ = $(SRC:.c=.o)
 #	maybe include an `objects` directory to keep things neat
 

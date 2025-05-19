@@ -1,4 +1,4 @@
-# include "../../FdF.h"
+# include "../inc/fdf.h"
 
 bool	check_file(char **a, int i, int j)
 {

@@ -60,8 +60,8 @@
 # include "init.h"
 # include "func.h"
 # include "struct.h"
-# include "./mlx/mlx.h"
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include "./libft/get_next_line/get_next_line.h"
+# include "../mlx/mlx.h"
+# include "../libft/libft.h"
+# include "../libft/ft_printf/ft_printf.h"
+# include "../libft/get_next_line/get_next_line.h"
 #endif

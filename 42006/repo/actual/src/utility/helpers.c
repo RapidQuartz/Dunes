@@ -1,4 +1,4 @@
-# include "../../FdF.h"
+# include "../inc/fdf.h"
 
 ////	HEXTOI:
 //	if `n` is a number '0'-'9' —> (48 - 57)
@@ -19,4 +19,11 @@ int	ft_hextoi(char n)
 	else if (n >= 'a' && n <= 'f')
 		return (n - 87);
 	return (-1);
+}
+
+int	ft_abs(int num)
+{
+	if (num < 0)
+		return (-num);
+	return (num);
 }

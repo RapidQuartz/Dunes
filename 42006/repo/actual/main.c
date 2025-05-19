@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/14 12:36:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:09:08 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ int	main(int arg, char **param)
 	if (arg != 2)
 		return (1);
 	fdf.fd = open(param[1], O_RDONLY);
-
 	init_fdf(&fdf);
-	
-	
-		
 }
 /* ||*********************Created: 2025/05/12 21:33:42*********************|| */

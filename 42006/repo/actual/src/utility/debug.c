@@ -1,4 +1,4 @@
-# include "../../FdF.h"
+# include "../inc/fdf.h"
 
 void	debug(char *m)
 {

@@ -1,7 +1,6 @@
 #ifndef INIT_H
 # define INIT_H
 // # include "fdf.h"
-# include "struct.h"
 # include <stddef.h>
 # include <stdlib.h>
 # include <stdio.h>
