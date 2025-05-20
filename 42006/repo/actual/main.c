@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/19 19:23:51 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:30:49 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int arg, char **param)
 	init_fdf(&fdf);
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, DEFWID, DEFHEI, "Fer De Fil");
-	fdf.map->bpp = 32;
+	fdf.bpp = 32;
+	fdf.len = 0;
 	prepare_image(&fdf);
 	draw_image(&fdf);
 	printf("just follow me\n");
@@ -55,22 +56,24 @@ void	free_map(t_fdf *fdf)
 }
 
 ////	TODO: move to separate `draw_map.c` file
-void	draw_image(t_fdf *fdf)
+void	prepare_image(t_fdf *fdf)
 {
 	int	z;
 	char	*addr;
-	int	p[2];
 
-	fdf->img = mlx_new_image(fdf->map->mlx, fdf->dim->s_x, fdf->dim->s_y);
-	addr = get_data_addr(fdf->img);
+	fdf->img = mlx_new_image(fdf->map->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
+	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
 	while (fdf->y < fdf->ymax - 1)
 	{
 		while (fdf->x < fdf->xmax - 1)
 		{
+			project_origin(fdf, fdf->pro, fdf->x, fdf->y);
 			if (fdf->x < fdf->xmax - 1)
-				calculate_points(fdf, fdf->x + 1, fdf->y);
+				project_horizontal(fdf, fdf->pro, fdf->x + 1, fdf->y);
+				// calculate_points(fdf, fdf->x + 1, fdf->y);
 			if (fdf->y < fdf->ymax - 1)
-				calculate_points(fdf, fdf->x, fdf->y + 1);
+				project_vertical(fdf, fdf->pro, fdf->x, fdf->y + 1);
+				// calculate_points(fdf, fdf->x, fdf->y + 1);
 			fdf->x++;
 		}
 		fdf->x = 0;
@@ -104,16 +107,6 @@ void	calculate_points(t_fdf *fdf, int x, int y, int big)
 	bresenham(fdf);
 }
 
-char	*get_data_addr(void *img)
-{
-	int	len;
-	int	endian;
-	int	bpp;
-	char	*addr;
-
-	addr = mlx_get_data_addr(img, &bpp, &len, &endian);
-	return (addr);
-}
 void	bresenham(t_fdf *fdf)
 {
 	fdf->map->err = fdf->iso->dx - fdf->iso->dy;

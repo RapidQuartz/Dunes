@@ -18,6 +18,11 @@ typedef struct s_dim
 	int	z_y;
 }	t_dim;
 
+typedef struct s_proj
+{
+
+}	t_proj;
+
 typedef struct s_iso
 {
 	int		offset;
@@ -50,8 +55,6 @@ typedef struct s_map
 	char	*raw_str;
 	void	*win;
 	void	*mlx;
-	int	bpp;
-	int	endian;
 }	t_map;
 
 typedef struct s_drw
@@ -66,8 +69,17 @@ typedef struct s_pro
 	int	x1;
 	int	y0;
 	int	y1;
-	int	dx;
-	int	dy;
+	int	y2;
+	int	z0;
+	int	z1;
+	int	z2;
+	int	c0;
+	int	c1;
+	int	c2;
+	int	hx;
+	int	hy;
+	int	vx;
+	int	vy;
 }	t_pro;
 
 typedef struct s_fdf
@@ -79,6 +91,7 @@ typedef struct s_fdf
 	int	x;
 	int	y;
 	int	theta;
+	int	endian;
 	int	xmax;
 	int	ymax;
 	t_pro	*pro;
@@ -87,6 +100,8 @@ typedef struct s_fdf
 	t_iso	*iso;
 	t_pos	*pos;
 	t_pts	**pts;
+	int	bpp;
+	int	len;
 }	t_fdf;
 #endif
 //&$`~*@^%|header file for Fer De Fil project at 42berlin by akjoerse|%^@*~`$&//

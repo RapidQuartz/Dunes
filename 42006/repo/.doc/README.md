@@ -6,9 +6,9 @@
 ##	[2025.05.20](20250520.md#index)
 ##	[2025.05.12](20250512.md#index)  
 ##	[2025.05.11](20250511.md#index)  
-####	[TODAY'S DEEDS](#checklist)  
-####	[THE WAY](#path-to-glory)  
-
+###	[TODAY'S DEEDS](#checklist)  
+###	[THE WAY](#path-to-glory)  
+###	[TODOLIST](todo.md#index)  
 
 #### path to glory
 
@@ -97,7 +97,7 @@ associate map coords with angles
 	- [ ] subset
 
 
-!	getting dy/dx::
+#	`!	getting dy/dx::`
 
 	dx = ft_abs(x1 - x0)
 	dy = ft_abs(y1 - y0)
@@ -145,7 +145,7 @@ associate map coords with angles
 	- [ ] subset
 	- [ ] subset
 - [ ] antialiasing
-	- [ ] breckenham
+	- [x] breckenham
 		- [ ] easier to understand
 		- [ ] doesn't use floats
 	- [ ] wushaolin
@@ -162,19 +162,19 @@ associate map coords with angles
 ##	map parsing
 so far, `get_next_line` performs as expected and reads the map file  
 converting to coordinates is not 'difficult' per se, but requires:  
-- [ ] splitting the lines by ' ' spaces ((or commas{TODO:LATER:}))
-- [ ] splitting the lines by '\n' newlines (newline = y--)
-- [ ] `num_lines` count lines
-- [ ] `num_elements` count elements, essentially spaces?
+- [x] splitting the lines by ' ' spaces ((or commas{TODO:LATER:}))
+- [x] splitting the lines by '\n' newlines (newline = y--)
+- [x] `num_lines` count lines
+- [x] `num_elements` count elements, essentially spaces?
 - [ ] `key_exotic` `val_exotic` split exotics and location to save space?
-- [ ] ft_atoi split lines to `int **array` by `array[j][i++]`
-- [ ] next line to `array[j++][i]`
+- [x] ft_atoi split lines to `int **array` by `array[j][i++]`
+- [x] next line to `array[j++][i]`
 - [ ] repeat until `line` is `NULL` (or whatever gnl returns)
 ##	TODO:LATER:
-- [ ] parse color info:
-	- [ ] store color info in `char **gamma`
+- [x] parse color info:
+	- [x] store color info in `char **gamma`
 		- [ ] store '\0' when no color info (no ',' found after number)
-		- [ ] store 'hex code' when color info (when number followed by ',')
+		- [x] store 'hex code' when color info (when number followed by ',')
 	- [ ] store x-y-z info in `int`
 		- [ ] `z = array[y][x]`
 - [ ] tread through array

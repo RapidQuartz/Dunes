@@ -9,7 +9,8 @@ SRC = main.c error.c \
 src/init_fdf.c \
 src/parsing/parse_mapfile.c src/parsing/create_map.c \
 src/parsing/parse_color.c \
-src/utility/helpers.c
+src/utility/helpers.c \
+src/drawing/project_map.c
 # src/
 # src/parsing/
 OBJ = $(SRC:.c=.o)
