@@ -37,7 +37,7 @@ void	split_map_str(t_fdf *fdf)
 	while (split_map[l])
 		l++;
 
-	fdf->dim->max_y = l;
+	fdf->ymax = l;
 	fdf->map->elements = malloc(sizeof(*fdf->map->elements) * l);
 	if (!fdf->map->elements || fdf->map->elements == NULL)
 		exit (0);//TODO:integrate into exit function
@@ -49,6 +49,6 @@ void	split_map_str(t_fdf *fdf)
 			r++;
 		l++;
 	}
-	fdf->dim->max_x = r;
+	fdf->xmax = r;
 	free (split_map);
 }

@@ -25,6 +25,8 @@ typedef struct s_iso
 	double	y0;
 	double	x1;
 	double	y1;
+	int		dx;
+	int		dy;
 	int		sx;
 	int		sy;
 }	t_iso;
@@ -58,10 +60,28 @@ typedef struct s_drw
 	int	y;
 }	t_drw;
 
+typedef struct s_pro
+{
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+	int	dx;
+	int	dy;
+}	t_pro;
+
 typedef struct s_fdf
 {
 	int	fd;
 	void	*img;
+	void	*mlx;
+	void	*win;
+	int	x;
+	int	y;
+	int	theta;
+	int	xmax;
+	int	ymax;
+	t_pro	*pro;
 	t_map	*map;
 	t_dim	*dim;
 	t_iso	*iso;

@@ -6,154 +6,69 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/19 14:58:20 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/20 08:55:30 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/fdf.h"
-char	*extract_color(char *col, int start);
-void	init_points(char ***lmn, t_fdf *fdf, int x, int y);
-int	get_lmn_len(char *lmn);
-t_pts	plot_point(char *hei, char *col, t_pts pts);
-int	convert_color(char *col);
-char	*extract_height(char *num, int end);
 
 void	init_fdf(t_fdf *fdf)
 {
 	int	i;
 
 	i = 0;
-	fdf->map = malloc(sizeof(t_map));
-	fdf->dim = malloc(sizeof(t_dim));
-	fdf->iso = malloc(sizeof(t_iso));
-	fdf->pos = malloc(sizeof(t_pos));
-	if (!fdf->map || !fdf->dim || !fdf->iso || !fdf->pos)
-		error();
-	init_null_dim(fdf);
+	init_map(fdf->map);
+	init_iso(fdf->iso);
 	read_mapfile(fdf);
 	split_map_str(fdf);
-	fdf->pts = malloc(sizeof(t_pts *) * fdf->dim->max_y);
-	if (!fdf->pts || fdf->pts == NULL)
-		exit (0);//TODO:integrate into exit function
-	while (i < fdf->dim->max_y)
+	init_pts(fdf->pts, fdf->xmax, fdf->ymax);
+	fdf->pts = malloc(sizeof(t_pts *) * fdf->ymax);
+	while (i < fdf->ymax)
 	{
-		fdf->pts[i] = malloc(sizeof(t_pts) * fdf->dim->max_x);
+		fdf->pts[i] = malloc(sizeof(t_pts) * fdf->xmax);
 		if (!fdf->pts[i] || fdf->pts[i] == NULL)
 			exit (0);//TODO:integrate into exit function
 		i++;
 	}
-	init_points(fdf->map->elements, fdf, 0, 0);
-	free_map(fdf->map, fdf->dim);
+	set_points(fdf->map->elements, fdf, 0, 0);
 }
 
-void	init_null_dim(t_fdf *fdf)
+void	init_map(t_map *map)
 {
-	fdf->dim->max_x = 0;
-	fdf->dim->max_y = 0;
-	fdf->dim->s_x = -1;
-	fdf->dim->s_y = -1;
-	fdf->dim->z_x = -1;
-	fdf->dim->z_y = -1;
+	map = malloc(sizeof(t_map));
+	if (!map || map == NULL)
+		exit (0);//TODO:integrate into exit function
+	map->raw_str = NULL;
+	map->space_split = NULL;
+	map->elements = NULL;
 }
 
-void	init_points(char ***lmn, t_fdf *fdf, int x, int y)
+void	init_iso(t_iso *iso)
 {
-	int	i;
-	int	lmn_len;
-	char	*num;
-	char	*col;
+	iso = malloc(sizeof(t_iso));
+	if (!iso || iso == NULL)
+		exit (0);//TODO:integrate into exit function
+	iso->offset = 0;
+	iso->x0 = 0;
+	iso->y0 = 0;
+	iso->x1 = 0;
+	iso->y1 = 0;
+	iso->dx = 0;
+	iso->dy = 0;
+	iso->sx = 0;
+	iso->sy = 0;
+}
 
-	lmn_len = 0;
-	while (y < fdf->dim->max_y)
+void	init_pts(t_pts **pts, int xmax, int ymax, int y)
+{
+	pts = malloc(sizeof(t_pts *) * ymax);
+	if (!pts || pts == NULL)
+		exit (0);//TODO:integrate into exit function
+	while (y < ymax)
 	{
-		i = 0;
-		lmn_len = get_lmn_len(lmn[y][x]);
-		if (lmn_len < 0)
-			col = extract_color(lmn[y][x], -lmn_len);
-		else if (lmn_len > 0)
-			col = DEFCOL;
-		lmn_len = ft_abs(lmn_len);
-		num = extract_height(lmn[y][x], lmn_len);
-		fdf->pts[y][x] = plot_point(num, col, fdf->pts[y][x]);
-		x++;
-		if (!lmn[y][x])
-		{
-			x = 0;
-			y++;
-		}
+		pts[y] = malloc(sizeof(t_pts) * xmax);
+		if (!pts[y] || pts[y] == NULL)
+			exit (0);//TODO:integrate into exit function
+		y++;
 	}
-}
-t_pts	plot_point(char *hei, char *col, t_pts pts)
-{
-	pts.c = convert_color(col);
-	pts.z = ft_atoi(hei);
-	return (pts);
-}
-
-int	convert_color(char *col)
-{
-	int	i;
-	int	hex;
-	
-	i = 2;
-	hex = 0;
-	while (col[i])
-	{
-		hex *= 16;
-		hex += ft_hextoi(col[i]);
-		i++;
-	}
-	return (hex);	
-}
-
-char	*extract_height(char *num, int end)
-{
-	int	i;
-	char	*height;
-	
-	i = 0;
-	height = malloc(sizeof(char) * end + 1);
-	if (!height || height == NULL)
-		exit (0);//TODO:integrate into exit function;
-	while (i < end)
-	{
-		height[i] = num[i];
-		i++;
-	}
-	height[i] = '\0';
-	return (height);
-}
-
-char	*extract_color(char *col, int start)
-{
-	int	len;
-	int	i;
-	char	*out;
-	
-	i = 0;
-	len = ft_strlen(col + start);
-	out = malloc(sizeof(char) * len + 1);
-	if (!out || out == NULL)
-		return (NULL);
-	while (col[start + i] != '\0' && i < len)
-	{
-		out[i] = col[start + i];
-		i++;
-	}
-	out[i] = '\0';
-	return (out);
-}
-
-int	get_lmn_len(char *lmn)
-{
-	int	i;
-	
-	i = 0;
-	while (lmn[i])
-	{
-		if (lmn[i] == ',')
-			return (-i);
-		i++;
-	}
-	return (i);
 }

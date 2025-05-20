@@ -61,6 +61,7 @@
     "stdlib.h": "c",
     "math.h": "c",
     "limits.h": "c",
-    "get_next_line.h": "c"
+    "get_next_line.h": "c",
+    "fdf.h": "c"
   }
 }
