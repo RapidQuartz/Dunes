@@ -35,6 +35,3 @@ z0	— height at `(0,0)`
 z1	— height at `(0,1)`  
 z2	— height at `(1,0)`  
 
-
-abcd
-efgh

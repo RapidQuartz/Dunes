@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 15:08:36 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:51:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	main(int arg, char **param)
 
 	if (arg != 2)
 		return (1);
-	init_raw(&fdf, param[1]);
-	init_fdf(&fdf);
+	fdf.fd = open(param[1], O_RDONLY);
 	fdf.x = 0;
 	fdf.y = 0;
+	init_fdf(&fdf);
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, DEFWID, DEFHEI, "Fer De Fil");
 	fdf.bpp = 32;

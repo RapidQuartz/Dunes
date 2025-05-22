@@ -10,9 +10,11 @@ src/init_fdf.c \
 src/parsing/parse_mapfile.c src/parsing/create_map.c \
 src/parsing/parse_color.c \
 src/utility/helpers.c \
-src/drawing/project_map.c
+src/drawing/project_map.c \
+src/utility/error.c
 # src/
 # src/parsing/
+# src/utility/
 OBJ = $(SRC:.c=.o)
 #	maybe include an `objects` directory to keep things neat
 

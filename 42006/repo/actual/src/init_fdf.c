@@ -6,41 +6,57 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:30:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:11:08 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/fdf.h"
 
+void	init_raw(t_fdf *fdf, char *map_file)
+{
+	fdf->raw = malloc(sizeof(t_raw));
+	if (!fdf->raw || fdf->raw == NULL)
+		exit (0);//TODO:integrate into exit function
+	fdf->raw->map = open(map_file, O_RDONLY);
+	fdf->raw->line = NULL;
+	fdf->raw->string = NULL;
+	fdf->raw->lines = NULL;
+	fdf->raw->elements = NULL;
+	read_raw_map(fdf);
+}
 void	init_fdf(t_fdf *fdf)
 {
 	int	i;
 
 	i = 0;
-	init_map(fdf->map);
+	init_dim(fdf);
 	init_iso(fdf->iso);
 	init_pro(fdf->pro);
-	read_mapfile(fdf);
 	split_map_str(fdf);
-	init_pts(fdf->pts, fdf->xmax, fdf->ymax);
-	while (i < fdf->ymax)
+	init_pts(fdf->pts, fdf->dim->map_height, fdf->dim->map_height);
+	while (i < fdf->dim->map_height)
 	{
-		fdf->pts[i] = malloc(sizeof(t_pts) * fdf->xmax);
+		fdf->pts[i] = malloc(sizeof(t_pts) * fdf->dim->map_height);
 		if (!fdf->pts[i] || fdf->pts[i] == NULL)
 			exit (0);//TODO:integrate into exit function
 		i++;
 	}
-	set_points(fdf->map->elements, fdf, 0, 0);
+	set_points(fdf->raw->elements, fdf, 0, 0);
 }
 
-void	init_map(t_map *map)
+void	init_dim(t_fdf *fdf)
 {
-	map = malloc(sizeof(t_map));
-	if (!map || map == NULL)
+	fdf->dim = malloc(sizeof(t_dim));
+	if (!fdf->dim || fdf->dim == NULL)
 		exit (0);//TODO:integrate into exit function
-	map->raw_str = NULL;
-	map->space_split = NULL;
-	map->elements = NULL;
+	fdf->dim->screen_height = DEFWID;
+	fdf->dim->screen_height = DEFHEI;
+	fdf->dim->screen_offset = 0;
+	fdf->dim->map_height = 0;
+	fdf->dim->map_height = 0;
+	fdf->dim->tile_size = 0;
+	fdf->dim->rotation = 30;
+	fdf->dim->zoom = 1;
 }
 
 void	init_iso(t_iso *iso)

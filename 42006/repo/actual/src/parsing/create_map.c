@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:26:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:06:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:00:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
 	char	*col;
 
 	lmn_len = 0;
-	while (y < fdf->ymax)
+	while (y < fdf->dim->map_height)
 	{
 		lmn_len = get_lmn_len(lmn[y][x]);
 		if (lmn_len < 0)
