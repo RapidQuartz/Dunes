@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 15:07:18 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:20:09 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,13 @@
 //// NEO:  ////  ////the new structures for the FDF project////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// RAW:  ////  ////the pure output from reading the mapfile//////////////////
+typedef struct s_mlx
+{
+	void	*win;
+	void	*mlx;
+	int			bpp;
+	int			len;
+}	t_mlx;
 typedef struct s_raw
 {
 	int		map;
@@ -125,7 +132,6 @@ typedef struct s_raw
 	char	*string;
 	char	**lines;
 	char	***elements;
-
 }	t_raw;
 //// MAP:  ////  ////the processed map file converted into data points/////////
 typedef struct s_map
@@ -181,11 +187,11 @@ typedef struct s_fdf
 {
 	int		x;
 	int		y;
-	int		width;
-	int		height;
 	t_raw	*raw;
 	t_map	*map;
 	t_dim	*dim;
+	void	*mlx;
+	void	*win;
 	t_pts	**pts;
 	t_pro	**pro;
 }	t_fdf;

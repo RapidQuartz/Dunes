@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 14:31:50 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:09:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@
 # include "init.h"
 # include "func.h"
 # include "struct.h"
-# include "../mlx/mlx.h"
+//ORIGINAL PATH
+// # include "../mlx/mlx.h"
+//ALTERNATIVEPATH
+# include "../../../resources/minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 # include "../libft/ft_printf/ft_printf.h"
 # include "../libft/get_next_line/get_next_line.h"
