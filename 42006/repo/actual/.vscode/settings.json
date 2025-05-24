@@ -62,6 +62,11 @@
     "math.h": "c",
     "limits.h": "c",
     "get_next_line.h": "c",
-    "fdf.h": "c"
+    "fdf.h": "c",
+    "func.h": "c",
+    "init.h": "c",
+    "stdio.h": "c",
+    "unistd.h": "c",
+    "stddef.h": "c"
   }
 }

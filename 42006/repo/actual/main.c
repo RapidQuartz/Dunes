@@ -6,112 +6,60 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 09:03:49 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:37:53 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "inc/fdf.h"
 
+
 int	main(int arg, char **param)
 {
 	t_fdf	fdf;
-	void	*win;
-
+		
 	if (arg != 2)
 		return (1);
-	init_raw(&fdf, param[1]);
+	check_params(arg, param);
+	fdf.file = param[1];
 	init_fdf(&fdf);
-	fdf.x = 0;
-	fdf.y = 0;
-	fdf.mlx = mlx_init();
-	fdf.win = mlx_new_window(fdf.mlx, DEFWID, DEFHEI, "Fer De Fil");
-	fdf.bpp = 32;
-	fdf.len = 0;
-	prepare_image(&fdf);
-	draw_image(&fdf);
-	printf("just follow me\n");
+	init_mlx(&fdf);
+	draw_image(&fdf, *fdf.pro);
+	//put img to screen stuff
+	//TODO:	check if need to insert an offset
+	mlx_put_image_to_window(fdf.mlx->ptr, fdf.mlx->win, fdf.mlx->img, 0, 0);//replace `0, 0` with `o_x, o_y` for `offset_x` and `offset_y`
+	mlx_loop(fdf.mlx->ptr);
 }
 
-void	free_map(t_fdf *fdf)
+int	key_handler(int key, void *param)
 {
-	int	i;
-	int	j;
-	
-	i = 0;
-	while (i < fdf->ymax)
+	t_fdf	*fdf;
+
+	fdf = param;
+	if (key == 65307)
 	{
-		j = 0;
-		while (j < fdf->xmax)
-		{
-			free(fdf->map->elements[i][j]);
-			j++;
-		}
-		free(fdf->map->elements[i]);
-		i++;
+		close_handler(fdf);
+		exit (0);//TODO:integrate into exit function
 	}
-	free (fdf->map->elements);
-	free (fdf->raw->string);
-	fdf->raw->string = NULL;
+	return (0);
 }
 
-////	TODO: move to separate `draw_map.c` file
-void	prepare_image(t_fdf *fdf)
+int	close_handler(void *param)
 {
-	int	z;
-	char	*addr;
+	t_fdf	*fdf;
 
-	fdf->img = mlx_new_image(fdf->map->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
-	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
-	while (fdf->y < fdf->ymax - 1)
-	{
-		while (fdf->x < fdf->xmax - 1)
-		{
-			project_origin(fdf, fdf->pro, fdf->x, fdf->y);
-			if (fdf->x < fdf->xmax - 1)
-				project_horizontal(fdf, fdf->pro, fdf->x + 1, fdf->y);
-				// calculate_points(fdf, fdf->x + 1, fdf->y);
-			if (fdf->y < fdf->ymax - 1)
-				project_vertical(fdf, fdf->pro, fdf->x, fdf->y + 1);
-				// calculate_points(fdf, fdf->x, fdf->y + 1);
-			fdf->x++;
-		}
-		fdf->x = 0;
-		fdf->y++;
-	}
+	fdf = param;
+	mlx_destroy_window(fdf->mlx->ptr, fdf->mlx->win);
+	exit (0);
+	return (0);
 }
 
-////	TODO: move to separate `project_map.c` file
-void	calculate_points(t_fdf *fdf, int x, int y, int big)
+////	TODO: check for map size/zoom/misc params
+void	check_params(int arg, char **param)
 {
-	int	theta;
-	int	z[2];
-
-	theta = fdf->theta;
-	z[0] = fdf->pts[y][x].z;
-	z[1] = fdf->pts[y + 1][x + 1].z;
-	fdf->iso->x0 = (x - y) * cos(fdf->theta);
-	fdf->iso->y0 = (x + y) * sin(fdf->theta) - z[0] * fdf->map->zoom;
-	fdf->iso->x1 = ((x + 1) - y) * cos(fdf->theta);
-	fdf->iso->y1 = ((x + 1) + y) * sin(fdf->theta) - z1 * fdf->map->zoom;
-	fdf->pos->dx = ft_abs(fdf->iso->x1 - fdf->iso->x0);
-	fdf->pos->dy = ft_abs(fdf->iso->y1 - fdf->iso->y0);
-	if (fdf->iso->x0 < fdf->iso->x1)
-		fdf->iso->sx = 1;
-	else
-		fdf->iso->sx = -1;
-	if (fdf->iso->y0 < fdf->iso->y1)
-		fdf->iso->sy = 1;
-	else
-		fdf->iso->sy = -1;
-	bresenham(fdf);
+	if (arg < 2 || !param)
+		exit (0);//TODO:integrate into exit function
+	return ;
 }
 
-void	bresenham(t_fdf *fdf)
-{
-	fdf->map->err = fdf->iso->dx - fdf->iso->dy;
-	while (fdf->iso->x0 != fdf->iso->x1 || fdf->iso->y0 != fdf->iso->y1)
-	{
-		
-	}
-}
+
 /* ||*********************Created: 2025/05/12 21:33:42*********************|| */

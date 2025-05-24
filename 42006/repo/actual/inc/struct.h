@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 11:37:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:37:06 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,29 +121,32 @@
 typedef struct s_mlx
 {
 	void	*win;
-	void	*mlx;
+	void	*ptr;
+	void	*img;
 	int			bpp;
 	int			len;
+	int			end;
+	char	*addr;
 }	t_mlx;
-typedef struct s_raw
+typedef struct s_map
 {
-	int		map;
+	int		fd;
 	char	*line;
 	char	*string;
 	char	**lines;
 	char	***elements;
-}	t_raw;
-//// MAP:  ////  ////the processed map file converted into data points/////////
-typedef struct s_map
-{
-	t_raw	 *raw;
-	int	 width;
-	int	 height;
-	int	 offset;
-	int	 tile_size;
-	int	 rotation;
-	int	 zoom;
 }	t_map;
+//// MAP:  ////  ////the processed map file converted into data points/////////
+// typedef struct s_map
+// {
+// 	t_raw	 *raw;
+// 	int	 width;
+// 	int	 height;
+// 	int	 offset;
+// 	int	 tile_size;
+// 	int	 rotation;
+// 	int	 zoom;
+// }	t_map;
 //// PTS:  ////  ////container for the map coordinates' values/////////////////
 typedef struct s_pts
 {
@@ -154,9 +157,9 @@ typedef struct s_pts
 typedef struct s_pro
 {
 	int		x;
-	int		xy;
-	int		xx;
 	int		y;
+	int		xx;
+	int		xy;
 	int		yx;
 	int		yy;
 	int		z;
@@ -174,28 +177,25 @@ typedef struct s_pro
 //// DIM:  ////  ////container for image and window parameters/////////////////
 typedef struct s_dim
 {
-	int		screen_width;
-	int		screen_height;
-	int		map_width;
-	int		map_height;
-	int		screen_offset;
-	int		tile_size;
-	int		rotation;
-	int		zoom;
-	int		rows;
-	int		columns;
-	int		total_elements;
+	int		s_x;
+	int		s_y;
+	int		m_x;
+	int		m_y;
+	int		rotation;//BONUS
+	int		zoom;//BONUS
+	int		y_lim;
+	int		x_lim;
+	int		total_elements;//UNUSED
 }	t_dim;
 //// FDF:  ////  ////container for all data in FDF project/////////////////////
 typedef struct s_fdf
 {
 	int		x;
 	int		y;
-	t_raw	*raw;
-	t_map	*map;
+	char		*file;
 	t_dim	*dim;
-	void	*mlx;
-	void	*win;
+	t_map	*map;
+	t_mlx	*mlx;
 	t_pts	**pts;
 	t_pro	**pro;
 }	t_fdf;

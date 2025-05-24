@@ -1,22 +1,19 @@
 
 NAME = fdf
 INC = -I./inc -I./mlx -I./libft/
+#	TODO: build or copy mlx at runtime, or omit it entirely
+##	could git clone and make it straight from the source to ensure function
 CC = @cc -g
 CF = -Wall -Werror -Wextra
 RM = @rm -f
 LIBFT = libft.a
-SRC = main.c error.c \
+SRC = main.c \
 src/init_fdf.c \
-src/parsing/parse_mapfile.c src/parsing/create_map.c \
-src/parsing/parse_color.c \
-src/utility/helpers.c \
-src/drawing/project_map.c \
-src/utility/error.c
-# src/
-# src/parsing/
-# src/utility/
+src/drawing/draw.c src/drawing/project_map.c \
+src/parsing/create_map.c src/parsing/parse_mapfile.c \
+src/utility/check_input.c src/utility/helpers.c
 OBJ = $(SRC:.c=.o)
-#	maybe include an `objects` directory to keep things neat
+#	TODO: maybe include an `objects` directory to keep things neat
 
 all:	$(NAME)
 	

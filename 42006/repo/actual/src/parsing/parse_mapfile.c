@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:04:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 15:11:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:47:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,44 @@
 void	read_raw_map(t_fdf *fdf)
 {
 	char		*raw;
-	char		*line;
 
-	while (fdf->raw->map != -1)
+	while (fdf->map->fd != -1)
 	{
-		fdf->raw->line = get_next_line(fdf->raw->map);
-		if (!line)
+		fdf->map->line = get_next_line(fdf->map->fd);
+		if (!fdf->map->line)
 			break ;
 		if (raw)
-			raw = ft_strjoin(raw, line);
+			raw = ft_strjoin(raw, fdf->map->line);
 		else
-			raw = ft_strdup(line);
-		free (line);
+			raw = ft_strdup(fdf->map->line);
+		free (fdf->map->line);
 	}
-	fdf->raw->string = malloc(sizeof(raw));
-	if (!fdf->raw->string || fdf->raw->string == NULL)
+	fdf->map->string = malloc(sizeof(raw));
+	if (!fdf->map->string || fdf->map->string == NULL)
 		exit (0);//TODO:integrate into exit function
-	fdf->raw->string = ft_strdup(raw);
+	fdf->map->string = ft_strdup(raw);
 	free (raw);
 }
 
-void	split_map_str(t_fdf *fdf)
+void	split_map_str(t_fdf *fdf, t_map *map, int x, int y)
 {
 	char	**split_map;
-	int	l;
-	int	r;
 
-	l = 0;
-	r = 0;
-	split_map = ft_split(fdf->raw->string, '\n');
-	while (split_map[l])
-		l++;
-	fdf->dim->map_height = l;
-	fdf->raw->elements = malloc(sizeof(*fdf->raw->elements) * l);
-	if (!fdf->raw->elements || fdf->raw->elements == NULL)
+	split_map = ft_split(map->string, '\n');
+	while (split_map[y])
+		y++;
+	fdf->dim->y_lim = y;
+	map->elements = malloc(sizeof(*map->elements) * y);
+	if (!map->elements || map->elements == NULL)
 		exit (0);//TODO:integrate into exit function
-	l = 0;
-	while (split_map[l])
+	y = 0;
+	while (split_map[y])
 	{
-		fdf->raw->elements[l] = ft_split(split_map[l], ' ');
-		while (l == 0 && fdf->raw->elements[l][r])
-			r++;
-		l++;
+		map->elements[y] = ft_split(split_map[y], ' ');
+		while (y == 0 && map->elements[y][x])
+			x++;
+		y++;
 	}
-	fdf->dim->map_height = r;
+	fdf->dim->x_lim = x;
 	free (split_map);
 }

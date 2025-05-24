@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 14:32:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:19:46 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <math.h>
 # include <limits.h>
+# include <stdbool.h>
 # define DEFCOL "0xFFFFFF"
 # define DEFWID 800
 # define DEFHEI 800
