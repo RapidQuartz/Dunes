@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 09:53:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:49:01 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //fdf->pro[fdf->y][fdf->x] = get_projection(fdf, fdf->x, fdf->y);
 //
-t_pro	get_projection(t_fdf *fdf, t_pts **pts, int x, int y);
+void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro);
 //
 void	init_mlx(t_fdf *fdf, int width, int height, char *title);
 void	init_raw(t_fdf *fdf, char *map_file)
@@ -104,7 +104,7 @@ void	init_pro(t_fdf *fdf)
 			exit(0);//TODO:REPLACE
 		while (fdf->x < fdf->dim->columns)
 		{
-			fdf->pro[fdf->y][fdf->x] = get_projection(fdf, fdf->x, fdf->y);
+			get_projection(fdf, fdf->pts, &fdf->pro[fdf->y][fdf->x]);
 			fdf->x++;
 		}
 		fdf->x = 0;
@@ -112,26 +112,78 @@ void	init_pro(t_fdf *fdf)
 	}
 }
 
-t_pro	get_projection(t_fdf *fdf, t_pts **pts, int x, int y)
+void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro)
 {
-	t_pro	res;
-
-	res.z = pts[y][x].z_height;
-	res.zx = pts[y][x + 1].z_height;
-	res.zy = pts[y + 1][x].z_height;
-	res.c =  pts[y][x].c_color;
-	res.cx = pts[y][x + 1].c_color;
-	res.cy =  pts[y + 1][x].c_color;
-	res.x = (x - y) * (cos (fdf->dim->rotation));
-	res.xx = ((x + 1) - y) * (cos (fdf->dim->rotation));
-	res.y = (x + y) * (sin (fdf->dim->rotation)) - res.z;
-	res.yx = ((x + 1) + y) * (sin (fdf->dim->rotation)) - res.zx;
-	res.yy = (x + (y + 1)) * (sin (fdf->dim->rotation)) - res.zy;
-	res.dx = ft_abs(res.xx);
-	res.dy = ft_abs();
-	return (res);
+	pro->z = pts[fdf->y][fdf->x].z_height;
+	pro->c =  pts[fdf->y][fdf->x].c_color;
+	pro->x = (fdf->x - fdf->y) * (cos (fdf->dim->rotation));
+	pro->y = (fdf->x + fdf->y) * (sin (fdf->dim->rotation)) - pro->z;
+	if (fdf->x < fdf->dim->rows - 1)
+		proj_next_row(fdf, pts, pro);
+	if (fdf->y < fdf->dim->columns - 1)
+		proj_next_col(fdf, pts, pro);
 }
 
+void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *pro)
+{
+	pro->zx = pts[fdf->y][fdf->x + 1].z_height;
+	pro->cx = pts[fdf->y][fdf->x + 1].c_color;
+	pro->xx = ((fdf->x + 1) - fdf->y) * (cos (fdf->dim->rotation));
+	pro->yx = ((fdf->x + 1) + fdf->y) * (sin (fdf->dim->rotation)) - pro->zx;
+	pro->d = ft_abs(pro->xx) - ft_abs(pro->x);
+	pro->dx = ft_abs(pro->yx) - ft_abs(pro->y);
+	if (pro->xx > pro->x)
+		pro->sx = 1;
+	else
+		pro->sx = -1;	
+}
+
+void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *pro)
+{
+	pro->zy = pts[fdf->y + 1][fdf->x].z_height;
+	pro->cy =  pts[fdf->y + 1][fdf->x].c_color;
+	pro->xy = (fdf->x - (fdf->y + 1)) * (cos (fdf->dim->rotation));
+	pro->yy = (fdf->x + (fdf->y + 1)) * (sin (fdf->dim->rotation)) - pro->zy;
+	pro->dy = ft_abs(pro->yy) - ft_abs(pro->y);
+	if (pro->yy > pro->y)
+	pro->sy = 1;	
+	else
+		pro->sy = -1;
+}
+/* res.z -- `int` for height at x, y
+res.zx -- `int` for height at x + 1, y
+res.zy -- `int` for height at x, y + 1
+res.c --  `int` fir color at x, y
+res.cx --  `int` fir color at x + 1, y
+res.cy --  `int` fir color at x, y + 1
+res.x -- ((x - y) * (cos (30))) at x, y
+res.xy -- ((x - (y + 1)) * (cos (30))) at x, y + 1
+res.xx -- (((x + 1) - y) * (cos (30))) at x + 1, y
+res.y --  ((x + y) * (sin (30))  at x, y
+res.yx --  ((x + (y + 1)) * (sin (30))) at at x + 1, y
+res.yy --  (((x + 1) + y) * (sin (30))) at  at x, y + 1
+res.dx -- (ft_abs(xx) - ft_abs(x)) at x, y
+res.dy -- (ft_abs(yx) - ft_abs(y)) at x, y + 1
+res.dxy -- (ft_abs(yy) - ft_abs(y)) at x + 1, y
+res.sx --
+{
+if (res.xx > res.x)
+	res.sx = 1;
+else
+	res.sx = -1;	
+}
+res.sy --
+{
+if (res.yy > res.y)
+	res.sy = 1;	
+else
+	res.sy = -1;
+}
+
+d	--	ft_abs(xx) - ft_abs(x)
+dx	--	ft_abs(yx) - ft_abs(y)
+dy	--	ft_abs(yy) - ft_abs(y)
+*/
 /* 
 	dx = ft_abs(x1 - x0)
 	dy = ft_abs(y1 - y0)

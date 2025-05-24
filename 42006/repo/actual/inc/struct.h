@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 09:20:09 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:37:57 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_pts
 typedef struct s_pro
 {
 	int		x;
+	int		xy;
 	int		xx;
 	int		y;
 	int		yx;
@@ -164,8 +165,11 @@ typedef struct s_pro
 	int		c;
 	int		cx;
 	int		cy;
+	int		d;
 	int		dx;
 	int		dy;
+	int		sx;
+	int		sy;
 }	t_pro;
 //// DIM:  ////  ////container for image and window parameters/////////////////
 typedef struct s_dim
