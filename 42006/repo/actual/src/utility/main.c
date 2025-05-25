@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 14:51:32 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:03:28 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	prepare_image(t_fdf *fdf)
 	int	z;
 	char	*addr;
 
-	fdf->img = mlx_new_image(fdf->map->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
+	fdf->img = mlx_new_image(fdf->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
 	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
 	while (fdf->y < fdf->ymax - 1)
 	{

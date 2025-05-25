@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 09:03:49 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:33:17 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	main(int arg, char **param)
 	fdf.y = 0;
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, DEFWID, DEFHEI, "Fer De Fil");
-	fdf.bpp = 32;
-	fdf.len = 0;
+	fdf.b = 32;
+	fdf.l = 0;
 	prepare_image(&fdf);
 	draw_image(&fdf);
-	printf("just follow me\n");
+	printf(RED"just follow me\n"DEF);
 }
 
 void	free_map(t_fdf *fdf)
@@ -60,8 +60,7 @@ void	prepare_image(t_fdf *fdf)
 	int	z;
 	char	*addr;
 
-	fdf->img = mlx_new_image(fdf->map->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
-	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
+	fdf->img = mlx_new_image(fdf->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
 	while (fdf->y < fdf->ymax - 1)
 	{
 		while (fdf->x < fdf->xmax - 1)
@@ -108,6 +107,9 @@ void	calculate_points(t_fdf *fdf, int x, int y, int big)
 
 void	bresenham(t_fdf *fdf)
 {
+	printf(RED"just follow me\n"DEF);
+	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
+
 	fdf->map->err = fdf->iso->dx - fdf->iso->dy;
 	while (fdf->iso->x0 != fdf->iso->x1 || fdf->iso->y0 != fdf->iso->y1)
 	{

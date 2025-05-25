@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 11:37:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:32:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ typedef struct s_mlx
 {
 	void	*win;
 	void	*mlx;
-	int			bpp;
 	int			len;
 }	t_mlx;
 typedef struct s_raw
@@ -191,10 +190,14 @@ typedef struct s_fdf
 {
 	int		x;
 	int		y;
+	int		e;
+	int		b;
+	int		l;
 	t_raw	*raw;
 	t_map	*map;
 	t_dim	*dim;
 	void	*mlx;
+	void	*img;
 	void	*win;
 	t_pts	**pts;
 	t_pro	**pro;

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 09:24:02 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:02:19 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		convert_color(char *col);
 void	init_fdf(t_fdf *fdf);
 void	init_map(t_map *map);
 void	init_pro(t_fdf *fdf);
-void	init_iso(t_iso *iso);
+// void	init_iso(t_iso *iso);
 void	init_pts(t_pts **pts, int xmax, int ymax);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// PARSE:////  //////////////////////////////////////////////////////////////

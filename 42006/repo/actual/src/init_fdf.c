@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/23 11:49:01 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 00:04:43 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	init_pts(t_pts **pts, int xmax, int ymax)
 	y = 0;
 	pts = malloc(sizeof(t_pts *) * ymax);
 	if (!pts || pts == NULL)
-	exit (0);//TODO:integrate into exit function
+		exit (0);//TODO:integrate into exit function
 	while (y < ymax)
 	{
 		pts[y] = malloc(sizeof(t_pts) * xmax);
 		if (!pts[y] || pts[y] == NULL)
-		exit (0);//TODO:integrate into exit function
+			exit (0);//TODO:integrate into exit function
 		y++;
 	}
 }
