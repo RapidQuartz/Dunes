@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:02:43 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:57:08 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:39:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro)
 {
-	pro->z = pts[fdf->y][fdf->x].z_height;
-	pro->c =  pts[fdf->y][fdf->x].c_color;
+	pro->z = pts[fdf->y][fdf->x].z;
+	pro->c =  pts[fdf->y][fdf->x].c;
 	pro->x = (fdf->x - fdf->y) * (cos (fdf->dim->rotation));
 	pro->y = (fdf->x + fdf->y) * (sin (fdf->dim->rotation)) - pro->z;
 	if (fdf->x < fdf->dim->x_lim - 1)
@@ -25,8 +25,8 @@ void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro)
 }
 void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *pro)
 {
-	pro->zx = pts[fdf->y][fdf->x + 1].z_height;
-	pro->cx = pts[fdf->y][fdf->x + 1].c_color;
+	pro->zx = pts[fdf->y][fdf->x + 1].z;
+	pro->cx = pts[fdf->y][fdf->x + 1].c;
 	pro->xx = ((fdf->x + 1) - fdf->y) * (cos (fdf->dim->rotation));
 	pro->xy = ((fdf->x + 1) + fdf->y) * (sin (fdf->dim->rotation)) - pro->zx;
 	pro->d = ft_abs(pro->xx) - ft_abs(pro->x);
@@ -39,8 +39,8 @@ void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *pro)
 
 void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *pro)
 {
-	pro->zy = pts[fdf->y + 1][fdf->x].z_height;
-	pro->cy =  pts[fdf->y + 1][fdf->x].c_color;
+	pro->zy = pts[fdf->y + 1][fdf->x].z;
+	pro->cy =  pts[fdf->y + 1][fdf->x].c;
 	pro->yx = (fdf->x - (fdf->y + 1)) * (cos (fdf->dim->rotation));
 	pro->yy = (fdf->x + (fdf->y + 1)) * (sin (fdf->dim->rotation)) - pro->zy;
 	pro->dy = ft_abs(pro->yy) - ft_abs(pro->y);

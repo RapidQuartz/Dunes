@@ -6,40 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:26:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/25 15:05:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:28:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/fdf.h"
-
-void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
-{
-	int	lmn_len;
-	char	*num;
-	char	*col;
-
-	lmn_len = 0;
-	col = NULL;
-	while (y < fdf->dim->y_lim)
-	{
-		lmn_len = get_lmn_len(lmn[y][x]);
-		if (lmn_len < 0)
-			col = extract_color(lmn[y][x], ft_abs(lmn_len));
-		else if (lmn_len > 0)
-			col = DEFCOL;
-		num = get_height(lmn[y][x], ft_abs(lmn_len));
-		fdf->pts[y][x].c_color = convert_color(col, lmn_len);
-		fdf->pts[y][x].z_height = ft_atoi(num);
-		free (num);
-		x++;
-		if (!lmn[y][x])
-		{
-			x = 0;
-			y++;
-		}
-	}
-	free_map(fdf);
-}
 
 int	get_lmn_len(char *lmn)
 {
@@ -71,6 +42,16 @@ int	get_height(t_fdf *fdf, char *num, int end)
 	}
 	height[i] = '\0';
 	return (ft_atoi(height));
+}
+
+int	get_color(t_fdf *fdf, char *p, int l)
+{
+	char	*c;
+	if (l < 0)
+		c = extract_color(fdf, p, ft_abs(l));
+	else
+		c = DEFCOL;
+	return (convert_color(p, l));
 }
 
 char	*extract_color(t_fdf *fdf, char *col, int start)

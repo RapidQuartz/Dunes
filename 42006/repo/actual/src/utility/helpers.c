@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:25:16 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/25 14:25:55 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:38:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,5 @@ void	end_fdf(t_fdf *fdf, int err_code)
 		free (fdf->dim);
 	exit (err_code);
 }
+
+void	free_pro(t_pro )

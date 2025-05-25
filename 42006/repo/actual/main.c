@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/25 14:18:07 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:30:14 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int arg, char **param)
 		
 	if (arg != 2)
 		return (1);
-	check_params(arg, param);
+	check_params(&fdf, arg, param);
 	fdf.file = param[1];
 	init_fdf(&fdf);
 	init_mlx(&fdf);
@@ -54,7 +54,7 @@ int	close_handler(void *param)
 }
 
 ////	TODO: check for map size/zoom/misc params
-void	check_params(int arg, char **param)
+void	check_params(t_fdf *fdf, int arg, char **param)
 {
 	if (arg < 2 || !param)
 		end_fdf(fdf, 0);

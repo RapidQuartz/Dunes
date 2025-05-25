@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/25 15:05:52 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:32:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 void	free_map(t_fdf *fdf);
 int	key_handler(int key, void *param);
 int	close_handler(void *param);
-void	check_params(int arg, char **param);
+void	check_params(t_fdf *fdf, int arg, char **param);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// INIT: ////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
 void	init_fdf(t_fdf *fdf);
 void	init_dim(t_fdf *fdf);
-void	init_map(t_fdf *fdf, t_dim *dim, int x, int y);
-void	init_img(t_fdf *fdf);
+void	init_map(t_fdf *fdf, int x, int y);
+void	init_img(t_fdf *fdf, t_map *map);
 void	init_mlx(t_fdf *fdf);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// PARSE:////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
-void	read_map(t_fdf *fdf, t_map *map);
+void	read_map(t_fdf *fdf, t_map *map, t_pts **pts);
 void	split_map_str(t_fdf *fdf, t_map *map, int x, int y);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// COLOR:////  //////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ void	free_map(t_fdf *fdf);
 //// MAP:  ////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
 // void	set_points(char ***lmn, t_fdf *fdf, int x, int y);
-void	set_points(t_fdf *fdf, t_map *map, int len, int hi);
+void	set_points(t_fdf *fdf, t_map *map, t_pts **pts, int len);
 int		get_lmn_len(char *lmn);
 int	get_height(t_fdf *fdf, char *num, int end);
 char	*extract_color(t_fdf *fdf, char *col, int start);
