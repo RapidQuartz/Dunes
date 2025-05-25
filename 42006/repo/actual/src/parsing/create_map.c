@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:26:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:52:22 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:05:00 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_lmn_len(char *lmn)
 	return (i);
 }
 
-char	*get_height(char *num, int end)
+int	get_height(t_fdf *fdf, char *num, int end)
 {
 	int	i;
 	char	*height;
@@ -63,17 +63,17 @@ char	*get_height(char *num, int end)
 	i = 0;
 	height = malloc(sizeof(char) * end + 1);
 	if (!height || height == NULL)
-		exit (0);//TODO:integrate into exit function;
+		end_fdf(fdf, -10);
 	while (i < end)
 	{
 		height[i] = num[i];
 		i++;
 	}
 	height[i] = '\0';
-	return (height);
+	return (ft_atoi(height));
 }
 
-char	*extract_color(char *col, int start)
+char	*extract_color(t_fdf *fdf, char *col, int start)
 {
 	int	len;
 	int	i;
@@ -83,7 +83,7 @@ char	*extract_color(char *col, int start)
 	len = ft_strlen(col + start);
 	out = malloc(sizeof(char) * len + 1);
 	if (!out || out == NULL)
-		return (NULL);
+		end_fdf(fdf, -11);
 	while (col[start + i] != '\0' && i < len)
 	{
 		out[i] = col[start + i];

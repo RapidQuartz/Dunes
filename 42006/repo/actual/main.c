@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:37:53 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 14:18:07 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	key_handler(int key, void *param)
 	if (key == 65307)
 	{
 		close_handler(fdf);
-		exit (0);//TODO:integrate into exit function
+		end_fdf(fdf, 0);
 	}
 	return (0);
 }
@@ -57,7 +57,7 @@ int	close_handler(void *param)
 void	check_params(int arg, char **param)
 {
 	if (arg < 2 || !param)
-		exit (0);//TODO:integrate into exit function
+		end_fdf(fdf, 0);
 	return ;
 }
 

@@ -6,53 +6,73 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:04:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:47:51 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:11:38 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/fdf.h"
 
-void	read_raw_map(t_fdf *fdf)
+void	read_map(t_fdf *fdf, t_map *map)
 {
-	char		*raw;
-
-	while (fdf->map->fd != -1)
+	while (map->fd != -1)
 	{
-		fdf->map->line = get_next_line(fdf->map->fd);
-		if (!fdf->map->line)
+		map->raw = get_next_line(map->fd);
+		if (!map->raw)
 			break ;
-		if (raw)
-			raw = ft_strjoin(raw, fdf->map->line);
+		if (map->str)
+			map->str = ft_strjoin(map->str, map->raw);
 		else
-			raw = ft_strdup(fdf->map->line);
-		free (fdf->map->line);
+			map->str = ft_strdup(map->raw);
+		free (map->raw);
 	}
-	fdf->map->string = malloc(sizeof(raw));
-	if (!fdf->map->string || fdf->map->string == NULL)
-		exit (0);//TODO:integrate into exit function
-	fdf->map->string = ft_strdup(raw);
-	free (raw);
+	map->lin = ft_split(map->str, '\n');
+	free (map->str);
+	split_map_str(fdf, map, 0, 0);
+	set_points(fdf, map, 0, 0);
 }
 
 void	split_map_str(t_fdf *fdf, t_map *map, int x, int y)
 {
-	char	**split_map;
 
-	split_map = ft_split(map->string, '\n');
-	while (split_map[y])
-		y++;
-	fdf->dim->y_lim = y;
-	map->elements = malloc(sizeof(*map->elements) * y);
-	if (!map->elements || map->elements == NULL)
-		exit (0);//TODO:integrate into exit function
-	y = 0;
-	while (split_map[y])
+	while (map->lin[map->y])
+		map->y++;
+	fdf->pos = malloc(sizeof(*fdf->pos) * map->y);
+	if (!fdf->pos || fdf->pos == NULL)
+		end_fdf(fdf, 0);
+	while (map->lin[y])
 	{
-		map->elements[y] = ft_split(split_map[y], ' ');
-		while (y == 0 && map->elements[y][x])
+		fdf->pos[y] = ft_split(map->lin[y], ' ');
+		while (y == 0 && fdf->pos[y][x])
 			x++;
 		y++;
 	}
-	fdf->dim->x_lim = x;
-	free (split_map);
+	map->x = x;
+	free (map->lin);
+}
+
+void	set_points(t_fdf *fdf, t_map *map, int len, int hi)
+{
+	char	*p;
+	t_pts	*s;
+
+	fdf->pts = malloc(sizeof(t_pts *) * map->y);
+	if (!fdf->pts || fdf->pts == NULL)
+		end_fdf(fdf, 0);
+	while (fdf->y < map->y)
+	{
+		s = fdf->pts[fdf->y];
+		p = map->pts[fdf->y][fdf->x];
+		if (s[fdf->x] == NULL)
+		{
+			fdf->x = 0;
+			fdf->y++;
+		}
+		len = get_lmn_len(p);
+		s = malloc(sizeof(t_pts) * map->x);
+		if (!s || s == NULL)
+			end_fdf(fdf, 0);
+		s[fdf->x].c_color = get_color(fdf, p, len);
+		s[fdf->x].z_height = get_height(fdf, p, ft_abs(len));
+		fdf->x++;
+	}
 }

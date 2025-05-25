@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:37:06 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 14:30:01 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,12 @@ typedef struct s_mlx
 typedef struct s_map
 {
 	int		fd;
-	char	*line;
-	char	*string;
-	char	**lines;
-	char	***elements;
+	int		x;
+	int		y;
+	char	*raw;
+	char	*str;
+	char	**lin;
+	char	***pts;
 }	t_map;
 //// MAP:  ////  ////the processed map file converted into data points/////////
 // typedef struct s_map
@@ -193,6 +195,7 @@ typedef struct s_fdf
 	int		x;
 	int		y;
 	char		*file;
+	char		***pos;
 	t_dim	*dim;
 	t_map	*map;
 	t_mlx	*mlx;

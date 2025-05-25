@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:25:16 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:45:07 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 14:25:55 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ void	free_map(t_fdf *fdf)
 		x = 0;
 		while (x < fdf->dim->x_lim)
 		{
-			free(fdf->map->elements[y][x]);
+			free(fdf->pos[y][x]);
 			x++;
 		}
-		free(fdf->map->elements[y]);
+		free(fdf->pos[y]);
 		y++;
 	}
-	free (fdf->map->elements);
-	free (fdf->map->string);
-	fdf->map->string = NULL;
+	free (fdf->pos);
+	free (fdf->map->str);
+	fdf->map->str = NULL;
 }
 
 void	end_fdf(t_fdf *fdf, int err_code)

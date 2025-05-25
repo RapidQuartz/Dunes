@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/24 17:55:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:07:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_dim(t_fdf *fdf)
 {
 	fdf->dim = malloc(sizeof(t_dim));
 	if (!fdf->dim || fdf->dim == NULL)
-		exit (0);//TODO:integrate into exit function
+		end_fdf(fdf, 0);
 	fdf->dim->s_x = DEFWID;
 	fdf->dim->s_y = DEFHEI;
 	fdf->dim->m_x = 0;
@@ -40,27 +40,56 @@ void	init_map(t_fdf *fdf, t_dim *dim, int x, int y)
 {
 	fdf->map = malloc(sizeof(t_map));
 	if (!fdf->map || fdf->map == NULL)
-		exit (0);//TODO:integrate into exit function
+		end_fdf(fdf, 0);
 	fdf->map->fd = open(fdf->file, O_RDONLY);
-	fdf->map->line = NULL;
-	fdf->map->string = NULL;
-	fdf->map->lines = NULL;
-	fdf->map->elements = NULL;
-	read_raw_map(fdf);
-	split_map_str(fdf, fdf->map, x, y);
-	fdf->pts = malloc(sizeof(t_pts *) * dim->y_lim);
-	if (!fdf->pts || fdf->pts == NULL)
-		exit (0);//TODO:integrate into exit function
-	while (y < dim->y_lim)
-	{
-		fdf->pts[y] = malloc(sizeof(t_pts) * dim->x_lim);
-		if (!fdf->pts[y] || fdf->pts[y] == NULL)
-			exit (0);//TODO:integrate into exit function
-		y++;
-	}
-	set_points(fdf->map->elements, fdf, fdf->x, fdf->y);
+	fdf->map->x = 0;
+	fdf->map->y = 0;
+	fdf->map->raw = NULL;
+	fdf->map->str = NULL;
+	fdf->map->lin = NULL;
+	fdf->pos = NULL;
+	read_map(fdf, fdf->map);
+	
 }
+/* 
+void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
+{
+	int	lmn_len;
+	char	*num;
+	char	*col;
 
+	lmn_len = 0;
+	col = NULL;
+	while (y < fdf->dim->y_lim)
+	{
+		lmn_len = get_lmn_len(lmn[y][x]);
+		if (lmn_len < 0)
+			col = extract_color(lmn[y][x], ft_abs(lmn_len));
+		else if (lmn_len > 0)
+			col = DEFCOL;
+		num = get_height(lmn[y][x], ft_abs(lmn_len));
+		fdf->pts[y][x].c_color = convert_color(col, lmn_len);
+		fdf->pts[y][x].z_height = ft_atoi(num);
+		free (num);
+		x++;
+		if (!lmn[y][x])
+		{
+			x = 0;
+			y++;
+		}
+	}
+	free_map(fdf);
+} */
+
+int	get_color(t_fdf *fdf, char *p, int l)
+{
+	char	*c;
+	if (l < 0)
+		c = extract_color(p, ft_abs(l));
+	else
+		c = DEFCOL;
+	return (convert_color(p, l))
+}
 void	init_img(t_fdf *fdf)
 {
 	
@@ -89,7 +118,7 @@ void	init_mlx(t_fdf *fdf)
 
 	fdf->mlx = malloc(sizeof(t_mlx));
 	if (!fdf->mlx || fdf->mlx == NULL)
-		exit (0);//TODO:integrate into exit function
+		end_fdf(fdf, 0);
 	mlx = fdf->mlx;
 	mlx->ptr = mlx_init();
 	mlx->win = mlx_new_window(mlx->ptr,
