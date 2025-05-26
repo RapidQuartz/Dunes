@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 00:32:13 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:22:39 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,25 +146,19 @@ typedef struct s_map
 //// PTS:  ////  ////container for the map coordinates' values/////////////////
 typedef struct s_pts
 {
-	int	z_height;
-	int	c_color;
+	int			z_height;
+	int			c_color;
+	struct s_pro	*src;
+	struct s_pro	*x_dst;
+	struct s_pro	*y_dst;
 }	t_pts;
 //// PRO:  ////  ////container for projection data/////////////////////////////
 typedef struct s_pro
 {
 	int		x;
-	int		xy;
-	int		xx;
 	int		y;
-	int		yx;
-	int		yy;
 	int		z;
-	int		zx;
-	int		zy;
 	int		c;
-	int		cx;
-	int		cy;
-	int		d;
 	int		dx;
 	int		dy;
 	int		sx;
@@ -175,8 +169,8 @@ typedef struct s_dim
 {
 	int		screen_width;
 	int		screen_height;
-	int		map_width;
-	int		map_height;
+	int		x_max;
+	int		y_max;
 	int		screen_offset;
 	int		tile_size;
 	int		rotation;
@@ -193,14 +187,25 @@ typedef struct s_fdf
 	int		e;
 	int		b;
 	int		l;
-	t_raw	*raw;
-	t_map	*map;
-	t_dim	*dim;
-	void	*mlx;
-	void	*img;
-	void	*win;
-	t_pts	**pts;
-	t_pro	**pro;
+	int		t;
+	t_raw		*raw;
+	t_map		*map;
+	t_dim		*dim;
+	void		*mlx;
+	void		*img;
+	void		*win;
+	t_pts		**pts;
+	t_pro		**pro;
 }	t_fdf;
+
+typedef struct s_tri
+{
+	char			*a;
+	char			*b;
+	char			*c;
+	int			*i;
+	int			*ii;
+	struct s_tri	*tri;
+}	t_tri;
 #endif
 //&$`~*@^%|header file for Fer De Fil project at 42berlin by akjoerse|%^@*~`$&//

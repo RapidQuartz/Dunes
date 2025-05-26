@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:26:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 15:00:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 10:01:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
 	char	*col;
 
 	lmn_len = 0;
-	while (y < fdf->dim->map_height)
+	while (y < fdf->dim->y_max)
 	{
 		lmn_len = get_lmn_len(lmn[y][x]);
 		if (lmn_len < 0)
@@ -27,8 +27,8 @@ void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
 		else if (lmn_len > 0)
 			col = DEFCOL;
 		num = get_height(lmn[y][x], ft_abs(lmn_len));
-		fdf->pts[y][x].c = convert_color(col);
-		fdf->pts[y][x].z = ft_atoi(num);
+		fdf->pts[y][x].c_color = convert_color(col);
+		fdf->pts[y][x].z_height = ft_atoi(num);
 		free (num);
 		x++;
 		if (!lmn[y][x])

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 14:32:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:47:23 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define INIT_H
 # include <stddef.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>

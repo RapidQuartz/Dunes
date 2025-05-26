@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   notnew.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 00:03:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 10:08:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,22 @@ void	free_map(t_fdf *fdf)
 {
 	int	i;
 	int	j;
+	t_dim	d;
 	
 	i = 0;
-	while (i < fdf->ymax)
+	d = *fdf->dim;
+	while (i < d.y_max)
 	{
 		j = 0;
-		while (j < fdf->xmax)
+		while (j < d.x_max)
 		{
-			free(fdf->map->elements[i][j]);
+			free(fdf->raw->elements[i][j]);
 			j++;
 		}
-		free(fdf->map->elements[i]);
+		free(fdf->raw->elements[i]);
 		i++;
 	}
-	free (fdf->map->elements);
+	free (fdf->raw->elements);
 	free (fdf->raw->string);
 	fdf->raw->string = NULL;
 }
@@ -86,13 +88,13 @@ void	calculate_points(t_fdf *fdf, int x, int y, int big)
 	int	theta;
 	int	z[2];
 
-	theta = fdf->theta;
+	theta = fdf->t;
 	z[0] = fdf->pts[y][x].z;
 	z[1] = fdf->pts[y + 1][x + 1].z;
-	fdf->iso->x0 = (x - y) * cos(fdf->theta);
-	fdf->iso->y0 = (x + y) * sin(fdf->theta) - z[0] * fdf->map->zoom;
-	fdf->iso->x1 = ((x + 1) - y) * cos(fdf->theta);
-	fdf->iso->y1 = ((x + 1) + y) * sin(fdf->theta) - z1 * fdf->map->zoom;
+	fdf->iso->x0 = (x - y) * cos(fdf->t);
+	fdf->iso->y0 = (x + y) * sin(fdf->t) - z[0] * fdf->map->zoom;
+	fdf->iso->x1 = ((x + 1) - y) * cos(fdf->t);
+	fdf->iso->y1 = ((x + 1) + y) * sin(fdf->t) - z1 * fdf->map->zoom;
 	fdf->pos->dx = ft_abs(fdf->iso->x1 - fdf->iso->x0);
 	fdf->pos->dy = ft_abs(fdf->iso->y1 - fdf->iso->y0);
 	if (fdf->iso->x0 < fdf->iso->x1)

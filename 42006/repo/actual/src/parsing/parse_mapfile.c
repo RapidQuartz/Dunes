@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:04:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/22 15:11:30 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:51:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,23 @@ void	read_raw_map(t_fdf *fdf)
 	free (raw);
 }
 
-void	split_map_str(t_fdf *fdf)
+void	split_raw_map(t_fdf *fdf)
 {
 	char	**split_map;
+	int	n;
 	int	l;
 	int	r;
 
+	n = 0;
 	l = 0;
 	r = 0;
 	split_map = ft_split(fdf->raw->string, '\n');
-	while (split_map[l])
-		l++;
-	fdf->dim->map_height = l;
-	fdf->raw->elements = malloc(sizeof(*fdf->raw->elements) * l);
+	while (split_map[n])
+		n++;
+	fdf->dim->y_max = n;
+	fdf->raw->elements = malloc(sizeof(*fdf->raw->elements) * n);
 	if (!fdf->raw->elements || fdf->raw->elements == NULL)
 		exit (0);//TODO:integrate into exit function
-	l = 0;
 	while (split_map[l])
 	{
 		fdf->raw->elements[l] = ft_split(split_map[l], ' ');
@@ -58,6 +59,6 @@ void	split_map_str(t_fdf *fdf)
 			r++;
 		l++;
 	}
-	fdf->dim->map_height = r;
+	fdf->dim->y_max = r;
 	free (split_map);
 }

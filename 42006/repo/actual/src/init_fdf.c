@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 00:04:43 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:37:11 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,29 @@
 
 //fdf->pro[fdf->y][fdf->x] = get_projection(fdf, fdf->x, fdf->y);
 //
-void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro);
+void	get_projection(t_fdf *fdf, t_pts **pts, t_pro **pro);
+void	null_pro(t_fdf *fdf, t_pro *pro, int x);
+
 //
 void	init_mlx(t_fdf *fdf, int width, int height, char *title);
 void	init_raw(t_fdf *fdf, char *map_file)
 {
-	fdf->raw = malloc(sizeof(t_raw));
-	if (!fdf->raw || fdf->raw == NULL)
-		exit (0);//TODO:integrate into exit function
-	fdf->raw->map = open(map_file, O_RDONLY);
-	fdf->raw->line = NULL;
-	fdf->raw->string = NULL;
-	fdf->raw->lines = NULL;
-	fdf->raw->elements = NULL;
-	read_raw_map(fdf);
+	t_raw	raw;
+
+	if (fdf && fdf->raw != NULL || !map_file)
+		end_fdf(fdf, 9);
+	raw.map = open(map_file, O_RDONLY);
+	raw.line = NULL;
+	raw.string = NULL;
+	raw.lines = NULL;
+	raw.elements = NULL;
+	fdf->raw = &raw;
 }
 
 void	init_fdf(t_fdf *fdf)
 {
-	int	i;
+
 	
-	i = 0;
-	init_dim(fdf);
-	// init_iso(fdf->iso);
-	split_map_str(fdf);
-	init_pro(fdf->pro);
-	init_pts(fdf->pts, fdf->dim->map_height, fdf->dim->map_height);
-	while (i < fdf->dim->map_height)
-	{
-		fdf->pts[i] = malloc(sizeof(t_pts) * fdf->dim->map_height);
-		if (!fdf->pts[i] || fdf->pts[i] == NULL)
-		exit (0);//TODO:integrate into exit function
-		i++;
-	}
-	set_points(fdf->raw->elements, fdf, 0, 0);
 	init_mlx(fdf, fdf->dim->screen_width,
 		fdf->dim->screen_height, "Bonjour FdF");
 }
@@ -55,17 +44,19 @@ void	init_fdf(t_fdf *fdf)
 
 void	init_dim(t_fdf *fdf)
 {
-	fdf->dim = malloc(sizeof(t_dim));
-	if (!fdf->dim || fdf->dim == NULL)
-	exit (0);//TODO:integrate into exit function
-	fdf->dim->screen_height = DEFWID;
-	fdf->dim->screen_height = DEFHEI;
-	fdf->dim->screen_offset = 0;
-	fdf->dim->map_height = 0;
-	fdf->dim->map_height = 0;
-	fdf->dim->tile_size = 0;
-	fdf->dim->rotation = 30;
-	fdf->dim->zoom = 1;
+	t_dim	dim;
+	
+	if (fdf->dim != NULL)
+		return ;
+	dim.screen_height = DEFWID;
+	dim.screen_height = DEFHEI;
+	dim.screen_offset = 0;
+	dim.y_max = 0;
+	dim.y_max = 0;
+	dim.tile_size = 0;
+	dim.rotation = 30;
+	dim.zoom = 1;
+	fdf->dim = &dim;
 }
 
 void	init_mlx(t_fdf *fdf, int width, int height, char *title)
@@ -75,81 +66,180 @@ void	init_mlx(t_fdf *fdf, int width, int height, char *title)
 	fdf->win = mlx_new_window(fdf->mlx, width, height, title);
 }
 
-void	init_pts(t_pts **pts, int xmax, int ymax)
+void	init_pts(t_fdf *fdf)
 {
+	int	x;
 	int	y;
+	t_dim	d;
+	int	i;
 	
+	i = 0;
+	x = 0;
 	y = 0;
-	pts = malloc(sizeof(t_pts *) * ymax);
-	if (!pts || pts == NULL)
-		exit (0);//TODO:integrate into exit function
-	while (y < ymax)
+	d = *fdf->dim;
+	fdf->pts = malloc(sizeof(t_pts *) * d.y_max);
+	while (y < d.y_max)
 	{
-		pts[y] = malloc(sizeof(t_pts) * xmax);
-		if (!pts[y] || pts[y] == NULL)
-			exit (0);//TODO:integrate into exit function
+		fdf->pts[y] = malloc(sizeof(t_pts) * d.x_max);
+		if (!fdf->pts[y] || fdf->pts[y] == NULL)
+			end_fdf(fdf, 8);
+		while (x < d.x_max)
+		{
+			fdf->pts[y][x].src = NULL;
+			fdf->pts[y][x].dst = NULL;
+			x++;
+		}
 		y++;
 	}
+	set_points(fdf->raw->elements, fdf, 0, 0);
 }
 
 void	init_pro(t_fdf *fdf)
 {
-	fdf->pro = malloc(sizeof(t_pro *) * fdf->dim->rows);
+	t_dim	d;
+	int	y;
+	int	x;
+
+	y = 0;
+	fdf->pro = malloc(sizeof(t_pro *) * fdf->dim->y_max);
 	if (!fdf->pro || fdf->pro == NULL)
-		exit(0);//TODO:REPLACE
-	while (fdf->y < fdf->dim->rows)
+		end_fdf(fdf, 79);
+	while (y < d.y_max)
 	{
-		fdf->pro[fdf->y] = malloc(sizeof(t_pro) * fdf->dim->columns);
-		if (!fdf->pro[fdf->y] || fdf->pro[fdf->y] == NULL)
-			exit(0);//TODO:REPLACE
-		while (fdf->x < fdf->dim->columns)
+		fdf->pro[y] = malloc(sizeof(t_pro) * d.x_max);
+		if (!fdf->pro[y] || fdf->pro[y] == NULL)
+			end_fdf(fdf, 90);
+		null_pro(fdf, fdf->pro[y], 0);
+		y++;
+	}
+	set_pro(fdf);
+}
+
+
+void	set_pro(t_fdf *fdf)
+{
+	t_dim	d;
+	t_pro	src;
+	int	*y;
+	int	*x;
+
+	y = &fdf->y;
+	x = &fdf->x;
+	d = *fdf->dim;
+	while ((*y) < d.y_max)
+	{
+		(*x) = 0;
+		while ((*x) < d.y_max)
 		{
-			get_projection(fdf, fdf->pts, &fdf->pro[fdf->y][fdf->x]);
-			fdf->x++;
+			get_projection(fdf, fdf->pts, fdf->pro);
+			src = fdf->pro[(*y)][(*x)];
+			if ((*y) < fdf->dim->x_max - 2)
+				proj_next_row(fdf, fdf->pts, &src);
+			if ((*x) < fdf->dim->y_max - 2)
+				proj_next_col(fdf, fdf->pts, &src);
+			(*x)++;
 		}
-		fdf->x = 0;
-		fdf->y++;
+		(*y)++;
 	}
 }
 
-void	get_projection(t_fdf *fdf, t_pts **pts, t_pro *pro)
+void	null_pro(t_fdf *fdf, t_pro *pro, int x)
 {
-	pro->z = pts[fdf->y][fdf->x].z_height;
-	pro->c =  pts[fdf->y][fdf->x].c_color;
-	pro->x = (fdf->x - fdf->y) * (cos (fdf->dim->rotation));
-	pro->y = (fdf->x + fdf->y) * (sin (fdf->dim->rotation)) - pro->z;
-	if (fdf->x < fdf->dim->rows - 1)
-		proj_next_row(fdf, pts, pro);
-	if (fdf->y < fdf->dim->columns - 1)
-		proj_next_col(fdf, pts, pro);
+	while (x >= 0 && x < fdf->dim->x_max)
+	{
+		pro->x = 0;
+		pro->y = 0;
+		pro->z = 0;
+		pro->c = 0;
+		pro->dx = 0;
+		pro->dy = 0;
+		pro->sx = 0;
+		pro->sy = 0;
+		x++;
+	}
+	if (x < 0)
+	{
+		pro->dx = 0;
+		pro->dy = 0;
+		pro->sx = 0;
+		pro->sy = 0;
+	}
 }
 
-void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *pro)
+void	get_projection(t_fdf *fdf, t_pts **pts, t_pro **pro)
 {
-	pro->zx = pts[fdf->y][fdf->x + 1].z_height;
-	pro->cx = pts[fdf->y][fdf->x + 1].c_color;
-	pro->xx = ((fdf->x + 1) - fdf->y) * (cos (fdf->dim->rotation));
-	pro->yx = ((fdf->x + 1) + fdf->y) * (sin (fdf->dim->rotation)) - pro->zx;
-	pro->d = ft_abs(pro->xx) - ft_abs(pro->x);
-	pro->dx = ft_abs(pro->yx) - ft_abs(pro->y);
-	if (pro->xx > pro->x)
+	t_pro	src;
+	t_pts	nts;
+	
+	nts = pts[fdf->y][fdf->x];
+	src = pro[fdf->y][fdf->x];
+	nts.src = &src;
+	src.z = nts.z_height;
+	src.c =  nts.c_color;
+	src.x = (fdf->x - fdf->y) * (cos (fdf->t));
+	src.y = (fdf->x + fdf->y) * (sin (fdf->t)) - src.z;
+}
+
+void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *src)
+{
+	t_pro	src;
+	t_pro	x_dst;
+	t_pts	pre;
+	t_pts	cur;
+	
+	pre = pts[fdf->y][fdf->x];
+	cur = pts[fdf->y][fdf->x + 1];
+	src = *pre.src;
+	x_dst.x = ((fdf->x + 1) - fdf->y) * (cos (fdf->t));
+	x_dst.y = ((fdf->x + 1) + fdf->y) * (sin (fdf->t)) - cur.z_height;
+	x_dst.dx = ft_abs(x_dst.x) - ft_abs(src.x);
+	x_dst.dy = ft_abs(x_dst.y) - ft_abs(src.y);
+	if (x_dst.x > src.x)
+		src.sx = 1;
+	else
+		src.sx = -1;
+	pre.x_dst = &x_dst
+}
+
+void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *src)
+{
+	t_pro	src;
+	t_pro	y_dst;
+	t_pts	pre;
+	t_pts	cur;
+	
+	pre = pts[fdf->y][fdf->x];
+	cur = pts[fdf->y + 1][fdf->x];
+	src = *pre.src;
+	y_dst.x = ((fdf->y + 1) - fdf->y) * (cos (fdf->t));
+	y_dst.y = ((fdf->y + 1) + fdf->y) * (sin (fdf->t)) - cur.z_height;
+	y_dst.dx = ft_abs(y_dst.x) - ft_abs(src.x);
+	y_dst.dy = ft_abs(y_dst.y) - ft_abs(src.y);
+	if (y_dst.x > src.x)
+		src.sy = 1;
+	else
+		src.sy = -1;
+	pre.y_dst = &y_dst;
+}
+/* 
+void	proj_next_row(t_fdf *fdf, t_pts **pts)
+{
+	t_pro	dst;
+	t_pts	nts;
+	
+	dst = pro[fdf->y + 1][fdf->x];
+	nts = pts[fdf->y + 1][fdf->x];
+	dst.z = pts[fdf->y][fdf->x + 1].z_height;
+	dst.c = pts[fdf->y][fdf->x + 1].c_color;
+	dst.x = ((fdf->x + 1) - fdf->y) * (cos (fdf->t));
+	dst.y = ((fdf->x + 1) + fdf->y) * (sin (fdf->t)) - pro->z;
+	pro->dx = ft_abs(dst.x) - ft_abs(pro->x);
+	pro->dy = ft_abs(dst.y) - ft_abs(pro->y);
+	if (dst.x > pro->x)
 		pro->sx = 1;
 	else
-		pro->sx = -1;	
-}
-
-void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *pro)
-{
-	pro->zy = pts[fdf->y + 1][fdf->x].z_height;
-	pro->cy =  pts[fdf->y + 1][fdf->x].c_color;
-	pro->xy = (fdf->x - (fdf->y + 1)) * (cos (fdf->dim->rotation));
-	pro->yy = (fdf->x + (fdf->y + 1)) * (sin (fdf->dim->rotation)) - pro->zy;
-	pro->dy = ft_abs(pro->yy) - ft_abs(pro->y);
-	if (pro->yy > pro->y)
-	pro->sy = 1;	
-	else
-		pro->sy = -1;
-}
+		pro->sx = -1;
+} */
 /* res.z -- `int` for height at x, y
 res.zx -- `int` for height at x + 1, y
 res.zy -- `int` for height at x, y + 1

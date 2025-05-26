@@ -27,3 +27,32 @@ int	ft_abs(int num)
 		return (-num);
 	return (num);
 }
+
+void	free_map(t_fdf *fdf)
+{
+	int	i;
+	int	j;
+	t_dim	d;
+	char	***e;
+	char	*s;
+	
+	i = 0;
+	d = *fdf->dim;
+	e = fdf->raw->elements;
+	s = fdf->raw->string;
+	while (i < d.y_max)
+	{
+		j = 0;
+		while (j < d.x_max)
+		{
+			free(e[i][j]);
+			j++;
+		}
+		free(e[i]);
+		i++;
+	}
+	free (e);
+	e = NULL;
+	free (s);
+	s = NULL;
+}
