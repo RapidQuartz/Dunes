@@ -6,11 +6,11 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:26:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 11:24:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:36:34 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "inc/fdf.h"
+# include "../../inc/fdf.h"
 
 void	error(void)
 {

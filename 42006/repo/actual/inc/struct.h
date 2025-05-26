@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 11:22:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:44:52 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,10 @@ typedef struct s_map
 //// PTS:  ////  ////container for the map coordinates' values/////////////////
 typedef struct s_pts
 {
-	int			z_height;
-	int			c_color;
+	int			x;
+	int			y;
+	int			z;
+	int			c;
 	struct s_pro	*src;
 	struct s_pro	*x_dst;
 	struct s_pro	*y_dst;
@@ -155,14 +157,14 @@ typedef struct s_pts
 //// PRO:  ////  ////container for projection data/////////////////////////////
 typedef struct s_pro
 {
-	int		x;
-	int		y;
-	int		z;
-	int		c;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
+	int		x[3];
+	int		y[3];
+	int		z[3];
+	int		c[3];
+	int		dx[3];
+	int		dy[3];
+	int		sx[3];
+	int		sy[3];
 }	t_pro;
 //// DIM:  ////  ////container for image and window parameters/////////////////
 typedef struct s_dim
@@ -184,10 +186,14 @@ typedef struct s_fdf
 {
 	int		x;
 	int		y;
+	int		x_lim;
+	int		y_lim;
 	int		e;
 	int		b;
 	int		l;
 	int		t;
+	double	co;
+	double	si;
 	t_raw		*raw;
 	t_map		*map;
 	t_dim		*dim;
@@ -197,7 +203,69 @@ typedef struct s_fdf
 	t_pts		**pts;
 	t_pro		**pro;
 }	t_fdf;
-
+/* NEONEO */
+/* NEONEO
+typedef struct s_fdf
+{
+	void	*p;
+	void	*p;
+	void	*p;
+	void	*p;
+	void	*p;
+	void	*p;
+	void	*p;
+	void	*p;
+}	t_fdf;
+*/
+/* 
+typedef struct s_fdf
+{
+	void	*p_img;
+	void	*p_mlx;
+	void	*p_win;
+	int	a_a;
+	int	*a_b;
+	int	**a_c;
+	bool	b_alt;
+	bool	b_bon;
+	bool	b_col;
+	char	*c_string;
+	char	**c_lines;
+	char	***c_map;
+	struct s_pos	*d_pos;
+	struct s_pro	*d_pro;
+	struct s_env	*d_env;
+}	t_fdf; */
+/* NEONEO */
+/* typedef struct s_pos
+{
+	int	x;
+	int	y;
+	int	h;
+	int	v;
+}	t_pos; */
+/* NEONEO *//* 
+typedef struct s_pro
+{
+	int	**pt_z;
+	int	**pt_c;
+	int	orig_xyzc[4];
+	int	hori_xyzc[4];
+	int	vert_xyzc[4];
+	int	diag_xyzc[4];
+}	t_pro; */
+/* NEONEO *//* 
+typedef struct s_env
+{
+	int	fd;
+	char	*str;
+	char	*map;
+	int	dim[2];
+	int	scr[2];
+	int	win[2];
+	int	off[2];
+}	t_env; */
+/* NEONEO *//* 
 typedef struct s_tri
 {
 	char			*a;
@@ -206,6 +274,6 @@ typedef struct s_tri
 	int			*i;
 	int			*ii;
 	struct s_tri	*tri;
-}	t_tri;
+}	t_tri; */
 #endif
 //&$`~*@^%|header file for Fer De Fil project at 42berlin by akjoerse|%^@*~`$&//

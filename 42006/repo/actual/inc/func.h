@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 11:35:25 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:32:54 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ void	split_raw_map(t_fdf *fdf);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// PROJ: ////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
-void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *src);
-void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *src);
+// void	proj_last_col(t_fdf *fdf, t_pts **pts, t_pro src);
+// void	proj_last_row(t_fdf *fdf, t_pts **pts, t_pro src);
+// void	proj_last_col(t_fdf *fdf, t_pts pre, t_pts cur, t_pro src);
+// void	proj_last_row(t_fdf *fdf, t_pts pre, t_pts cur, t_pro src);
+void	proj_hori(t_fdf *f, t_pro *c);
+void	proj_vert(t_fdf *f, t_pro *c);
+
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// HELPER:///  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////

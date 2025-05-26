@@ -57,16 +57,16 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-	"struct.h": "c",
-	"stdlib.h": "c",
-	"math.h": "c",
-	"limits.h": "c",
-	"get_next_line.h": "c",
-	"fdf.h": "c",
-	"libft.h": "c",
-	"init.h": "c",
-	"fcntl.h": "c",
-	"func.h": "c",
-	"unistd.h": "c"
-}
+    "struct.h": "c",
+    "stdlib.h": "c",
+    "math.h": "c",
+    "limits.h": "c",
+    "get_next_line.h": "c",
+    "fdf.h": "c",
+    "libft.h": "c",
+    "init.h": "c",
+    "fcntl.h": "c",
+    "func.h": "c",
+    "unistd.h": "c"
+  }
 }

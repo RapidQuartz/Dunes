@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:04:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 09:51:24 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:33:23 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,17 @@
 void	read_raw_map(t_fdf *fdf)
 {
 	char		*raw;
-	char		*line;
 
 	while (fdf->raw->map != -1)
 	{
 		fdf->raw->line = get_next_line(fdf->raw->map);
-		if (!line)
+		if (!fdf->raw->line)
 			break ;
 		if (raw)
-			raw = ft_strjoin(raw, line);
+			raw = ft_strjoin(raw, fdf->raw->line);
 		else
-			raw = ft_strdup(line);
-		free (line);
+			raw = ft_strdup(fdf->raw->line);
+		free (fdf->raw->line);
 	}
 	fdf->raw->string = malloc(sizeof(raw));
 	if (!fdf->raw->string || fdf->raw->string == NULL)
@@ -48,7 +47,7 @@ void	split_raw_map(t_fdf *fdf)
 	split_map = ft_split(fdf->raw->string, '\n');
 	while (split_map[n])
 		n++;
-	fdf->dim->y_max = n;
+	fdf->y_lim = n;
 	fdf->raw->elements = malloc(sizeof(*fdf->raw->elements) * n);
 	if (!fdf->raw->elements || fdf->raw->elements == NULL)
 		exit (0);//TODO:integrate into exit function
@@ -59,6 +58,6 @@ void	split_raw_map(t_fdf *fdf)
 			r++;
 		l++;
 	}
-	fdf->dim->y_max = r;
+	fdf->x_lim = r;
 	free (split_map);
 }

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/akjoerse/42/999_GitHub/42006/repo/actual",
-      "program": "/home/akjoerse/42/999_GitHub/42006/repo/actual/build/Debug/outDebug",
+      "cwd": "/home/akjoerse/42/999_GitHub/42006/repo/actual/src",
+      "program": "/home/akjoerse/42/999_GitHub/42006/repo/actual/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

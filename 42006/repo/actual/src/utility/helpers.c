@@ -40,10 +40,10 @@ void	free_map(t_fdf *fdf)
 	d = *fdf->dim;
 	e = fdf->raw->elements;
 	s = fdf->raw->string;
-	while (i < d.y_max)
+	while (i < fdf->y_lim)
 	{
 		j = 0;
-		while (j < d.x_max)
+		while (j < fdf->x_lim)
 		{
 			free(e[i][j]);
 			j++;

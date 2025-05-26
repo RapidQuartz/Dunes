@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 11:37:11 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:47:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 //fdf->pro[fdf->y][fdf->x] = get_projection(fdf, fdf->x, fdf->y);
 //
-void	get_projection(t_fdf *fdf, t_pts **pts, t_pro **pro);
-void	null_pro(t_fdf *fdf, t_pro *pro, int x);
+void	null_pro(t_fdf *fdf, t_pro *pro, int x, int y);
+void	set_pro(t_fdf *f, t_pts **p, t_pro **r);
 
 //
 void	init_mlx(t_fdf *fdf, int width, int height, char *title);
@@ -23,7 +23,7 @@ void	init_raw(t_fdf *fdf, char *map_file)
 {
 	t_raw	raw;
 
-	if (fdf && fdf->raw != NULL || !map_file)
+	if ((fdf && fdf->raw != NULL) || !map_file)
 		end_fdf(fdf, 9);
 	raw.map = open(map_file, O_RDONLY);
 	raw.line = NULL;
@@ -31,6 +31,8 @@ void	init_raw(t_fdf *fdf, char *map_file)
 	raw.lines = NULL;
 	raw.elements = NULL;
 	fdf->raw = &raw;
+	fdf->co = (cos (fdf->t));
+	fdf->si = (sin (fdf->t));
 }
 
 void	init_fdf(t_fdf *fdf)
@@ -48,11 +50,9 @@ void	init_dim(t_fdf *fdf)
 	
 	if (fdf->dim != NULL)
 		return ;
-	dim.screen_height = DEFWID;
+	dim.screen_width = DEFWID;
 	dim.screen_height = DEFHEI;
 	dim.screen_offset = 0;
-	dim.y_max = 0;
-	dim.y_max = 0;
 	dim.tile_size = 0;
 	dim.rotation = 30;
 	dim.zoom = 1;
@@ -70,23 +70,20 @@ void	init_pts(t_fdf *fdf)
 {
 	int	x;
 	int	y;
-	t_dim	d;
-	int	i;
-	
-	i = 0;
-	x = 0;
+
 	y = 0;
-	d = *fdf->dim;
-	fdf->pts = malloc(sizeof(t_pts *) * d.y_max);
-	while (y < d.y_max)
+	fdf->pts = malloc(sizeof(t_pts *) * fdf->y_lim);
+	while (y < fdf->y_lim)
 	{
-		fdf->pts[y] = malloc(sizeof(t_pts) * d.x_max);
+		x = 0;
+		fdf->pts[y] = malloc(sizeof(t_pts) * fdf->x_lim);
 		if (!fdf->pts[y] || fdf->pts[y] == NULL)
 			end_fdf(fdf, 8);
-		while (x < d.x_max)
+		while (x < fdf->x_lim)
 		{
 			fdf->pts[y][x].src = NULL;
-			fdf->pts[y][x].dst = NULL;
+			fdf->pts[y][x].x_dst = NULL;
+			fdf->pts[y][x].y_dst = NULL;
 			x++;
 		}
 		y++;
@@ -96,26 +93,161 @@ void	init_pts(t_fdf *fdf)
 
 void	init_pro(t_fdf *fdf)
 {
-	t_dim	d;
 	int	y;
-	int	x;
 
 	y = 0;
-	fdf->pro = malloc(sizeof(t_pro *) * fdf->dim->y_max);
+	fdf->pro = malloc(sizeof(t_pro *) * fdf->y_lim);
 	if (!fdf->pro || fdf->pro == NULL)
 		end_fdf(fdf, 79);
-	while (y < d.y_max)
+	while (y < fdf->y_lim)
 	{
-		fdf->pro[y] = malloc(sizeof(t_pro) * d.x_max);
+		fdf->pro[y] = malloc(sizeof(t_pro) * fdf->x_lim);
 		if (!fdf->pro[y] || fdf->pro[y] == NULL)
 			end_fdf(fdf, 90);
-		null_pro(fdf, fdf->pro[y], 0);
+		null_pro(fdf, fdf->pro[y], 0, 0);
 		y++;
 	}
-	set_pro(fdf);
+	set_pro(fdf, fdf->pts, fdf->pro);
 }
 
+//reverse order
+	//always set x/y/z/c
+	//always set pts->src
+//check if x > 0
+	// calculate xco for x - 1
+	/* 
+void	proj_last_row(t_fdf *fdf, t_pro src, t_pts pts)
+{
+	src.
+}
+void	proj_last_col(t_fdf *fdf, t_pro src, t_pts pts)
+{
+	src.
+} */
+//check if y > 0
+	// calculate yco for y - 1
+/* 
+void	proj_line_horizontal(t_fdf *fdf, t_pro *src, t_pro *dst)
+{
+	dst->x = (((fdf->x + 1) - fdf->y) * (cos (fdf->t)));
+	dst->y = (((fdf->x + 1) + fdf->y) * (sin (fdf->t)) - dst->z);
+	src->x_dst->dx = ft_abs(src->x1 - src->x0);
+	src->x_dst->dy = ft_abs(src->y1 - src->y0);
+	if (src->x0 < src->x1)
+		src->x_dst->sx = 1;
+	else
+		src->x_dst->sx = -1;
+	if (src->y0 < src->y1)
+		src->x_dst->sy = 1;
+	else
+		src->x_dst->sy = -1;
+}
+void	proj_line_vertical(t_fdf *fdf, t_pro *src, t_pro *dst)
+{
+	src->x1 = (((fdf->x) - fdf->y + 1) * (cos (fdf->t)));
+	src->y1 = (((fdf->x) + fdf->y + 1) * (sin (fdf->t)) - dst->z);
+	src->y_dst->dx = ft_abs(src->x1 - src->x0);
+	src->y_dst->dy = ft_abs(src->y1 - src->y0);
+	if (src->x0 < src->x1)
+		src->y_dst->sx = 1;
+	else
+		src->y_dst->sx = -1;
+	if (src->y0 < src->y1)
+		src->y_dst->sy = 1;
+	else
+		src->y_dst->sy = -1;
+} */
+void	set_pro(t_fdf *fdf, t_pts **pts, t_pro **pro)
+{
+	t_pro c;
 
+	while (fdf->y < fdf->y_lim - 1)
+	{
+		fdf->x = 0;
+		while (fdf->x < fdf->x_lim - 1)
+		{
+			c = pro[fdf->y][fdf->x];
+			c.z[0] = pts[fdf->y][fdf->x].z;
+			c.x[0] = ((fdf->x - fdf->y) * (fdf->co));
+			c.y[0] = ((fdf->x + fdf->y) * (fdf->si) - c.z[0]);
+			if (fdf->x + 1 < fdf->x_lim - 1)
+				proj_hori(fdf, &c);
+			if (fdf->y + 1 < fdf->y_lim - 1)
+				proj_vert(fdf, &c);
+			fdf->x++;
+		}
+		fdf->y++;
+	}
+}
+/* 	if (x_dst.x > src.x)
+		src.sx = 1;
+	else
+		src.sx = -1; */
+void	proj_hori(t_fdf *f, t_pro *c)
+{
+	c->z[1] = f->pts[f->y][f->x + 1].z;
+	c->x[1] = ((f->x - f->y) * (f->co));
+	c->y[1] = ((f->x + f->y) * (f->si) - c->z[1]);
+	c->dx[0] = (ft_abs(c->x[1]) - ft_abs(c->x[0]));
+	c->dy[0] = (ft_abs(c->y[1]) - ft_abs(c->y[0]));
+	if (c->x[1] > c->x[0])
+		c->sx[0] = 1;
+	else
+		c->sx[0] = -1;
+	if (c->y[1] > c->y[0])
+		c->sy[0] = 1;
+	else
+		c->sy[0] = -1;
+}
+
+void	proj_vert(t_fdf *f, t_pro *c)
+{
+	c->z[2] = f->pts[f->y + 1][f->x].z;
+	c->x[2] = ((f->x - f->y) * (f->co));
+	c->y[2] = ((f->x + f->y) * (f->si) - c->z[2]);
+	c->dx[1] = (ft_abs(c->x[2]) - ft_abs(c->x[0]));
+	c->dy[1] = (ft_abs(c->y[2]) - ft_abs(c->y[0]));
+	if (c->x[2] > c->x[0])
+		c->sx[1] = 1;
+	else
+		c->sx[1] = -1;
+	if (c->y[2] > c->y[0])
+		c->sy[1] = 1;
+	else
+		c->sy[1] = -1;
+}
+/* 
+	t_pts	o;
+	t_pts x;
+	t_pts y;
+	fdf->co = cos (fdf->t);
+	fdf->si = sin (fdf->t);
+	while (fdf->y < fdf->y_lim - 1)
+	{
+		fdf->x = 0;
+		while (fdf->x < fdf->x_lim - 1)
+		{
+			o = p[fdf->y][fdf->x];
+			o.src->x = ((fdf->x - fdf->y) * (fdf->co));
+			o.src->y = ((fdf->x + fdf->y) * (fdf->si) - o.z);
+			if (fdf->x + 1 < fdf->x_lim - 1)
+			{
+				o.x_dst->x = (((fdf->x + 1) - fdf->y) * (cos (fdf->t)));
+				o.x_dst->y = (((fdf->x + 1) + fdf->y) * (sin (fdf->t)));
+				proj_line_horizontal(fdf, &o.src, &o.x_dst);
+			}
+			x = p[fdf->y][fdf->x + 1];
+			if (fdf->y + 1 < fdf->y_lim - 1)
+			{
+				o.y_dst = &p[fdf->y + 1][fdf->x];
+				y = p[fdf->y + 1][fdf->x];
+				proj_line_vertical(fdf, &o.src, &o.y_dst);
+			}
+		}
+		
+	}
+}
+ *//* 
 void	set_pro(t_fdf *fdf)
 {
 	t_dim	d;
@@ -126,70 +258,98 @@ void	set_pro(t_fdf *fdf)
 	y = &fdf->y;
 	x = &fdf->x;
 	d = *fdf->dim;
-	while ((*y) < d.y_max)
+	while (fdf->y < fdf->y_lim)
 	{
-		(*x) = 0;
-		while ((*x) < d.y_max)
+		fdf->x = 0;
+		while (fdf->x < fdf->y_lim)
 		{
 			get_projection(fdf, fdf->pts, fdf->pro);
-			src = fdf->pro[(*y)][(*x)];
-			if ((*y) < fdf->dim->x_max - 2)
-				proj_next_row(fdf, fdf->pts, &src);
-			if ((*x) < fdf->dim->y_max - 2)
-				proj_next_col(fdf, fdf->pts, &src);
-			(*x)++;
+			src = fdf->pro[fdf->y][fdf->x];
+			if (fdf->y < fdf->x_lim - 2)
+				proj_next_row(fdf, fdf->pts, src);
+			if (fdf->x < fdf->y_lim - 2)
+				proj_next_col(fdf, fdf->pts, src);
+			fdf->x++;
 		}
-		(*y)++;
+		fdf->y++;
+	}
+} */
+
+void	null_pro(t_fdf *fdf, t_pro *pro, int x, int y)
+{
+	int	i;
+
+	y = 0;
+	while (y < fdf->y_lim)
+	{
+		x = 0;
+		pro = fdf->pro[y];
+		while (x < fdf->x_lim)
+		{
+			i = 0;
+			while (i < 3)
+			{
+				pro->dx[i] = 0;
+				pro->dy[i] = 0;
+				pro->sx[i] = 0;
+				pro->sy[i] = 0;
+				pro->x[i] = 0;
+				pro->y[i] = 0;
+				pro->z[i] = 0;
+				i++;
+			}
+			x++;
+		}
+		y++;
 	}
 }
 
-void	null_pro(t_fdf *fdf, t_pro *pro, int x)
-{
-	while (x >= 0 && x < fdf->dim->x_max)
-	{
-		pro->x = 0;
-		pro->y = 0;
-		pro->z = 0;
-		pro->c = 0;
-		pro->dx = 0;
-		pro->dy = 0;
-		pro->sx = 0;
-		pro->sy = 0;
-		x++;
-	}
-	if (x < 0)
-	{
-		pro->dx = 0;
-		pro->dy = 0;
-		pro->sx = 0;
-		pro->sy = 0;
-	}
-}
+/*
+thing is, I basically have to retroactively apply the slope stuff
 
-void	get_projection(t_fdf *fdf, t_pts **pts, t_pro **pro)
-{
-	t_pro	src;
-	t_pts	nts;
+see, this is how it goes:
+
+if::::
+	x is within bounds && y is within bounds
+then:::
+:if::
+	x is greater than 0
+::then:
+	calculate::::
+		x-x-destination for x - 1
+		y-x-destination for x - 1
+		dx-distance for x - 1
+		dy-distance for x - 1
+:if::
+	y is greater than 0
+::then:
+	calculate::::
+		x-y-destination for y - 1
+		y-y-destination for y - 1
+		dx-distance for y - 1
+		dy-distance for y - 1
+then:
+	increase x
+if::
+	x is not within bounds
+:then:
+	increase y
+	set x = 0
+if::
+	y is not within bounds
+then:
+	finish
+else:
+	loop
 	
-	nts = pts[fdf->y][fdf->x];
-	src = pro[fdf->y][fdf->x];
-	nts.src = &src;
-	src.z = nts.z_height;
-	src.c =  nts.c_color;
-	src.x = (fdf->x - fdf->y) * (cos (fdf->t));
-	src.y = (fdf->x + fdf->y) * (sin (fdf->t)) - src.z;
-}
+	
 
-void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *src)
+*/
+/* 
+void	proj_last_col(t_fdf *fdf, t_pts pre, t_pts cur, t_pro src)
 {
-	t_pro	src;
 	t_pro	x_dst;
-	t_pts	pre;
-	t_pts	cur;
 	
-	pre = pts[fdf->y][fdf->x];
-	cur = pts[fdf->y][fdf->x + 1];
-	src = *pre.src;
 	x_dst.x = ((fdf->x + 1) - fdf->y) * (cos (fdf->t));
 	x_dst.y = ((fdf->x + 1) + fdf->y) * (sin (fdf->t)) - cur.z_height;
 	x_dst.dx = ft_abs(x_dst.x) - ft_abs(src.x);
@@ -201,18 +361,13 @@ void	proj_next_col(t_fdf *fdf, t_pts **pts, t_pro *src)
 	pre.x_dst = &x_dst
 }
 
-void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *src)
+// void	proj_last_row(t_fdf *fdf, t_pts **pts, t_pro src)
+void	proj_last_row(t_fdf *fdf, t_pts pre, t_pts cur, t_pro src)
 {
-	t_pro	src;
 	t_pro	y_dst;
-	t_pts	pre;
-	t_pts	cur;
 	
-	pre = pts[fdf->y][fdf->x];
-	cur = pts[fdf->y + 1][fdf->x];
-	src = *pre.src;
-	y_dst.x = ((fdf->y + 1) - fdf->y) * (cos (fdf->t));
-	y_dst.y = ((fdf->y + 1) + fdf->y) * (sin (fdf->t)) - cur.z_height;
+	y_dst.x = (fdf->x - (fdf->y)) * (cos (fdf->t));
+	y_dst.y = (fdf->x + (fdf->y)) * (sin (fdf->t)) - cur.z;
 	y_dst.dx = ft_abs(y_dst.x) - ft_abs(src.x);
 	y_dst.dy = ft_abs(y_dst.y) - ft_abs(src.y);
 	if (y_dst.x > src.x)
@@ -220,7 +375,7 @@ void	proj_next_row(t_fdf *fdf, t_pts **pts, t_pro *src)
 	else
 		src.sy = -1;
 	pre.y_dst = &y_dst;
-}
+} */
 /* 
 void	proj_next_row(t_fdf *fdf, t_pts **pts)
 {

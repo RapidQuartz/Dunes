@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:33:42 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 10:08:54 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:40:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	free_map(t_fdf *fdf)
 	
 	i = 0;
 	d = *fdf->dim;
-	while (i < d.y_max)
+	while (i < fdf->y_lim)
 	{
 		j = 0;
-		while (j < d.x_max)
+		while (j < fdf->x_lim)
 		{
 			free(fdf->raw->elements[i][j]);
 			j++;
@@ -57,22 +57,22 @@ void	free_map(t_fdf *fdf)
 }
 
 ////	TODO: move to separate `draw_map.c` file
-void	prepare_image(t_fdf *fdf)
+/* void	prepare_image(t_fdf *fdf)
 {
 	int	z;
 	char	*addr;
 
 	fdf->img = mlx_new_image(fdf->mlx, fdf->dim->s_x, fdf->dim->s_y);//TODO:CHANGE STRUCT
 	addr = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->len, &fdf->endian);
-	while (fdf->y < fdf->ymax - 1)
+	while (fdf->y < fdf->y_lim - 1)
 	{
-		while (fdf->x < fdf->xmax - 1)
+		while (fdf->x < fdf->x_lim - 1)
 		{
 			project_origin(fdf, fdf->pro, fdf->x, fdf->y);
-			if (fdf->x < fdf->xmax - 1)
+			if (fdf->x < fdf->x_lim - 1)
 				project_horizontal(fdf, fdf->pro, fdf->x + 1, fdf->y);
 				// calculate_points(fdf, fdf->x + 1, fdf->y);
-			if (fdf->y < fdf->ymax - 1)
+			if (fdf->y < fdf->y_lim - 1)
 				project_vertical(fdf, fdf->pro, fdf->x, fdf->y + 1);
 				// calculate_points(fdf, fdf->x, fdf->y + 1);
 			fdf->x++;
@@ -80,7 +80,7 @@ void	prepare_image(t_fdf *fdf)
 		fdf->x = 0;
 		fdf->y++;
 	}
-}
+} */
 
 ////	TODO: move to separate `project_map.c` file
 void	calculate_points(t_fdf *fdf, int x, int y, int big)
