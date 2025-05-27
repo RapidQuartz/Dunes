@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/04/29 12:47:18 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:23:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "../libft.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t		i;
+
+	i = 0;
+	while (size > 0 && src[i] != '\0' && i + 1 < size)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (size > 0)
+		dst[i] = '\0';
+	return (ft_strlen(src));
+}

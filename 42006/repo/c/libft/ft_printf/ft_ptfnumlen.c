@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_ptfnumlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/06/14 17:18:18 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:20:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_ptfnumlen(unsigned int num)
+{
+	int	len;
+
+	len = 0;
+	while (num)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
+}

@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_ptfhex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/06/14 17:19:04 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:20:24 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_ptfhex(unsigned long long int num, const char format)
+{
+	if (num == 0)
+		return (ft_ptfcha('0'));
+	ft_ptfhex_put(num, format);
+	return (ft_ptfhex_len(num));
+}

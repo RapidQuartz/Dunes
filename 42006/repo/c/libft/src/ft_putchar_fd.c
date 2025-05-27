@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/05/10 14:56:29 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:23:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "../libft.h"
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write (fd, &c, 1);
+}

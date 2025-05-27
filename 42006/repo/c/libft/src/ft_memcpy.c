@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/05/16 18:05:13 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:23:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "../libft.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	const unsigned char	*s;
+	unsigned char		*d;
+	size_t				m;
+
+	s = (const unsigned char *) src;
+	d = (unsigned char *) dest;
+	if (dest == src || n == 0)
+		return (dest);
+	m = 0;
+	while (m < n)
+	{
+		d[m] = s[m];
+		m++;
+	}
+	return (dest);
+}

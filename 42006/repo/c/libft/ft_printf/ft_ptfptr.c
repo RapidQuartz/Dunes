@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_ptfptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/06/14 17:12:11 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:20:05 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_ptfptr(unsigned long long ptr)
+{
+	int	len;
+
+	len = 0;
+	if (!ptr)
+		return (ft_ptfstr("(nil)"));
+	else
+	{
+		ft_ptfstr("0x");
+		len += 2;
+	}
+	len += ft_ptfhex(ptr, (const char) 'x');
+	return (len);
+}

@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/05/08 12:52:37 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:23:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "../libft.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+	void	*cpy;
+	size_t	i;
+
+	i = nmemb * size;
+	ptr = (void *)malloc(i);
+	if (!ptr)
+		return (NULL);
+	cpy = ptr;
+	while (i--)
+		*(unsigned char *)ptr++ = '\0';
+	return (cpy);
+}

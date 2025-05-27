@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:52:18 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:29 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/04/29 17:12:14 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:23:48 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "inc/fdf.h"
+#include "../libft.h"
 
-int	main(int a, char **v)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int	i;
-	int	j;
+	size_t			i;
+	size_t			l;
+	size_t			s;
 
 	i = 0;
-	j = 0;
-	if (a != 2)
-		return (1);
-	while (v[i][j] != '\0')
+	l = 0;
+	s = 0;
+	s = ft_strlen(src);
+	l = ft_strlen(dst);
+	if (size == 0)
+		return (s);
+	if (l > size && size > 0)
+		return (s + size);
+	if (l + 1 < size)
 	{
-		while (v[i][j] != '\0')
-
-			j++;
-		i++;
+		while (src[i] != '\0' && i + l + 1 < size)
+		{
+			dst[i + l] = src[i];
+			i++;
+		}
 	}
-	return (0);
+	dst[i + l] = '\0';
+	return (l + s);
 }

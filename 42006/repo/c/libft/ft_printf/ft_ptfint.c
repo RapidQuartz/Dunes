@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_ptfint.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/06/14 17:13:09 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:20:15 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_ptfint(int num)
+{
+	char	*nbr;
+	int		len;
+
+	len = 0;
+	if (num == -2147483648)
+	{
+		ft_ptfstr("-2147483648");
+		return (11);
+	}
+	if (num == 0)
+		return (ft_ptfcha('0'));
+	else
+	{
+		nbr = ft_itoa(num);
+		len += ft_ptfstr(nbr);
+		free (nbr);
+	}
+	return (len);
+}

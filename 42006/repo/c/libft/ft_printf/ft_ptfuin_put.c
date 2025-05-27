@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_ptfuin_put.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 10:46:46 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/27 10:53:49 by akjoerse         ###   ########.fr       */
+/*   Created: 2024/06/14 19:29:41 by akjoerse          #+#    #+#             */
+/*   Updated: 2025/04/25 12:19:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNC_H
-# define FUNC_H
-# include "structure.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_ptfuin_put(unsigned int num)
+{
+	int		len;
+	char	*nbr;
+
+	len = 0;
+	if (num == 0)
+		return (ft_ptfcha('0'));
+	else
+	{
+		nbr = ft_uitoa(num);
+		len += ft_ptfstr(nbr);
+		free (nbr);
+	}
+	return (len);
+}

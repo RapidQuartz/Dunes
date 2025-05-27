@@ -9,6 +9,12 @@
 # include <unistd.h>
 # include <math.h>
 # include <limits.h>
+# include "functions.h"
+# include "structure.h"
+# include "../../actual/mlx/mlx.h"
+# include "../libft/libft.h"
+# include "../libft/ft_printf/ft_printf.h"
+# include "../libft/get_next_line/get_next_line.h"
 # define DEFCOL "0xFFFFFF"
 # define DEFWID 800
 # define DEFHEI 800
