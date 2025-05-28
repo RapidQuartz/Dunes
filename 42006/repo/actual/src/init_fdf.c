@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:12:27 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:47:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:40:57 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //fdf->pro[fdf->y][fdf->x] = get_projection(fdf, fdf->x, fdf->y);
 //
-void	null_pro(t_fdf *fdf, t_pro *pro, int x, int y);
+void	null_pro(t_fdf *fdf, int x, int y);
 void	set_pro(t_fdf *f, t_pts **p, t_pro **r);
 
 //
@@ -22,42 +22,80 @@ void	init_mlx(t_fdf *fdf, int width, int height, char *title);
 void	init_raw(t_fdf *fdf, char *map_file)
 {
 	t_raw	raw;
-
-	if ((fdf && fdf->raw != NULL) || !map_file)
-		end_fdf(fdf, 9);
-	raw.map = open(map_file, O_RDONLY);
-	raw.line = NULL;
-	raw.string = NULL;
-	raw.lines = NULL;
-	raw.elements = NULL;
+	
 	fdf->raw = &raw;
-	fdf->co = (cos (fdf->t));
-	fdf->si = (sin (fdf->t));
+	raw.map = open(map_file, O_RDONLY);
+	raw.string = get_next_line(raw.map);
+	while (raw.map != -1)
+	{
+		raw.line = get_next_line(raw.map);
+		if (raw.line == NULL)
+			break;
+		raw.string = ft_strjoin(raw.string, raw.line);
+	}
+	raw.lines = ft_split(raw.string, '\n');
+	while (raw.lines[fdf->y_lim])
+		fdf->y_lim++;
+	fdf->pts = malloc((sizeof(*fdf->pts) * fdf->y_lim));
+	while (raw.lines[fdf->y])
+	{
+		raw.segments = ft_split(raw.lines[fdf->y], ' ');
+		while (raw.segments[fdf->x_lim] && fdf->y == 0)
+			fdf->x_lim++;
+		fdf->pts[fdf->y] = meta_segments(fdf, fdf->y);
+		free (raw.segments);
+		fdf->y++;
+	}
+}
+
+t_pts	*meta_segments(t_fdf *f, int y)
+{
+	t_pts	*p;
+	char	**s;
+	int	len;
+	int	x;
+
+	x = 0;
+	p = malloc(sizeof(t_pts) * f->x_lim);
+	if (!p || p == NULL)
+		return (NULL);
+	s = f->raw->segments;
+	while (s[x])
+	{
+		len = get_lmn_len(s[x]);
+		p[x].c = extract_color(s[x], ft_abs(len));
+		p[x].z = get_height(s[x], ft_abs(len));
+		p[x].x = (x - y * (cos (30)));
+		p[x].y = (x + y * (sin (30)) - p[x].z);
+		x++;
+	}
+	return (p);
 }
 
 void	init_fdf(t_fdf *fdf)
 {
-
-	
-	init_mlx(fdf, fdf->dim->screen_width,
-		fdf->dim->screen_height, "Bonjour FdF");
+	fdf->x = 0;
+	fdf->y = 0;
+	fdf->x_lim = 0;
+	fdf->y_lim = 0;
+	fdf->e = 0;
+	fdf->b = 0;
+	fdf->l = 0;
+	fdf->t = 0;
+	fdf->co = 0;
+	fdf->si = 0;
+	fdf->max = NULL;
+	fdf->raw = NULL;
+	fdf->map = NULL;
+	fdf->dim = NULL;
+	fdf->mlx = NULL;
+	fdf->img = NULL;
+	fdf->win = NULL;
+	fdf->pts = NULL;
+	fdf->pro = NULL;
 }
 // void	init_mlx(t_fdf *fdf, int width, int height, char *title);
 
-void	init_dim(t_fdf *fdf)
-{
-	t_dim	dim;
-	
-	if (fdf->dim != NULL)
-		return ;
-	dim.screen_width = DEFWID;
-	dim.screen_height = DEFHEI;
-	dim.screen_offset = 0;
-	dim.tile_size = 0;
-	dim.rotation = 30;
-	dim.zoom = 1;
-	fdf->dim = &dim;
-}
 
 void	init_mlx(t_fdf *fdf, int width, int height, char *title)
 {
@@ -66,31 +104,31 @@ void	init_mlx(t_fdf *fdf, int width, int height, char *title)
 	fdf->win = mlx_new_window(fdf->mlx, width, height, title);
 }
 
-void	init_pts(t_fdf *fdf)
-{
-	int	x;
-	int	y;
+// void	init_pts(t_fdf *fdf)
+// {
+// 	int	x;
+// 	int	y;
 
-	y = 0;
-	fdf->pts = malloc(sizeof(t_pts *) * fdf->y_lim);
-	while (y < fdf->y_lim)
-	{
-		x = 0;
-		fdf->pts[y] = malloc(sizeof(t_pts) * fdf->x_lim);
-		if (!fdf->pts[y] || fdf->pts[y] == NULL)
-			end_fdf(fdf, 8);
-		while (x < fdf->x_lim)
-		{
-			fdf->pts[y][x].src = NULL;
-			fdf->pts[y][x].x_dst = NULL;
-			fdf->pts[y][x].y_dst = NULL;
-			x++;
-		}
-		y++;
-	}
-	set_points(fdf->raw->elements, fdf, 0, 0);
-}
-
+// 	y = 0;
+// 	fdf->pts = malloc(sizeof(t_pts *) * fdf->y_lim);
+// 	while (y < fdf->y_lim)
+// 	{
+// 		x = 0;
+// 		fdf->pts[y] = malloc(sizeof(t_pts) * fdf->x_lim);
+// 		if (!fdf->pts[y] || fdf->pts[y] == NULL)
+// 			end_fdf(fdf, 8);
+// 		while (x < fdf->x_lim)
+// 		{
+// 			fdf->pts[y][x].src = NULL;
+// 			fdf->pts[y][x].x_dst = NULL;
+// 			fdf->pts[y][x].y_dst = NULL;
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// 	// set_points(fdf->raw->elements, fdf, 0, 0);
+// }
+/* 
 void	init_pro(t_fdf *fdf)
 {
 	int	y;
@@ -104,11 +142,12 @@ void	init_pro(t_fdf *fdf)
 		fdf->pro[y] = malloc(sizeof(t_pro) * fdf->x_lim);
 		if (!fdf->pro[y] || fdf->pro[y] == NULL)
 			end_fdf(fdf, 90);
-		null_pro(fdf, fdf->pro[y], 0, 0);
 		y++;
 	}
 	set_pro(fdf, fdf->pts, fdf->pro);
-}
+} */
+// null_pro(fdf, fdf->pro[y], 0, 0);
+// null_pro(fdf, 0, 0);
 
 //reverse order
 	//always set x/y/z/c
@@ -274,8 +313,8 @@ void	set_pro(t_fdf *fdf)
 		fdf->y++;
 	}
 } */
-
-void	null_pro(t_fdf *fdf, t_pro *pro, int x, int y)
+/* 
+void	null_pro(t_fdf *fdf, int x, int y)
 {
 	int	i;
 
@@ -283,26 +322,25 @@ void	null_pro(t_fdf *fdf, t_pro *pro, int x, int y)
 	while (y < fdf->y_lim)
 	{
 		x = 0;
-		pro = fdf->pro[y];
 		while (x < fdf->x_lim)
 		{
 			i = 0;
 			while (i < 3)
 			{
-				pro->dx[i] = 0;
-				pro->dy[i] = 0;
-				pro->sx[i] = 0;
-				pro->sy[i] = 0;
-				pro->x[i] = 0;
-				pro->y[i] = 0;
-				pro->z[i] = 0;
+				fdf->pro[y]->dx[i] = 0;
+				fdf->pro[y]->dy[i] = 0;
+				fdf->pro[y]->sx[i] = 0;
+				fdf->pro[y]->sy[i] = 0;
+				fdf->pro[y]->x[i] = 0;
+				fdf->pro[y]->y[i] = 0;
+				fdf->pro[y]->z[i] = 0;
 				i++;
 			}
 			x++;
 		}
 		y++;
 	}
-}
+} */
 
 /*
 thing is, I basically have to retroactively apply the slope stuff

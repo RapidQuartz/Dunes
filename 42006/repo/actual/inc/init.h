@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 09:47:23 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:41:33 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@
 # include <unistd.h>
 # include <math.h>
 # include <limits.h>
-# define DEFCOL "0xFFFFFF"
+# define DEFCOL 16777215
 # define DEFWID 800
 # define DEFHEI 800
+# define SCALE 3
+# define SCALEX 30
+# define SCALEY 10
+# define SCALEZ 8
+# define ANGLE 25
+# define PI 3.14159
 # define HEXSET "0123456789ABCDEFabcdef"
 # define RED "\033[1;31m"
 # define GRN "\033[1;32m"

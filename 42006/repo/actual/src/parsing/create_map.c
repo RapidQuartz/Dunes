@@ -6,12 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:26:22 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:28:20 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:07:07 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/fdf.h"
-
+/* 
 void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
 {
 	int	lmn_len;
@@ -38,7 +38,7 @@ void	set_points(char ***lmn, t_fdf *fdf, int x, int y)
 		}
 	}
 	free_map(fdf);
-}
+} */
 
 int	get_lmn_len(char *lmn)
 {
@@ -54,7 +54,7 @@ int	get_lmn_len(char *lmn)
 	return (i);
 }
 
-char	*get_height(char *num, int end)
+int	get_height(char *num, int end)
 {
 	int	i;
 	char	*height;
@@ -69,9 +69,26 @@ char	*get_height(char *num, int end)
 		i++;
 	}
 	height[i] = '\0';
-	return (height);
+	return(ft_atoi(height));
 }
-
+int	extract_color(char *col, int j)
+{
+	int	i;
+	int	hex;
+	
+	i = 2 + j;
+	hex = 0;
+	if (col[j] != ',')
+		return (DEFCOL);
+	while (col[i])
+	{
+		hex *= 16;
+		hex += ft_hextoi(col[i]);
+		i++;
+	}
+	return (hex);
+}
+/* 
 char	*extract_color(char *col, int start)
 {
 	int	len;
@@ -107,4 +124,4 @@ int	convert_color(char *col)
 	}
 	free (col);
 	return (hex);	
-}
+} */

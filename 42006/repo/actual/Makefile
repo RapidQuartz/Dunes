@@ -5,12 +5,13 @@ CC = @cc -g
 CF = -Wall -Werror -Wextra
 RM = @rm -f
 LIBFT = libft.a
-SRC = main.c \
-src/init_fdf.c \
-src/parsing/parse_mapfile.c src/parsing/create_map.c \
-src/utility/helpers.c \
-src/drawing/project_map.c \
-src/utility/error.c src/utility/check_input.c
+SRC = omni.c
+# main.c \
+# src/init_fdf.c \
+# src/parsing/parse_mapfile.c src/parsing/create_map.c \
+# src/utility/helpers.c \
+# src/drawing/project_map.c \
+# src/utility/error.c src/utility/check_input.c
 # src/
 # src/parsing/
 # src/utility/

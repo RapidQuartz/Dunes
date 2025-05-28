@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:26:11 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:36:34 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:57:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	free_fdf(t_fdf *fdf)
 		free (fdf->img);
 	if (fdf->win != NULL)
 		free (fdf->win);
-	null_fdf(fdf, 0, 0);
+	// null_fdf(fdf, 0, 0);
 	return (0);
 }
 

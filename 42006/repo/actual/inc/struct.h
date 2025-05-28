@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:44:52 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:13:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,18 +124,10 @@ typedef struct s_mlx
 	void	*mlx;
 	int			len;
 }	t_mlx;
-typedef struct s_raw
-{
-	int		map;
-	char	*line;
-	char	*string;
-	char	**lines;
-	char	***elements;
-}	t_raw;
 //// MAP:  ////  ////the processed map file converted into data points/////////
 typedef struct s_map
 {
-	t_raw	 *raw;
+	struct s_raw	 *raw;
 	int	 width;
 	int	 height;
 	int	 offset;
@@ -154,6 +146,13 @@ typedef struct s_pts
 	struct s_pro	*x_dst;
 	struct s_pro	*y_dst;
 }	t_pts;
+typedef struct s_max
+{
+	struct s_fdf	**fdf;
+	int	z;
+	int	c;
+}	t_max;
+
 //// PRO:  ////  ////container for projection data/////////////////////////////
 typedef struct s_pro
 {
@@ -182,6 +181,31 @@ typedef struct s_dim
 	int		total_elements;
 }	t_dim;
 //// FDF:  ////  ////container for all data in FDF project/////////////////////
+typedef struct s_raw
+{
+	int		map;
+	char	*line;
+	char	*string;
+	char	**lines;
+	char	**segments;
+	char	***elements;
+}	t_raw;
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int	err;
+	int	endian;
+	int	bpp;
+	int	len;
+	int	width;
+	int	height;
+	
+}	t_img;
 typedef struct s_fdf
 {
 	int		x;
@@ -192,13 +216,20 @@ typedef struct s_fdf
 	int		b;
 	int		l;
 	int		t;
+	int		x_off;
+	int		y_off;
+	int		scale;
+	int		angle;
+	// float		angle;
 	double	co;
 	double	si;
+	t_max		*max;
 	t_raw		*raw;
 	t_map		*map;
 	t_dim		*dim;
 	void		*mlx;
-	void		*img;
+	t_img		*img;
+	// void		*img;
 	void		*win;
 	t_pts		**pts;
 	t_pro		**pro;

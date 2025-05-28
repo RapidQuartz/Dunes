@@ -6,12 +6,12 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:02:43 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:44:35 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:52:51 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/fdf.h"
-
+/* 
 void	prepare_image(t_fdf *fdf)
 {
 	int	z;
@@ -32,4 +32,4 @@ void	prepare_image(t_fdf *fdf)
 		fdf->x = 0;
 		fdf->y++;
 	}
-}
+} */

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:04:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/26 18:33:23 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:15:13 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	read_raw_map(t_fdf *fdf)
 			raw = ft_strjoin(raw, fdf->raw->line);
 		else
 			raw = ft_strdup(fdf->raw->line);
-		free (fdf->raw->line);
+		// free (fdf->raw->line);
 	}
-	fdf->raw->string = malloc(sizeof(raw));
-	if (!fdf->raw->string || fdf->raw->string == NULL)
-		exit (0);//TODO:integrate into exit function
+	// fdf->raw->string = malloc(sizeof(raw));
+	// if (!fdf->raw->string || fdf->raw->string == NULL)
+	// 	exit (0);//TODO:integrate into exit function
 	fdf->raw->string = ft_strdup(raw);
 	free (raw);
 }
@@ -45,7 +45,7 @@ void	split_raw_map(t_fdf *fdf)
 	l = 0;
 	r = 0;
 	split_map = ft_split(fdf->raw->string, '\n');
-	while (split_map[n])
+	while (split_map[n])		
 		n++;
 	fdf->y_lim = n;
 	fdf->raw->elements = malloc(sizeof(*fdf->raw->elements) * n);
