@@ -46,29 +46,30 @@ void	put_pixel(int x, int y, int c, t_mlx *i)
 	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
-t_pro	set_pro(t_pts o, t_pts d)
+void	set_pro(t_pts o, t_pts d, t_pro *p)
 {
-	t_pro	p;
-	p.x0 = (int)o.x;
-	p.x1 = (int)d.x;
-	p.y0 = (int)o.y;
-	p.y1 = (int)d.y;
-	p.dx = ft_abs(p.x1 - p.x0);
-	p.dy = -ft_abs(p.y1 - p.y0);
-	p.err = p.dx + p.dy;
-	if (p.x0 < p.x1)
-		p.sx = 1;
+	p->x0 = (int)o.x;
+	p->x1 = (int)d.x;
+	p->y0 = (int)o.y;
+	p->y1 = (int)d.y;
+	p->dx = ft_abs(p->x1 - p->x0);
+	p->dy = -ft_abs(p->y1 - p->y0);
+	p->err = p->dx + p->dy;
+	if (p->x0 < p->x1)
+		p->sx = 1;
 	else
-		p.sx = -1;
-	if (p.y0 < p.y1)
-		p.sy = 1;
+		p->sx = -1;
+	if (p->y0 < p->y1)
+		p->sy = 1;
 	else
-		p.sy = -1;
-	return (p);
+		p->sy = -1;
 }
 void	draw_line(t_pts o, t_pts d, t_fdf *f)
 {
-	*p = set_pro(o, d);
+	t_pro *p;
+
+	set_pro(o, d, f->pro);
+	p = f->pro;
 	while (1)
 	{
 		put_pixel(p->x0, p->y0, o.c, f->mlx);
@@ -95,10 +96,10 @@ void	init_img(t_fdf *f, t_mlx *m)
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
 	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	while (f->y < f->y_lim)
+	while (f->y < f->y_lim - 1)
 	{
 		f->x = 0;
-		while (f->x < f->x_lim)
+		while (f->x < f->x_lim - 1)
 		{
 			if (f->x + 1 < f->x_lim)
 				draw_line(p[f->y][f->x], p[f->y][f->x + 1], f);
@@ -179,9 +180,9 @@ t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 	fy = y * SCALEY;
 	fz = p.z * SCALEZ;
 	// p.x = ((x - -y) * (f->cosine));
-	p.x = ((fx - -fy) * (f->cosine) + f->x_off);
+	p.x = ((fx - -fy) * (D_COS) + f->x_off);
 	// p.y = ((x + -y) * (f->sine) - fz);
-	p.y = ((fx + -fy) * (f->sine) - fz + f->y_off);
+	p.y = ((fx + -fy) * (D_SIN) - fz + f->y_off);
 	return (p);
 }
 t_pts	*meta_segments(t_fdf *f, int y)
@@ -197,9 +198,9 @@ t_pts	*meta_segments(t_fdf *f, int y)
 		return (NULL);
 	s = f->raw->segments;
 	if (f->x_off == 0)
-		f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * f->cosine * SCALE)) / 2;
+		f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * D_COS * SCALE)) / 2;
 	if (f->y_off == 0)
-		f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * f->sine * SCALE)) / 2;
+		f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * D_SIN * SCALE)) / 2;
 	while (s[x])
 	{
 		len = get_lmn_len(s[x]);

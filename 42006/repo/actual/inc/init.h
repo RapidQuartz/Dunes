@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/29 18:11:28 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:54:29 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define SCALEX 50
 # define SCALEY 30
 # define SCALEZ 10
+# define ANGLE 30
+# define D_COS 0.707105
+# define D_SIN 0.707108
 # define ANGLE 30
 # define PI 3.1415926535897
 # define HEXSET "0123456789ABCDEFabcdef"
