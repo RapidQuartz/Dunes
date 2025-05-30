@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/28 10:41:33 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:11:28 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 # define DEFCOL 16777215
 # define DEFWID 800
 # define DEFHEI 800
-# define SCALE 3
-# define SCALEX 30
-# define SCALEY 10
-# define SCALEZ 8
-# define ANGLE 25
-# define PI 3.14159
+# define SCALE 1
+# define SCALEX 50
+# define SCALEY 30
+# define SCALEZ 10
+# define ANGLE 30
+# define PI 3.1415926535897
 # define HEXSET "0123456789ABCDEFabcdef"
 # define RED "\033[1;31m"
 # define GRN "\033[1;32m"

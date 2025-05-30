@@ -72,22 +72,18 @@ void	draw_line(t_pts d, t_pts o, t_img *i)
 		}
 	}
 }
-void	init_img(t_fdf *f, t_pts **p, t_mlx *m)
+void	init_img(t_fdf *f, t_img *i, t_pts **p)
 {
-	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	f->pro = malloc(sizeof(t_pro *) * f->y_lim);
-	if (!f->pro || f->pro == NULL)
-		exit (0);//TODO:integrate into exit function
-	while ()
+	i->addr = mlx_get_data_addr(i->img, &i->bpp, &i->len, &i->endian);
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
 			if (f->x + 1 < f->x_lim)
-				draw_line(p[f->y][f->x + 1], p[f->y][f->x], f->pro);
+				draw_line(p[f->y][f->x + 1], p[f->y][f->x], i);
 			if (f->y + 1 < f->y_lim)
-				draw_line(p[f->y + 1][f->x], p[f->y][f->x], f->pro);
+				draw_line(p[f->y + 1][f->x], p[f->y][f->x], i);
 			f->x++;
 		}
 		f->y++;
@@ -203,17 +199,12 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 			f->x_lim++;
 		if (f->y == 0)
 		{
-			f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * f->cosine * SCALE)) / 2;
-			f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * f->sine * SCALE)) / 2;
+			f->x_off = DEFWID / 2
 		}
 		p[f->y] = meta_segments(f, f->y);
 		free (raw->segments);
 		f->y++;
 	}
-}
-void	init_pro(t_fdf *fdf)
-{
-	
 }
 void	init_raw(t_fdf *fdf, char *map_file)
 {
@@ -280,7 +271,7 @@ bool	check_file(char **a)
 		return (true);
 	return (false);
 }
-void	init_mlx(t_fdf *f)
+t_mlx	init_mlx(void)
 {
 	t_mlx	m;
 
@@ -291,11 +282,11 @@ void	init_mlx(t_fdf *f)
 	m.len = 0;
 	m.bpp = 0;
 	m.err = 0;
-	m.end = 0;
 	m.mlx = mlx_init();
 	m.win = mlx_new_window(m.mlx, DEFWID, DEFHEI, "Fer De Fil");
+	m.img = malloc(sizeof(t_img));
 	m.img = mlx_new_image(m.mlx, DEFWID, DEFHEI);
-	f->mlx = &m;
+	return (m);
 }
 int	main(int arg, char **param)
 {
@@ -306,14 +297,15 @@ int	main(int arg, char **param)
 		return (1);
 	init_fdf(&fdf);
 	init_raw(&fdf, param[1]);
-	init_mlx(&fdf);
+	*fdf.mlx = init_mlx();
 	fdf.x = 0;
 	fdf.y = 0;
-	init_pro(&fdf);
-	init_img(&fdf, fdf.pts, fdf.mlx);
+	init_img(&fdf, fdf.img, fdf.pts);
 	mlx_hook(fdf.win, 17, 0, close_handler, &fdf);
 	mlx_key_hook(fdf.win, keychain, &fdf);
 	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img->img, 0, 0);
 	mlx_loop(fdf.mlx);
 	printf(RED"just follow me\n"DEF);
 }
+	f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * cos(f->angle) * SCALE)) / 2;
+	f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * sin(f->angle) * SCALE)) / 2;

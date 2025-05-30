@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/28 10:13:56 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:26:31 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,118 +14,20 @@
 # define STRUCT_H
 
 # include "fdf.h"
-//// ////  ////  //////////////////////////////////////////////////////////////
-//// PAL:  ////  ////the old structures for the FDF project////////////////////
-//// ////  ////  //////////////////////////////////////////////////////////////
-// typedef struct s_pts
-// {
-// 	int	z;
-// 	int	c;
-// }	t_pts;
-
-// typedef struct s_dim
-// {
-// 	int	max_x;
-// 	int	max_y;
-// 	int	s_x;
-// 	int	s_y;
-// 	int	z_x;
-// 	int	z_y;
-// }	t_dim;
-
-// typedef struct s_iso
-// {
-// 	int		offset;
-// 	double	x0;
-// 	double	y0;
-// 	double	x1;
-// 	double	y1;
-// 	int		dx;
-// 	int		dy;
-// 	int		sx;
-// 	int		sy;
-// }	t_iso;
-
-// typedef struct s_pos
-// {
-// 	int	dx;
-// 	int	dy;
-// 	int	x;
-// 	int	y;
-// }	t_pos;
-
-// typedef struct s_map
-// {
-// 	int		err;
-// 	int		zoom;
-// 	int		tiles;
-// 	int		theta;
-// 	char	***elements;
-// 	char	**space_split;
-// 	char	*raw_str;
-// 	void	*win;
-// 	void	*mlx;
-// }	t_map;
-
-// typedef struct s_drw
-// {
-// 	int	x;
-// 	int	y;
-// }	t_drw;
-
-// typedef struct s_pro
-// {
-// 	int	x0;
-// 	int	x1;
-// 	int	y0;
-// 	int	y1;
-// 	int	y2;
-// 	int	z0;
-// 	int	z1;
-// 	int	z2;
-// 	int	c0;
-// 	int	c1;
-// 	int	c2;
-// 	int	hx;
-// 	int	hy;
-// 	int	vx;
-// 	int	vy;
-// }	t_pro;
-
-// typedef struct s_fdf
-// {
-// 	int		fd;
-// 	int		x;
-// 	int		y;
-// 	int		theta;
-// 	int		endian;
-// 	int		xmax;
-// 	int		ymax;
-// 	int		bpp;
-// 	int		len;
-// 	void	*img;
-// 	void	*mlx;
-// 	void	*win;
-// 	t_pro	*pro;
-// 	t_map	*map;
-// 	t_dim	*dim;
-// 	t_iso	*iso;
-// 	t_pos	*pos;
-// 	t_pts	**pts;
-// }	t_fdf;
-
-//// ////  ////  //////////////////////////////////////////////////////////////
-//// NEO:  ////  ////the new structures for the FDF project////////////////////
-//// ////  ////  //////////////////////////////////////////////////////////////
 //// RAW:  ////  ////the pure output from reading the mapfile//////////////////
 typedef struct s_mlx
 {
+	char	*adr;
 	void	*win;
 	void	*mlx;
-	int			len;
+	void	*img;
+	int		len;
+	int		bpp;
+	int		end;
+	int		err;
 }	t_mlx;
 //// MAP:  ////  ////the processed map file converted into data points/////////
-typedef struct s_map
+/* typedef struct s_map
 {
 	struct s_raw	 *raw;
 	int	 width;
@@ -134,37 +36,26 @@ typedef struct s_map
 	int	 tile_size;
 	int	 rotation;
 	int	 zoom;
-}	t_map;
+}	t_map; */
 //// PTS:  ////  ////container for the map coordinates' values/////////////////
-typedef struct s_pts
+/* typedef struct s_pts
 {
-	int			x;
-	int			y;
+	double		x;
+	double		y;
 	int			z;
 	int			c;
 	struct s_pro	*src;
 	struct s_pro	*x_dst;
 	struct s_pro	*y_dst;
-}	t_pts;
-typedef struct s_max
+}	t_pts; */
+/* typedef struct s_max
 {
 	struct s_fdf	**fdf;
 	int	z;
 	int	c;
-}	t_max;
+}	t_max; */
 
 //// PRO:  ////  ////container for projection data/////////////////////////////
-typedef struct s_pro
-{
-	int		x[3];
-	int		y[3];
-	int		z[3];
-	int		c[3];
-	int		dx[3];
-	int		dy[3];
-	int		sx[3];
-	int		sy[3];
-}	t_pro;
 //// DIM:  ////  ////container for image and window parameters/////////////////
 typedef struct s_dim
 {
@@ -194,6 +85,10 @@ typedef struct s_img
 {
 	void	*img;
 	char	*addr;
+	int		ox;
+	int		tx;
+	int		oy;
+	int		ty;
 	int		dx;
 	int		dy;
 	int		sx;
@@ -206,36 +101,53 @@ typedef struct s_img
 	int	height;
 	
 }	t_img;
+typedef struct s_pts
+{
+	int	x;
+	int	y;
+	int	z;
+	int	c;
+}	t_pts;
+typedef struct s_pro
+{
+	t_pts	*x_origin;
+	t_pts	*y_origin;
+	t_pts	*x_destination;
+	t_pts	*y_destination;
+}	t_pro;
 typedef struct s_fdf
 {
+	double	radians;
+	double	cosine;
+	double	sine;
 	int		x;
 	int		y;
-	int		x_lim;
-	int		y_lim;
-	int		e;
-	int		b;
-	int		l;
-	int		t;
-	int		x_off;
-	int		y_off;
-	int		scale;
-	int		angle;
+	int		x_lim;//width in members
+	int		y_lim;//height in members
+	int		e;//used during trig
+	int		b;//bits per pixel
+	int		l;//len - length of 1D char *array that holds image buffer
+	int		t;//theta: the angle used for trig
+	int		x_off;//screen offsets
+	int		y_off;//screen offsets
+	int		scale;//to be multiplied with position for appropriate size
+	int		angle;//theta: the angle used for trig
 	// float		angle;
-	double	co;
-	double	si;
-	t_max		*max;
-	t_raw		*raw;
-	t_map		*map;
-	t_dim		*dim;
-	void		*mlx;
-	t_img		*img;
+	double	co;//unused, but were (x - y * {cos (theta)})
+	double	si;//unused, but were (x + y * {sin (theta)} + z)
+	// t_max		*max;//ptrs
+	t_raw		*raw;//ptr for map in chars
+	// t_map		*map;//disused
+	t_dim		*dim;//ptrs//dimensions of canvas/window etc
+	t_mlx		*mlx;// mlx ptr for mlx mlxing
+	t_img		*img;// image ptr for mlx mlxing
 	// void		*img;
-	void		*win;
-	t_pts		**pts;
+	void		*win;// window ptr for mlx mlxing
+	t_pts		**pts;//[y]/[x] = {z, c} // for height and color
 	t_pro		**pro;
 }	t_fdf;
 /* NEONEO */
-/* NEONEO
+/* old stuff
 typedef struct s_fdf
 {
 	void	*p;
@@ -248,6 +160,17 @@ typedef struct s_fdf
 	void	*p;
 }	t_fdf;
 */
+/* typedef struct s_pro
+{
+	int		x[3];
+	int		y[3];
+	int		z[3];
+	int		c[3];
+	int		dx[3];
+	int		dy[3];
+	int		sx[3];
+	int		sy[3];
+}	t_pro; */
 /* 
 typedef struct s_fdf
 {

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/28 08:26:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:31:27 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		convert_color(char *col);
 //// INIT: ////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
 void	init_fdf(t_fdf *fdf);
-void	init_map(t_map *map);
-void	init_pro(t_fdf *fdf);
+// void	init_m(t_map *map);
+// void	init_pro(t_fdf *fdf);
 void	init_raw(t_fdf *fdf, char *map_file);
 void	init_dim(t_fdf *fdf);
 // void	init_iso(t_iso *iso);
@@ -60,7 +60,7 @@ void	init_null_dim(t_fdf *fdf);
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// MAP:  ////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
-void	set_points(char ***lmn, t_fdf *fdf, int x, int y);
+// void	set_points(char ***lmn, t_fdf *fdf, int x, int y);
 int		get_lmn_len(char *lmn);
 int		get_height(char *num, int end);
 // char	*extract_color(char *col, int start);
@@ -78,7 +78,7 @@ void	put_pixel(int x, int y, int c, t_img *i);
 //// ERROR:////  //////////////////////////////////////////////////////////////
 //// ////  ////  //////////////////////////////////////////////////////////////
 void	error(void);
-int		error_end(int fd, char *params, t_map *map);
+// int		error_end(int fd, char *params, t_map *map);
 int	end_fdf(t_fdf *fdf, int err);
 int	free_fdf(t_fdf *fdf);
 void	null_fdf(t_fdf *fdf, int x, int y);
