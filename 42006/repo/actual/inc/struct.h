@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/30 13:26:31 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:20:40 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,24 @@ typedef struct s_img
 }	t_img;
 typedef struct s_pts
 {
-	int	x;
-	int	y;
-	int	z;
-	int	c;
+	double	x;
+	double	y;
+	int		z;
+	int		c;
 }	t_pts;
 typedef struct s_pro
 {
-	t_pts	*x_origin;
-	t_pts	*y_origin;
-	t_pts	*x_destination;
-	t_pts	*y_destination;
+	int	c;
+	int	z;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+	int	err;
 }	t_pro;
 typedef struct s_fdf
 {
@@ -144,7 +151,7 @@ typedef struct s_fdf
 	// void		*img;
 	void		*win;// window ptr for mlx mlxing
 	t_pts		**pts;//[y]/[x] = {z, c} // for height and color
-	t_pro		**pro;
+	t_pro		*pro;
 }	t_fdf;
 /* NEONEO */
 /* old stuff

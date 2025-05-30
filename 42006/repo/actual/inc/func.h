@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/30 13:31:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:30:28 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int		convert_color(char *col);
 //// ////  ////  //////////////////////////////////////////////////////////////
 void	prepare_image(t_fdf *fdf);
 // void	draw_line(t_fdf *fdf, t_pro *pro, int x, int y);
-void	draw_line(t_pts o, t_pts d, t_img *i);
-void	put_pixel(int x, int y, int c, t_img *i);
+// void	draw_line(t_pts o, t_pts d, t_img *i);
+// void	put_pixel(int x, int y, int c, t_img *i);
 
 //// ////  ////  //////////////////////////////////////////////////////////////
 //// ERROR:////  //////////////////////////////////////////////////////////////

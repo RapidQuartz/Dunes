@@ -23,71 +23,87 @@ int	close_handler(void *param)
 	return (0);
 }
 // void	derive_trig(t_pts d, t_pts o, t_img *i)
-void	derive_trig(t_img *i)
-{
-	i->dx = ft_abs(i->tx - i->ox);
-	i->dy = -ft_abs(i->ty - i->oy);
-	i->err = i->dx + i->dy;
-	if (i->ox < i->tx)
-		i->sx = 1;
-	else
-		i->sx = -1;
-	if (i->oy < i->ty)
-		i->sy = 1;
-	else
-		i->sy = -1;
-}
-void	put_pixel(int x, int y, int c, t_img *i)
+// void	derive_trig(t_img *i)
+// {
+// 	i->dx = ft_abs(p->x1 - i->ox);
+// 	i->dy = -ft_abs(p->y1 - i->oy);
+// 	i->err = i->dx + i->dy;
+// 	if (i->ox < p->x1)
+// 		i->sx = 1;
+// 	else
+// 		i->sx = -1;
+// 	if (i->oy < p->y1)
+// 		i->sy = 1;
+// 	else
+// 		i->sy = -1;
+// }
+void	put_pixel(int x, int y, int c, t_mlx *i)
 {
 	char	*pix;
 
 	if (x < 0 || x >= DEFWID || y < 0 || y >= DEFHEI)
 		return ;
-	pix = i->addr + (y * i->len + x * (i->bpp / 8));
+	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
-void	draw_line(t_pts d, t_pts o, t_img *i)
+t_pro	set_pro(t_pts o, t_pts d)
 {
-	i->ox = (int)o.x;
-	i->tx = (int)d.x;
-	i->oy = (int)o.y;
-	i->ty = (int)d.y;
-	// int	x_abs;
-	// int	y_abs;
-	derive_trig(i);
+	t_pro	p;
+	p.x0 = (int)o.x;
+	p.x1 = (int)d.x;
+	p.y0 = (int)o.y;
+	p.y1 = (int)d.y;
+	p.dx = ft_abs(p.x1 - p.x0);
+	p.dy = -ft_abs(p.y1 - p.y0);
+	p.err = p.dx + p.dy;
+	if (p.x0 < p.x1)
+		p.sx = 1;
+	else
+		p.sx = -1;
+	if (p.y0 < p.y1)
+		p.sy = 1;
+	else
+		p.sy = -1;
+	return (p);
+}
+void	draw_line(t_pts o, t_pts d, t_fdf *f)
+{
+	*p = set_pro(o, d);
 	while (1)
 	{
-		put_pixel(i->ox, i->oy, o.c, i);
-		if (i->ox == i->tx && i->oy == i->ty)
+		put_pixel(p->x0, p->y0, o.c, f->mlx);
+		if (p->x0 == p->x1 && p->y0 == p->y1)
 			break ;
-		if (2 * i->err >= i->dy)
+		if (2 * p->err >= p->dy)
 		{
-			i->err += i->dy;
-			i->ox += i->sx;
+			p->err += p->dy;
+			p->x0 += p->sx;
 		}
-		if (2 * i->err <= i->dx)
+		if (2 * p->err <= p->dx)
 		{
-			i->err += i->dx;
-			i->oy += i->sy;
+			p->err += p->dx;
+			p->y0 += p->sy;
 		}
 	}
 }
-void	init_img(t_fdf *f, t_pts **p, t_mlx *m)
+void	init_img(t_fdf *f, t_mlx *m)
 {
-	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	f->pro = malloc(sizeof(t_pro *) * f->y_lim);
+	t_pts	**p;
+
+	p = f->pts;
+	f->pro = malloc(sizeof(t_pro));
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
-	while ()
+	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
 			if (f->x + 1 < f->x_lim)
-				draw_line(p[f->y][f->x + 1], p[f->y][f->x], f->pro);
+				draw_line(p[f->y][f->x], p[f->y][f->x + 1], f);
 			if (f->y + 1 < f->y_lim)
-				draw_line(p[f->y + 1][f->x], p[f->y][f->x], f->pro);
+				draw_line(p[f->y][f->x], p[f->y + 1][f->x], f);
 			f->x++;
 		}
 		f->y++;
@@ -150,7 +166,7 @@ int	get_lmn_len(char *lmn)
 	}
 	return (i);
 }
-t_pts	proj_offset(t_pts p, double x, double y, t_fdf *f)
+t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 {
 	// float	fx;
 	double	fx;
@@ -162,10 +178,10 @@ t_pts	proj_offset(t_pts p, double x, double y, t_fdf *f)
 	fx = x * SCALEX;
 	fy = y * SCALEY;
 	fz = p.z * SCALEZ;
-	p.x = ((fx - -fy) * (f->cosine));
-	// p.x = ((fx - -fy) * (cosine) + f->x_off);
-	p.y = ((fx + -fy) * (f->sine) - fz);
-	// p.y = ((fx + -fy) * (sine) - fz + f->y_off);
+	// p.x = ((x - -y) * (f->cosine));
+	p.x = ((fx - -fy) * (f->cosine) + f->x_off);
+	// p.y = ((x + -y) * (f->sine) - fz);
+	p.y = ((fx + -fy) * (f->sine) - fz + f->y_off);
 	return (p);
 }
 t_pts	*meta_segments(t_fdf *f, int y)
@@ -176,19 +192,20 @@ t_pts	*meta_segments(t_fdf *f, int y)
 	int	x;
 
 	x = 0;
-	
 	p = malloc(sizeof(t_pts) * f->x_lim);
 	if (!p || p == NULL)
 		return (NULL);
 	s = f->raw->segments;
+	if (f->x_off == 0)
+		f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * f->cosine * SCALE)) / 2;
+	if (f->y_off == 0)
+		f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * f->sine * SCALE)) / 2;
 	while (s[x])
 	{
 		len = get_lmn_len(s[x]);
 		p[x].c = extract_color(s[x], ft_abs(len));
 		p[x].z = get_height(s[x], ft_abs(len));
 		p[x] = proj_offset(p[x], x, y, f);
-		// p[x] = proj_offset(p[x], (f->x_lim - 1 - x), y, f);
-		// p[x] = proj_offset(p[x], x, (f->y_lim - 1 - y), f);
 		x++;
 	}
 	return (p);
@@ -199,21 +216,13 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 	while (raw->lines[f->y])
 	{
 		raw->segments = ft_split(raw->lines[f->y], ' ');
-		while (raw->segments[f->x_lim] && f->y == 0)
+		while (f->y == 0 && raw->segments[f->x_lim])
 			f->x_lim++;
-		if (f->y == 0)
-		{
-			f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * f->cosine * SCALE)) / 2;
-			f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * f->sine * SCALE)) / 2;
-		}
 		p[f->y] = meta_segments(f, f->y);
 		free (raw->segments);
 		f->y++;
 	}
-}
-void	init_pro(t_fdf *fdf)
-{
-	
+	free (raw->lines);
 }
 void	init_raw(t_fdf *fdf, char *map_file)
 {
@@ -249,8 +258,8 @@ void	init_fdf(t_fdf *fdf)
 	fdf->t = 0;
 	fdf->co = 0;
 	fdf->si = 0;
-	// fdf->x_off = DEFWID / 2;
-	// fdf->y_off = DEFHEI / 2;
+	fdf->x_off = 0;
+	fdf->y_off = 0;
 	fdf->scale = 1;//NB
 	// fdf->angle = ANGLE * (PI/180.0);
 	fdf->angle = ANGLE;//NB
@@ -282,20 +291,23 @@ bool	check_file(char **a)
 }
 void	init_mlx(t_fdf *f)
 {
-	t_mlx	m;
+	t_mlx	*m;
 
-	m.win = NULL;
-	m.mlx = NULL;
-	m.img = NULL;
-	m.adr = NULL;
-	m.len = 0;
-	m.bpp = 0;
-	m.err = 0;
-	m.end = 0;
-	m.mlx = mlx_init();
-	m.win = mlx_new_window(m.mlx, DEFWID, DEFHEI, "Fer De Fil");
-	m.img = mlx_new_image(m.mlx, DEFWID, DEFHEI);
-	f->mlx = &m;
+	m = malloc(sizeof(t_mlx));
+	if (!m || m == NULL)
+		exit (0);//TODO:integrate into exit function
+	m->win = NULL;
+	m->mlx = NULL;
+	m->img = NULL;
+	m->adr = NULL;
+	m->len = 0;
+	m->bpp = 0;
+	m->err = 0;
+	m->end = 0;
+	m->mlx = mlx_init();
+	m->win = mlx_new_window(m->mlx, DEFWID, DEFHEI, "Fer De Fil");
+	m->img = mlx_new_image(m->mlx, DEFWID, DEFHEI);
+	f->mlx = m;
 }
 int	main(int arg, char **param)
 {
@@ -309,8 +321,7 @@ int	main(int arg, char **param)
 	init_mlx(&fdf);
 	fdf.x = 0;
 	fdf.y = 0;
-	init_pro(&fdf);
-	init_img(&fdf, fdf.pts, fdf.mlx);
+	init_img(&fdf, fdf.mlx);
 	mlx_hook(fdf.win, 17, 0, close_handler, &fdf);
 	mlx_key_hook(fdf.win, keychain, &fdf);
 	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img->img, 0, 0);

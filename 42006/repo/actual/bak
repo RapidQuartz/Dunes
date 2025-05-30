@@ -72,9 +72,9 @@ void	draw_line(t_pts d, t_pts o, t_img *i)
 		}
 	}
 }
-void	init_img(t_fdf *f, t_img *i, t_pts **p)
+void	init_img(t_fdf *f, t_img *i, t_pts **p, t_pro **r)
 {
-	i->addr = mlx_get_data_addr(i->img, &i->bpp, &i->len, &i->endian);
+	i->adr = mlx_get_data_addr(i->img, &i->bpp, &i->len, &i->endian);
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
@@ -300,7 +300,7 @@ int	main(int arg, char **param)
 	*fdf.mlx = init_mlx();
 	fdf.x = 0;
 	fdf.y = 0;
-	init_img(&fdf, fdf.img, fdf.pts);
+	init_img(&fdf, fdf.img, fdf.pts, fdf.pro);
 	mlx_hook(fdf.win, 17, 0, close_handler, &fdf);
 	mlx_key_hook(fdf.win, keychain, &fdf);
 	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img->img, 0, 0);
