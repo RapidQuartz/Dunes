@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/30 14:20:40 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/31 19:48:15 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_fdf
 	int		x_off;//screen offsets
 	int		y_off;//screen offsets
 	int		scale;//to be multiplied with position for appropriate size
-	int		angle;//theta: the angle used for trig
+	double	angle;//theta: the angle used for trig
 	// float		angle;
 	double	co;//unused, but were (x - y * {cos (theta)})
 	double	si;//unused, but were (x + y * {sin (theta)} + z)

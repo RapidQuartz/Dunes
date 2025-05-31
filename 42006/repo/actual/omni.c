@@ -46,12 +46,17 @@ void	put_pixel(int x, int y, int c, t_mlx *i)
 	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
+// void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f)
 void	set_pro(t_pts o, t_pts d, t_pro *p)
 {
-	p->x0 = (int)o.x;
-	p->x1 = (int)d.x;
-	p->y0 = (int)o.y;
-	p->y1 = (int)d.y;
+	// p->x0 = (int)rint(o.x) + (f->x_off / 2);
+	p->x0 = (int)rint(o.x);
+	// p->x1 = (int)rint(d.x) + (f->x_off / 2);
+	p->x1 = (int)rint(d.x);
+	// p->y0 = (int)rint(o.y) + (f->y_off / 2);
+	p->y0 = (int)rint(o.y);
+	// p->y1 = (int)rint(d.y) + (f->y_off / 2);
+	p->y1 = (int)rint(d.y);
 	p->dx = ft_abs(p->x1 - p->x0);
 	p->dy = -ft_abs(p->y1 - p->y0);
 	p->err = p->dx + p->dy;
@@ -68,12 +73,13 @@ void	draw_line(t_pts o, t_pts d, t_fdf *f)
 {
 	t_pro *p;
 
+	// set_pro(o, d, f->pro, f);
 	set_pro(o, d, f->pro);
 	p = f->pro;
 	while (1)
 	{
 		put_pixel(p->x0, p->y0, o.c, f->mlx);
-		if (p->x0 == p->x1 && p->y0 == p->y1)
+		if (p->x0 == p->x1 && p->y0 == p->y1)//SOMETHING FUNNY GOING ON HERE!! DOESNT BREAK SUFFICIENTLY TO PREVENT OVERRUN!!
 			break ;
 		if (2 * p->err >= p->dy)
 		{
@@ -96,13 +102,17 @@ void	init_img(t_fdf *f, t_mlx *m)
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
 	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	while (f->y < f->y_lim - 1)
+	// while (f->y < f->y_lim - 1)
+	while (f->y < f->y_lim)
 	{
 		f->x = 0;
-		while (f->x < f->x_lim - 1)
+		// while (f->x < f->x_lim - 1)
+		while (f->x < f->x_lim)
 		{
+			// if (f->x < f->x_lim)
 			if (f->x + 1 < f->x_lim)
 				draw_line(p[f->y][f->x], p[f->y][f->x + 1], f);
+			// if (f->y < f->y_lim)
 			if (f->y + 1 < f->y_lim)
 				draw_line(p[f->y][f->x], p[f->y + 1][f->x], f);
 			f->x++;
@@ -116,20 +126,28 @@ void	init_img(t_fdf *f, t_mlx *m)
 }
 t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 {
-	// float	fx;
-	double	fx;
-	// float	fy;
-	double	fy;
-	// float	fz;
-	double	fz;
-
-	fx = x * SCALEX;
-	fy = y * SCALEY;
-	fz = p.z * SCALEZ;
+	// p.x = ((x - y) * (f->cosine) * (SCALEX * SCALE)
+	//  + ((f->x_off * SCALE) / 2));
+	// p.y = ((x + y) * (f->sine * (SCALEY * SCALE))
+	//  - (p.z * (SCALEZ * SCALE)) + ((f->y_off * SCALE) / 2));
 	// p.x = ((x - -y) * (f->cosine));
-	p.x = ((fx - -fy) * (D_COS) + f->x_off);
-	// p.y = ((x + -y) * (f->sine) - fz);
-	p.y = ((fx + -fy) * (D_SIN) - fz + f->y_off);
+	// p.y = ((x + -y) * (f->sine) - p.z);
+	// p.x = ((x - -y) * (f->cosine) * SCALEX);
+	// p.y = ((x + -y) * (f->sine) - p.z * SCALEY);
+	// p.x = ((x - -y) * (f->cosine) * SCALEX + f->x_off / 2);
+	// p.y = ((x + -y) * (f->sine) - p.z * SCALEZ + f->y_off);
+	// p.x = ((x - -y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
+	p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
+	p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - p.z * (tan(f->angle) * SCALEZ) + f->y_off);
+	// p.x = ((x - -y) * (D_COS) * SCALEX + f->x_off);
+	// p.x = ((x - y) * (f->cosine) * SCALEX);//
+	// p.x = ((x - y) * (f->cosine) * SCALEX);
+	// p.y = ((x + -y) * (D_SIN) - p.z * SCALEY + f->y_off);
+	// p.y = ((x + y) * (f->sine) - (p.z * SCALEZ));//
+	// p.y = ((x + y) * (f->sine * SCALEY) - (p.z * SCALEZ) + (f->y_off / 2));
+	// p.y = ((x + y) * (f->sine) - p.z * SCALEY);
 	return (p);
 }
 int	get_height(char *num, int end)
@@ -204,9 +222,9 @@ t_pts	*meta_segments(t_fdf *f, int y)
 		return (NULL);
 	s = f->raw->segments;
 	if (f->x_off == 0)
-		f->x_off = (DEFWID - ((f->x_lim - f->y_lim) * D_COS * SCALE)) / 2;
+		f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));
 	if (f->y_off == 0)
-		f->y_off = (DEFHEI - ((f->x_lim + f->y_lim) * D_SIN * SCALE)) / 2;
+		f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));
 	while (s[x])
 	{
 		len = get_lmn_len(s[x]);
@@ -300,10 +318,11 @@ void	init_fdf(t_fdf *fdf)
 	fdf->win = NULL;
 	fdf->pts = NULL;
 	fdf->pro = NULL;
-	fdf->radians = fdf->angle * (PI / 180.0);
+	fdf->radians = (fdf->angle * PI) / 180.0;
+	// fdf->cosine = SCALEX * cos(fdf->radians);
 	fdf->cosine = cos(fdf->radians);
+	// fdf->sine = SCALEY * sin(fdf->radians);
 	fdf->sine = sin(fdf->radians);
-	
 }
 bool	check_file(char **a)
 {
