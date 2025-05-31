@@ -126,6 +126,10 @@ void	init_img(t_fdf *f, t_mlx *m)
 }
 t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 {
+	p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
+	p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
+	return (p);
+}
 	// p.x = ((x - y) * (f->cosine) * (SCALEX * SCALE)
 	//  + ((f->x_off * SCALE) / 2));
 	// p.y = ((x + y) * (f->sine * (SCALEY * SCALE))
@@ -138,8 +142,6 @@ t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 	// p.y = ((x + -y) * (f->sine) - p.z * SCALEZ + f->y_off);
 	// p.x = ((x - -y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
 	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
-	p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
-	p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
 	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - p.z * (tan(f->angle) * SCALEZ) + f->y_off);
 	// p.x = ((x - -y) * (D_COS) * SCALEX + f->x_off);
 	// p.x = ((x - y) * (f->cosine) * SCALEX);//
@@ -148,8 +150,6 @@ t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 	// p.y = ((x + y) * (f->sine) - (p.z * SCALEZ));//
 	// p.y = ((x + y) * (f->sine * SCALEY) - (p.z * SCALEZ) + (f->y_off / 2));
 	// p.y = ((x + y) * (f->sine) - p.z * SCALEY);
-	return (p);
-}
 int	get_height(char *num, int end)
 {
 	int	i;
