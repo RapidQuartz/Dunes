@@ -109,6 +109,28 @@ void	init_img(t_fdf *f, t_mlx *m)
 		}
 		f->y++;
 	}
+	mlx_hook(m->win, 17, 0, close_handler, f);
+	mlx_key_hook(m->win, keychain, f);
+	mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 0);
+	mlx_loop(m->mlx);
+}
+t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
+{
+	// float	fx;
+	double	fx;
+	// float	fy;
+	double	fy;
+	// float	fz;
+	double	fz;
+
+	fx = x * SCALEX;
+	fy = y * SCALEY;
+	fz = p.z * SCALEZ;
+	// p.x = ((x - -y) * (f->cosine));
+	p.x = ((fx - -fy) * (D_COS) + f->x_off);
+	// p.y = ((x + -y) * (f->sine) - fz);
+	p.y = ((fx + -fy) * (D_SIN) - fz + f->y_off);
+	return (p);
 }
 int	get_height(char *num, int end)
 {
@@ -125,7 +147,9 @@ int	get_height(char *num, int end)
 		i++;
 	}
 	height[i] = '\0';
-	return(ft_atoi(height));
+	i = ft_atoi(height);
+	free (height);
+	return(i);
 }
 int	ft_hextoi(char n)
 {
@@ -167,24 +191,6 @@ int	get_lmn_len(char *lmn)
 	}
 	return (i);
 }
-t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
-{
-	// float	fx;
-	double	fx;
-	// float	fy;
-	double	fy;
-	// float	fz;
-	double	fz;
-
-	fx = x * SCALEX;
-	fy = y * SCALEY;
-	fz = p.z * SCALEZ;
-	// p.x = ((x - -y) * (f->cosine));
-	p.x = ((fx - -fy) * (D_COS) + f->x_off);
-	// p.y = ((x + -y) * (f->sine) - fz);
-	p.y = ((fx + -fy) * (D_SIN) - fz + f->y_off);
-	return (p);
-}
 t_pts	*meta_segments(t_fdf *f, int y)
 {
 	t_pts	*p;
@@ -224,6 +230,27 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 		f->y++;
 	}
 	free (raw->lines);
+}
+
+void	init_mlx(t_fdf *f)
+{
+	t_mlx	*m;
+
+	m = malloc(sizeof(t_mlx));
+	if (!m || m == NULL)
+		exit (0);//TODO:integrate into exit function
+	m->win = NULL;
+	m->mlx = NULL;
+	m->img = NULL;
+	m->adr = NULL;
+	m->len = 0;
+	m->bpp = 0;
+	m->err = 0;
+	m->end = 0;
+	m->mlx = mlx_init();
+	m->win = mlx_new_window(m->mlx, DEFWID, DEFHEI, "Fer De Fil");
+	m->img = mlx_new_image(m->mlx, DEFWID, DEFHEI);
+	f->mlx = m;
 }
 void	init_raw(t_fdf *fdf, char *map_file)
 {
@@ -290,26 +317,6 @@ bool	check_file(char **a)
 		return (true);
 	return (false);
 }
-void	init_mlx(t_fdf *f)
-{
-	t_mlx	*m;
-
-	m = malloc(sizeof(t_mlx));
-	if (!m || m == NULL)
-		exit (0);//TODO:integrate into exit function
-	m->win = NULL;
-	m->mlx = NULL;
-	m->img = NULL;
-	m->adr = NULL;
-	m->len = 0;
-	m->bpp = 0;
-	m->err = 0;
-	m->end = 0;
-	m->mlx = mlx_init();
-	m->win = mlx_new_window(m->mlx, DEFWID, DEFHEI, "Fer De Fil");
-	m->img = mlx_new_image(m->mlx, DEFWID, DEFHEI);
-	f->mlx = m;
-}
 int	main(int arg, char **param)
 {
 	t_fdf	fdf;
@@ -323,9 +330,9 @@ int	main(int arg, char **param)
 	fdf.x = 0;
 	fdf.y = 0;
 	init_img(&fdf, fdf.mlx);
-	mlx_hook(fdf.win, 17, 0, close_handler, &fdf);
-	mlx_key_hook(fdf.win, keychain, &fdf);
-	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img->img, 0, 0);
-	mlx_loop(fdf.mlx);
+	mlx_hook(fdf.mlx->win, 17, 0, close_handler, &fdf);
+	mlx_key_hook(fdf.mlx->win, keychain, &fdf);
+	mlx_put_image_to_window(fdf.mlx->mlx, fdf.mlx->win, fdf.mlx->img, 0, 0);
+	mlx_loop(fdf.mlx->mlx);
 	printf(RED"just follow me\n"DEF);
 }

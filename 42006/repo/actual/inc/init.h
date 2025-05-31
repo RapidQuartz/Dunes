@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:24 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/30 14:54:29 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:47:04 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # define DEFWID 800
 # define DEFHEI 800
 # define SCALE 1
-# define SCALEX 50
-# define SCALEY 30
-# define SCALEZ 10
+# define SCALEX 5
+# define SCALEY 3
+# define SCALEZ 1
 # define ANGLE 30
 # define D_COS 0.707105
 # define D_SIN 0.707108
