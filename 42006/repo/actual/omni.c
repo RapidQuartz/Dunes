@@ -102,11 +102,10 @@ void	init_img(t_fdf *f, t_mlx *m)
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
 	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	// while (f->y < f->y_lim - 1)
+	f->y = 0;
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
-		// while (f->x < f->x_lim - 1)
 		while (f->x < f->x_lim)
 		{
 			// if (f->x < f->x_lim)
@@ -119,10 +118,6 @@ void	init_img(t_fdf *f, t_mlx *m)
 		}
 		f->y++;
 	}
-	mlx_hook(m->win, 17, 0, close_handler, f);
-	mlx_key_hook(m->win, keychain, f);
-	mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 0);
-	mlx_loop(m->mlx);
 }
 t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 {
@@ -130,26 +125,6 @@ t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 	p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
 	return (p);
 }
-	// p.x = ((x - y) * (f->cosine) * (SCALEX * SCALE)
-	//  + ((f->x_off * SCALE) / 2));
-	// p.y = ((x + y) * (f->sine * (SCALEY * SCALE))
-	//  - (p.z * (SCALEZ * SCALE)) + ((f->y_off * SCALE) / 2));
-	// p.x = ((x - -y) * (f->cosine));
-	// p.y = ((x + -y) * (f->sine) - p.z);
-	// p.x = ((x - -y) * (f->cosine) * SCALEX);
-	// p.y = ((x + -y) * (f->sine) - p.z * SCALEY);
-	// p.x = ((x - -y) * (f->cosine) * SCALEX + f->x_off / 2);
-	// p.y = ((x + -y) * (f->sine) - p.z * SCALEZ + f->y_off);
-	// p.x = ((x - -y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
-	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 2);
-	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - p.z * (tan(f->angle) * SCALEZ) + f->y_off);
-	// p.x = ((x - -y) * (D_COS) * SCALEX + f->x_off);
-	// p.x = ((x - y) * (f->cosine) * SCALEX);//
-	// p.x = ((x - y) * (f->cosine) * SCALEX);
-	// p.y = ((x + -y) * (D_SIN) - p.z * SCALEY + f->y_off);
-	// p.y = ((x + y) * (f->sine) - (p.z * SCALEZ));//
-	// p.y = ((x + y) * (f->sine * SCALEY) - (p.z * SCALEZ) + (f->y_off / 2));
-	// p.y = ((x + y) * (f->sine) - p.z * SCALEY);
 int	get_height(char *num, int end)
 {
 	int	i;
@@ -307,23 +282,18 @@ void	init_fdf(t_fdf *fdf)
 	fdf->x_off = 0;
 	fdf->y_off = 0;
 	fdf->scale = 1;//NB
-	// fdf->angle = ANGLE * (PI/180.0);
-	fdf->angle = ANGLE;//NB
-	// fdf->max = NULL;
 	fdf->raw = NULL;
-	// fdf->map = NULL;
 	fdf->dim = NULL;
 	fdf->mlx = NULL;
 	fdf->img = NULL;
 	fdf->win = NULL;
 	fdf->pts = NULL;
 	fdf->pro = NULL;
-	fdf->radians = (fdf->angle * PI) / 180.0;
-	// fdf->cosine = SCALEX * cos(fdf->radians);
+	fdf->radians = (ANGLE * PI) / 180.0;
 	fdf->cosine = cos(fdf->radians);
-	// fdf->sine = SCALEY * sin(fdf->radians);
 	fdf->sine = sin(fdf->radians);
 }
+
 bool	check_file(char **a)
 {
 	int i;
@@ -336,6 +306,7 @@ bool	check_file(char **a)
 		return (true);
 	return (false);
 }
+
 int	main(int arg, char **param)
 {
 	t_fdf	fdf;
