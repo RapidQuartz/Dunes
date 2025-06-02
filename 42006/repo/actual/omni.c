@@ -82,13 +82,14 @@ void	put_pixel(int x, int y, int c, t_mlx *i)
 	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
+// void	set_pro(t_pts o, t_pts d, t_pro *p, int zoom)
 // void	set_pro(t_pts o, t_pts d, t_pro *p)
-void	set_pro(t_pts o, t_pts d, t_pro *p, int zoom)
+void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f)
 {
-	p->x0 = round(o.x) * zoom;
-	p->x1 = round(d.x) * zoom;
-	p->y0 = round(o.y) * zoom;
-	p->y1 = round(d.y) * zoom;
+	p->x0 = round(o.x * f->zoom) + f->x_off;
+	p->x1 = round(d.x * f->zoom) + f->x_off;
+	p->y0 = round(o.y * f->zoom) + f->y_off;
+	p->y1 = round(d.y * f->zoom) + f->y_off;
 	p->dx = ft_abs(p->x1 - p->x0);
 	p->dy = -ft_abs(p->y1 - p->y0);
 	p->err = p->dx + p->dy;
@@ -106,8 +107,8 @@ void	draw_line(t_pts o, t_pts d, t_fdf *f)
 	t_pro *p;
 	int	e2;
 
-	// set_pro(o, d, f->pro);
-	set_pro(o, d, f->pro, f->zoom);
+	// set_pro(o, d, f->pro, f->zoom);
+	set_pro(o, d, f->pro, f);
 	p = f->pro;
 	while (1)
 	{
@@ -151,36 +152,62 @@ void	init_img(t_fdf *f, t_mlx *m)
 		f->y++;
 	}
 }
-void	proj_zoom(t_fdf *f, t_pts **p)
+// t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
+/* 
+t_pts	proj_offset(t_pts p, t_fdf *f)
+{
+	// p.x = round((p.x * f->zoom) + f->x_off);//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	// p.x = ((x - y) * (f->cosine));//without offset, calc that later
+	p.x = round(((f->x - f->y) * (f->cosine) * f->zoom) + f->x_off);//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE);//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
+	// p.y = ((x + y) * (f->sine) - (p.z));//without offset, calc that later
+	// p.y = round((p.y * f->zoom) + f->y_off);//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	p.y = round(((f->x + f->y) * (f->sine) * f->zoom - (p.z)) + f->y_off);//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE));//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
+	return (p);
+}
+ */
+// void	proj_zoom(t_fdf *f, t_pts **p)
+void	proj_zoom(t_fdf *f)
 {
 	int	x_zoom;
 	int	y_zoom;
 
 
-	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]));
-	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]));
+	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]) - f->x_range[0]);
+	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]) - f->y_range[0]);
 	if (x_zoom < y_zoom)
-		f->zoom = round(x_zoom * 0.2);
+		f->zoom = round(x_zoom * 0.5);
 	else
-		f->zoom = round(y_zoom * 0.2);
-	f->y = 0;
+		f->zoom = round(y_zoom * 0.5);
+	/* f->y = 0;
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
-			p[f->y][f->x].x = round((f->x - f->y) * f->cosine);
+			proj_offset(p[f->y][f->x], f);
+			// proj_offset(p[f->y][f->x], f->x, f->y, f);
+			// p[f->y][f->x].x = round((f->x - f->y) * (f->cosine));
+			// p[f->y][f->x].x = round(((p[f->y][f->x].x - p[f->y][f->x].y) * (f->cosine * x_zoom)) - f->x_off);
+			// p[f->y][f->x].x = round((f->x - f->y) * f->cosine);
 			// p[f->y][f->x].x = round(p[f->y][f->x].x);
 			// p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom));
 			// p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom)) + f->x_off;
-			p[f->y][f->x].y = round(((f->x + f->y) * f->sine) / 2 - p[f->y][f->x].z);
+			// p[f->y][f->x].y = round(((f->x + f->y) * (f->sine)) - p[f->y][f->x].z);
+			// p[f->y][f->x].y = round(((p[f->y][f->x].x + p[f->y][f->x].y) * (f->sine * y_zoom) - p[f->y][f->x].z) - f->y_off);
+			// p[f->y][f->x].y = round(((f->x + f->y) * f->sine) / 2 - p[f->y][f->x].z);
 			// p[f->y][f->x].y = round(p[f->y][f->x].y);
 			// p[f->y][f->x].y = round((p[f->y][f->x].y) / 2 - p[f->y][f->x].z * (f->zoom));
 			// p[f->y][f->x].y = round(p[f->y][f->x].y * (f->zoom)) + f->y_off;
 			f->x++;
 		}
 		f->y++;
-	}
+	} */
 }
 
 void	get_range(t_pts **p, t_fdf *f)
@@ -203,20 +230,6 @@ void	get_range(t_pts **p, t_fdf *f)
 		}
 		f->y++;
 	}
-}
-t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
-{
-	// p.x = ((x - y) * (f->cosine));//without offset, calc that later
-	p.x = ((x - y) * (f->cosine)) + f->x_off;//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
-	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE);//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
-	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
-	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
-	// p.y = ((x + y) * (f->sine) - (p.z));//without offset, calc that later
-	p.y = ((x + y) * (f->sine) - (p.z)) + f->y_off;//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
-	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE));//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
-	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
-	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
-	return (p);
 }
 int	get_height(char *num, int end)
 {
@@ -296,7 +309,7 @@ t_pts	*meta_segments(t_fdf *f, int y)
 		p[x].c = extract_color(s[x], ft_abs(len));
 		p[x].z = get_height(s[x], ft_abs(len));
 		p[x].x = ((x - y) * (f->cosine));
-		p[x].y = ((x + y) * (f->sine) - (p[x].z));
+		p[x].y = (((x + y) * (f->sine)) - (p[x].z));
 		// p[x] = proj_offset(p[x], x, y, f);
 		x++;
 	}
@@ -305,28 +318,25 @@ t_pts	*meta_segments(t_fdf *f, int y)
 
 void	get_off(t_fdf *f)
 {
+	// t_pts p;
+
 	// f->x_off = 
-	f->x_off = (DEFWID / 16);
+	f->x_off = (DEFWID / 4);
 	// f->y_off = 
-	f->y_off = (DEFHEI / 16);
-	f->y = 0;
-	while (f->y < f->y_lim)
+	f->y_off = (DEFHEI / 4);
+	// f->y = 0;
+	/* while (f->y < f->y_lim)
 	{
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
-			if (p[f->y][f->x].x < f->x_range[0])
-				f->x_range[0] = p[f->y][f->x].x;
-			if (p[f->y][f->x].x > f->x_range[1])
-				f->x_range[1] = p[f->y][f->x].x;
-			if (p[f->y][f->x].y < f->y_range[0])
-				f->y_range[0] = p[f->y][f->x].y;
-			if (p[f->y][f->x].y > f->y_range[1])
-				f->y_range[1] = p[f->y][f->x].y;
+			p = f->pts[f->y][f->x];
+			p.x -= f->x_off;
+			p.y -= f->y_off;
 			f->x++;
 		}
 		f->y++;
-	}
+	} */
 }
 /* OLD
 if (f->x_off == 0)//TODO//CAN BE MOVED
@@ -356,7 +366,8 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 	get_range(p, f);
 	get_off(f);
 	free (raw->lines);
-	proj_zoom(f, p);
+	proj_zoom(f);
+	// proj_zoom(f, p);
 }
 
 void	init_mlx(t_fdf *f)
