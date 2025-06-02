@@ -82,18 +82,31 @@ void	put_pixel(int x, int y, int c, t_mlx *i)
 	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
+
 // void	set_pro(t_pts o, t_pts d, t_pro *p, int zoom)
 // void	set_pro(t_pts o, t_pts d, t_pro *p)
 void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f)
 {
-	// p->x0 = round((o.x * f->zoom) + f->x_off);
-	p->x0 = round((o.x * f->zoom) + ((DEFWID / 2) + f->x_off));
-	// p->x1 = round((d.x * f->zoom) + f->x_off);
-	p->x1 = round((d.x * f->zoom) + ((DEFWID / 2) + f->x_off));
-	// p->y0 = round((o.y * f->zoom) + f->y_off);
-	p->y0 = round((o.y * f->zoom) + ((DEFHEI / 4) + f->y_off));
-	// p->y1 = round((d.y * f->zoom) + f->y_off);
-	p->y1 = round((d.y * f->zoom) + ((DEFHEI / 4) + f->y_off));
+	// p->x0 = round(o.x + f->x_off);
+	// p->x0 = round(((o.x) * f->zoom) + f->x_off);
+	p->x0 = round((o.x * f->zoom) + f->x_off);
+	// p->x0 = round((o.x * f->zoom) + ((DEFWID / 2) + f->x_off));
+	// p->x0 = round((o.x / f->zoom) + ((DEFWID / 2) + f->x_off));
+	// p->x1 = round(d.x + f->x_off);
+	// p->x1 = round(((d.x) * f->zoom) + f->x_off);
+	p->x1 = round((d.x * f->zoom) + f->x_off);
+	// p->x1 = round((d.x * f->zoom) + ((DEFWID / 2) + f->x_off));
+	// p->x1 = round((d.x / f->zoom) + ((DEFWID / 2) + f->x_off));
+	// p->y0 = round(o.y + f->y_off);
+	// p->y0 = round(((o.y) * f->zoom) + f->y_off);
+	p->y0 = round((o.y * f->zoom) + f->y_off);
+	// p->y0 = round((o.y * f->zoom) + ((DEFHEI / 4) + f->y_off));
+	// p->y0 = round((o.y / f->zoom) + ((DEFHEI / 4) + f->y_off));
+	// p->y1 = round(d.y + f->y_off);
+	// p->y1 = round(((d.y) * f->zoom) + f->y_off);
+	p->y1 = round((d.y * f->zoom) + f->y_off);
+	// p->y1 = round((d.y * f->zoom) + ((DEFHEI / 4) + f->y_off));
+	// p->y1 = round((d.y / f->zoom) + ((DEFHEI / 4) + f->y_off));
 	p->dx = ft_abs(p->x1 - p->x0);
 	p->dy = -ft_abs(p->y1 - p->y0);
 	p->err = p->dx + p->dy;
@@ -106,6 +119,57 @@ void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f)
 	else
 		p->sy = -1;
 }
+/*	NORMALIZING LOGIC
+
+add the smallest limit to all numbers
+
+*/
+/*	NORMALIZER
+
+take halfway
+
+start - center limit == center of img. obj.
+
+f->x_range[0]
+x_halfrange = (f->x_range[1] + -(f->x_range[0])) / 2
+f->y_range[0]
+y_halfrange = (f->y_range[1] + -(f->y_range[0])) / 2
+f->x_off = DEFWID / 2 - (f->x_range[2] * f->zoom);
+f->y_off = DEFHEI / 2 - (f->y_range[2] * f->zoom);
+
+find middle of f->x_range
+
+find middle of f->y_range
+ 
+*/
+// void	normalize_pts(t_pts **p, t_fdf *f)
+void	normalize_pts(t_fdf *f)
+{
+	int	x_half;
+	int	y_half;
+
+	x_half = ((f->x_range[1] + -(f->x_range[0])) / 2);
+	// x_half = ((f->x_range[1] + -(f->x_range[0])) / 2);
+	y_half = ((f->y_range[1] + -(f->y_range[0])) / 2);
+	// y_half = ((f->y_range[1] + -(f->y_range[0])) / 2);
+	f->x_off = DEFWID / 2 - (x_half);
+	f->y_off = DEFHEI / 2 - (y_half);
+	// f->x_off = DEFWID / 2 - (x_half * f->zoom);
+	// f->y_off = DEFHEI / 2 - (y_half * f->zoom);
+/*	f->y = 0;
+	while (f->y < f->y_lim)
+	{
+		f->x = 0;
+		while (f->x < f->x_lim)
+		{
+			p[f->y][f->x].x += f->x_range[0];
+			p[f->y][f->x].y += f->y_range[0];
+			f->x++;
+		}
+		f->y++;
+	} */
+}
+
 void	draw_line(t_pts o, t_pts d, t_fdf *f)
 {
 	t_pro *p;
@@ -136,12 +200,13 @@ void	init_img(t_fdf *f, t_mlx *m)
 {
 	t_pts	**p;
 
-	f->y = 0;
 	p = f->pts;
 	f->pro = malloc(sizeof(t_pro));
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
 	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
+	normalize_pts(f);
+	f->y = 0;
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
@@ -163,14 +228,14 @@ void	proj_zoom(t_fdf *f)
 	int	y_zoom;
 
 
-	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]) - f->x_range[0]);
+	x_zoom = DEFWID / (f->x_range[1] - f->x_range[0]);
 	// x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]));
-	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]) - f->y_range[0]);
+	y_zoom = DEFHEI / (f->y_range[1] - f->y_range[0]);
 	// y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]));
 	if (x_zoom < y_zoom)
-		f->zoom = round(x_zoom * 0.5);
+		f->zoom = round(x_zoom * 0.75);
 	else
-		f->zoom = round(y_zoom * 0.5);
+		f->zoom = round(y_zoom * 0.75);
 }
 
 void	get_range(t_pts **p, t_fdf *f)
@@ -278,51 +343,73 @@ t_pts	*meta_segments(t_fdf *f, int y)
 	}
 	return (p);
 }
+/*	OFFSET LOGIC
+we want a buffer from the edge of the screen
 
+int	off;
+int	x_off;
+int	y_off;
+int	buf;
+int	x_buf;
+int	y_buf;
+int	x_start;
+int	y_start;
+
+//buffer offset, eg. 2% of picture
+void	
+x_start = (DEFWID * 0.02);
+y_start = (DEFHEI * 0.02);
+
+//	which is higher, x/y//_lim
+if (f->x_lim < f->y_lim)//the y is limiting/the x needs a buff
+{
+	x_buf = y_start * (f->y_lim / f->x_lim);
+	y_buf = y_start;
+}
+if (f->x_lim > f->y_lim)//the x is limiting/the y needs a buff
+{
+	x_buf = x_start;
+	y_buf = x_start * (f->x_lim / f->y_lim);
+}
+//	end point/limit
+x_end = (DEFWID - x_buf);
+y_end = (DEFHEI - y_buf);
+//	available screen real estate
+x_realty = x_end - x_buf;
+y_realty = y_end - y_buf;
+
+
+
+
+//	the one that is larger = remains at 2%
+int	x_buf;
+//	the one that is smaller = becomes 2% times the ratio by which it is smaller
+int	y_buf;
+
+
+
+if x < y
+	extra offset based on y
+else
+	extra offset based on x
+
+
+
+
+*/
 void	get_off(t_fdf *f)
 {
 	int	off;
 	// t_pts p;
-	if (f->x_lim < f->y_lim)
-		off = f->x_lim;
+	if (f->x_lim > f->y_lim)
+		off = (DEFWID / f->x_lim) / 2;
 	else
-		off = f->y_lim;
-	// f->x_off = 
-	f->x_off = (DEFWID / off);
-	// f->x_off = (DEFWID / (DEFWID / f->x_lim));
-	// f->x_off = (DEFWID / 10 + (DEFWID / f->x_lim));
-	// f->y_off = 
-	f->y_off = (DEFHEI / off);
-	// f->y_off = (DEFHEI / (DEFHEI / f->y_lim));
-	// f->y_off = (DEFHEI / 10 + (DEFHEI / f->y_lim));
-	// f->y = 0;
-	/* while (f->y < f->y_lim)
-	{
-		f->x = 0;
-		while (f->x < f->x_lim)
-		{
-			p = f->pts[f->y][f->x];
-			p.x -= f->x_off;
-			p.y -= f->y_off;
-			f->x++;
-		}
-		f->y++;
-	} */
+		off = (DEFHEI / f->y_lim) / 2;
+	f->x_off = ((DEFWID - off));
+	f->y_off = ((DEFHEI - off));
+
 }
-/* OLD
-if (f->x_off == 0)//TODO//CAN BE MOVED
-		// f->x_off = (DEFWID / 2);
-		f->x_off = (DEFWID - ((f->x_range[1] - f->x_range[0]))) / 2 - f->x_range[0];//(f->x_range[1] - f->x_range[0])
-		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2 - f->x_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
-		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2;//works better, but still oversized
-		// f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));//not enough, is oversized.
-	if (f->y_off == 0)//TODO//CAN BE MOVED
-		// f->y_off = (DEFHEI / 2);
-		f->y_off = (DEFHEI - ((f->y_range[1] - f->y_range[0]))) / 2 - f->y_range[0];//(f->y_range[1] - f->y_range[0])
-		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2 - f->y_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
-		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2;//works better, but still oversized
-		// f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));//not enough, is oversized.
- */
+
 void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 {
 	while (raw->lines[f->y])
@@ -335,7 +422,7 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 		f->y++;
 	}
 	get_range(p, f);
-	get_off(f);
+	// get_off(f);
 	free (raw->lines);
 	proj_zoom(f);
 	// proj_zoom(f, p);
