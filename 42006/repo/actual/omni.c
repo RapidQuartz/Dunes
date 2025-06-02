@@ -1,6 +1,56 @@
 
 # include "inc/fdf.h"
 
+/*	TODO: 2025.06.02 11:40:41
+IT WORKS WITH OTHER MAPS~!!!!!!~!!1!!!!1!!
+-	make it center correctly
+	-	why isnt it centering?
+		-	position is calculated once
+		-	jalombar did it twice
+			!	try to calc pos/offset twice:
+				1.	basic pos
+				2.	offset based on pos/zoom
+					a.	zoom after offset -> zoom offset
+					b.	offset after zoom -> screen based
+				3.	updated pos based on offset
+-	make colors work
+	IT KINDA WORKS WITH COLORRRRRRRR
+	-	make it work with gradients of colors?
+
+*/
+
+/* lmeubrin
+
+zooms - calc after screen size comparison
+
+offsets
+
+scale around draw line
+
+*/
+/* 	-	make it work with other maps.
+-	why isn't it working now?
+//(gdb) r test_maps/50-4.fdf 
+//Starting program: /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf test_maps/50-4.fdf
+//[Thread debugging using libthread_db enabled]
+//Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+//^C
+//Program received signal SIGINT, Interrupt.
+//put_pixel (x=32767, y=-8232, c=0, i=0x7fffffffdf70) at omni.c:47
+//47      {
+
+	// so, it goes waaay outta bounds. why?
+
+	// ?	not obeying x-limits?
+	// 	!	could set another condition:
+	// 		based on `sx/sy`:
+	// 			+1	if x0 > x1 -> break
+	// 			-1	if x0 < x1 -> break
+	// 		++	could make an inbounds function?
+	// 			while (inbounds(o, d, var))
+					
+	// ?	where would it be limited?
+ */
 int	ft_abs(int num)
 {
 	if (num < 0)
@@ -22,21 +72,7 @@ int	close_handler(void *param)
 	exit (0);
 	return (0);
 }
-// void	derive_trig(t_pts d, t_pts o, t_img *i)
-// void	derive_trig(t_img *i)
-// {
-// 	i->dx = ft_abs(p->x1 - i->ox);
-// 	i->dy = -ft_abs(p->y1 - i->oy);
-// 	i->err = i->dx + i->dy;
-// 	if (i->ox < p->x1)
-// 		i->sx = 1;
-// 	else
-// 		i->sx = -1;
-// 	if (i->oy < p->y1)
-// 		i->sy = 1;
-// 	else
-// 		i->sy = -1;
-// }
+
 void	put_pixel(int x, int y, int c, t_mlx *i)
 {
 	char	*pix;
@@ -46,17 +82,13 @@ void	put_pixel(int x, int y, int c, t_mlx *i)
 	pix = i->adr + (y * i->len + x * (i->bpp / 8));
 	*(unsigned int *)pix = c;
 }
-// void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f)
-void	set_pro(t_pts o, t_pts d, t_pro *p)
+// void	set_pro(t_pts o, t_pts d, t_pro *p)
+void	set_pro(t_pts o, t_pts d, t_pro *p, int zoom)
 {
-	// p->x0 = (int)rint(o.x) + (f->x_off / 2);
-	p->x0 = (int)rint(o.x);
-	// p->x1 = (int)rint(d.x) + (f->x_off / 2);
-	p->x1 = (int)rint(d.x);
-	// p->y0 = (int)rint(o.y) + (f->y_off / 2);
-	p->y0 = (int)rint(o.y);
-	// p->y1 = (int)rint(d.y) + (f->y_off / 2);
-	p->y1 = (int)rint(d.y);
+	p->x0 = round(o.x) * zoom;
+	p->x1 = round(d.x) * zoom;
+	p->y0 = round(o.y) * zoom;
+	p->y1 = round(d.y) * zoom;
 	p->dx = ft_abs(p->x1 - p->x0);
 	p->dy = -ft_abs(p->y1 - p->y0);
 	p->err = p->dx + p->dy;
@@ -72,21 +104,23 @@ void	set_pro(t_pts o, t_pts d, t_pro *p)
 void	draw_line(t_pts o, t_pts d, t_fdf *f)
 {
 	t_pro *p;
+	int	e2;
 
-	// set_pro(o, d, f->pro, f);
-	set_pro(o, d, f->pro);
+	// set_pro(o, d, f->pro);
+	set_pro(o, d, f->pro, f->zoom);
 	p = f->pro;
 	while (1)
 	{
 		put_pixel(p->x0, p->y0, o.c, f->mlx);
-		if (p->x0 == p->x1 && p->y0 == p->y1)//SOMETHING FUNNY GOING ON HERE!! DOESNT BREAK SUFFICIENTLY TO PREVENT OVERRUN!!
+		if (p->x0 == p->x1 && p->y0 == p->y1)
 			break ;
-		if (2 * p->err >= p->dy)
+		e2 = 2 * p->err;
+		if (e2 >= p->dy)
 		{
 			p->err += p->dy;
 			p->x0 += p->sx;
 		}
-		if (2 * p->err <= p->dx)
+		if (e2 <= p->dx)
 		{
 			p->err += p->dx;
 			p->y0 += p->sy;
@@ -97,21 +131,19 @@ void	init_img(t_fdf *f, t_mlx *m)
 {
 	t_pts	**p;
 
+	f->y = 0;
 	p = f->pts;
 	f->pro = malloc(sizeof(t_pro));
 	if (!f->pro || f->pro == NULL)
 		exit (0);//TODO:integrate into exit function
 	m->adr = mlx_get_data_addr(m->img, &m->bpp, &m->len, &m->end);
-	f->y = 0;
 	while (f->y < f->y_lim)
 	{
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
-			// if (f->x < f->x_lim)
 			if (f->x + 1 < f->x_lim)
 				draw_line(p[f->y][f->x], p[f->y][f->x + 1], f);
-			// if (f->y < f->y_lim)
 			if (f->y + 1 < f->y_lim)
 				draw_line(p[f->y][f->x], p[f->y + 1][f->x], f);
 			f->x++;
@@ -119,10 +151,69 @@ void	init_img(t_fdf *f, t_mlx *m)
 		f->y++;
 	}
 }
+void	proj_zoom(t_fdf *f, t_pts **p)
+{
+	int	x_zoom;
+	int	y_zoom;
+
+
+	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]));
+	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]));
+	if (x_zoom < y_zoom)
+		f->zoom = round(x_zoom * 0.2);
+	else
+		f->zoom = round(y_zoom * 0.2);
+	f->y = 0;
+	while (f->y < f->y_lim)
+	{
+		f->x = 0;
+		while (f->x < f->x_lim)
+		{
+			// p[f->y][f->x].x = round(p[f->y][f->x].x);
+			// p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom));
+			p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom)) + f->x_off;
+			// p[f->y][f->x].y = round(p[f->y][f->x].y);
+			// p[f->y][f->x].y = round((p[f->y][f->x].y) / 2 - p[f->y][f->x].z * (f->zoom));
+			p[f->y][f->x].y = round(p[f->y][f->x].y * (f->zoom)) + f->y_off;
+			f->x++;
+		}
+		f->y++;
+	}
+}
+
+void	get_range(t_pts **p, t_fdf *f)
+{
+	f->y = 0;
+	while (f->y < f->y_lim)
+	{
+		f->x = 0;
+		while (f->x < f->x_lim)
+		{
+			if (p[f->y][f->x].x < f->x_range[0])
+				f->x_range[0] = p[f->y][f->x].x;
+			else if (p[f->y][f->x].x > f->x_range[1])
+				f->x_range[1] = p[f->y][f->x].x;
+			if (p[f->y][f->x].y < f->y_range[0])
+				f->y_range[0] = p[f->y][f->x].y;
+			else if (p[f->y][f->x].y > f->y_range[1])
+				f->y_range[1] = p[f->y][f->x].y;
+			f->x++;
+		}
+		f->y++;
+	}
+}
 t_pts	proj_offset(t_pts p, int x, int y, t_fdf *f)
 {
-	p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
-	p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
+	// p.x = ((x - y) * (f->cosine));//without offset, calc that later
+	p.x = ((x - y) * (f->cosine)) + f->x_off;//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE);//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
+	// p.x = ((x - y) * (f->cosine) * SCALEX * SCALE + f->x_off / 1.3);
+	// p.y = ((x + y) * (f->sine) - (p.z));//without offset, calc that later
+	p.y = ((x + y) * (f->sine) - (p.z)) + f->y_off;//now it is centered pretty good, but too small. that's ok. make a zoom scale based on min-max.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE));//this offset it to the other corner, so offset is good, but maybe later. try with offset, without scale, then move on to doing these separately.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off);//no noticeable change from removing '/ n'tbh.. maybe remove offset entirely.
+	// p.y = ((x + y) * (f->sine * SCALEY * SCALE) - (p.z * SCALEZ * SCALE) + f->y_off / 1.5);
 	return (p);
 }
 int	get_height(char *num, int end)
@@ -197,15 +288,25 @@ t_pts	*meta_segments(t_fdf *f, int y)
 		return (NULL);
 	s = f->raw->segments;
 	if (f->x_off == 0)
-		f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));
+		// f->x_off = (DEFWID / 2);
+		f->x_off = (DEFWID - ((f->x_range[1] - f->x_range[0]))) / 2 - f->x_range[0];//(f->x_range[1] - f->x_range[0])
+		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2 - f->x_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
+		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2;//works better, but still oversized
+		// f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));//not enough, is oversized.
 	if (f->y_off == 0)
-		f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));
+		// f->y_off = (DEFHEI / 2);
+		f->y_off = (DEFHEI - ((f->y_range[1] - f->y_range[0]))) / 2 - f->y_range[0];//(f->y_range[1] - f->y_range[0])
+		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2 - f->y_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
+		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2;//works better, but still oversized
+		// f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));//not enough, is oversized.
 	while (s[x])
 	{
 		len = get_lmn_len(s[x]);
 		p[x].c = extract_color(s[x], ft_abs(len));
 		p[x].z = get_height(s[x], ft_abs(len));
-		p[x] = proj_offset(p[x], x, y, f);
+		p[x].x = ((x - y) * (f->cosine));
+		p[x].y = ((x + y) * (f->sine) - (p[x].z));
+		// p[x] = proj_offset(p[x], x, y, f);
 		x++;
 	}
 	return (p);
@@ -222,7 +323,9 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 		free (raw->segments);
 		f->y++;
 	}
+	get_range(p, f);
 	free (raw->lines);
+	proj_zoom(f, p);
 }
 
 void	init_mlx(t_fdf *f)
@@ -276,9 +379,6 @@ void	init_fdf(t_fdf *fdf)
 	fdf->e = 0;
 	fdf->b = 0;
 	fdf->l = 0;
-	fdf->t = 0;
-	fdf->co = 0;
-	fdf->si = 0;
 	fdf->x_off = 0;
 	fdf->y_off = 0;
 	fdf->scale = 1;//NB
@@ -292,6 +392,10 @@ void	init_fdf(t_fdf *fdf)
 	fdf->radians = (ANGLE * PI) / 180.0;
 	fdf->cosine = cos(fdf->radians);
 	fdf->sine = sin(fdf->radians);
+	fdf->x_range[0] = 0;
+	fdf->x_range[1] = 0;
+	fdf->y_range[0] = 0;
+	fdf->y_range[1] = 0;
 }
 
 bool	check_file(char **a)

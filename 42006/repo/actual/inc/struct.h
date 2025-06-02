@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:16:13 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/05/31 19:48:15 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:14:56 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,9 @@ typedef struct s_fdf
 	int		b;//bits per pixel
 	int		l;//len - length of 1D char *array that holds image buffer
 	int		t;//theta: the angle used for trig
+	int		x_range[2];//screen offsets
+	int		y_range[2];//screen offsets
+	int		zoom;
 	int		x_off;//screen offsets
 	int		y_off;//screen offsets
 	int		scale;//to be multiplied with position for appropriate size
