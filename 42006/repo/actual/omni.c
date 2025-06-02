@@ -178,12 +178,14 @@ void	proj_zoom(t_fdf *f)
 	int	y_zoom;
 
 
-	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]) - f->x_range[0]);
-	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]) - f->y_range[0]);
+	// x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]) - f->x_range[0]);
+	x_zoom = (DEFWID / (f->x_range[1] - f->x_range[0]));
+	// y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]) - f->y_range[0]);
+	y_zoom = (DEFHEI / (f->y_range[1] - f->y_range[0]));
 	if (x_zoom < y_zoom)
-		f->zoom = round(x_zoom * 0.5);
+		f->zoom = round(x_zoom * 1);
 	else
-		f->zoom = round(y_zoom * 0.5);
+		f->zoom = round(y_zoom * 1);
 	/* f->y = 0;
 	while (f->y < f->y_lim)
 	{
@@ -321,9 +323,9 @@ void	get_off(t_fdf *f)
 	// t_pts p;
 
 	// f->x_off = 
-	f->x_off = (DEFWID / 4);
+	f->x_off = (DEFWID / 2);
 	// f->y_off = 
-	f->y_off = (DEFHEI / 4);
+	f->y_off = (DEFHEI / 5);
 	// f->y = 0;
 	/* while (f->y < f->y_lim)
 	{
