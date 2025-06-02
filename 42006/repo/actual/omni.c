@@ -169,12 +169,14 @@ void	proj_zoom(t_fdf *f, t_pts **p)
 		f->x = 0;
 		while (f->x < f->x_lim)
 		{
+			p[f->y][f->x].x = round((f->x - f->y) * f->cosine);
 			// p[f->y][f->x].x = round(p[f->y][f->x].x);
 			// p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom));
-			p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom)) + f->x_off;
+			// p[f->y][f->x].x = round(p[f->y][f->x].x * (f->zoom)) + f->x_off;
+			p[f->y][f->x].y = round(((f->x + f->y) * f->sine) / 2 - p[f->y][f->x].z);
 			// p[f->y][f->x].y = round(p[f->y][f->x].y);
 			// p[f->y][f->x].y = round((p[f->y][f->x].y) / 2 - p[f->y][f->x].z * (f->zoom));
-			p[f->y][f->x].y = round(p[f->y][f->x].y * (f->zoom)) + f->y_off;
+			// p[f->y][f->x].y = round(p[f->y][f->x].y * (f->zoom)) + f->y_off;
 			f->x++;
 		}
 		f->y++;
@@ -191,11 +193,11 @@ void	get_range(t_pts **p, t_fdf *f)
 		{
 			if (p[f->y][f->x].x < f->x_range[0])
 				f->x_range[0] = p[f->y][f->x].x;
-			else if (p[f->y][f->x].x > f->x_range[1])
+			if (p[f->y][f->x].x > f->x_range[1])
 				f->x_range[1] = p[f->y][f->x].x;
 			if (p[f->y][f->x].y < f->y_range[0])
 				f->y_range[0] = p[f->y][f->x].y;
-			else if (p[f->y][f->x].y > f->y_range[1])
+			if (p[f->y][f->x].y > f->y_range[1])
 				f->y_range[1] = p[f->y][f->x].y;
 			f->x++;
 		}
@@ -245,7 +247,7 @@ int	ft_hextoi(char n)
 		return (n - 87);
 	return (-1);
 }
-int	extract_color(char *col, int j)
+int	extract_color(char *col, int j)//TODO::segfault?
 {
 	int	i;
 	int	hex;
@@ -262,7 +264,7 @@ int	extract_color(char *col, int j)
 	}
 	return (hex);
 }
-int	get_lmn_len(char *lmn)
+int	get_lmn_len(char *lmn)//SUPERFLUOUS?
 {
 	int	i;
 	
@@ -287,18 +289,7 @@ t_pts	*meta_segments(t_fdf *f, int y)
 	if (!p || p == NULL)
 		return (NULL);
 	s = f->raw->segments;
-	if (f->x_off == 0)
-		// f->x_off = (DEFWID / 2);
-		f->x_off = (DEFWID - ((f->x_range[1] - f->x_range[0]))) / 2 - f->x_range[0];//(f->x_range[1] - f->x_range[0])
-		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2 - f->x_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
-		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2;//works better, but still oversized
-		// f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));//not enough, is oversized.
-	if (f->y_off == 0)
-		// f->y_off = (DEFHEI / 2);
-		f->y_off = (DEFHEI - ((f->y_range[1] - f->y_range[0]))) / 2 - f->y_range[0];//(f->y_range[1] - f->y_range[0])
-		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2 - f->y_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
-		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2;//works better, but still oversized
-		// f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));//not enough, is oversized.
+	
 	while (s[x])
 	{
 		len = get_lmn_len(s[x]);
@@ -312,6 +303,45 @@ t_pts	*meta_segments(t_fdf *f, int y)
 	return (p);
 }
 
+void	get_off(t_fdf *f)
+{
+	// f->x_off = 
+	f->x_off = (DEFWID / 16);
+	// f->y_off = 
+	f->y_off = (DEFHEI / 16);
+	f->y = 0;
+	while (f->y < f->y_lim)
+	{
+		f->x = 0;
+		while (f->x < f->x_lim)
+		{
+			if (p[f->y][f->x].x < f->x_range[0])
+				f->x_range[0] = p[f->y][f->x].x;
+			if (p[f->y][f->x].x > f->x_range[1])
+				f->x_range[1] = p[f->y][f->x].x;
+			if (p[f->y][f->x].y < f->y_range[0])
+				f->y_range[0] = p[f->y][f->x].y;
+			if (p[f->y][f->x].y > f->y_range[1])
+				f->y_range[1] = p[f->y][f->x].y;
+			f->x++;
+		}
+		f->y++;
+	}
+}
+/* OLD
+if (f->x_off == 0)//TODO//CAN BE MOVED
+		// f->x_off = (DEFWID / 2);
+		f->x_off = (DEFWID - ((f->x_range[1] - f->x_range[0]))) / 2 - f->x_range[0];//(f->x_range[1] - f->x_range[0])
+		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2 - f->x_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
+		// f->x_off = (DEFWID - ((f->x_lim - f->y_lim))) / 2;//works better, but still oversized
+		// f->x_off = (DEFWID / 2 - ((f->x_lim - f->y_lim)));//not enough, is oversized.
+	if (f->y_off == 0)//TODO//CAN BE MOVED
+		// f->y_off = (DEFHEI / 2);
+		f->y_off = (DEFHEI - ((f->y_range[1] - f->y_range[0]))) / 2 - f->y_range[0];//(f->y_range[1] - f->y_range[0])
+		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2 - f->y_lim;//no noticeable change. try to calculate max/min coords right after projecting, then offset based on max/min coords, then new coords based on offset.
+		// f->y_off = (DEFHEI - ((f->x_lim + f->y_lim))) / 2;//works better, but still oversized
+		// f->y_off = (DEFHEI / 2 - ((f->x_lim + f->y_lim)));//not enough, is oversized.
+ */
 void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 {
 	while (raw->lines[f->y])
@@ -324,6 +354,7 @@ void	set_points(t_fdf *f, t_pts **p, t_raw *raw)
 		f->y++;
 	}
 	get_range(p, f);
+	get_off(f);
 	free (raw->lines);
 	proj_zoom(f, p);
 }
