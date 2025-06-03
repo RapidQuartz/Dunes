@@ -2,3 +2,7 @@
 *.o
 push_swap
 *.a
+42006/repo/actual/.vscode/c_cpp_properties.json
+.gitignore
+42006/repo/actual/.vscode/settings.json
+42006/repo/actual/.vscode/launch.json
