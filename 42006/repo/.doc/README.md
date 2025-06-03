@@ -2,7 +2,7 @@
 [index](#index)  
 # Welcome to the README for FdF
 —
-
+##	[cleanup](cleanup.md#index)  
 ### the project was continued	2025.05.10 10:20:11
 ##	[2025.05.20](20250520.md#index)
 ##	[2025.05.12](20250512.md#index)  

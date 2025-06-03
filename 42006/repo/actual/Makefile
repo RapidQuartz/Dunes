@@ -5,16 +5,7 @@ CC = @cc -g
 CF = -Wall -Werror -Wextra
 RM = @rm -f
 LIBFT = libft.a
-SRC = omni.c
-# main.c \
-# src/init_fdf.c \
-# src/parsing/parse_mapfile.c src/parsing/create_map.c \
-# src/utility/helpers.c \
-# src/drawing/project_map.c \
-# src/utility/error.c src/utility/check_input.c
-# src/
-# src/parsing/
-# src/utility/
+SRC = fdf.c src/helpers.c src/parse.c src/project.c src/draw.c src/init.c
 OBJ = $(SRC:.c=.o)
 #	maybe include an `objects` directory to keep things neat
 
