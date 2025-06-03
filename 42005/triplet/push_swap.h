@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:13:55 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 18:57:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:47:20 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ typedef struct s_stack
 } t_stack;
 
 ////		FUNCTIONS:
-////		TODO:	make some structure here bwoi
+////		TODO:	make `cost_*` pointers for positioning.
 
 
 //		adds info like position, next/prev pointers etc
 t_stack	*find_lowest(t_stack *stack);
+
+void		update_head(t_stack **old_head, t_stack *new_head);
 
 ////		ERROR:
 void		error_handling(t_stack **one, t_stack **other);
@@ -59,11 +61,11 @@ void		check_minmax(long int value, t_stack **stack);
 int		get_absolute(int rel);
 
 void		*ft_calloc(size_t nmemb, size_t size);
-int		**ft_nzero(int **s, size_t n, size_t m);
+int		*ft_nzero(int *s, size_t n);
 
 ////		PRIMARY:
 //		gets ready made stacks and does magic
-void		push_swap(t_stack **stack_a, t_stack **stack_b, int members);
+void		push_swap(t_stack **stack_a, t_stack **stack_b);
 
 ////		ARGUMENTS:
 t_stack	*stack_stacker(int value, t_stack *prev);
@@ -72,7 +74,7 @@ int		arg_inspector(int argc, char **argv);
 int		arg_checker(char a, char b);
 
 ////		STACK:
-t_stack	*stacker(int *array, int argn, t_stack **head);
+t_stack	*stacker(int *array, int argn, t_stack **head, int index);
 t_stack	*create_node(int value, t_stack *prev, int index, int argn);
 void		ouroboros(t_stack **snek, int argn);
 t_stack	*highlow_value(t_stack *stack, int argn);
@@ -105,28 +107,37 @@ int		*arg_array(int argc, char **argv, int argn, int *array);
 ////		DEBUG:
 void		debug(char *str);
 void		debug_print(t_stack *stack, char *msg);
+void		debug_cost_print(int *num, int size);
 
 ////		BUCKET:
 void		set_bucket(t_stack *stack);
 
 ////		OPERATIONS:
-void		do_swap(t_stack *stack);
-void		rotate_head(t_stack **stack);
+void		do_swap(t_stack **stack);
+void		announce_rotate(char stk, int dir);
+void		do_rotate(t_stack **stack_a, t_stack **stack_b, char stk, int dir);
+void		rotate_head(t_stack **old, t_stack **new, char stk, int dir);
 void		reverse_rotate_head(t_stack **stack);
 ////		CO:OPS:
-void		sa(t_stack **t);
-void		sb(t_stack **t);
-void		ss(t_stack **t, t_stack **s);
-void		ra(t_stack **t);
-void		rb(t_stack **t);
-void		rr(t_stack **t, t_stack **s);
-void		rra(t_stack **t);
-void		rrb(t_stack **t);
-void		rrr(t_stack **t, t_stack **s);
-void		pa(t_stack **t, t_stack **s);
-void		pb(t_stack **t, t_stack **s);
+void		do_sa(t_stack **stack);
+void		do_sb(t_stack **stack);
+void		do_ss(t_stack **stack_a, t_stack **stack_b);
+void		do_ra(t_stack **stack);
+void		do_rb(t_stack **stack);
+void		do_rr(t_stack **stack_a, t_stack **stack_b);
+void		do_rra(t_stack **stack);
+void		do_rrb(t_stack **stack);
+void		do_rrr(t_stack **stack_a, t_stack **stack_b);
+
+void		push_multi(t_stack **sa, t_stack **sb, char dest, int multi);
+void		do_pa(t_stack **sa, t_stack **sb);
+
+
+void		do_pb(t_stack **sa, t_stack **sb);
 
 ////		SORTING:
+void		three_sort(t_stack **stack_a, t_stack **stack_b);
+
 int		sort_stack(t_stack **stack_a, t_stack **stack_b);
 void		sort_trip(t_stack **st, t_stack **ts, char cl);
 void		sort_doub(t_stack **st, t_stack **ts, char cl);
@@ -137,19 +148,19 @@ void		stack_assay(t_stack **st, t_stack **ts, int size);
 void		is_adjacent(t_stack **st);
 void		check_adjacency(t_stack **st);
 t_stack	*nav_ptr_set(t_stack **st, int size);
-void		cost_set(t_stack **st, t_stack **ts, int size, int **num);
+void		cost_get(t_stack **st, int size, int *num);
 
 
 int		sort_checker(t_stack *stack);
 void		sort_cost(t_stack **stack_a, int size);
-void		sort_three(t_stack **stack_a, t_stack **stack_b, int members);
+void		sort_three(t_stack **stack_a, t_stack **stack_b);
 void		swap_xy(t_stack **stack_a);
 void		swap_yz(t_stack **stack_a);
 
 ////		COST:
-void		trip_cost_set(t_stack **st);
-void		doub_cost_set(t_stack **st);
-void		sing_cost_set(t_stack **st);
+void		trip_cost_get(t_stack **st);
+void		doub_cost_get(t_stack **st);
+void		sing_cost_get(t_stack **st);
 
 
 ////		LEGACY:	DISUSED:

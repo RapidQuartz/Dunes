@@ -6,117 +6,46 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:27:34 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/23 18:03:57 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:41:32 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-
-//sa(t_stack **t);
-void	sa(t_stack **t)
+void		do_rotate(t_stack **stack_a, t_stack **stack_b, char stk, int dir)
 {
-	write(1, "sa\n", 4);
-	return ;
+	if (dir == 1)
+		write(1, "r", 1);
+	else if (dir == -1)
+		write(1, "rr", 2);
+	if (stk == 'a')
+		write(1, "a\n", 3);
+	else if (stk == 'b')
+		write(1, "b\n", 3);
+	else if (stk == 'c')
+		write(1, "r\n", 3);
+	if (stk == 'a' && dir == 1 || dir == -1)
+		rotate_head(stack_a, stack_a, stk, dir);
+	if (stk == 'b' && dir == 1 || dir == -1)
+		rotate_head(stack_b, stack_b, stk, dir);
+	if (stk == 'c' && dir == 1 || dir == -1)
+		rotate_head(stack_a, stack_b, stk, dir);
 }
 
-//sb(t_stack **t);
-void	sb(t_stack **t)
+void		rotate_head(t_stack **old, t_stack **new, char stk, int dir)
 {
-	write(1, "sb\n", 4);
-	return ;
+	if ((stk == 'a' || stk == 'b') && dir == 1)
+		*((*old)->head) = (*new)->next;
+	if ((stk == 'a' || stk == 'b') && dir == -1)
+		*((*old)->head) = (*new)->prev;
+	if (stk == 'c' && dir == 1)
+	{
+		*((*old)->head) = (*old)->next;
+		*((*new)->head) = (*new)->next;
+	}
+	if (stk == 'c' && dir == -1)
+	{
+		*((*old)->head) = (*old)->prev;
+		*((*new)->head) = (*new)->prev;
+	}
 }
-
-//ss(t_stack **t, t_stack **s);
-void	ss(t_stack **t, t_stack **s)
-{
-	write(1, "ss\n", 4);
-	return ;
-}
-
-//ra(t_stack **t);
-void	ra(t_stack **t)
-{
-	write(1, "ra\n", 4);
-	return ;
-}
-
-//rb(t_stack **t);
-void	rb(t_stack **t)
-{
-	write(1, "rb\n", 4);
-	return ;
-}
-
-//rr(t_stack **t, t_stack **s);
-void	rr(t_stack **t, t_stack **s)
-{
-	write(1, "rr\n", 4);
-	return ;
-}
-
-//rra(t_stack **t);
-void	rra(t_stack **t)
-{
-	write(1, "rra\n", 4);
-	return ;
-}
-
-//rrb(t_stack **t);
-void	rrb(t_stack **t)
-{
-	write(1, "rrb\n", 4);
-	return ;
-}
-
-//rrr(t_stack **t, t_stack **s);
-void	rrr(t_stack **t, t_stack **s)
-{
-	write(1, "rrr\n", 4);
-	return ;
-}
-
-//pa(t_stack **t, t_stack **s);
-void	pa(t_stack **t, t_stack **s)
-{
-	write(1, "pa\n", 4);
-	return ;
-}
-
-//pb(t_stack **t, t_stack **s);
-void	pb(t_stack **t, t_stack **s)
-{
-	/* (*t)->head = t->next;
-	(*t)->prev->next = (*t)->head;
-	(*s)->head = t;
-	(*s)->prev->next = (*t);
-	(*t)->next = (*s);
-	(*s)->prev = (*t);
-	 */
-	write(1, "pb\n", 4);
-	return ;
-}
-
-/* 
-void	do_ra(t_stack **stack)
-{
-	write(1, "ra\n", 3);
-	rotate_head(stack);
-}
-
-void	do_rra(t_stack **stack)
-{
-	write(1, "rra\n", 3);
-	reverse_rotate_head(stack);
-}
-//	FIRST TO LAST
-void		rotate_head(t_stack **stack)
-{
-	(*stack)->head = (*stack)->prev;
-}
-//	LAST TO FIRST
-void		reverse_rotate_head(t_stack **stack)
-{
-	(*stack)->head = (*stack)->next;
-}
- */

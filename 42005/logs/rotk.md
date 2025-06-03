@@ -32,7 +32,12 @@
 ##	sort 3
 #	[file for this](sort3.md)
 -	should find better option to 7 move switch for cba setup
-	
+-	[three_sort](../triplet/sorting/stack_sorter.c#L15)
+	first tries to set a char to the relevant clue
+	if char is `a>=<f` then apply set mode operation
+	compress operations?
+
+
 ##	sort n
 #	[file for this](sortn.md)
 ##	

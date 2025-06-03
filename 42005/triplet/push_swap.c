@@ -15,20 +15,24 @@
 // void		sort_negativecost(t_stack **stack_a);
 
 
-void	push_swap(t_stack **stack_a, t_stack **stack_b, int members)
+void		push_swap(t_stack **stack_a, t_stack **stack_b)
 {
+	int	size;
+
+	size = (*stack_a)->size;
 	debug("inside push_swap");
-	if (members == 2)
+	if (size == 2)
 	{
 		debug("doing sa inside ps");
-		write (1, "sa\n", 3);
-		// do_twoswap(*stack_a);
+		do_sa(stack_a);
 	}
-	if (members == 3)
+	else if (size == 3)
+	{
+		three_sort(stack_a, stack_b);
 		debug("default");
-	// sort_three(stack_a, stack_b, members);
+	}
 	// if (members > 2 && members < 6)
-	if (members > 3)
-		debug("default");
+	else if (size > 3)
+		debug("default 2");
 	// set_cost(stack_a, stack_b, members);
 }

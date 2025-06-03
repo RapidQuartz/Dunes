@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:32:50 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 17:06:10 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:36:41 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ int	main(int argc, char **argv)
 	if (argc < 2 || !(argn = arg_inspector(argc, argv)))
 		return (1);
 	stack_b = NULL;
-	stack_a = NULL;
 	stack_a = stack_maker(argc, argv, argn);
 	if (sort_checker(stack_a))
 		debug(GRNTXT"\n\n\n\n\t\t\t STACK IS SORTED!!!!!!!\n\n\n\n"DEFTXT);
 	else
 	{
-		debug("\n\n\n\nBEFORE SORT\n\n\n\n");
+		debug(BLUTXT"\n\n\n\nBEFORE SORT\n\n\n\n"DEFTXT);
 		print_stack(stack_a, 0, argn);
 		stack_assay(&stack_a, &stack_b, stack_a->size + 1);
-		//push_swap(stack_a, stack_b);
+		debug(GRNTXT"\n\n\n\nAFTER ASSAY\n\n\n\n"DEFTXT);
+		print_stack(stack_a, 0, argn);
+		push_swap(&stack_a, &stack_b);
 	}
 	debug("\n\n\n\nAFTER SORT\n\n\n\n");
 	print_stack(stack_a, 0, argn);
@@ -47,14 +48,15 @@ void		print_stack(t_stack *stack, int i, int argn)
 	while (i < argn)
 	{
 		i++;
-		printf("[%d]\t\tvalue = %d\t"
-			"index = %d\t"
-			"pos = %d\t"
-			"clue = %c\t"
-			"cost_a = %d\t"
-			"cost_b = %d\t"
-			"next->value = %d\t\t"
-			"prev->value = %d\n", \
+		printf("\n[%d]\tvalue = %d"
+			" index = %d"
+			" pos = %d\t"
+			" clue = %c"
+			" cost_a = %d"
+			" cost_b = %d\t"
+			" next->value = %d"
+			" prev->value = %d"
+			" head = %p\n", \
 			i, stack->value, \
 			stack->index, \
 			stack->pos, \
@@ -62,7 +64,8 @@ void		print_stack(t_stack *stack, int i, int argn)
 			stack->cost_a, \
 			stack->cost_b, \
 			stack->next->value, \
-			stack->prev->value);
+			stack->prev->value, \
+			stack->head);
 		stack = stack->next;
 	}
 }

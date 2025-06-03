@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:26:19 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 18:58:00 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:25:59 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,32 @@
 void		do_sa(t_stack **stack)
 {
 	write(1, "sa\n", 3);
-	//do_swap(*stack);
+	do_swap(stack);
 }
 
 void		do_sb(t_stack **stack)
 {
 	write(1, "sb\n", 3);
-	//do_swap(*stack);
+	do_swap(stack);
 }
-/* broken as fff *//* 
-void		do_twoswap(t_stack *stack)
+
+void		do_swap(t_stack **stack)
 {
-	debug(GRNTXT"inside 2swap"DEFTXT);
-	debug_print(stack, "BEFORE 2SWAP");
-	t_stack	*first;//becomes second
-	t_stack	*second;//becomes first
-	if (stack == NULL || stack->next == NULL)
-		return ;
-	if (stack->prev != NULL)
-		first = find_top(stack);
-	else
-		first = stack;
-	second = first->next;
-	first->prev = second;
-	first->next = NULL;
-	second->next = first;
-	second->prev = NULL;
-	debug(BLUTXT"leaving 2swap"DEFTXT);
-	debug_print(stack, "AFTER 2SWAP");
-} *//* 
-void		do_swap(t_stack *stack)
-{
-	debug(GRNTXT"inside swap"DEFTXT);
-	debug_print(stack, "BEFORE SWAP");
-	t_stack	*first;//becomes second
-	t_stack	*second;//becomes first
-	t_stack	*third;//->prev becomes first
-	if (stack == NULL || stack->next == NULL)
-		return ;
-	if (stack->prev != NULL)
-		first = find_top(stack);
-	else
-		first = stack;
-	second = first->next;
-	third = second->next;
-	first->prev = second;
-	first->next = third;
-	second->next = first;
-	second->prev = NULL;
-	third->prev = first;
-	debug(BLUTXT"leaving swap"DEFTXT);
-	debug_print(stack, "AFTER SWAP");
-} */
-/* old version: doesnt work on pointers
-void		do_swap(t_stack *stack)
-{
-	int		val;
+	t_stack	*new_head;
+	t_stack	*old;
 	
-	if (stack == NULL || stack->next == NULL)
-		return ;
-	val = stack->value;
-	stack->value = stack->next->value;
-	stack->next->value = val;
-	val = stack->pos;
-	stack->pos = stack->next->pos;
-	stack->next->pos = val;
-	val = stack->bucket;
-	stack->bucket= stack->next->bucket;
-	stack->next->bucket = val;
-} */
+	old = (*stack);
+	debug("here it fails");
+	new_head = old->next;
+	new_head->prev = old->prev;
+	old->prev->next = new_head;
+	old->next = new_head->next;
+	new_head->next->prev = old;
+	new_head->next = old;
+	update_head(old->head, new_head);
+}
+
+void		update_head(t_stack **old_head, t_stack *new_head)
+{
+	*old_head = new_head;
+}

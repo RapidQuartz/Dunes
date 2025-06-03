@@ -1,19 +1,55 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/04/23 14:08:49 by akjoerse          #+#    #+#              #
+#    Updated: 2025/04/23 17:30:10 by akjoerse         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME = fdf
+NAME = FdF
+CC = cc -g
+CF = -Wall -Werror -Wextra
+RM = rm -f
+LIBFT = libft.a
+SRC = src
+DIR_LIBFT = libft
+LIB = $(DIR_LFT)/$(LIBFT)
+OBJ = $(SRC:.c=.o)
 
-CC = gcc -g 
+all:	$(NAME)
+	
+# ONE RING APPROACH::COMBO PTF AND GNL INTO LIBFT
+# $(NAME): $(OBJ) $(LIBFT) 
+# 	$(CC) $(CF)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CF) $(OBJ) -L$(DIR_LIBFT) -lft \
+	-lftprinft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
-SRC = ./src($SRCS)
-
-SRCS = main.c
-
-INC = ../resources/minilibx-linux($INCS)
-
-INCS = 
+$(LIBFT):
+	@make -C $(DIR_LFT)
 
 %.o: %.c
-	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@)
+	$(CC) $(CF) -c $< -o $@
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+clean:
+	$(RM) $(OBJ)
+	@make clean -C $(DIR_LFT)
 
+fclean: clean
+	$(RM) $(NAME)
+	@make fclean -C $(DIR_LFT)
+	
+	
+re: fclean all
+
+RED	= \033[1;31m
+GRN	= \033[1;32m
+YLW	= \033[1;33m
+BLU	= \033[1;34m
+DEF	= \033[0m
+
+.PHONY: all clean fclean re

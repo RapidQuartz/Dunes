@@ -2,6 +2,10 @@
 ###	log 
 #	[]() 
 ## >:log:>
+## <:log10:<
+###	log 2025-02-27 12:40:27
+#	[working on sorting three numbers](../triplet/sorting/stack_sorter.c) 
+## >:log10:>
 ## <:log9:<
 ###	log 2025-02-23 18:57:57
 #	[push_swap now makes and positions a stack](notes.md#2025-02-23-185854)

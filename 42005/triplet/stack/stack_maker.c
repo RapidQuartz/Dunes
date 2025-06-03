@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:09:40 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/02/24 17:37:27 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:35:37 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,20 @@ t_stack	*stack_maker(int argc, char **argv, int argn)
 	array = arg_array(argc, argv, argn, array);
 	if (!array)
 		error_handling(NULL, NULL);
-	stack = stacker(array, argn, &head);
-	ouroboros(stack->head, argn);
+	stack = stacker(array, argn, &head, 0);
+	// ouroboros(stack->head, argn);
 	positioner(stack->head, argn);
 	stack_inspector(stack->head);
-	return (*stack->head);
+	return (stack);
 }
 
 //provision for last
 
-t_stack	*stacker(int *array, int argn, t_stack **head)
+t_stack	*stacker(int *array, int argn, t_stack **head, int index)
 {
-	int			index;
 	t_stack		*stack;
 	t_stack		*prev;
 	
-	index = 0;
-	stack = NULL;
 	prev = NULL;
 	while (index < argn)
 	{
@@ -52,8 +49,13 @@ t_stack	*stacker(int *array, int argn, t_stack **head)
 		stack->head = head;
 		prev = stack;
 		index++;
+		if (index == argn)
+		{
+			stack = *stack->head;
+			stack->prev = prev;
+			prev->next = stack;
+		}
 	}
-	// stack = *stack->head;
 	return (stack);
 }
 
