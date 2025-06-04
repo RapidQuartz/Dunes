@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:31:53 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/06/03 13:43:39 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:38:10 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 ///	fdf.c
 int		main(int arg, char **param);
 bool	check_file(char **a);
+int	ptr_free(void *struct_ptr);
+int	fdf_free(t_fdf *f);
+void	fdf_exit(t_fdf *f);
+
 /* <!-- ERROR HANDLING --> */
 
 ///	src/helpers.c
@@ -27,7 +31,6 @@ int		get_lmn_len(char *lmn);
 
 ///	src/parse.c
 int		extract_color(char *col, int j);
-int		get_height(char *num, int end);
 t_pts	*meta_segments(t_fdf *f, int y);
 void	get_range(t_pts **p, t_fdf *f);
 void	set_points(t_fdf *f, t_pts **p, t_raw *raw);
@@ -39,8 +42,9 @@ void	set_pro(t_pts o, t_pts d, t_pro *p, t_fdf *f);
 ///	src/draw.c
 void	put_pixel(int x, int y, int c, t_mlx *i);
 void	draw_line(t_pts o, t_pts d, t_fdf *f);
-int		keychain(int key, void *par);
+int		keychain(int key, void *param);
 int		close_handler(void *param);
+
 
 ///	src/init.c
 void	init_img(t_fdf *f, t_mlx *m);

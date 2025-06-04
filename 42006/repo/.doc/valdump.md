@@ -1,12 +1,581 @@
 
+##	[2025.06.03 15:48](valdump.md#20250603-1548)
 ##	[2025.06.03 13:07](valdump.md#20250603-1307)  
-##	[clear text 2025.06.03 13:07](valdump.md#clear-text)  
-###	[get_next_line](valdump.md#1)  
-###	[ft_split: ' '](valdump.md#2)  
-###	[get_next_line](valdump.md#3)  
-###	[ft_split: '\n'](valdump.md#4)  
-###	[ft_strjoin](valdump.md#5)  
-##	[raw log 2025.06.03 13:07](valdump.md#raw-dump-logs)  
+
+
+#	2025.06.03 15:48
+
+##	clear text
+
+clear out:
+
+mlx pointers::
+	win
+	mlx
+	img
+	adr
+
+structures::
+!
+	t_pts
+	t_pro
+	t_mlx
+
+?
+	t_raw
+	t_fdf
+
+##	raw dump logs
+<!--	
+==358952== Memcheck, a memory error detector
+==358952== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==358952== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==358952== Command: ./fdf test_maps/42.fdf
+==358952== 
+==358952== 
+==358952== HEAP SUMMARY:
+==358952==     in use at exit: 115,192 bytes in 123 blocks
+==358952==   total heap usage: 1,360 allocs, 1,237 frees, 172,047 bytes allocated
+==358952== 
+==358952== 3 bytes in 1 blocks are still reachable in loss record 1 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4B5458E: strdup (strdup.c:42)
+==358952==    by 0x489FB45: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 8 bytes in 1 blocks are still reachable in loss record 2 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4B5458E: strdup (strdup.c:42)
+==358952==    by 0x489C9AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x49B6820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 8 bytes in 1 blocks are still reachable in loss record 3 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B4B34: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69DF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 10 bytes in 1 blocks are still reachable in loss record 4 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4B5458E: strdup (strdup.c:42)
+==358952==    by 0x489C9AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4906213: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48A06A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 16 bytes in 1 blocks are still reachable in loss record 5 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4CE62EE: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE6E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x48AFEE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 21 bytes in 1 blocks are still reachable in loss record 6 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A003E: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 24 bytes in 1 blocks are still reachable in loss record 7 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B6041: XextCreateExtension (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B64CC: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 24 bytes in 1 blocks are still reachable in loss record 8 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4B5458E: strdup (strdup.c:42)
+==358952==    by 0x489C9AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x49B6820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B650A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 24 bytes in 1 blocks are still reachable in loss record 9 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B69F5: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 24 bytes in 1 blocks are still reachable in loss record 10 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48ADA65: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B62C6: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE40A: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 29 bytes in 1 blocks are still reachable in loss record 11 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48990CD: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489B929: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404D52: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 32 bytes in 1 blocks are still reachable in loss record 12 of 59
+==358952==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4CEA15E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA237: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA2EE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA364: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x48A052B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 32 bytes in 1 blocks are still reachable in loss record 13 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4CE31B7: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE3A08: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE3EB0: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE4E44: xcb_wait_for_reply (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA292: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA2EE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CEA364: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x48A052B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 32 bytes in 1 blocks are still reachable in loss record 14 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B67FF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 32 bytes in 1 blocks are still reachable in loss record 15 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B67FF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B650A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 33 bytes in 1 blocks are still reachable in loss record 16 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48990CD: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489B929: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404D3B: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 40 bytes in 1 blocks are still reachable in loss record 17 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B01F1: _XPollfdCacheInit (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FE71: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 44 bytes in 1 blocks are still reachable in loss record 18 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x403265: init_img (init.c:20)
+==358952==    by 0x40256F: main (fdf.c:36)
+==358952== 
+==358952== 48 bytes in 1 blocks are still reachable in loss record 19 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4034D5: init_mlx (init.c:46)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 48 bytes in 1 blocks are still reachable in loss record 20 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48AFE71: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 48 bytes in 1 blocks are still reachable in loss record 21 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48AFE87: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 48 bytes in 1 blocks are still reachable in loss record 22 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FE4C0: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 72 bytes in 1 blocks are still reachable in loss record 23 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489FF20: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 72 bytes in 1 blocks are still reachable in loss record 24 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FE4A4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 88 bytes in 1 blocks are still reachable in loss record 25 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4036AA: init_raw (init.c:86)
+==358952==    by 0x402559: main (fdf.c:34)
+==358952== 
+==358952== 88 bytes in 1 blocks are still reachable in loss record 26 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x40535B: mlx_int_new_xshm_image (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x405682: mlx_new_image (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4035A0: init_mlx (init.c:59)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 112 bytes in 1 blocks are still reachable in loss record 27 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48AFD72: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 112 bytes in 1 blocks are still reachable in loss record 28 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A0200: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 128 bytes in 1 blocks are still reachable in loss record 29 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A012E: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 128 bytes in 1 blocks are still reachable in loss record 30 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489C99E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4906213: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48A06A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 128 bytes in 1 blocks are still reachable in loss record 31 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489C99E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x49B6820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 128 bytes in 1 blocks are still reachable in loss record 32 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489C99E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x49B6820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B650A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 136 bytes in 1 blocks are still reachable in loss record 33 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x404C8F: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 136 bytes in 1 blocks are still reachable in loss record 34 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B50C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x405386: mlx_int_new_xshm_image (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x405682: mlx_new_image (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4035A0: init_mlx (init.c:59)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 148 bytes in 1 blocks are still reachable in loss record 35 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A0710: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 152 bytes in 1 blocks are still reachable in loss record 36 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x490640E: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48A06A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 160 bytes in 1 blocks are still reachable in loss record 37 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x488E9EF: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48A05A4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 160 bytes in 1 blocks are still reachable in loss record 38 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x488E9EF: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404EDE: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 168 bytes in 1 blocks are still reachable in loss record 39 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A00B2: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 208 bytes in 1 blocks are still reachable in loss record 40 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x49B4AE9: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49B69DF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x49BB9E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==358952==    by 0x404AE3: mlx_int_deal_shm (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404D61: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 208 bytes in 1 blocks are still reachable in loss record 41 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B1FAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4BB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B5EC0: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B6205: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4051F5: mlx_int_wait_first_expose (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404F1D: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 256 bytes in 1 blocks are still reachable in loss record 42 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x490355D: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE0DE: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 352 bytes in 7 blocks are still reachable in loss record 43 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FD8F5: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 512 bytes in 1 blocks are still reachable in loss record 44 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489B46A: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489B84E: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404D3B: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 832 bytes in 4 blocks are still reachable in loss record 45 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B1FAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4BB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B5F01: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B6205: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4051F5: mlx_int_wait_first_expose (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404F1D: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 832 bytes in 4 blocks are still reachable in loss record 46 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B1FAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4BB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4C69: _XEventsQueued (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x488F87D: XFlush (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4025CF: main (fdf.c:39)
+==358952== 
+==358952== 936 bytes in 1 blocks are still reachable in loss record 47 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x404E40: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 1,120 bytes in 1 blocks are still reachable in loss record 48 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4903619: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FDEB7: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 1,456 bytes in 7 blocks are still reachable in loss record 49 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B1FAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4BB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B5EC0: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B61D0: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4051F5: mlx_int_wait_first_expose (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404F1D: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 2,028 bytes in 27 blocks are still reachable in loss record 50 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FD7DD: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 2,048 bytes in 1 blocks are still reachable in loss record 51 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FD914: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 2,080 bytes in 10 blocks are still reachable in loss record 52 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48B1FAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B4BB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B5F01: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48B61D0: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x4051F5: mlx_int_wait_first_expose (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x404F1D: mlx_new_window (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403581: init_mlx (init.c:58)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 4,096 bytes in 1 blocks are still reachable in loss record 53 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48FE13E: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE41E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE4F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x48FE8AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x405A57: mlx_int_param_KeyRelease (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4050A5: mlx_loop (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x4025DC: main (fdf.c:40)
+==358952== 
+==358952== 4,704 bytes in 1 blocks are still reachable in loss record 54 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489FB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 5,016 bytes in 11 blocks are still reachable in loss record 55 of 59
+==358952==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x402896: meta_segments (parse.c:61)
+==358952==    by 0x402CD7: set_points (parse.c:110)
+==358952==    by 0x4036EF: init_raw (init.c:89)
+==358952==    by 0x402559: main (fdf.c:34)
+==358952== 
+==358952== 14,612 bytes in 1 blocks are still reachable in loss record 56 of 59
+==358952==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4CE64FB: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE6E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x48AFEE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 16,384 bytes in 1 blocks are still reachable in loss record 57 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x489FEBE: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 21,168 bytes in 1 blocks are still reachable in loss record 58 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x4CE6204: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x4CE6E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==358952==    by 0x48AFEE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x489FB68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== 33,600 bytes in 2 blocks are still reachable in loss record 59 of 59
+==358952==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==358952==    by 0x48A0290: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==358952==    by 0x404CA7: mlx_init (in /home/akjoerse/42/999_GitHub/42006/repo/actual/fdf)
+==358952==    by 0x403558: init_mlx (init.c:57)
+==358952==    by 0x402562: main (fdf.c:35)
+==358952== 
+==358952== LEAK SUMMARY:
+==358952==    definitely lost: 0 bytes in 0 blocks
+==358952==    indirectly lost: 0 bytes in 0 blocks
+==358952==      possibly lost: 0 bytes in 0 blocks
+==358952==    still reachable: 115,192 bytes in 123 blocks
+==358952==         suppressed: 0 bytes in 0 blocks
+==358952== 
+==358952== For lists of detected and suppressed errors, rerun with: -s
+==358952== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)-->
+
 
 #	2025.06.03 13:07
 

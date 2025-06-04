@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:25:38 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/06/03 13:54:03 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:32:21 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,6 @@ int	extract_color(char *col, int j)
 	return (hex);
 }
 
-int	get_height(char *num, int end)
-{
-	int		i;
-	char	*height;
-
-	i = 0;
-	height = malloc(sizeof(char) * end + 1);
-	if (!height || height == NULL)
-		exit (0);//TODO:integrate into exit function;
-	while (i < end)
-	{
-		height[i] = num[i];
-		i++;
-	}
-	height[i] = '\0';
-	i = ft_atoi(height);
-	free (height);
-	return (i);
-}
-
 t_pts	*meta_segments(t_fdf *f, int y)
 {
 	t_pts	*p;
@@ -66,7 +46,7 @@ t_pts	*meta_segments(t_fdf *f, int y)
 	{
 		len = get_lmn_len(s[x]);
 		p[x].c = extract_color(s[x], ft_abs(len));
-		p[x].z = get_height(s[x], ft_abs(len));
+		p[x].z = ft_atoi(s[x]);
 		p[x].x = ((x - y) * (f->cosine));
 		p[x].y = (((x + y) * (f->sine)) / 2 - (p[x].z * SCALEZ));
 		x++;

@@ -6,7 +6,7 @@
 /*   By: akjoerse <akjoerse@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:25:49 by akjoerse          #+#    #+#             */
-/*   Updated: 2025/06/03 13:48:14 by akjoerse         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:19:58 by akjoerse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	draw_line(t_pts o, t_pts d, t_fdf *f)
 	}
 }
 
-int	keychain(int key, void *par)
+int	keychain(int key, void *param)
 {
-	if (key == 65307 || !par)
-		exit(0);
+	if (key == 65307 || !param)
+		close_handler(param);
 	return (0);
 }
 
@@ -60,7 +60,7 @@ int	close_handler(void *param)
 	t_fdf	*fdf;
 
 	fdf = param;
-	mlx_destroy_window(fdf->mlx->mlx, fdf->mlx->win);
-	exit (0);
+	// mlx_destroy_window(fdf->mlx->mlx, fdf->mlx->win);
+	fdf_exit(param);// fdf_free(param);
 	return (0);
 }
